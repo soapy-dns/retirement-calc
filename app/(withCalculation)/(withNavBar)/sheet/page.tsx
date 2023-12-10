@@ -9,7 +9,7 @@ export default function Sheet() {
     <div className="flex flex-col">
       <div className="">Sheet page</div>
       <div>{selectedScenario.name}</div>
-      <pre>{JSON.stringify(calculationResults, null, 4)}</pre>
+      {calculationResults ? <pre>{JSON.stringify(calculationResults, null, 4)}</pre> : <div>Loading...</div>}
     </div>
   )
 }
