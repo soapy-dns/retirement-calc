@@ -1,0 +1,54 @@
+import { LivingExpensesRecord } from "../../data/types"
+import { InflationContext } from "./types"
+import range from "lodash/range"
+import { BasicYearData } from "calculations/types"
+
+// Exposed for testing
+export const getLivingExpensesInTodaysMoney = (yearRange: number[], livingExpensesConfig: LivingExpensesRecord[]) => {
+  const sortedConfig = livingExpensesConfig.sort((a, b) => {
+    if (a.fromYear > b.fromYear) return 1
+    if (a.fromYear < b.fromYear) return -1
+    return 0
+  })
+
+  const lastYearFromYearRange = yearRange[yearRange.length - 1]
+
+  const livingExpensesRange = range(sortedConfig[0].fromYear, lastYearFromYearRange + 1) // + 1 to include end year
+
+  let latestAmt: number
+  const gaplessConfig = livingExpensesRange.map((year) => {
+    const found = sortedConfig.find((it) => it.fromYear === year)
+    if (found) {
+      latestAmt = found.amountInTodaysTerms
+      return { year: found.fromYear, value: found.amountInTodaysTerms }
+    } else {
+      return { year: year, value: latestAmt }
+    }
+  })
+  return gaplessConfig
+}
+
+// CALCULATE LIVING EXPENSES FOR EACH YEAR TAKING INTO ACCOUNT ESTIMATED INFLATION
+export const getLivingExpenses = (
+  yearRange: number[],
+  livingExpenses: LivingExpensesRecord[],
+  inflationContext: InflationContext
+) => {
+  console.log("--inflationContext--", inflationContext)
+  const livingExpensesTodaysMoney = getLivingExpensesInTodaysMoney(yearRange, livingExpenses)
+
+  const projectedLivingExpenses = livingExpensesTodaysMoney.map(({ year, value }) => {
+    if (!inflationContext[year]) throw new Error(`No inflation configuration for year ${year}`)
+    const factor = inflationContext[year].factor
+
+    return { year: year + 1, value: Math.round(value * factor) }
+  })
+  projectedLivingExpenses.unshift({ year: yearRange[0], value: livingExpensesTodaysMoney[0].value })
+
+  return { livingExpensesTodaysMoney, projectedLivingExpenses }
+}
+
+export const getLivingExpensesAmtForYear = (year: number, projectedLivingExpenses: BasicYearData[]): number => {
+  const foundLivingExpenses = projectedLivingExpenses.find((it) => it.year === year)?.value
+  return foundLivingExpenses || 0
+}

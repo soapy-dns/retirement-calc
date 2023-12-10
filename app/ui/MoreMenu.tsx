@@ -13,7 +13,7 @@ import Link from "next/link"
 // import { useNavigation } from "view/hooks/useNavigation"
 // import { AppPath } from "view/routes/types"
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
 }
 
