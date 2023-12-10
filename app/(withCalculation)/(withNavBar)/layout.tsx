@@ -1,5 +1,5 @@
-import { AppNavBar } from "../ui/AppNavBar"
-import { Container } from "../ui/Container"
+import { AppNavBar } from "@/app/ui/AppNavBar"
+import { Container } from "@/app/ui/Container"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="fixed top-10 left-0 z-40 mb-4 inline-block min-w-full">
         <AppNavBar />
       </div>
-      {children}
+      <div className="mt-20">{children}</div>
     </>
   )
 }

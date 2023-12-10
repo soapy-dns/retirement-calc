@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <div className="fixed top-0 left-0 z-50 mb-4 inline-block min-w-full ">
+        <div className="fixed top-0 left-0 z-50 mb-4 inline-block min-w-full">
           <AppBanner />
         </div>
         {children}

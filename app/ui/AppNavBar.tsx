@@ -3,13 +3,12 @@ import { Cog8ToothIcon, PresentationChartLineIcon, TableCellsIcon } from "@heroi
 import Link from "next/link"
 import { AppPath } from "./types"
 import { usePathname } from "next/navigation"
+import { MoreMenu } from "./MoreMenu"
 
 // import { Link, useLocation } from "react-router-dom"
 // import { ScenarioMenu } from "./SelectMenu"
-// import { MoreMenu } from "./MoreMenu"
 
 export const AppNavBar = () => {
-  console.log("--AppNavBar--")
   const pathname = usePathname()
 
   const selectedTabClassNames = "border-b-4"
@@ -50,7 +49,7 @@ export const AppNavBar = () => {
         </div>
       </Link>
 
-      {/* <MoreMenu /> */}
+      <MoreMenu />
     </div>
   )
 }

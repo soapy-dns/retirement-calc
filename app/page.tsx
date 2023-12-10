@@ -1,5 +1,4 @@
 import Image from "next/image"
-import { AppBanner } from "./ui/AppBanner"
 
 export default function Home() {
   return (

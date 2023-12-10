@@ -12,7 +12,6 @@ export const AppBanner = () => {
         height={30}
         priority
       />
-      {/* <img src={bluePig} alt="Logo" className="mx-4 h-10 py-2" /> */}
       <div className="py-1 text-2xl text-primary">The Retirement Project</div>
     </div>
   )
