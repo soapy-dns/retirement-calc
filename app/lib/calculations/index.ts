@@ -1,3 +1,5 @@
+"use server"
+
 import range from "lodash/range.js"
 import { addAssetEarnings, canDrawdownAssets, getGroupedAssets, buildInitialAssets } from "./assets/assetUtils"
 import { calculateTaxes, initTaxes } from "./tax/utils"
@@ -238,17 +240,17 @@ export const calculate = (scenario: IScenario) => {
 
     const surplusRowData = { "Surplus (if -ve is tax liability for next yr)": surplusYearData }
 
-    console.log("--yearRange--", calcYearRangeAssets)
-    console.log("--calculationData--", calculationData)
-    console.log("--graphCalculatedAssetData--", graphCalculatedAssetData)
-    console.log("--assetRowData--", assetRowData)
-    console.log("--earningsRowData--", earningsRowData)
-    console.log("--drawDownRowData--", drawDownRowData)
-    console.log("--expensesRowData--", expensesRowData)
-    console.log("--surplusRowData--", surplusRowData)
-    console.log("--inflationContext--", inflationContext)
-    console.log("totalAssetsData", totalAssetsData)
-    console.log("--netPresentValue--", netPresentValue)
+    // console.log("--yearRange--", calcYearRangeAssets)
+    // console.log("--calculationData--", calculationData)
+    // console.log("--graphCalculatedAssetData--", graphCalculatedAssetData)
+    // console.log("--assetRowData--", assetRowData)
+    // console.log("--earningsRowData--", earningsRowData)
+    // console.log("--drawDownRowData--", drawDownRowData)
+    // console.log("--expensesRowData--", expensesRowData)
+    // console.log("--surplusRowData--", surplusRowData)
+    // console.log("--inflationContext--", inflationContext)
+    // console.log("totalAssetsData", totalAssetsData)
+    // console.log("--netPresentValue--", netPresentValue)
 
     console.groupEnd()
 
