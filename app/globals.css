@@ -1,4 +1,30 @@
 @tailwind base;
+
+/* reset rules */
+@layer base {
+  p {
+    @apply mb-4;
+  }
+  h1 {
+    @apply mb-4 text-2xl;
+  }
+  h2 {
+    @apply mb-4 text-xl;
+  }
+  h3 {
+    @apply mb-4;
+  }
+  h4 {
+    @apply mb-4;
+  }
+  h5 {
+    @apply mb-4;
+  }
+  h6 {
+    @apply mb-4;
+  }
+}
+
 @tailwind components;
 @tailwind utilities;
 
