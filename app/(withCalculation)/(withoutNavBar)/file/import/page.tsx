@@ -1,6 +1,6 @@
 "use client"
 import { IScenario } from "@/app/lib/data/types"
-import { Button, ButtonType } from "@/app/ui/components/form/Button"
+import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
@@ -28,7 +28,7 @@ export default () => {
   const navigation = useNavigation()
 
   const handleBack = () => {
-    // navigation.goBack()
+    navigation.goBack()
   }
 
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {

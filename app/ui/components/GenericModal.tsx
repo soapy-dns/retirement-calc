@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, ButtonType } from "./form/Button"
+import { Button, ButtonType } from "./common/Button"
 // import { Button, ButtonType } from "./components/form/Button"
 // import { HelpModalContext } from "./context/HelpModalContext"
 
