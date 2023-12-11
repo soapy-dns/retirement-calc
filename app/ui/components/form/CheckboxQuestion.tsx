@@ -1,8 +1,7 @@
 import React, { ChangeEvent } from "react"
 import { Control } from "react-hook-form"
+import { useError } from "../../hooks/useError"
 import { FormGroup } from "../common/FormGroup"
-import { useError } from "../hooks/useError"
-// import { FormGroup } from "./form/FormGroup"
 
 type CheckboxProps = {
   label: string

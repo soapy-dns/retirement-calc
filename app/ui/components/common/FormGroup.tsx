@@ -1,6 +1,6 @@
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline"
 import { useState } from "react"
-import { getErrorMsgId } from "view/common/utils"
+import { getErrorMsgId } from "../../utils"
 import { Label } from "./Label"
 import { ValidationError } from "./ValidationError"
 
