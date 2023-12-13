@@ -1,12 +1,11 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { ScenarioContext } from "./ScenarioContext"
 import { IScenario, ISelectOption } from "@/app/lib/data/types"
-import { useEffect } from "react"
 import { scenarios as defaultScenarios } from "@/app/lib/data/scenarios"
 import { calculate, calculateAsync } from "@/app/lib/calculations"
 import { CalculationResults } from "@/app/lib/calculations/types"
 import { useAppAlert } from "../hooks/useAppAlert"
-// import { getRandomKey } from "view/common/utils"
+import { getRandomKey } from "@/app/lib/utils/getRandomKey"
 
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
   const scenarioOptions = scenarios.map((scenario) => ({
@@ -22,7 +21,6 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
   const [selectedScenario, setSelectedScenario] = useState<IScenario>(defaultScenarios[0])
   const [scenarios, setScenarios] = useState<IScenario[]>(defaultScenarios)
   const [calculationResults, setCalculationResults] = useState<CalculationResults>()
-  // const [calculationMessage, setCalculationMessage] = useState<string>()
   const { displayErrorAlert, displayWarningAlert } = useAppAlert()
 
   const getSelectedScenarioAssetsOptions = ({ excludeIncome }: { excludeIncome: boolean }): ISelectOption[] => {
@@ -32,176 +30,168 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     return assetOptions
   }
 
-  const importScenarios = (scenarios: IScenario[]) => {}
+  // const importScenarios = (scenarios: IScenario[]) => {}
 
-  // const importScenarios = (scenarios: IScenario[]) => {
-  //   try {
-  //     const defaultSelectedScenario = scenarios[0]
+  const importScenarios = (scenarios: IScenario[]) => {
+    try {
+      const defaultSelectedScenario = scenarios[0]
 
-  //     if (!defaultSelectedScenario) throw new Error("No scenario found in import file")
+      if (!defaultSelectedScenario) throw new Error("No scenario found in import file")
 
-  //     const calculationResults = calculate(defaultSelectedScenario)
-  //     setCalculationResults(calculationResults)
+      const calculationResults = calculate(defaultSelectedScenario)
+      setCalculationResults(calculationResults)
 
-  //     const scenarioOptions = getScenarioOptions(scenarios)
-  //     const selectedScenarioOption = scenarioOptions.find((it) => it.value === defaultSelectedScenario.id)
+      const scenarioOptions = getScenarioOptions(scenarios)
+      const selectedScenarioOption = scenarioOptions.find((it) => it.value === defaultSelectedScenario.id)
 
-  //     setScenarios(scenarios)
-  //     setSelectedScenario(defaultSelectedScenario)
-  //     setScenarioOptions(scenarioOptions)
-  //     setSelectedScenarioOption(selectedScenarioOption)
+      setScenarios(scenarios)
+      setSelectedScenario(defaultSelectedScenario)
+      setScenarioOptions(scenarioOptions)
+      setSelectedScenarioOption(selectedScenarioOption)
 
-  //     sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
-  //     sessionStorage.setItem("selectedScenario", JSON.stringify(defaultSelectedScenario))
+      sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
+      sessionStorage.setItem("selectedScenario", JSON.stringify(defaultSelectedScenario))
 
-  //     const { calculationMessage } = calculationResults
+      const { calculationMessage } = calculationResults
 
-  //     if (calculationMessage) {
-  //       displayWarningAlert(calculationMessage)
-  //     }
-  //   } catch (err) {
-  //     displayErrorAlert(
-  //       "Calculation error.  File to import likely has incorrect configuration.  The file has not been imported."
-  //     )
-  //   }
-  // }
-
-  const onSelectScenario = (selectedValue: string) => {}
+      if (calculationMessage) {
+        displayWarningAlert(calculationMessage)
+      }
+    } catch (err) {
+      displayErrorAlert(
+        "Calculation error.  File to import likely has incorrect configuration.  The file has not been imported."
+      )
+    }
+  }
 
   // // when an different scenario is selected
-  // const onSelectScenario = (selectedValue: string) => {
-  //   try {
-  //     const newSelectedScenario = scenarios.find((it) => it.id === selectedValue)
-  //     if (!newSelectedScenario || !scenarioOptions) {
-  //       throw new Error("ScenarioProvider - Scenario not found")
-  //     }
+  const onSelectScenario = (selectedValue: string) => {
+    try {
+      const newSelectedScenario = scenarios.find((it) => it.id === selectedValue)
+      if (!newSelectedScenario || !scenarioOptions) {
+        throw new Error("ScenarioProvider - Scenario not found")
+      }
 
-  //     const calculationResults = calculate(newSelectedScenario)
+      const calculationResults = calculate(newSelectedScenario)
 
-  //     if (newSelectedScenario) setSelectedScenario(newSelectedScenario)
+      if (newSelectedScenario) setSelectedScenario(newSelectedScenario)
 
-  //     const selectedScenarioOption = scenarioOptions.find((it) => it.value === selectedValue)
-  //     setSelectedScenarioOption(selectedScenarioOption)
+      const selectedScenarioOption = scenarioOptions.find((it) => it.value === selectedValue)
+      setSelectedScenarioOption(selectedScenarioOption)
 
-  //     setCalculationResults(calculationResults)
+      setCalculationResults(calculationResults)
 
-  //     sessionStorage.setItem("selectedScenario", JSON.stringify(newSelectedScenario))
+      sessionStorage.setItem("selectedScenario", JSON.stringify(newSelectedScenario))
 
-  //     const { calculationMessage } = calculationResults
-  //     if (calculationMessage) {
-  //       displayWarningAlert(calculationMessage, { duration: 1000 })
-  //     }
-  //   } catch (err) {
-  //     displayErrorAlert("Calculation error.  Selected scenario configuration is likely incorrect.  Please correct.")
-  //   }
-  // }
-
-  const updateScenario = async (updatedScenario: IScenario) => {}
+      const { calculationMessage } = calculationResults
+      if (calculationMessage) {
+        displayWarningAlert(calculationMessage, { duration: 1000 })
+      }
+    } catch (err) {
+      displayErrorAlert("Calculation error.  Selected scenario configuration is likely incorrect.  Please correct.")
+    }
+  }
 
   // // For an updated scenario
-  // const updateScenario = async (updatedScenario: IScenario) => {
-  //   try {
-  //     const calculationResults = await calculateAsync(updatedScenario)
-  //     setCalculationResults(calculationResults)
+  const updateScenario = async (updatedScenario: IScenario) => {
+    try {
+      const calculationResults = await calculateAsync(updatedScenario)
+      setCalculationResults(calculationResults)
 
-  //     setSelectedScenario(updatedScenario)
+      setSelectedScenario(updatedScenario)
 
-  //     const index = scenarios.findIndex((it) => it.id === updatedScenario.id) || 0
+      const index = scenarios.findIndex((it) => it.id === updatedScenario.id) || 0
 
-  //     if (index === -1) throw new Error(`index not found ${updatedScenario.id}`)
+      if (index === -1) throw new Error(`index not found ${updatedScenario.id}`)
 
-  //     scenarios.splice(index, 1, updatedScenario)
+      scenarios.splice(index, 1, updatedScenario)
 
-  //     const scenarioOptions = getScenarioOptions(scenarios)
+      const scenarioOptions = getScenarioOptions(scenarios)
 
-  //     sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
-  //     sessionStorage.setItem("selectedScenario", JSON.stringify(updatedScenario))
+      sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
+      sessionStorage.setItem("selectedScenario", JSON.stringify(updatedScenario))
 
-  //     setScenarios(scenarios)
-  //     setSelectedScenario(updatedScenario)
-  //     setScenarioOptions(scenarioOptions)
+      setScenarios(scenarios)
+      setSelectedScenario(updatedScenario)
+      setScenarioOptions(scenarioOptions)
 
-  //     const { calculationMessage } = calculationResults
-  //     if (calculationMessage) {
-  //       displayWarningAlert(calculationMessage, { duration: 1000 })
-  //     }
-  //   } catch (err) {
-  //     displayErrorAlert(
-  //       `Calculation error.  Updated scenario ${updatedScenario.name} likely incorrect.  Please correct.`
-  //     )
-  //   }
-  // }
+      const { calculationMessage } = calculationResults
+      if (calculationMessage) {
+        displayWarningAlert(calculationMessage, { duration: 1000 })
+      }
+    } catch (err) {
+      displayErrorAlert(
+        `Calculation error.  Updated scenario ${updatedScenario.name} likely incorrect.  Please correct.`
+      )
+    }
+  }
 
-  const deleteSelectedScenario = () => {}
+  const deleteSelectedScenario = () => {
+    if (scenarios.length > 1) {
+      const index = scenarios.findIndex((it) => it.id === selectedScenario.id)
+      if (index === undefined) throw new Error("No scenario found to delete")
 
-  // const deleteSelectedScenario = () => {
-  //   if (scenarios.length > 1) {
-  //     const index = scenarios.findIndex((it) => it.id === selectedScenario.id)
-  //     if (index === undefined) throw new Error("No scenario found to delete")
+      const remainingScenarios = [...scenarios]
+      remainingScenarios.splice(index, 1)
 
-  //     const remainingScenarios = [...scenarios]
-  //     remainingScenarios.splice(index, 1)
+      const scenarioOptions = getScenarioOptions(remainingScenarios)
 
-  //     const scenarioOptions = getScenarioOptions(remainingScenarios)
+      const newSelectedScenario = remainingScenarios[0]
 
-  //     const newSelectedScenario = remainingScenarios[0]
+      const selectedScenarioOption = scenarioOptions.find((it) => it.value === newSelectedScenario.id)
 
-  //     const selectedScenarioOption = scenarioOptions.find((it) => it.value === newSelectedScenario.id)
+      sessionStorage.setItem("scenarios", JSON.stringify(remainingScenarios))
+      sessionStorage.setItem("selectedScenario", JSON.stringify(newSelectedScenario))
 
-  //     sessionStorage.setItem("scenarios", JSON.stringify(remainingScenarios))
-  //     sessionStorage.setItem("selectedScenario", JSON.stringify(newSelectedScenario))
+      setScenarios(remainingScenarios)
+      setScenarioOptions(scenarioOptions)
+      setSelectedScenario(newSelectedScenario)
+      setSelectedScenarioOption(selectedScenarioOption)
 
-  //     setScenarios(remainingScenarios)
-  //     setScenarioOptions(scenarioOptions)
-  //     setSelectedScenario(newSelectedScenario)
-  //     setSelectedScenarioOption(selectedScenarioOption)
+      try {
+        const calculationResults = calculate(newSelectedScenario)
+        setCalculationResults(calculationResults)
+        const { calculationMessage } = calculationResults
+        if (calculationMessage) {
+          displayWarningAlert(calculationMessage, { duration: 1000 })
+        }
+      } catch (err) {
+        displayErrorAlert(`Calculation error.  Scenario ${newSelectedScenario.name} likely incorrect.  Please correct.`)
+      }
+    }
+  }
 
-  //     try {
-  //       const calculationResults = calculate(newSelectedScenario)
-  //       setCalculationResults(calculationResults)
-  //       const { calculationMessage } = calculationResults
-  //       if (calculationMessage) {
-  //         displayWarningAlert(calculationMessage, { duration: 1000 })
-  //       }
-  //     } catch (err) {
-  //       displayErrorAlert(`Calculation error.  Scenario ${newSelectedScenario.name} likely incorrect.  Please correct.`)
-  //     }
-  //   }
-  // }
+  const addScenario = (name: string, description: string) => {
+    const newScenario = { ...selectedScenario, name, description, id: getRandomKey() }
 
-  const addScenario = (name: string, description: string) => {}
+    try {
+      const calculationResults = calculate(newScenario)
+      setCalculationResults(calculationResults)
 
-  // const addScenario = (name: string, description: string) => {
-  //   const newScenario = { ...selectedScenario, name, description, id: getRandomKey() }
+      scenarios.concat([newScenario])
 
-  //   try {
-  //     const calculationResults = calculate(newScenario)
-  //     setCalculationResults(calculationResults)
+      const scenarioOptions = getScenarioOptions(scenarios)
 
-  //     scenarios.concat([newScenario])
+      const selectedScenarioOption = scenarioOptions.find((it) => it.value === newScenario.id)
 
-  //     const scenarioOptions = getScenarioOptions(scenarios)
+      sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
+      sessionStorage.setItem("selectedScenario", JSON.stringify(newScenario))
 
-  //     const selectedScenarioOption = scenarioOptions.find((it) => it.value === newScenario.id)
+      setScenarios(scenarios)
+      setScenarioOptions(scenarioOptions)
+      setSelectedScenario(newScenario)
+      setSelectedScenarioOption(selectedScenarioOption)
 
-  //     sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
-  //     sessionStorage.setItem("selectedScenario", JSON.stringify(newScenario))
-
-  //     setScenarios(scenarios)
-  //     setScenarioOptions(scenarioOptions)
-  //     setSelectedScenario(newScenario)
-  //     setSelectedScenarioOption(selectedScenarioOption)
-
-  //     const { calculationMessage } = calculationResults
-  //     if (calculationMessage) {
-  //       displayWarningAlert(calculationMessage, { duration: 1000 })
-  //     }
-  //   } catch (err) {
-  //     displayErrorAlert(
-  //       `Calculation error.  Newly added scenario ${newScenario.name} likely incorrect.  Please correct.`
-  //     )
-  //   }
-  // }
+      const { calculationMessage } = calculationResults
+      if (calculationMessage) {
+        displayWarningAlert(calculationMessage, { duration: 1000 })
+      }
+    } catch (err) {
+      displayErrorAlert(
+        `Calculation error.  Newly added scenario ${newScenario.name} likely incorrect.  Please correct.`
+      )
+    }
+  }
 
   const doCalculations = async (selectedScenario: IScenario) => {
     try {

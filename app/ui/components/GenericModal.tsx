@@ -1,9 +1,5 @@
 import React from "react"
 import { Button, ButtonType } from "./common/Button"
-// import { Button, ButtonType } from "./components/form/Button"
-// import { HelpModalContext } from "./context/HelpModalContext"
-
-// const getContent = (modalData) => <pre>{modalData ? JSON.stringify(modalData, null, 4) : "N/A"}</pre>
 
 interface IGenericModalProps {
   heading: string
@@ -12,11 +8,7 @@ interface IGenericModalProps {
   onToggle: Function
 }
 export const GenericModal = (props: IGenericModalProps) => {
-  // const helpModalContext = useContext(HelpModalContext)
   const { heading, showModal, content, onToggle } = props
-  // const { showModal, onToggle, modalData = {} } = helpModalContext
-
-  // const content = getContent(modalData)
 
   const modalHiddenClass = showModal ? "" : "hidden"
 

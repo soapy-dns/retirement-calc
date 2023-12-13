@@ -10,17 +10,12 @@ import {
 } from "@heroicons/react/24/outline"
 import { AppPath } from "./types"
 import Link from "next/link"
-// import { useNavigation } from "view/hooks/useNavigation"
-// import { AppPath } from "view/routes/types"
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
 }
 
 export const MoreMenu = () => {
-  //   const navigation = useNavigation()
-  // const { pathname } = useLocation()
-
   return (
     <Menu as="div" className="relative flex justify-center">
       <Menu.Button className=" border-x hover:bg-primary-darker">

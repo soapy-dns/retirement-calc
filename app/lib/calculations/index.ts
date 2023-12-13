@@ -8,19 +8,19 @@ import { getLivingExpenses } from "./utils/livingExpensesUtils"
 import { initialiseEarningsFromAssets } from "./utils/initialiseEarningsFromAssets"
 import { AutomatedDrawdown } from "./autoDrawdowns/types"
 import { applyAutoDrawdowns } from "./autoDrawdowns/drawdown"
-import { CellData } from "../view/pages/sheets/row/types"
-import { AssetData, RowData, IScenario, SurplusYearData } from "../data/types"
 import { getInflationContext } from "./utils/getInflationContext"
 import { calculateTotalEarnings } from "./earnings/utils"
 import { removeUnusedHistoryFromTaxes } from "./tax/removeUnusedHistoryFromTaxes"
 import { getYearRange } from "./utils/yearRange"
 import { getIncomeTaxCalculator } from "./tax/taxCalcs/getIncomeTaxCalculator"
-import { BasicYearData, CalculationData } from "./types"
+import { AssetData, BasicYearData, CalculationData, RowData, SurplusYearData } from "./types"
 import { getAssetSplit } from "./assets/getAssetClasses"
 import { getCalculatedNpvData, getGraphIncomeNpvData } from "./utils/getCalculatedNpvData"
 import { getStartingYear } from "./utils/getStartingYear"
+import { IScenario } from "../data/types"
+import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const calculateAsync = async (scenario: IScenario) => {
   console.log("calculate ASYNC")

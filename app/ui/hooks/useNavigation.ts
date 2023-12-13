@@ -1,6 +1,3 @@
-// import { useHistory } from "react-router-dom"
-// import { AccordionItem } from "view/components/accordian/AccordianItem"
-// import { AppPath } from "view/routes/types"
 import { useRouter } from "next/navigation"
 import { AppPath } from "../types"
 

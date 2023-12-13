@@ -1,15 +1,29 @@
-// TODO: use InputField
 import React, { ChangeEvent } from "react"
-import { Controller, Control, useFormState } from "react-hook-form"
+import { Controller, Control } from "react-hook-form"
 import { useError } from "../../hooks/useError"
-import { FormGroup } from "../common/FormGroup"
 import { Input } from "../common/Input"
 // import { useError } from "../hooks/useError"
-// import { FormGroup } from "./form/FormGroup"
 // import { Input } from "./form/Input"
 
+interface PrefixProps {
+  text?: string
+}
+
+const Prefix: React.FC<PrefixProps> = ({ text }) => {
+  if (text) return <div className="inline-block border bg-gray-100 p-1">{text}</div>
+  return null
+}
+
+interface SuffixProps {
+  text?: string
+}
+
+const Suffix: React.FC<SuffixProps> = ({ text }) => {
+  if (text) return <div className="inline-block border bg-gray-100 p-1">{text}</div>
+  return null
+}
+
 type InputProps = {
-  label: string
   id: string
   name?: string
   defaultValue?: string | number
@@ -26,19 +40,13 @@ type InputProps = {
   inputProps?: object
   maxLength?: number
   restrictedCharSet?: RegExp
-  //   labelVariant?: LabelVariant
   disabled?: boolean
-  editable?: boolean
-  helpText?: string
 }
 
-export const InputQuestion: React.FC<InputProps> = ({
-  label,
+export const InputField: React.FC<InputProps> = ({
   id,
   name,
   defaultValue,
-  helpText,
-  editable = false,
   type,
   control,
   prefix,
@@ -57,11 +65,19 @@ export const InputQuestion: React.FC<InputProps> = ({
   const nameOfEl = name ?? id
 
   const errorMsg = useError(control, nameOfEl)
-  // const { errors } = useFormState({ control })
-
-  // const errorMsg = errors[nameOfEl]?.message
 
   const handleOnChange = (value: string, onChange: Function) => {
+    // const {
+    //   target: { value }
+    // } = event
+    console.log(
+      "--restrictedCharSet, value, value.match(restrictedCharSet)--",
+      restrictedCharSet,
+      "-",
+      value,
+      "-",
+      value.match(restrictedCharSet || "")
+    )
     // Assumes empty input is always valid
     const validInput = !value || (restrictedCharSet && value.match(restrictedCharSet)) || !restrictedCharSet
     if (validInput) {
@@ -70,16 +86,7 @@ export const InputQuestion: React.FC<InputProps> = ({
   }
 
   return (
-    <FormGroup
-      label={label}
-      id={`formGroup-${id}`}
-      //   className={formGroupClassName}
-      //   labelClassName={labelClassName}
-      //   labelVariant={labelVariant}
-      //   {...otherContainerProps}
-      errorMsg={errorMsg}
-      helpText={helpText}
-    >
+    <>
       <Controller
         name={nameOfEl}
         control={control}
@@ -87,6 +94,7 @@ export const InputQuestion: React.FC<InputProps> = ({
         rules={validationRules}
         render={({ field: { value, onChange, onBlur, name: renderName, ref }, formState: { isSubmitted } }) => (
           <>
+            {prefix && <Prefix text={prefix} />}
             <Input
               id={id}
               data-testid={id}
@@ -100,8 +108,6 @@ export const InputQuestion: React.FC<InputProps> = ({
               // // This assumes handleSubmit performs validation
               // onBlur={() => setTimeout(onBlur, 100)}
               placeholder={placeholder}
-              prefix={prefix}
-              suffix={suffix}
               isError={!!errorMsg}
               ref={ref}
               //   valid={!errorMsg}
@@ -111,9 +117,10 @@ export const InputQuestion: React.FC<InputProps> = ({
               // maxLength={maxLength}
               {...inputProps}
             />
+            {suffix && <Suffix text={suffix} />}
           </>
         )}
       />
-    </FormGroup>
+    </>
   )
 }

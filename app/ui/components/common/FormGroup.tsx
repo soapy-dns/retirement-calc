@@ -1,5 +1,5 @@
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline"
-import { useState } from "react"
+import { SyntheticEvent, useState } from "react"
 import { getErrorMsgId } from "../../utils"
 import { Label } from "./Label"
 import { ValidationError } from "./ValidationError"
@@ -14,7 +14,7 @@ interface IFormGroup {
 export const FormGroup: React.FC<IFormGroup> = ({ id, label, helpText, errorMsg, children }) => {
   const [showHelpText, setShowHelpText] = useState<boolean>(false)
 
-  const toggleHelpText = (e) => {
+  const toggleHelpText = (e: SyntheticEvent) => {
     e.preventDefault()
 
     setShowHelpText(!showHelpText)

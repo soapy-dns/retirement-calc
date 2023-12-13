@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { ReactNode, useState } from "react"
 import { createContext } from "react"
 
 interface IHelpModalContext {
@@ -8,11 +8,11 @@ interface IHelpModalContext {
 }
 export const HelpModalContext = createContext<IHelpModalContext>({ showModal: true, onToggle: () => {} })
 
-export const HelpModalProvider = ({ children }) => {
+export const HelpModalProvider = ({ children }: { children: ReactNode }) => {
   const [showModal, setShowModal] = useState(false)
   const [modalData, setModalData] = useState()
 
-  const onToggle = (data) => {
+  const onToggle = (data: ReactNode) => {
     setShowModal(!showModal)
 
     setModalData(data)

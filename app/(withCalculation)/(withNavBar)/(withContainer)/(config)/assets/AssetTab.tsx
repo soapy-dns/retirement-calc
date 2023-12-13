@@ -1,0 +1,47 @@
+import { Button, ButtonType } from "@/app/ui/components/common/Button"
+import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { useNavigation } from "@/app/ui/hooks/useNavigation"
+import { AppPath } from "@/app/ui/types"
+import { PlusCircleIcon } from "@heroicons/react/24/outline"
+import { useContext } from "react"
+
+import { AssetSummary } from "./AssetSummary"
+
+export const AssetTab = () => {
+  const navigation = useNavigation()
+
+  const { selectedScenario } = useContext(ScenarioContext)
+  if (!selectedScenario) return null
+
+  const { assets, context } = selectedScenario
+
+  const { owners } = context
+
+  const handleAdd = () => {
+    navigation.goTo(AppPath.assetAdd)
+  }
+
+  return (
+    <div className="">
+      <div className="my-4 flex justify-center">
+        <Button buttonType={ButtonType.secondary} onClick={handleAdd}>
+          <div className="flex items-center gap-2">
+            <PlusCircleIcon className="h-4 w-4" />
+            Add another asset
+          </div>
+        </Button>
+      </div>
+
+      {assets.map((asset, index) => {
+        return (
+          <AssetSummary
+            asset={asset}
+            owners={owners}
+            key={asset.name}
+            removeAllowed={index === 0 && assets.length === 1}
+          />
+        )
+      })}
+    </div>
+  )
+}
