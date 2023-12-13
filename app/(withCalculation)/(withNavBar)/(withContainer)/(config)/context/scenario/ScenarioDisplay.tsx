@@ -17,7 +17,7 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
   const { selectedScenario, deleteSelectedScenario, scenarios } = React.useContext(ScenarioContext)
 
   const handleEdit = () => {
-    navigation.goTo(AppPath.scenarioEdit)
+    navigation.goTo(AppPath.scenarioEdit, { id: selectedScenario.id })
   }
 
   const handleRemove = () => {

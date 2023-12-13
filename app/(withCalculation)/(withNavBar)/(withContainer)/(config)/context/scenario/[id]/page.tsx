@@ -1,27 +1,29 @@
+"use client"
+
+import { useForm } from "react-hook-form"
+import { useContext } from "react"
+
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { ALPHA_ONLY } from "@/app/ui/components/common/formRegExes"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { TextAreaQuestion } from "@/app/ui/components/form/TextAreaQuestion"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
-import { useContext } from "react"
+import { useNavigation } from "@/app/ui/hooks/useNavigation"
 
-import { useForm } from "react-hook-form"
-
-import { scenarioConstants } from "./scenarioConstants"
+import { scenarioConstants } from "../scenarioConstants"
 
 interface ChangedFormData {
   name: string
   description: string
 }
 
-export const ScenarioEditPage: React.FC = () => {
-  let { action } = useParams()
-
+export default function ScenarioPage({ params }: { params: { id: string } }) {
+  const { id } = params
   const navigation = useNavigation()
   const { selectedScenario, updateScenario, addScenario } = useContext(ScenarioContext)
   const { name, description } = selectedScenario
-  const defaultValues = action === "edit" ? { name, description } : {}
+  const defaultValues = id === "add" ? {} : { name, description }
   const { control, handleSubmit } = useForm<ChangedFormData>({
     defaultValues
   })
@@ -33,7 +35,7 @@ export const ScenarioEditPage: React.FC = () => {
   const onSubmit = (data: ChangedFormData) => {
     const { name, description } = data
 
-    if (action.add) {
+    if (id === "add") {
       addScenario(name, description)
     } else {
       const updatedScenario = { ...selectedScenario, name, description }
@@ -55,7 +57,7 @@ export const ScenarioEditPage: React.FC = () => {
       handleBack={handleBack}
       handleCancel={handleBack}
     >
-      {action === "add" && (
+      {id === "add" && (
         <Alert heading="Note" alertType={AlertType.info}>
           The context, assets and transfers will be copied across as is. They can only be changed by editing after
           saving.

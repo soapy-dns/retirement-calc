@@ -1,3 +1,5 @@
+"use client"
+
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { ContextData } from "@/app/lib/data/types"
 import { DECIMALS_ONLY } from "@/app/ui/components/common/formRegExes"
@@ -6,20 +8,21 @@ import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext } from "react"
 import { useForm } from "react-hook-form"
-
 import { contextConstants } from "../contextConstants"
 
 interface ChangedFormData {
-  growthRate: number
+  investmentReturn: number
+  taxationRate: number
 }
 
-export const PropertyEditPage: React.FC = () => {
+const SuperPage: React.FC = () => {
   const navigation = useNavigation()
+
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
   const { context } = selectedScenario
-  const { property } = context
+  const { superAu } = context
   const { control, handleSubmit } = useForm<ChangedFormData>({
-    defaultValues: { growthRate: property.growthInterestRate }
+    defaultValues: { investmentReturn: superAu?.investmentReturn, taxationRate: superAu?.taxationRate }
   })
 
   const handleBack = () => {
@@ -27,13 +30,14 @@ export const PropertyEditPage: React.FC = () => {
   }
 
   const onSubmit = (data: ChangedFormData) => {
-    const { growthRate } = data
+    const { investmentReturn, taxationRate } = data
     const { context } = selectedScenario
 
     const updatedContext: ContextData = {
       ...context,
-      property: {
-        growthInterestRate: growthRate
+      superAu: {
+        investmentReturn,
+        taxationRate
       }
     }
 
@@ -45,7 +49,7 @@ export const PropertyEditPage: React.FC = () => {
 
   return (
     <EditPageLayout
-      heading="Property"
+      heading="Super"
       backText="Back to context"
       cancelText="Cancel and return to context"
       saveText="Save changes"
@@ -56,17 +60,28 @@ export const PropertyEditPage: React.FC = () => {
       <form>
         {/* @ts-ignore */}
         <InputQuestion
-          id="growthRate"
+          id="investmentReturn"
           control={control}
-          label={contextConstants.PROPERTY_GROWTH_RATE.LABEL}
-          suffix="%"
-          defaultValue={context?.property?.growthInterestRate}
+          label={contextConstants.SUPER_INVESTMENT_RETURN.LABEL}
+          defaultValue={superAu?.investmentReturn}
           editable={true}
           // validationRules={changeDetailsValidation}
           restrictedCharSet={DECIMALS_ONLY}
-          helpText={contextConstants.PROPERTY_GROWTH_RATE.HELP_TEXT}
+          helpText={contextConstants.SUPER_INVESTMENT_RETURN.HELP_TEXT}
+        />
+        <InputQuestion
+          id="taxationRate"
+          control={control}
+          label={contextConstants.SUPER_TAXATION_RATE.LABEL}
+          defaultValue={superAu?.investmentReturn}
+          editable={true}
+          // validationRules={changeDetailsValidation}
+          restrictedCharSet={DECIMALS_ONLY}
+          helpText={contextConstants.SUPER_TAXATION_RATE.HELP_TEXT}
         />
       </form>
     </EditPageLayout>
   )
 }
+
+export default SuperPage

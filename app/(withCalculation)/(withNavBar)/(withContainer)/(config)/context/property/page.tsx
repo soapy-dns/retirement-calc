@@ -1,3 +1,5 @@
+"use client"
+
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { ContextData } from "@/app/lib/data/types"
 import { DECIMALS_ONLY } from "@/app/ui/components/common/formRegExes"
@@ -6,24 +8,20 @@ import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext } from "react"
 import { useForm } from "react-hook-form"
+
 import { contextConstants } from "../contextConstants"
 
 interface ChangedFormData {
-  growthInterestRate: number
-  dividendInterestRate: number
+  growthRate: number
 }
 
-export const SharesEditPage: React.FC = () => {
+const PropertyPage: React.FC = () => {
   const navigation = useNavigation()
-
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
   const { context } = selectedScenario
-  const { sharesAu } = context
+  const { property } = context
   const { control, handleSubmit } = useForm<ChangedFormData>({
-    defaultValues: {
-      growthInterestRate: sharesAu?.growthInterestRate,
-      dividendInterestRate: sharesAu?.dividendInterestRate
-    }
+    defaultValues: { growthRate: property.growthInterestRate }
   })
 
   const handleBack = () => {
@@ -31,14 +29,13 @@ export const SharesEditPage: React.FC = () => {
   }
 
   const onSubmit = (data: ChangedFormData) => {
-    const { growthInterestRate, dividendInterestRate } = data
+    const { growthRate } = data
     const { context } = selectedScenario
 
     const updatedContext: ContextData = {
       ...context,
-      sharesAu: {
-        growthInterestRate,
-        dividendInterestRate
+      property: {
+        growthInterestRate: growthRate
       }
     }
 
@@ -50,7 +47,7 @@ export const SharesEditPage: React.FC = () => {
 
   return (
     <EditPageLayout
-      heading="Shares"
+      heading="Property"
       backText="Back to context"
       cancelText="Cancel and return to context"
       saveText="Save changes"
@@ -61,28 +58,19 @@ export const SharesEditPage: React.FC = () => {
       <form>
         {/* @ts-ignore */}
         <InputQuestion
-          id="growthInterestRate"
+          id="growthRate"
           control={control}
-          label={contextConstants.SHARES_GROWTH.LABEL}
+          label={contextConstants.PROPERTY_GROWTH_RATE.LABEL}
           suffix="%"
-          defaultValue={context.sharesAu ? context.sharesAu.growthInterestRate * 100 : "n/a"}
+          defaultValue={context?.property?.growthInterestRate}
           editable={true}
           // validationRules={changeDetailsValidation}
           restrictedCharSet={DECIMALS_ONLY}
-          helpText={contextConstants.SHARES_GROWTH.HELP_TEXT}
-        />
-        <InputQuestion
-          id="dividendInterestRate"
-          control={control}
-          label={contextConstants.SHARES_INCOME.LABEL}
-          suffix="%"
-          defaultValue={context.sharesAu ? context.sharesAu.dividendInterestRate * 100 : "n/a"}
-          editable={true}
-          // validationRules={changeDetailsValidation}
-          restrictedCharSet={DECIMALS_ONLY}
-          helpText={contextConstants.SHARES_INCOME.HELP_TEXT}
+          helpText={contextConstants.PROPERTY_GROWTH_RATE.HELP_TEXT}
         />
       </form>
     </EditPageLayout>
   )
 }
+
+export default PropertyPage
