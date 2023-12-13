@@ -1,11 +1,12 @@
-import { Country } from "calculations/tax/taxCalcs/types"
-import { ContextData } from "data/types"
+"use client"
+import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
+import { Country } from "@/app/lib/calculations/tax/taxCalcs/types"
+import { ContextData } from "@/app/lib/data/types"
+import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext } from "react"
 import { useForm } from "react-hook-form"
-import { ScenarioContext } from "view/context/ScenarioContext"
-import { useNavigation } from "view/hooks/useNavigation"
-import { EditPageLayout } from "../../../layouts/EditPageLayout"
-import { GeneralContext } from "./GeneralContext"
+import GeneralContextForm from "./GeneralContextForm"
 
 interface ChangedFormData {
   taxResident: Country
@@ -13,7 +14,7 @@ interface ChangedFormData {
   au2ukExchangeRate: number
 }
 
-export const GeneralContextEditPage: React.FC = () => {
+const GeneralContextEditPage: React.FC = () => {
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
   const navigation = useNavigation()
 
@@ -59,7 +60,9 @@ export const GeneralContextEditPage: React.FC = () => {
       handleBack={handleBack}
       handleCancel={handleBack}
     >
-      <GeneralContext control={control} taxResident={taxResident} currency={currency} />
+      <GeneralContextForm control={control} taxResident={taxResident} currency={currency} />
     </EditPageLayout>
   )
 }
+
+export default GeneralContextEditPage

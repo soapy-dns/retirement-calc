@@ -1,10 +1,12 @@
+"use client"
+
 import { DECIMALS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { SelectQuestion } from "@/app/ui/components/form/SelectQuestion"
 import { Control } from "react-hook-form"
-import { contextConstants } from "./contextConstants"
+import { contextConstants } from "../contextConstants"
 
-import { currencyOptions, taxResidentOptions } from "./options"
+import { currencyOptions, taxResidentOptions } from "../options"
 // import { useNavigation } from "view/hooks/useNavigation"
 
 interface Props {
@@ -13,7 +15,7 @@ interface Props {
   currency: string
 }
 
-export const GeneralContext: React.FC<Props> = ({ control, taxResident, currency }) => {
+const GeneralContextForm: React.FC<Props> = ({ control, taxResident, currency }) => {
   // const { selectedScenario } = useContext(ScenarioContext)
   // const navigation = useNavigation()
 
@@ -63,3 +65,5 @@ export const GeneralContext: React.FC<Props> = ({ control, taxResident, currency
     </form>
   )
 }
+
+export default GeneralContextForm

@@ -14,13 +14,13 @@ export const useNavigation = () => {
 
   // TODO: there may be a simpler way.  just trying to think of migration to nextjs
   const goTo = (appPath: AppPath, options?: Options) => {
-    // if (!options) return history.push(appPath)
-    // const path = Object.entries(options)?.reduce((accum: string, [key, value]: [string, string]) => {
-    //   const regEx = new RegExp(`:${key}`)
-    //   const replaced = accum.replace(regEx, value)
-    //   return replaced
-    // }, appPath)
-    // history.push(path)
+    if (!options) return router.push(appPath)
+    const path = Object.entries(options)?.reduce((accum: string, [key, value]: [string, string]) => {
+      const regEx = new RegExp(`:${key}`)
+      const replaced = accum.replace(regEx, value)
+      return replaced
+    }, appPath)
+    router.push(path)
   }
 
   return {

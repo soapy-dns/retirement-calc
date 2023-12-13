@@ -1,9 +1,11 @@
+"use client"
+
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
-import { LivingExpensesEdit } from "./LivingExpensesEdit"
+import { LivingExpensesEdit } from "./page"
 
-export const LivingExpensesPage: React.FC = () => {
+const LivingExpensesPage: React.FC = () => {
   const navigation = useNavigation()
 
   const handleBack = () => {
@@ -26,3 +28,5 @@ export const LivingExpensesPage: React.FC = () => {
     </>
   )
 }
+
+export default LivingExpensesPage

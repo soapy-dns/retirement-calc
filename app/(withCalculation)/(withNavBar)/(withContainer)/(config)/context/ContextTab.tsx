@@ -1,7 +1,7 @@
 import { InflationDisplay } from "./InflationDisplay"
 import { LivingExpensesDisplay } from "./LivingExpensesDisplay"
 import { OwnersDisplay } from "./OwnersDisplay"
-import { BankAuDisplay } from "./bankAu/BankAuDisplay"
+import { BankAuDisplay } from "./bank/BankAuDisplay"
 import { SuperAuDisplay } from "./superAu/SuperAuDisplay"
 import { SharesDisplay } from "./shares/SharesDisplay"
 import { PropertyDisplay } from "./property/PropertyDisplay"
