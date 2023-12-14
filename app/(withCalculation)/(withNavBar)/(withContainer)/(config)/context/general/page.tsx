@@ -60,6 +60,7 @@ const GeneralContextEditPage: React.FC = () => {
       handleBack={handleBack}
       handleCancel={handleBack}
     >
+      {/* @ts-ignore */}
       <GeneralContextForm control={control} taxResident={taxResident} currency={currency} />
     </EditPageLayout>
   )

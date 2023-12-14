@@ -24,8 +24,7 @@ const Sheet = React.forwardRef<HTMLDivElement>((props, ref) => {
   const helpModalContext = useContext(HelpModalContext)
   const scenarioContext = useContext(ScenarioContext)
   const [showEarningInfo, setShowEarningInfo] = useState<boolean>(false)
-  const earningInfo =
-    "Income from assets which leaves the asset.  eg Australian might produce 'income' but that is kept within the asset and would (potentially) get taxed under different rules to income tax.  Defined contribution pensions on the other hand would be treated as income as would interest from a bank."
+  const earningInfo = "Income from a capital asset or an income stream."
 
   const toggleEarningInfo = () => {
     setShowEarningInfo(!showEarningInfo)
@@ -132,12 +131,7 @@ const Sheet = React.forwardRef<HTMLDivElement>((props, ref) => {
         onToggle={onHelpModalToggle}
       />
       {showEarningInfo && (
-        <GenericModal
-          showModal={showEarningInfo}
-          heading="Earnings"
-          content={earningInfo}
-          onToggle={toggleEarningInfo}
-        />
+        <GenericModal showModal={showEarningInfo} heading="Income" content={earningInfo} onToggle={toggleEarningInfo} />
       )}
       {/* <GenericModal
         showModal={showScenarioModal}

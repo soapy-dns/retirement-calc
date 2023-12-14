@@ -54,7 +54,7 @@ const ConfigPage: React.FC = () => {
   }
 
   return (
-    <ConfigTabProvider>
+    <>
       <div className="flex content-center text-primary">
         <h1 className="flex items-center gap-2">
           {headingText}
@@ -76,6 +76,7 @@ const ConfigPage: React.FC = () => {
       </div>
 
       <ConfigNavBar />
+
       {activeTab === ConfigTab.context && <ContextTab />}
       {activeTab === ConfigTab.assets && <AssetTab />}
       {activeTab === ConfigTab.transfers && <TransfersTab />}
@@ -85,7 +86,7 @@ const ConfigPage: React.FC = () => {
         content={<HelpModalContent />}
         onToggle={onHelpModalToggle}
       />
-    </ConfigTabProvider>
+    </>
   )
 }
 
