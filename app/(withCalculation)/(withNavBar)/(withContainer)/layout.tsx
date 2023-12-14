@@ -1,5 +1,9 @@
 import { Container } from "@/app/ui/components/Container"
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  return <Container>{children}</Container>
+export default function LayoutWithContainer({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="pt-8 ">
+      <Container>{children}</Container>
+    </div>
+  )
 }

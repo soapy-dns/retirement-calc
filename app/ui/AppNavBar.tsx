@@ -4,9 +4,7 @@ import Link from "next/link"
 import { AppPath } from "./types"
 import { usePathname } from "next/navigation"
 import { MoreMenu } from "./MoreMenu"
-
-// import { Link, useLocation } from "react-router-dom"
-// import { ScenarioMenu } from "./SelectMenu"
+import { ScenarioMenu } from "./components/SelectMenu"
 
 export const AppNavBar = () => {
   const pathname = usePathname()
@@ -15,7 +13,7 @@ export const AppNavBar = () => {
 
   return (
     <div className=" flex h-10 flex-row justify-center border-0 bg-primary py-1 pl-3 text-white">
-      {/* <ScenarioMenu /> */}
+      <ScenarioMenu />
       <Link
         href={AppPath.config}
         className={`flex items-center justify-center border-x hover:bg-primary-darker ${

@@ -9,7 +9,7 @@ import { GenericModal } from "@/app/ui/components/GenericModal"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ConfigTab } from "@/app/ui/context/types"
 import { AppPath } from "@/app/ui/types"
-import { ConfigTabContext } from "@/app/ui/context/ConfigTabProvider"
+import { ConfigTabContext, ConfigTabProvider } from "@/app/ui/context/ConfigTabProvider"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { ConfigNavBar } from "../(config)/ConfigNavBar"
@@ -54,7 +54,7 @@ const ConfigPage: React.FC = () => {
   }
 
   return (
-    <>
+    <ConfigTabProvider>
       <div className="flex content-center text-primary">
         <h1 className="flex items-center gap-2">
           {headingText}
@@ -85,7 +85,7 @@ const ConfigPage: React.FC = () => {
         content={<HelpModalContent />}
         onToggle={onHelpModalToggle}
       />
-    </>
+    </ConfigTabProvider>
   )
 }
 
