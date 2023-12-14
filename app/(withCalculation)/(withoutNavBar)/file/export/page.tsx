@@ -14,7 +14,7 @@ interface ChangedFormData {
   fileName: string
 }
 
-export default () => {
+export default function Export() {
   const { scenarios, scenarioOptions = [] } = useContext(ScenarioContext)
 
   const navigation = useNavigation()

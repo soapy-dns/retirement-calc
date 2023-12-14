@@ -63,3 +63,5 @@ export const CheckboxQuestion = React.forwardRef<HTMLInputElement, CheckboxProps
     </FormGroup>
   )
 })
+
+CheckboxQuestion.displayName = "CheckboxQuestion"

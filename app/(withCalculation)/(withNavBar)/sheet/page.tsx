@@ -162,4 +162,6 @@ const Sheet = React.forwardRef<HTMLDivElement>((props, ref) => {
 //   const helpModalContext = useContext(HelpModalContext)
 //   const scenarioContext = useContext(ScenarioContext)
 
+Sheet.displayName = "Sheet"
+
 export default Sheet

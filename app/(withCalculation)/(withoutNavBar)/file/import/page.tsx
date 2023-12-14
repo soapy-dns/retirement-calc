@@ -21,7 +21,7 @@ enum ButtonStatus {
   active
 }
 
-export default () => {
+export default function Import() {
   const [selectedFile, setSelectedFile] = useState<File>()
   const [buttonStatus, setButtonStatus] = useState<ButtonStatus>(ButtonStatus.disabled)
   const { importScenarios } = useContext(ScenarioContext)

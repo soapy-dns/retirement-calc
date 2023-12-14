@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react"
 import { Controller, Control } from "react-hook-form"
 import { useError } from "../../hooks/useError"
 import { FormGroup } from "../common/FormGroup"
-import { RadioVariant } from "../common/Radio"
+import { Radio, RadioVariant } from "../common/Radio"
 import { Toggle, ToggleVariant } from "../common/Toggle"
 
 export enum RadioQuestionVariant {
