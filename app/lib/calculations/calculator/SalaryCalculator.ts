@@ -3,7 +3,6 @@ import { AssetConfig, YearData } from "../assets/types"
 import { DefinedBenefitsContext } from "../../data/types"
 import { Calculator } from "./Calculator"
 import { InflationContext } from "../types"
-// import { InflationContext } from "calculations/utils/types"
 
 export class SalaryCalculator extends Calculator {
   protected config: DefinedBenefitsContext // context is the same, the difference is in the asset - when does it stop paying out.

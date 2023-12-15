@@ -6,6 +6,7 @@ import { calculate, calculateAsync } from "@/app/lib/calculations"
 import { CalculationResults } from "@/app/lib/calculations/types"
 import { useAppAlert } from "../hooks/useAppAlert"
 import { getRandomKey } from "@/app/lib/utils/getRandomKey"
+import { Spinner } from "../components/common/Spinner"
 
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
   const scenarioOptions = scenarios.map((scenario) => ({
@@ -16,6 +17,8 @@ const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
 }
 
 export const ScenarioProvider = ({ children }: { children: React.ReactNode }) => {
+  const [calculating, setCalculating] = useState<boolean>(false)
+
   const [scenarioOptions, setScenarioOptions] = useState<ISelectOption[]>()
   const [selectedScenarioOption, setSelectedScenarioOption] = useState<ISelectOption>()
   const [selectedScenario, setSelectedScenario] = useState<IScenario>(defaultScenarios[0])
@@ -30,103 +33,81 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     return assetOptions
   }
 
-  // const importScenarios = (scenarios: IScenario[]) => {}
-
-  const importScenarios = (scenarios: IScenario[]) => {
+  const doCalculations = async (selectedScenario: IScenario): Promise<void> => {
     try {
-      const defaultSelectedScenario = scenarios[0]
-
-      if (!defaultSelectedScenario) throw new Error("No scenario found in import file")
-
-      const calculationResults = calculate(defaultSelectedScenario)
+      setCalculating(true)
+      const calculationResults = await calculate(selectedScenario)
       setCalculationResults(calculationResults)
-
-      const scenarioOptions = getScenarioOptions(scenarios)
-      const selectedScenarioOption = scenarioOptions.find((it) => it.value === defaultSelectedScenario.id)
-
-      setScenarios(scenarios)
-      setSelectedScenario(defaultSelectedScenario)
-      setScenarioOptions(scenarioOptions)
-      setSelectedScenarioOption(selectedScenarioOption)
-
-      sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
-      sessionStorage.setItem("selectedScenario", JSON.stringify(defaultSelectedScenario))
-
-      const { calculationMessage } = calculationResults
-
-      if (calculationMessage) {
-        displayWarningAlert(calculationMessage)
-      }
-    } catch (err) {
-      displayErrorAlert(
-        "Calculation error.  File to import likely has incorrect configuration.  The file has not been imported."
-      )
-    }
-  }
-
-  // // when an different scenario is selected
-  const onSelectScenario = (selectedValue: string) => {
-    try {
-      const newSelectedScenario = scenarios.find((it) => it.id === selectedValue)
-      if (!newSelectedScenario || !scenarioOptions) {
-        throw new Error("ScenarioProvider - Scenario not found")
-      }
-
-      const calculationResults = calculate(newSelectedScenario)
-
-      if (newSelectedScenario) setSelectedScenario(newSelectedScenario)
-
-      const selectedScenarioOption = scenarioOptions.find((it) => it.value === selectedValue)
-      setSelectedScenarioOption(selectedScenarioOption)
-
-      setCalculationResults(calculationResults)
-
-      sessionStorage.setItem("selectedScenario", JSON.stringify(newSelectedScenario))
+      setCalculating(false)
 
       const { calculationMessage } = calculationResults
       if (calculationMessage) {
         displayWarningAlert(calculationMessage, { duration: 1000 })
       }
     } catch (err) {
-      displayErrorAlert("Calculation error.  Selected scenario configuration is likely incorrect.  Please correct.")
+      setCalculating(false)
+
+      displayErrorAlert("Error with calc - make this msg standard")
     }
   }
 
-  // // For an updated scenario
+  const importScenarios = async (scenarios: IScenario[]) => {
+    const defaultSelectedScenario = scenarios[0]
+
+    if (!defaultSelectedScenario) throw new Error("No scenario found in import file")
+
+    await doCalculations(defaultSelectedScenario)
+
+    const scenarioOptions = getScenarioOptions(scenarios)
+    const selectedScenarioOption = scenarioOptions.find((it) => it.value === defaultSelectedScenario.id)
+
+    setScenarios(scenarios)
+    setSelectedScenario(defaultSelectedScenario)
+    setScenarioOptions(scenarioOptions)
+    setSelectedScenarioOption(selectedScenarioOption)
+
+    sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
+    sessionStorage.setItem("selectedScenario", JSON.stringify(defaultSelectedScenario))
+  }
+
+  const onSelectScenario = async (selectedValue: string) => {
+    const newSelectedScenario = scenarios.find((it) => it.id === selectedValue)
+    if (!newSelectedScenario || !scenarioOptions) {
+      throw new Error("ScenarioProvider - Scenario not found")
+    }
+
+    const calculationResults = await doCalculations(newSelectedScenario)
+
+    if (newSelectedScenario) setSelectedScenario(newSelectedScenario)
+
+    const selectedScenarioOption = scenarioOptions.find((it) => it.value === selectedValue)
+    setSelectedScenarioOption(selectedScenarioOption)
+
+    sessionStorage.setItem("selectedScenario", JSON.stringify(newSelectedScenario))
+  }
+
   const updateScenario = async (updatedScenario: IScenario) => {
-    try {
-      const calculationResults = await calculateAsync(updatedScenario)
-      setCalculationResults(calculationResults)
+    await doCalculations(updatedScenario)
 
-      setSelectedScenario(updatedScenario)
+    setSelectedScenario(updatedScenario)
 
-      const index = scenarios.findIndex((it) => it.id === updatedScenario.id) || 0
+    const index = scenarios.findIndex((it) => it.id === updatedScenario.id) || 0
 
-      if (index === -1) throw new Error(`index not found ${updatedScenario.id}`)
+    if (index === -1) throw new Error(`index not found ${updatedScenario.id}`)
 
-      scenarios.splice(index, 1, updatedScenario)
+    scenarios.splice(index, 1, updatedScenario)
 
-      const scenarioOptions = getScenarioOptions(scenarios)
+    const scenarioOptions = getScenarioOptions(scenarios)
 
-      sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
-      sessionStorage.setItem("selectedScenario", JSON.stringify(updatedScenario))
+    sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
+    sessionStorage.setItem("selectedScenario", JSON.stringify(updatedScenario))
 
-      setScenarios(scenarios)
-      setSelectedScenario(updatedScenario)
-      setScenarioOptions(scenarioOptions)
-
-      const { calculationMessage } = calculationResults
-      if (calculationMessage) {
-        displayWarningAlert(calculationMessage, { duration: 1000 })
-      }
-    } catch (err) {
-      displayErrorAlert(
-        `Calculation error.  Updated scenario ${updatedScenario.name} likely incorrect.  Please correct.`
-      )
-    }
+    setScenarios(scenarios)
+    setSelectedScenario(updatedScenario)
+    setScenarioOptions(scenarioOptions)
   }
 
-  const deleteSelectedScenario = () => {
+  const deleteSelectedScenario = async () => {
     if (scenarios.length > 1) {
       const index = scenarios.findIndex((it) => it.id === selectedScenario.id)
       if (index === undefined) throw new Error("No scenario found to delete")
@@ -137,6 +118,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
       const scenarioOptions = getScenarioOptions(remainingScenarios)
 
       const newSelectedScenario = remainingScenarios[0]
+      await doCalculations(newSelectedScenario)
 
       const selectedScenarioOption = scenarioOptions.find((it) => it.value === newSelectedScenario.id)
 
@@ -147,63 +129,27 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
       setScenarioOptions(scenarioOptions)
       setSelectedScenario(newSelectedScenario)
       setSelectedScenarioOption(selectedScenarioOption)
-
-      try {
-        const calculationResults = calculate(newSelectedScenario)
-        setCalculationResults(calculationResults)
-        const { calculationMessage } = calculationResults
-        if (calculationMessage) {
-          displayWarningAlert(calculationMessage, { duration: 1000 })
-        }
-      } catch (err) {
-        displayErrorAlert(`Calculation error.  Scenario ${newSelectedScenario.name} likely incorrect.  Please correct.`)
-      }
     }
   }
 
-  const addScenario = (name: string, description: string) => {
+  const addScenario = async (name: string, description: string) => {
     const newScenario = { ...selectedScenario, name, description, id: getRandomKey() }
 
-    try {
-      const calculationResults = calculate(newScenario)
-      setCalculationResults(calculationResults)
+    await doCalculations(newScenario)
 
-      scenarios.concat([newScenario])
+    scenarios.concat([newScenario])
 
-      const scenarioOptions = getScenarioOptions(scenarios)
+    const scenarioOptions = getScenarioOptions(scenarios)
 
-      const selectedScenarioOption = scenarioOptions.find((it) => it.value === newScenario.id)
+    const selectedScenarioOption = scenarioOptions.find((it) => it.value === newScenario.id)
 
-      sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
-      sessionStorage.setItem("selectedScenario", JSON.stringify(newScenario))
+    sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
+    sessionStorage.setItem("selectedScenario", JSON.stringify(newScenario))
 
-      setScenarios(scenarios)
-      setScenarioOptions(scenarioOptions)
-      setSelectedScenario(newScenario)
-      setSelectedScenarioOption(selectedScenarioOption)
-
-      const { calculationMessage } = calculationResults
-      if (calculationMessage) {
-        displayWarningAlert(calculationMessage, { duration: 1000 })
-      }
-    } catch (err) {
-      displayErrorAlert(
-        `Calculation error.  Newly added scenario ${newScenario.name} likely incorrect.  Please correct.`
-      )
-    }
-  }
-
-  const doCalculations = async (selectedScenario: IScenario) => {
-    try {
-      const calculationResults = await calculateAsync(selectedScenario)
-      setCalculationResults(calculationResults)
-      const { calculationMessage } = calculationResults
-      if (calculationMessage) {
-        displayWarningAlert(calculationMessage, { duration: 1000 })
-      }
-    } catch (err) {
-      displayErrorAlert("Error with calc - make this msg standard")
-    }
+    setScenarios(scenarios)
+    setScenarioOptions(scenarioOptions)
+    setSelectedScenario(newScenario)
+    setSelectedScenarioOption(selectedScenarioOption)
   }
 
   // Need to store.  This is remounted because the <Route> is remounted (I think)
@@ -228,17 +174,8 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
     sessionStorage.setItem("selectedScenario", JSON.stringify(selectedScenario))
 
+    // FIXME: remounts with react v18 and strict mode
     doCalculations(selectedScenario)
-    // try {
-    //   const calculationResults = calculate(selectedScenario)
-    //   setCalculationResults(calculationResults)
-    //   const { calculationMessage } = calculationResults
-    //   if (calculationMessage) {
-    //     displayWarningAlert(calculationMessage, { duration: 1000 })
-    //   }
-    // } catch (err) {
-    //   displayErrorAlert("Error with calc - make this msg standard")
-    // }
   }, [])
 
   return (
@@ -257,7 +194,8 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
         calculationResults
       }}
     >
-      {children}
+      <div className="z-50 mt-20">{calculating}</div>
+      {calculating ? <Spinner text="Calculating..." /> : <>{children}</>}
     </ScenarioContext.Provider>
   )
 }

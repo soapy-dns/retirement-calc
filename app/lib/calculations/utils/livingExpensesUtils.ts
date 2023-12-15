@@ -1,7 +1,6 @@
-import { LivingExpensesRecord } from "../../data/types"
-import { InflationContext } from "./types"
 import range from "lodash/range"
-import { BasicYearData } from "calculations/types"
+import { LivingExpensesRecord } from "../../data/types"
+import { BasicYearData, InflationContext } from "../types"
 
 // Exposed for testing
 export const getLivingExpensesInTodaysMoney = (yearRange: number[], livingExpensesConfig: LivingExpensesRecord[]) => {
@@ -34,7 +33,6 @@ export const getLivingExpenses = (
   livingExpenses: LivingExpensesRecord[],
   inflationContext: InflationContext
 ) => {
-  console.log("--inflationContext--", inflationContext)
   const livingExpensesTodaysMoney = getLivingExpensesInTodaysMoney(yearRange, livingExpenses)
 
   const projectedLivingExpenses = livingExpensesTodaysMoney.map(({ year, value }) => {

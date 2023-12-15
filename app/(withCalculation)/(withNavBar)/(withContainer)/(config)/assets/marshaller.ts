@@ -1,4 +1,4 @@
-import { IAsset } from "data/types"
+import { IAsset } from "@/app/lib/data/types"
 
 type YesNo = "Y" | "N"
 

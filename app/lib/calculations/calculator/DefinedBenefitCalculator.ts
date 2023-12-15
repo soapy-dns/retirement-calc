@@ -3,7 +3,6 @@ import { AssetConfig, YearData } from "../assets/types"
 import { DefinedBenefitsContext } from "../../data/types"
 import { Calculator } from "./Calculator"
 import { InflationContext } from "../types"
-// import { InflationContext } from "calculations/utils/types"
 
 /**
  * For super tax gets taken off at source so is not included in income tax

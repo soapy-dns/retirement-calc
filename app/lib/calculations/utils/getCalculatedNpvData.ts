@@ -1,8 +1,7 @@
-import { Asset } from "calculations/assets/Asset"
-import { Earning } from "calculations/assets/types"
-import { AssetData } from "data/types"
-import { CellData } from "view/pages/sheets/row/types"
-import { InflationContext } from "./types"
+import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
+import { Asset } from "../assets/Asset"
+import { Earning } from "../assets/types"
+import { AssetData, InflationContext } from "../types"
 
 // used by graph only
 export const getCalculatedNpvData = (assets: Asset[], inflationContext: InflationContext) => {

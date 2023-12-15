@@ -1,5 +1,5 @@
-import { Calculator } from "calculations/calculator/Calculator"
-import { IncomeConfig } from "data/types"
+import { IncomeConfig } from "@/app/lib/data/types"
+import { Calculator } from "../../calculator/Calculator"
 
 // TODO: I think we might be better swapping the names of IncomeConfig and IIncome
 export interface IIncome extends Omit<IncomeConfig, "className"> {

@@ -1,6 +1,5 @@
-import { ISelectOption } from "data/types"
-// import { RefCallback } from "react"
-// import { ChangeEvent } from "react"
+import { ISelectOption } from "@/app/lib/data/types"
+import { ChangeEvent, ChangeEventHandler } from "react"
 
 interface ISelect {
   id: string
@@ -13,7 +12,7 @@ interface ISelect {
   options?: ISelectOption[]
   //   ref: RefCallback<HTMLDivElement>
   //   onChange: (event: ChangeEvent<HTMLSelectElement>) => void
-  onChange: (string) => void
+  onChange: (x?: string) => void
 }
 export const Select: React.FC<ISelect> = ({
   id,
@@ -29,7 +28,7 @@ export const Select: React.FC<ISelect> = ({
   //   const colorClasses = isError ? "border-error text-error border-2" : "border"
   if (!name) name = id
 
-  const handleSelect = (e) => {
+  const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedOption = options?.find((it) => it.value === e.target.value)
     onChange(selectedOption?.value)
   }

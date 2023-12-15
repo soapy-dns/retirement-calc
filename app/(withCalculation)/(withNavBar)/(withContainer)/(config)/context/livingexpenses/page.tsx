@@ -104,10 +104,6 @@ const LivingExpensesPage: React.FC = () => {
     navigation.goBack()
   }
 
-  const getError = (fieldId: string) => {
-    return errors[fieldId]
-  }
-
   return (
     <EditPageLayout
       heading={"Edit tax and currency details"}
@@ -196,16 +192,16 @@ const LivingExpensesPage: React.FC = () => {
               Add
             </div>
           </Button>
-          {getError(yearAddId) && (
-            <div className="col-span-3">
-              <ValidationError id={`${yearAddId}_error`} errorMsg={getError(yearAddId).message} />
+          {errors.yearAdd && (
+            <div className="col-span-3 justify-self-start">
+              <ValidationError id={`yearAdd_error`} errorMsg={errors.yearAdd.message || ""} />
             </div>
           )}
-          {getError(amountInTodaysTermsAddId) && (
-            <div className="col-span-3">
+          {errors.amountInTodaysTermsAdd && (
+            <div className="col-span-3 justify-self-start">
               <ValidationError
-                id={`${amountInTodaysTermsAddId}_error`}
-                errorMsg={getError(amountInTodaysTermsAddId).message}
+                id={`amountInTodaysTermsAdd_error`}
+                errorMsg={errors.amountInTodaysTermsAdd.message || ""}
               />
             </div>
           )}

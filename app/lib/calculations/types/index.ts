@@ -11,11 +11,6 @@ export interface CalculationData {
   [dataType: string]: BasicYearData[]
 }
 
-// import { AutomatedDrawdown } from "../../autoDrawdowns/types"
-// import { Calculator } from "../../calculator/Calculator"
-// import { IAsset, IScenario } from "../../../data/types"
-// import { BasicYearData } from "calculations/types"
-
 export interface YearData extends BasicYearData {
   transferAmt?: number
   incomeCalc?: string

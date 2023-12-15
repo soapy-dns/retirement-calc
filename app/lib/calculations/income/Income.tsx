@@ -1,4 +1,4 @@
-import { BasicYearData } from "calculations/types"
+import { BasicYearData } from "../types"
 import { IIncome } from "./types"
 
 export abstract class Income {

@@ -1,6 +1,6 @@
-import { BasicYearData } from "calculations/types"
 import { Tax } from "../assets/types"
 import { getTaxAmtForYear } from "../tax/getTaxAmt"
+import { BasicYearData } from "../types"
 import { getLivingExpensesAmtForYear } from "../utils/livingExpensesUtils"
 
 export const getTotalExpenses = (year: number, taxes: Tax[], livingExpenses: BasicYearData[]): number => {

@@ -2,9 +2,9 @@ import { Asset } from "../assets/Asset"
 import { AssetConfig, YearData } from "../assets/types"
 import { Transfer } from "../transfers/types"
 
-export interface incomeCalculator {
-  config
-}
+// export interface incomeCalculator {
+//   config: unknown
+// }
 
 export abstract class Calculator {
   protected abstract config: object

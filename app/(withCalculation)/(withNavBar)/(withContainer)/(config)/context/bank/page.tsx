@@ -14,7 +14,7 @@ interface ChangedFormData {
   interestRate: number
 }
 
-export const BankPage: React.FC = () => {
+const BankPage: React.FC = () => {
   const navigation = useNavigation()
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
   const { context } = selectedScenario

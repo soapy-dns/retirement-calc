@@ -24,7 +24,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const calculateAsync = async (scenario: IScenario) => {
   console.log("calculate ASYNC")
-  await sleep(1000)
+  await sleep(5000)
 
   return calculate(scenario)
 }

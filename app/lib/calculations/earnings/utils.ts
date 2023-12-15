@@ -1,5 +1,5 @@
-import { BasicYearData } from "calculations/types"
 import { Earning } from "../assets/types"
+import { BasicYearData } from "../types"
 
 export const calculateTotalEarnings = (year: number, earningsFromAssets: Earning[], totalEarnings: BasicYearData[]) => {
   const totalEarningsFromAssetsAmt = earningsFromAssets.reduce((accum, earnedDetails) => {

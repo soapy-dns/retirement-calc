@@ -40,6 +40,6 @@ export const getScenarioTransfersForYear = (scenario: IScenario, year: number): 
   return transfersForYear
 }
 
-export const filterTransfersForYear = (transfers: Transfer[], year): Transfer[] => {
+export const filterTransfersForYear = (transfers: Transfer[], year: number): Transfer[] => {
   return transfers.filter((it) => it.year === year)
 }

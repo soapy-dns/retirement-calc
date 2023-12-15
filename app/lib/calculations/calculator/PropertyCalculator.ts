@@ -5,8 +5,6 @@ import { Transfer } from "../transfers/types"
 import { Calculator } from "./Calculator"
 import { InflationContext } from "../types"
 import { filterTransfersForYear } from "../transfers/transferUtils"
-// import { InflationContext } from "calculations/utils/types"
-// import { filterTransfersForYear } from "calculations/transfers/transferUtils"
 
 export class PropertyCalculator extends Calculator {
   protected config: PropertyContext

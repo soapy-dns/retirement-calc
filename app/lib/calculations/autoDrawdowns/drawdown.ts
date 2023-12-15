@@ -8,7 +8,7 @@ import { getTaxableDrawdownAmt } from "../tax/utils"
 import { getLivingExpensesAmtForYear } from "../utils/livingExpensesUtils"
 import { createAutoDrawdowns } from "./createAutoDrawdowns"
 import { AutomatedDrawdown } from "./types"
-import { BasicYearData } from "calculations/types"
+import { BasicYearData } from "../types"
 
 interface IContext {
   year: number

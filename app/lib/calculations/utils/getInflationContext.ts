@@ -1,7 +1,6 @@
-import { InflationRecord } from "data/types"
 import range from "lodash/range.js"
-
-import { InflationContext } from "./types"
+import { InflationRecord } from "../../data/types"
+import { InflationContext } from "../types"
 
 // export const getInflationForEachYear = (yearRange: number[], inflationConfig: number[] | undefined) => {
 //   let inflationValue = 0 // default to 0
@@ -40,7 +39,7 @@ export const getInflationForEachYear = (yearRange: number[], inflationConfig: In
 export const getInflationContext = (yearRange: number[], inflationConfig: InflationRecord[]): InflationContext => {
   const gaplessInflationConfig = getInflationForEachYear(yearRange, inflationConfig)
 
-  const inflationContext: InflationContext = gaplessInflationConfig.reduce((accum, it) => {
+  const inflationContext: InflationContext = gaplessInflationConfig.reduce((accum: InflationContext, it) => {
     const previousYearConfig = accum[it.fromYear - 1]
     const addOnFactor = 1 + it.inflationRate
 

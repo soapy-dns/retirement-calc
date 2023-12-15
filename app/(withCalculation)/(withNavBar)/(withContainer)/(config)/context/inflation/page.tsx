@@ -17,6 +17,7 @@ import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ValidationError } from "@/app/ui/components/common/ValidationError"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
+import { useError } from "@/app/ui/hooks/useError"
 
 const inflationAddId = "inflationAdd"
 const yearAddId = "yearAdd"
@@ -39,7 +40,7 @@ interface ChangedFormData {
   [yearAddId]: number
 }
 
-const marshall = (formData: ChangedFormData) => {}
+// const marshall = (formData: ChangedFormData) => {}
 
 const InflationEditPage: React.FC = () => {
   const navigation = useNavigation()
@@ -122,10 +123,6 @@ const InflationEditPage: React.FC = () => {
 
   const handleBack = () => {
     navigation.goBack()
-  }
-
-  const getError = (fieldId: string) => {
-    return errors[fieldId]
   }
 
   return (
@@ -217,16 +214,31 @@ const InflationEditPage: React.FC = () => {
               Add
             </div>
           </Button>
-          {getError(yearAddId) && (
+
+          {/* <ErrorMessage errors={errors} name="yearAddId" render={({ message }) => <p>{message}</p>} /> */}
+          {errors.yearAdd && (
+            <div className="col-span-3 justify-self-start">
+              <ValidationError id={`yearAdd_error`} errorMsg={errors.yearAdd.message || ""} />
+            </div>
+          )}
+          {errors.inflationAdd && (
+            <div className="col-span-3 justify-self-start">
+              <ValidationError id={`inflationAdd_error`} errorMsg={errors.inflationAdd.message || ""} />
+            </div>
+          )}
+          {/* {useError(control, yearAddId) && (
             <div className="col-span-3">
-              <ValidationError id={`${yearAddId}_error`} errorMsg={getError(yearAddId).message} />
+              <ValidationError
+                id={`${yearAddId}_error`}
+                errorMsg={errors[yearAddId] ? errors[yearAddId].message : ""}
+              />
             </div>
           )}
           {getError(inflationAddId) && (
             <div className="col-span-3">
               <ValidationError id={`${inflationAddId}_error`} errorMsg={getError(inflationAddId).message} />
             </div>
-          )}
+          )} */}
         </div>
       </form>
     </EditPageLayout>

@@ -24,6 +24,7 @@ const useAppAlert = () => {
     onClose?: Function
   ): string => {
     const { dismissible = true } = toastOptions || {}
+    console.log("--displaying warning alert...")
 
     const id = toast.custom(
       (t) => (
