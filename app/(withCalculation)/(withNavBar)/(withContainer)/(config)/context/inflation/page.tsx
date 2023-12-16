@@ -87,7 +87,7 @@ const InflationEditPage: React.FC = () => {
       if (findIndex === -1) {
         insertIndex = fields.length
       } else {
-        insertIndex = findIndex - 1
+        insertIndex = findIndex
       }
 
       // TODO: if value already found??
