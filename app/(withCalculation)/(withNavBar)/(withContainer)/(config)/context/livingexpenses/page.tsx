@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useContext } from "react"
+import React, { SyntheticEvent, useContext } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
@@ -50,7 +50,9 @@ const LivingExpensesPage: React.FC = () => {
     remove(index)
   }
 
-  const handleAdd = async () => {
+  const handleAdd = async (e: SyntheticEvent) => {
+    e.preventDefault()
+
     const valid = await trigger([yearAddId])
     if (valid) {
       const values = getValues()

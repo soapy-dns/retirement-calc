@@ -1,2 +1,0 @@
-- turn useStrict back on.
-- display alerts don't work
