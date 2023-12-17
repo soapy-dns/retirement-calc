@@ -5,7 +5,7 @@ interface Props {
 export const Spinner: React.FC<Props> = ({ className, text }) => {
   return (
     <>
-      <div className="h-screen flex items-center justify-center border-2 border-green-600">
+      <div className="h-screen flex items-center justify-center">
         <div role="status" className="mb-4 flex flex-col gap-2">
           <svg
             aria-hidden="true"

@@ -128,7 +128,7 @@ const InflationEditPage: React.FC = () => {
 
   return (
     <EditPageLayout
-      heading={"Edit tax and currency details"}
+      heading={"Edit estimated inflation rates"}
       backText="Back to main context"
       cancelText="Cancel and return to context"
       saveText="Save changes"
@@ -195,7 +195,7 @@ const InflationEditPage: React.FC = () => {
           })}
         </>
 
-        <div className="mt-4 grid grid-cols-3 justify-items-center gap-2">
+        <div className="mt-6 grid grid-cols-3 justify-items-center gap-2">
           <InputField id={yearAddId} control={control} restrictedCharSet={INTEGERS_ONLY} />
 
           <InputField
@@ -208,7 +208,7 @@ const InflationEditPage: React.FC = () => {
           <Button buttonType={ButtonType.tertiary} onClick={handleAdd}>
             <div className="flex items-center gap-2">
               <PlusCircleIcon className="h-4 w-4" />
-              Add it
+              Add a row
             </div>
           </Button>
 

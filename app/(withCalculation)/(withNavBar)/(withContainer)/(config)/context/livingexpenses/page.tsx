@@ -109,7 +109,7 @@ const LivingExpensesPage: React.FC = () => {
 
   return (
     <EditPageLayout
-      heading={"Edit tax and currency details"}
+      heading={"Edit estimated living expenses"}
       backText="Back to main context"
       cancelText="Cancel and return to context"
       saveText="Save changes"
@@ -174,7 +174,7 @@ const LivingExpensesPage: React.FC = () => {
           })}
         </>
 
-        <div className="mt-4 grid grid-cols-3 justify-items-center gap-2">
+        <div className="mt-6 grid grid-cols-3 justify-items-center justify-self-start gap-2">
           <InputField
             id={yearAddId}
             control={control}
@@ -192,9 +192,10 @@ const LivingExpensesPage: React.FC = () => {
           <Button buttonType={ButtonType.tertiary} onClick={handleAdd}>
             <div className="flex items-center gap-2">
               <PlusCircleIcon className="h-4 w-4" />
-              Add
+              Add a row
             </div>
           </Button>
+
           {errors.yearAdd && (
             <div className="col-span-3 justify-self-start">
               <ValidationError id={`yearAdd_error`} errorMsg={errors.yearAdd.message || ""} />
