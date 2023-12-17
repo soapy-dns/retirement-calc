@@ -3,7 +3,6 @@
 import React, { useContext, useState } from "react"
 import { Cell as HeadingCell } from "./heading/Cell"
 import { Row } from "./row/Row"
-import { CellData } from "./row/types"
 import { HeadingRow } from "./row/HeadingRow"
 import { GenericModal } from "@/app/ui/components/GenericModal"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
@@ -67,7 +66,7 @@ const SheetPage: React.FC = () => {
       <div className="shadow-md sm:rounded-lg">
         <div className="inline-block min-w-full align-middle">
           <table className="min-w-full table-fixed divide-y divide-gray-200 py-4 ">
-            <thead className=" sticky top-20 z-30 bg-gray-50 ">
+            <thead className="sticky top-20 z-30 bg-gray-50 ">
               <tr>
                 {headingRow.map((value, index) => {
                   if (index === 0)

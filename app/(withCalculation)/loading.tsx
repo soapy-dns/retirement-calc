@@ -1,5 +1,6 @@
+import { Spinner } from "../ui/components/common/Spinner"
+
 export default function Loading() {
-  // NOTE: this is server side loading only.  Probably don't need it for this
-  console.log("loading calculations")
-  return <div>Loading calculation results...</div>
+  // NOTE: this is server side loading only.  Still required for certain situations.
+  return <Spinner text="Calculating..." />
 }
