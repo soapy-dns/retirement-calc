@@ -112,7 +112,7 @@ export const scenarios: IScenario[] = [
         name: "UK Property",
         description: "UK property",
         className: "AuProperty",
-        value: 400000,
+        value: 500000,
         assetOwners: ["Her", "Him"],
         incomeProducing: true,
         canDrawdown: false
@@ -123,11 +123,11 @@ export const scenarios: IScenario[] = [
         name: "Au Property",
         description: "Australian property",
         className: "AuProperty",
-        value: 1250000,
+        value: 100000,
         assetOwners: ["Her", "Him"],
         incomeProducing: false,
         canDrawdown: false,
-        rentalIncomePerMonth: 820,
+        rentalIncomePerMonth: 600,
         rentalExpensesPerMonth: 100
       }
     ],

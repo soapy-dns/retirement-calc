@@ -71,7 +71,7 @@ const SheetPage: React.FC = () => {
                 {headingRow.map((value, index) => {
                   if (index === 0)
                     return (
-                      <th className="z-30 w-1/6 bg-gray-50 italic text-primary first:sticky first:left-0">
+                      <th key={index} className="z-30 w-1/6 bg-gray-50 italic text-primary first:sticky first:left-0">
                         {selectedScenario.name}
                       </th>
                     )
@@ -142,35 +142,8 @@ const SheetPage: React.FC = () => {
       {showEarningInfo && (
         <GenericModal showModal={showEarningInfo} heading="Income" content={earningInfo} onToggle={toggleEarningInfo} />
       )}
-      {/* <GenericModal
-        showModal={showScenarioModal}
-        heading="Select your Scenarios"
-        content={<ScenarioDetails />}
-        onToggle={onToggleScenarioModal}
-      /> */}
     </div>
   )
 }
-
-// import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
-// import Image from "next/image"
-// import { useContext } from "react"
-
-// export default function Sheet() {
-//   const { selectedScenario, calculationResults } = useContext(ScenarioContext)
-//   return (
-//     <div className="flex flex-col">
-//       <div className="">Sheet page</div>
-//       <div>{selectedScenario.name}</div>
-//       {calculationResults ? <pre>{JSON.stringify(calculationResults, null, 4)}</pre> : <div>Loading...</div>}
-//     </div>
-//   )
-// }
-
-// export const Sheet = React.forwardRef<HTMLDivElement>((props, ref) => {
-//   const helpModalContext = useContext(HelpModalContext)
-//   const scenarioContext = useContext(ScenarioContext)
-
-// Sheet.displayName = "Sheet"
 
 export default SheetPage

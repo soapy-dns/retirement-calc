@@ -18,11 +18,6 @@ export interface ChangedFormData {
 }
 
 export const marshall = (data: ChangedFormData, asset: IAsset) => {
-  //     const canDrawdownValue = asset.canDrawdown ? "Y" : "N"
-  //   const incomeEarningValue = asset.incomeProducing ? "Y" : "N"
-  //   const earningsAccumulated = asset.incomeBucket ? "Y" : "N"
-
-  //   const ownersOptions = owners.map((it) => ({ label: it, value: it }))
   const newAsset: IAsset = {
     ...asset,
     canDrawdown: data.canDrawdown === "Y",

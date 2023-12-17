@@ -19,8 +19,8 @@ export const ConfigNavBar = () => {
     updateActiveTab(ConfigTab.transfers)
   }
 
-  const tabColors = "border-primary hover:bg-primary-lighter"
-  const selectedTabClassNames = "border-b-4"
+  const tabColors = "hover:bg-primary-lighter"
+  const selectedTabClassNames = "border-b-4 border-primary "
 
   return (
     <div className=" mb-4 flex  justify-around bg-primary-lightest py-1 pl-3">
