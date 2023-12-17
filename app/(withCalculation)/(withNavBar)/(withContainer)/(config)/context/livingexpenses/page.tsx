@@ -119,7 +119,7 @@ const LivingExpensesPage: React.FC = () => {
     >
       <form>
         <>
-          <div className="grid grid-cols-3 justify-items-center gap-2">
+          <div className="grid grid-cols-3 gap-2">
             <div className="font-bold">From year</div>
             <div className="font-bold">Value at today&apos;s date</div>
             <div></div>

@@ -1,4 +1,4 @@
-import { MouseEvent, SyntheticEvent } from "react"
+import { MouseEvent, MouseEventHandler, SyntheticEvent } from "react"
 
 export enum ButtonType {
   primary = "primary",
@@ -8,11 +8,22 @@ export enum ButtonType {
 interface IButton {
   buttonType?: ButtonType
   disabled?: boolean
-  onClick: (e: MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void
+  // onClick: (e: SyntheticEvent) => void
+
+  // onClick: (e: MouseEvent<HTMLButtonElement, MouseEvent<Element, MouseEvent>>) => void
+
+  // onClick: (e: MouseEvent<HTMLButtonElement, MouseEvent<Element, MouseEvent>>) => void
+
+  // onClick: (e: MouseEvent<HTMLButtonElement, MouseEvent>) => void
   children: React.ReactNode
 }
 export const Button: React.FC<IButton> = ({ buttonType, disabled = false, onClick, children }) => {
-  const handleOnClick = (e: MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleOnClick = (e: MouseEvent<HTMLButtonElement>) => {
+    // const handleOnClick = (e: SyntheticEvent) => {
+    // const handleOnClick = (e: MouseEventHandler<HTMLButtonElement>) => {
+    // const handleOnClick = (e: MouseEvent<HTMLButtonElement, MouseEvent<Element, MouseEvent>>) => {
+    // const handleOnClick = (e: MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
     onClick(e)
   }

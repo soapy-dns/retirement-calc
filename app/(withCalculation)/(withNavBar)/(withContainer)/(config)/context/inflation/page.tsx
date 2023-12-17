@@ -1,6 +1,6 @@
 "use client"
 
-import React, { SyntheticEvent, useContext, useEffect } from "react"
+import React, { MouseEvent, SyntheticEvent, useContext, useEffect } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
@@ -70,7 +70,7 @@ const InflationEditPage: React.FC = () => {
     remove(index)
   }
 
-  const handleAdd = async (e: SyntheticEvent) => {
+  const handleAdd = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
     const valid = await trigger([yearAddId])
@@ -138,7 +138,7 @@ const InflationEditPage: React.FC = () => {
     >
       <form>
         <>
-          <div className="grid grid-cols-3 justify-items-center gap-2">
+          <div className="grid grid-cols-3  gap-2">
             <div className="font-bold">From year</div>
             <div className="font-bold">Inflation rate</div>
             <div></div>
@@ -156,6 +156,7 @@ const InflationEditPage: React.FC = () => {
                   restrictedCharSet={INTEGERS_ONLY}
                   type="number"
                 />
+
                 <InputField
                   id={`items.${index}.inflationRate`}
                   control={control}
@@ -195,17 +196,12 @@ const InflationEditPage: React.FC = () => {
         </>
 
         <div className="mt-4 grid grid-cols-3 justify-items-center gap-2">
-          <InputField
-            id={yearAddId}
-            control={control}
-            validationRules={newInflationYearValidationRules}
-            restrictedCharSet={INTEGERS_ONLY}
-          />
+          <InputField id={yearAddId} control={control} restrictedCharSet={INTEGERS_ONLY} />
 
           <InputField
             id={inflationAddId}
             control={control}
-            validationRules={newInflationRateValidationRules}
+            // validationRules={newInflationRateValidationRules}
             restrictedCharSet={DECIMALS_ONLY}
           />
 
