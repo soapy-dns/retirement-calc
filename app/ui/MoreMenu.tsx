@@ -5,6 +5,7 @@ import {
   ArrowLeftOnRectangleIcon,
   ArrowRightOnRectangleIcon,
   ChatBubbleBottomCenterIcon,
+  ChevronDoubleDownIcon,
   EllipsisVerticalIcon,
   WrenchScrewdriverIcon
 } from "@heroicons/react/24/outline"
@@ -36,6 +37,22 @@ export const MoreMenu = () => {
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  href={AppPath.drawdowns}
+                  className={classNames(
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block w-full px-4 py-2 text-left text-sm"
+                  )}
+                >
+                  <div className="flex gap-2">
+                    Drawdowns <ChevronDoubleDownIcon className="h-5 w-5" />
+                  </div>
+                </Link>
+              )}
+            </Menu.Item>
+
             <Menu.Item>
               {({ active }) => (
                 <Link

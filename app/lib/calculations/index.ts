@@ -22,16 +22,16 @@ import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-export const calculateAsync = async (scenario: IScenario) => {
-  console.log("calculate ASYNC")
-  await sleep(5000)
+// export const calculateAsync = async (scenario: IScenario) => {
+//   console.log("calculate ASYNC")
+//   await sleep(5000)
 
-  return calculate(scenario)
-}
+//   return calculate(scenario)
+// }
 
 export const calculate = (scenario: IScenario) => {
   try {
-    console.log("calculate for scenario", scenario)
+    console.log("calculate for scenario", scenario.name)
     // setup
     let calculationMessage = ""
     const totalDrawdowns: DrawdownYearData[] = []
@@ -107,6 +107,7 @@ export const calculate = (scenario: IScenario) => {
       const groupedAssets = getGroupedAssets(year, assets)
       // console.log("--groupedAssets--", groupedAssets)
 
+      // why are we sending (for example) the entire taxes for all years when we are only interested in 1.
       const context = {
         year,
         scenario,
@@ -245,7 +246,7 @@ export const calculate = (scenario: IScenario) => {
     // console.log("--graphCalculatedAssetData--", graphCalculatedAssetData)
     // console.log("--assetRowData--", assetRowData)
     // console.log("--earningsRowData--", earningsRowData)
-    // console.log("--drawDownRowData--", drawDownRowData)
+    // console.log("--drawDownRowData--", JSON.stringify(drawDownRowData, null, 4))
     // console.log("--expensesRowData--", expensesRowData)
     // console.log("--surplusRowData--", surplusRowData)
     // console.log("--inflationContext--", inflationContext)

@@ -34,7 +34,7 @@ export const scenarios: IScenario[] = [
       },
       {
         id: "HER_AU_SUPER",
-        name: "Hostplus",
+        name: "Her AU super",
         description: "Australian super - defined contributions",
         className: "AuSuper",
         value: 500000,
@@ -123,7 +123,7 @@ export const scenarios: IScenario[] = [
         name: "Au Property",
         description: "Australian property",
         className: "AuProperty",
-        value: 100000,
+        value: 500000,
         assetOwners: ["Her", "Him"],
         incomeProducing: false,
         canDrawdown: false,
@@ -136,7 +136,7 @@ export const scenarios: IScenario[] = [
       // au2ukExchangeRate: 0.52,
       currency: "AU",
 
-      // numOfYears: 1,
+      // numOfYears: 2,
       // startingYear: 2023,
       owners: ["Him", "Her"],
       auBank: {
@@ -308,7 +308,7 @@ export const scenarios: IScenario[] = [
         name: "UK_PROPERTY",
         description: "UK property",
         className: "AuProperty",
-        value: 400000,
+        value: 500000,
         assetOwners: ["Her", "Him"],
         incomeProducing: true,
         canDrawdown: false,
@@ -321,7 +321,7 @@ export const scenarios: IScenario[] = [
         name: "AU_PROPERTY",
         description: "Australian property",
         className: "AuProperty",
-        value: 1250000,
+        value: 500000,
         assetOwners: ["Her", "Him"],
         incomeProducing: false,
         canDrawdown: false
@@ -793,8 +793,8 @@ export const scenarios: IScenario[] = [
         name: "AU_DEFINED_BENEFIT",
         description: "AU defined benefits",
         className: "AuDefinedBenefits",
-        value: 1000000,
-        // income: 100000, // this isn't the pot, but the guaranteed return value in the first year
+        value: 0,
+        income: 100000, // this isn't the pot, but the guaranteed return value in the first year
         assetOwners: ["Him"],
         canDrawdown: true,
         preferredMinAmt: 100000,

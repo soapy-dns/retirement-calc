@@ -16,6 +16,7 @@ export enum AppPath {
   assetAdd = "/assets/add",
   sheet = "/sheet",
   config = "/config",
+  drawdowns = "/drawdowns",
   charts = "/charts",
   fileImport = "/file/import",
   fileExport = "/file/export",
