@@ -25,20 +25,30 @@ export const Toggle: React.FC<Props> = ({
 }) => {
   const cols = 2 // TODO: depends on num of options
 
-  const selectedClasses =
-    "hover:bg-primary-darkerborder-primary border-primary  bg-primary py-1 px-4 text-white first:rounded-l-md last:rounded-r-md my-2"
-  const unselectedClasses = "border-2 border-primary py-1 px-4 text-primary  first:rounded-l-md last:rounded-r-md my-2"
+  // hover: bg - primary - darker
+  const selectedClasses = "  bg-primary  text-white "
+  const unselectedClasses = " text-primary  "
 
   return (
-    <div className="grid w-1/4 grid-cols-2">
+    <div className="grid w-1/3 grid-cols-2">
       {options.map((option, index) => {
         const { label, value: optionValue } = option
         const id_ind = `${id}_${index}`
 
         const selected = value === optionValue
 
+        // first:rounded-l-md last:rounded-r-md
+
         return (
-          <div key={`${optionValue}`} className={selected ? selectedClasses : unselectedClasses}>
+          <div
+            key={`${optionValue}`}
+            className={`flex justify-center border-primary border-2  py-1  first:rounded-l-md last:rounded-r-md ${
+              selected ? selectedClasses : unselectedClasses
+            }`}
+          >
+            <label htmlFor={id_ind} className="">
+              {label}
+            </label>
             <input
               type="radio"
               id={id_ind}
@@ -49,9 +59,6 @@ export const Toggle: React.FC<Props> = ({
               onClick={onChange}
               className="opacity-0"
             />
-            <label htmlFor={id_ind} className="my-auto">
-              {label}
-            </label>
           </div>
         )
       })}
