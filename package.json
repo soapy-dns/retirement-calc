@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --project ./tsconfig.json",
-    "precommit": "npm run typecheck && npm run test",
+    "precommit": "next lint && npm run typecheck && npm run test",
     "test": "jest",
     "test:watch": "jest --watch"
   },

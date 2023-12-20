@@ -218,7 +218,7 @@ export const calculate = (scenario: IScenario) => {
 
     const graphIncomeNpvData = getGraphIncomeNpvData(earningsFromAssets, inflationContext)
 
-    const drawDownRowData = { "Asset drawdown": totalDrawdowns }
+    const drawDownRowData = totalDrawdowns
 
     const projectedLivingExpensesToDisplay = projectedLivingExpenses.splice(0, numOfCalculatedYears)
     const livingExpensesTodaysMoneyToDisplay = livingExpensesTodaysMoney.splice(0, numOfCalculatedYears)

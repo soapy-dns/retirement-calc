@@ -86,10 +86,8 @@ const SheetPage: React.FC = () => {
                 Object.entries(assetRowData).map(([rowIdentifier, rowData], index) => {
                   return <Row key={index} rowIdentifier={rowIdentifier} row={rowData} onToggle={onHelpModalToggle} />
                 })}
-
               <Row rowIdentifier="Total Assets" bold={true} row={totalAssetsData} onToggle={onHelpModalToggle} />
               <Row rowIdentifier="Present value" bold={true} row={netPresentValue} onToggle={onHelpModalToggle} />
-
               <EmptyLine />
               {/* earnings */}
               <HeadingRow text="Income" onToggle={toggleEarningInfo} />
@@ -100,7 +98,6 @@ const SheetPage: React.FC = () => {
                   )
                 })}
               <Row rowIdentifier="Total Income" bold={true} row={totalEarningsData} onToggle={onHelpModalToggle} />
-
               <EmptyLine />
               {/* expenses */}
               <HeadingRow text="Expenses" />
@@ -111,7 +108,6 @@ const SheetPage: React.FC = () => {
                   )
                 })}
               <Row rowIdentifier="Total Expenses" bold={true} row={totalExpensesData} onToggle={onHelpModalToggle} />
-
               <EmptyLine />
               {/* calculated values */}
               <HeadingRow text="Calculated values" />
@@ -123,10 +119,7 @@ const SheetPage: React.FC = () => {
                   )
                 })}
               {/* drawdowns */}
-              {drawDownRowData &&
-                Object.entries(drawDownRowData).map(([rowIdentifier, incomeData], index) => {
-                  return <Row key={index} rowIdentifier={rowIdentifier} row={incomeData} onToggle={onHelpModalToggle} />
-                })}
+              <Row rowIdentifier="Asset drawdowns" row={drawDownRowData} onToggle={onHelpModalToggle} />)
               {/* <Row rowIdentifier="Inflation percentage" row={inflationRateData} onToggle={onHelpModalToggle} />
               <Row rowIdentifier="Inflation factor" row={inflationFactorData} onToggle={onHelpModalToggle} /> */}
             </tbody>
