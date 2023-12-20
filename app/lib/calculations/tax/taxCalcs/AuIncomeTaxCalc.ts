@@ -1,10 +1,6 @@
 import { IncomeTaxCalc } from "./incomeTaxCalc"
 
 export class AuIncomeTaxCalc extends IncomeTaxCalc {
-  // constructor(factor: number) {
-  //   super(factor)
-  // }
-
   taxRate1 = 0
   taxRate2 = 0.19
   taxRate3 = 0.325

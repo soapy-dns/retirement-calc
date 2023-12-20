@@ -1,4 +1,4 @@
-import { AuIncomeTaxCalc } from "./auIncomeTaxCalc"
+import { AuIncomeTaxCalc } from "./AuIncomeTaxCalc"
 import { IncomeTaxCalc } from "./incomeTaxCalc"
 import { Country } from "./types"
 import { UkIncomeTaxCalc } from "./UkIncomeTaxCalc"

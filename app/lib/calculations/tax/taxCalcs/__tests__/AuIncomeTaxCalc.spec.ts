@@ -1,6 +1,6 @@
-import { AuIncomeTaxCalc } from "../auIncomeTaxCalc"
+import { AuIncomeTaxCalc } from "../AuIncomeTaxCalc"
 
-const taxCalc = new AuIncomeTaxCalc()
+const taxCalc = new AuIncomeTaxCalc(1)
 
 describe("test", () => {
   it("should be no tax below threshold 1", () => {

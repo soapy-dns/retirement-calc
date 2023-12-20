@@ -81,11 +81,9 @@ export const applyAutoDrawdowns = (context: IContext): number => {
 
   let remainingAmtToDrawdown = totalExpensesAmt
 
-  console.log("--totalExpensesAmt--", year, totalExpensesAmt)
   let i = 0
   while (remainingAmtToDrawdown > 100 && i < 100) {
     i = i + 1
-    console.log("--remainingAmtToDrawdown--", remainingAmtToDrawdown)
 
     drawdownIteration(context, remainingAmtToDrawdown)
 
@@ -96,7 +94,6 @@ export const applyAutoDrawdowns = (context: IContext): number => {
 
     remainingAmtToDrawdown = Math.round(totalExpensesAmt - automatedDrawdownsAmt)
   }
-  console.log("-drawdown iterations", year, i)
 
   totalExpenses.push({
     year,

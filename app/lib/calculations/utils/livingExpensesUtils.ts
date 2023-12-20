@@ -41,9 +41,27 @@ export const getLivingExpenses = (
 
     return { year: year + 1, value: Math.round(value * factor) }
   })
-  projectedLivingExpenses.unshift({ year: yearRange[0], value: livingExpensesTodaysMoney[0].value })
 
-  return { livingExpensesTodaysMoney, projectedLivingExpenses }
+  projectedLivingExpenses.unshift({
+    year: projectedLivingExpenses[0].year - 1,
+    value: livingExpensesTodaysMoney[0].value
+  })
+
+  const startYear = yearRange[0]
+  const endYear = yearRange[yearRange.length - 1]
+
+  const filteredLivingExpensesTodaysMoney = livingExpensesTodaysMoney.filter((it) => {
+    return it.year >= startYear && it.year <= endYear
+  })
+
+  const filteredProjectedLivingExpenses = projectedLivingExpenses.filter((it) => {
+    return it.year >= startYear && it.year <= endYear
+  })
+
+  return {
+    livingExpensesTodaysMoney: filteredLivingExpensesTodaysMoney,
+    projectedLivingExpenses: filteredProjectedLivingExpenses
+  }
 }
 
 export const getLivingExpensesAmtForYear = (year: number, projectedLivingExpenses: BasicYearData[]): number => {
