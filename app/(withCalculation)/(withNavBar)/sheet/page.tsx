@@ -81,7 +81,7 @@ const SheetPage: React.FC = () => {
             </thead>
             {/* assets */}
             <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
-              <HeadingRow text="Capital" />
+              <HeadingRow text="Capital Assets" />
               {assetRowData &&
                 Object.entries(assetRowData).map(([rowIdentifier, rowData], index) => {
                   return <Row key={index} rowIdentifier={rowIdentifier} row={rowData} onToggle={onHelpModalToggle} />

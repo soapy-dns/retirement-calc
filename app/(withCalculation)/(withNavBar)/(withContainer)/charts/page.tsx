@@ -6,7 +6,6 @@ import { AssetSplit } from "./AssetSplit"
 import { ArrowsPointingOutIcon } from "@heroicons/react/24/outline"
 import { ArrowsPointingInIcon } from "@heroicons/react/24/solid"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
-import { Container } from "@/app/ui/components/Container"
 
 const ChartPage = () => {
   const { selectedScenario, calculationResults } = useContext(ScenarioContext)
@@ -32,7 +31,7 @@ const ChartPage = () => {
       <div className="mb-8">
         <div className="flex justify-center text-primary">
           <h2>
-            Capital
+            Capital Assets
             <button onClick={toggleShowIt}>
               <ArrowsPointingOutIcon className="ml-2 h-5 w-5" />
             </button>
@@ -44,7 +43,7 @@ const ChartPage = () => {
 
       <div className="mb-8">
         <h2 className="text-center text-primary">
-          Capital (npv){" "}
+          Capital Assets(in today&apos;s money){" "}
           <button onClick={() => alert("To be implemented")}>
             <ArrowsPointingOutIcon className="ml-2 h-5 w-5" />
           </button>
