@@ -2,6 +2,10 @@ import { Calculator } from "../calculator/Calculator"
 import { AssetConfig, YearData } from "./types"
 import { AssetClass } from "@/app/lib/calculations/types"
 
+interface Props extends AssetConfig {
+  incomeProducing: boolean
+}
+
 // TODO: need to have sub classes with the relevant properties
 export abstract class Asset {
   calculator?: Calculator
@@ -24,7 +28,7 @@ export abstract class Asset {
   public abstract capitalAsset: boolean
 
   // TODO: can this be improved -> https://www.digitalocean.com/community/tutorials/how-to-use-classes-in-typescript
-  constructor(props: AssetConfig) {
+  constructor(props: Props) {
     const {
       id,
       name,
@@ -46,7 +50,7 @@ export abstract class Asset {
     this.id = id
     this.name = name
     this.description = description
-    this.incomeProducing = incomeProducing || false
+    this.incomeProducing = incomeProducing
     this.assetOwners = assetOwners
     this.calculator = calculator
     this.incomeBucket = incomeBucket || false

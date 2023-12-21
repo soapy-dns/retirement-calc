@@ -15,7 +15,7 @@ export const scenarios: IScenario[] = [
         className: "AuSuper",
         value: 500000,
         assetOwners: ["Him"],
-        incomeProducing: false,
+        // incomeProducing: false,
         canDrawdown: true,
         drawdownFrom: 2026,
         drawdownOrder: 50,
@@ -39,7 +39,7 @@ export const scenarios: IScenario[] = [
         className: "AuSuper",
         value: 500000,
         assetOwners: ["Her"],
-        incomeProducing: false,
+        // incomeProducing: false,
         canDrawdown: true,
         drawdownOrder: 50,
         percOfEarningsTaxable: 0
@@ -51,7 +51,7 @@ export const scenarios: IScenario[] = [
         className: "AuSuper",
         value: 100000,
         assetOwners: ["Him"],
-        incomeProducing: false,
+        // incomeProducing: false,
         canDrawdown: true,
         drawdownFrom: 2026,
         drawdownOrder: 50,
@@ -76,7 +76,7 @@ export const scenarios: IScenario[] = [
         className: "AuShares",
         value: 50000,
         assetOwners: ["Her", "Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         canDrawdown: true,
         drawdownOrder: 60
       },
@@ -88,7 +88,7 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 10000,
         assetOwners: ["Her", "Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
         preferredMinAmt: 10000,
@@ -102,7 +102,7 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 50000,
         assetOwners: ["Her", "Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         canDrawdown: true,
         drawdownOrder: 10
         // drawdownTaxed: false
@@ -114,8 +114,9 @@ export const scenarios: IScenario[] = [
         className: "AuProperty",
         value: 500000,
         assetOwners: ["Her", "Him"],
-        incomeProducing: true,
-        canDrawdown: false
+        // incomeProducing: true,
+        canDrawdown: false,
+        isRented: false
         // propertyRented: true
       },
       {
@@ -125,8 +126,9 @@ export const scenarios: IScenario[] = [
         className: "AuProperty",
         value: 500000,
         assetOwners: ["Her", "Him"],
-        incomeProducing: false,
+        // incomeProducing: false,
         canDrawdown: false,
+        isRented: true,
         rentalIncomePerMonth: 600,
         rentalExpensesPerMonth: 100
       }
@@ -206,7 +208,7 @@ export const scenarios: IScenario[] = [
         className: "AuSuper",
         value: 500000,
         assetOwners: ["Him"],
-        incomeProducing: false,
+        // incomeProducing: false,
         canDrawdown: true,
         drawdownFrom: 2026,
         drawdownOrder: 50,
@@ -231,7 +233,7 @@ export const scenarios: IScenario[] = [
         value: 500000,
         assetOwners: ["Her"],
 
-        incomeProducing: false,
+        // incomeProducing: false,
         canDrawdown: true,
         drawdownOrder: 50,
         // drawdownTaxed: false,
@@ -244,7 +246,7 @@ export const scenarios: IScenario[] = [
         className: "AuSuper",
         value: 100000,
         assetOwners: ["Him"],
-        incomeProducing: false,
+        // incomeProducing: false,
         canDrawdown: true,
         drawdownFrom: 2026,
         drawdownOrder: 50,
@@ -271,7 +273,7 @@ export const scenarios: IScenario[] = [
         className: "AuShares",
         value: 50000,
         assetOwners: ["Her", "Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         canDrawdown: true,
         drawdownOrder: 60
         // drawdownTaxed: false // However there could be capital gains tax
@@ -284,7 +286,7 @@ export const scenarios: IScenario[] = [
         description: "Australian bank account",
         value: 10000,
         assetOwners: ["Her", "Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
         preferredMinAmt: 10000,
@@ -298,7 +300,7 @@ export const scenarios: IScenario[] = [
         description: "UK bank account",
         value: 50000,
         assetOwners: ["Her", "Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         canDrawdown: true,
         drawdownOrder: 10
         // drawdownTaxed: false
@@ -310,9 +312,10 @@ export const scenarios: IScenario[] = [
         className: "AuProperty",
         value: 500000,
         assetOwners: ["Her", "Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         canDrawdown: false,
         // propertyRented: true,
+        isRented: true,
         rentalIncomePerMonth: 820,
         rentalExpensesPerMonth: 100
       },
@@ -323,8 +326,9 @@ export const scenarios: IScenario[] = [
         className: "AuProperty",
         value: 500000,
         assetOwners: ["Her", "Him"],
-        incomeProducing: false,
-        canDrawdown: false
+        // incomeProducing: false,
+        canDrawdown: false,
+        isRented: false
       }
     ],
     context: {
@@ -408,7 +412,7 @@ export const scenarios: IScenario[] = [
         value: 100000,
         assetOwners: ["Him"],
 
-        incomeProducing: false,
+        // incomeProducing: false,
         canDrawdown: true,
         // drawdownFrom: 2026,
         drawdownOrder: 50,
@@ -423,7 +427,7 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 0,
         assetOwners: ["Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
         drawdownOrder: 10
@@ -494,7 +498,7 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 100000,
         assetOwners: ["Her", "Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
         // preferredMinAmt: 10000,
@@ -569,7 +573,7 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 100000,
         assetOwners: ["Her", "Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
         // preferredMinAmt: 10000,
@@ -634,7 +638,7 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 100000,
         assetOwners: ["Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
         // preferredMinAmt: 10000,
@@ -709,7 +713,7 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 100000,
         assetOwners: ["Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
         // preferredMinAmt: 10000,
@@ -781,7 +785,7 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 100000,
         assetOwners: ["Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
         preferredMinAmt: 100000,
@@ -860,7 +864,7 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 100000,
         assetOwners: ["Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
         // preferredMinAmt: 10000,
@@ -943,7 +947,7 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 100000,
         assetOwners: ["Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
         // preferredMinAmt: 10000,
@@ -1035,7 +1039,7 @@ export const scenarios: IScenario[] = [
         value: 50000,
         assetOwners: ["Him"],
         incomeBucket: true, // if this is where income goes to
-        incomeProducing: true,
+        // incomeProducing: true,
         canDrawdown: true,
         drawdownOrder: 10
         // drawdownTaxed: false
@@ -1048,9 +1052,10 @@ export const scenarios: IScenario[] = [
         value: 1000000,
         assetOwners: ["Him"],
 
-        incomeProducing: true,
+        // incomeProducing: true,
         canDrawdown: false,
         // propertyRented: true,
+        isRented: true,
         rentalIncomePerMonth: 2000,
         rentalExpensesPerMonth: 100
       }
@@ -1113,7 +1118,7 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 100000,
         assetOwners: ["Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
         // preferredMinAmt: 10000,
@@ -1127,7 +1132,7 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 100000,
         assetOwners: ["Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         incomeBucket: false, // if this is where income goes to
         canDrawdown: true,
         // preferredMinAmt: 10000,
@@ -1201,7 +1206,7 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 100000,
         assetOwners: ["Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
         // preferredMinAmt: 10000,
@@ -1216,7 +1221,7 @@ export const scenarios: IScenario[] = [
         value: 0,
         income: 100000,
         assetOwners: ["Him"],
-        incomeProducing: true,
+        // incomeProducing: true,
         incomeBucket: false, // if this is where income goes to
         canDrawdown: false
         // preferredMinAmt: 10000,

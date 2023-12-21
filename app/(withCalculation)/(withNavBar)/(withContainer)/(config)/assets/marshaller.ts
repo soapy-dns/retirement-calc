@@ -21,7 +21,7 @@ export const marshall = (data: ChangedFormData, asset: IAsset) => {
   const newAsset: IAsset = {
     ...asset,
     canDrawdown: data.canDrawdown === "Y",
-    incomeProducing: data.earnsIncome === "Y",
+    // incomeProducing: data.earnsIncome === "Y",
     incomeBucket: data.earningsBucket === "Y"
   }
 

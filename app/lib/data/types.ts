@@ -28,7 +28,7 @@ export interface IAsset {
   value: number
   assetOwners: string[]
   income?: number
-  incomeProducing?: boolean
+  // incomeProducing?: boolean
   incomeBucket?: boolean
   canDrawdown?: boolean
   drawdownFrom?: number
@@ -36,7 +36,7 @@ export interface IAsset {
   // drawdownTaxed?: boolean
   percOfEarningsTaxable?: number
   preferredMinAmt?: number
-  // propertyRented?: boolean
+  isRented?: boolean
   rentalIncomePerMonth?: number
   rentalExpensesPerMonth?: number
   incomeEndYear?: number

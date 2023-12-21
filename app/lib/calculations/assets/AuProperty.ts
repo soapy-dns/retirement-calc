@@ -15,10 +15,15 @@ const getCalculator = (assetConfig: AssetConfig, inflationContext: InflationCont
 }
 
 export class AuProperty extends Asset {
-  capitalAsset: boolean
+  capitalAsset: boolean // if all assets have this, shouldn't it be in the Asset class
 
   constructor(assetConfig: AssetConfig, inflationContext: InflationContext) {
-    super({ ...assetConfig, canDrawdown: false, calculator: getCalculator(assetConfig, inflationContext) })
+    super({
+      ...assetConfig,
+      canDrawdown: false,
+      incomeProducing: assetConfig.isRented || false,
+      calculator: getCalculator(assetConfig, inflationContext)
+    })
     const { value, startingYear } = assetConfig
 
     this.capitalAsset = true

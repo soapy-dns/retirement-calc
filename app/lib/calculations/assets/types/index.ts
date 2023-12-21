@@ -57,11 +57,13 @@ export interface Tax {
 }
 
 // this should be renamed i think
+// I think AssetConfig is the configuration required to define an Asset class.  IAsset is what is actually configured by the user
 export interface AssetConfig extends Omit<IAsset, "className"> {
   scenario: IScenario
   startingYear: number
-  rentalIncomePerMonth?: number
-  rentalExpensesPerMonth?: number
+  // incomeProducing: boolean
+  // rentalIncomePerMonth?: number // Really?
+  // rentalExpensesPerMonth?: number
   calculator?: Calculator
 }
 

@@ -11,16 +11,25 @@ import { Control } from "react-hook-form"
 import { assetConstants } from "./assetConstants"
 import { assetTypeOptions, drawdownOrderOptions } from "./assetTypeOptions"
 import { validateOwners } from "@/app/ui/validation/ownersValidation"
+import { YesNo } from "../types"
 
 interface Props {
   control: Control<any, object>
   register: Function
   assetType: string
   drawdownSet: string
+  isRentedFormValue: YesNo
   owners: string[]
 }
 
-export const AssetEditForm: FunctionComponent<Props> = ({ control, assetType, drawdownSet, owners, register }) => {
+export const AssetEditForm: FunctionComponent<Props> = ({
+  control,
+  assetType,
+  drawdownSet,
+  isRentedFormValue,
+  owners,
+  register
+}) => {
   const isIncome = assetTypeOptions.find((it) => it.value === assetType)?.assetClass === AssetClass.income || false
   const isProperty = assetTypeOptions.find((it) => it.value === assetType)?.assetClass === AssetClass.property || false
   const showDrawdown = drawdownSet === "Y"
@@ -69,14 +78,14 @@ export const AssetEditForm: FunctionComponent<Props> = ({ control, assetType, dr
             restrictedCharSet={INTEGERS_ONLY}
             helpText={assetConstants.VALUE.HELP_TEXT}
           />
-          <RadioButtonQuestion
+          {/* <RadioButtonQuestion
             id="earnsIncome"
             control={control}
             label={assetConstants.INCOME_EARNING.LABEL}
             values={yesNoOptions}
             variant={RadioQuestionVariant.BLOCK}
             helpText={assetConstants.INCOME_EARNING.HELP_TEXT}
-          />
+          /> */}
           <RadioButtonQuestion
             id="earningsBucket"
             control={control}
@@ -152,21 +161,33 @@ export const AssetEditForm: FunctionComponent<Props> = ({ control, assetType, dr
       />
       {isProperty && (
         <>
-          <InputQuestion
-            id="rentalIncome"
+          <RadioButtonQuestion
+            id="isRented"
+            label={assetConstants.PROPERTY_IS_RENTED.LABEL}
             control={control}
-            label={assetConstants.PROPERTY_RENTAL_INCOME.LABEL}
-            restrictedCharSet={INTEGERS_ONLY}
-            helpText={assetConstants.PROPERTY_RENTAL_INCOME.HELP_TEXT}
+            values={yesNoOptions}
+            variant={RadioQuestionVariant.BLOCK}
+            helpText={assetConstants.PROPERTY_IS_RENTED.HELP_TEXT}
           />
+          {isRentedFormValue === "Y" && (
+            <>
+              <InputQuestion
+                id="rentalIncome"
+                control={control}
+                label={assetConstants.PROPERTY_RENTAL_INCOME.LABEL}
+                restrictedCharSet={INTEGERS_ONLY}
+                helpText={assetConstants.PROPERTY_RENTAL_INCOME.HELP_TEXT}
+              />
 
-          <InputQuestion
-            id="rentalExpenses"
-            control={control}
-            label={assetConstants.PROPERTY_RENTAL_EXPENSES.LABEL}
-            restrictedCharSet={INTEGERS_ONLY}
-            helpText={assetConstants.PROPERTY_RENTAL_EXPENSES.HELP_TEXT}
-          />
+              <InputQuestion
+                id="rentalExpenses"
+                control={control}
+                label={assetConstants.PROPERTY_RENTAL_EXPENSES.LABEL}
+                restrictedCharSet={INTEGERS_ONLY}
+                helpText={assetConstants.PROPERTY_RENTAL_EXPENSES.HELP_TEXT}
+              />
+            </>
+          )}
         </>
       )}
     </form>

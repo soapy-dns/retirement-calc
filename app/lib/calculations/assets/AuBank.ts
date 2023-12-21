@@ -16,6 +16,7 @@ export class AuBank extends Asset {
   capitalAsset: boolean
 
   constructor(props: AssetConfig) {
+    // const assetConfig = {...props, this.incomeProducing: true}
     super({ ...props, incomeProducing: true, calculator: getCalculator(props) })
     const { value, startingYear } = props
 

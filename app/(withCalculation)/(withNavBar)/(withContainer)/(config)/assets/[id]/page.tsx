@@ -25,6 +25,7 @@ interface ChangedFormData {
   earnsIncome: YesNo
   earningsBucket: YesNo
   earningsTaxPerc: number
+  isRented?: YesNo
   rentalIncome?: number
   rentalExpenses?: number
   canDrawdown: YesNo
@@ -34,7 +35,7 @@ interface ChangedFormData {
   incomeEndYear?: number
 }
 
-const getAssetValuesFromForm = (data: ChangedFormData) => {
+const getAssetValuesFromForm = (data: ChangedFormData): Omit<IAsset, "id"> => {
   const {
     name,
     description,
@@ -49,6 +50,7 @@ const getAssetValuesFromForm = (data: ChangedFormData) => {
     earningsBucket,
     preferredMinAmt,
     earningsTaxPerc,
+    isRented,
     rentalIncome,
     rentalExpenses,
     incomeEndYear
@@ -64,10 +66,11 @@ const getAssetValuesFromForm = (data: ChangedFormData) => {
     canDrawdown: canDrawdown === "Y",
     drawdownOrder,
     drawdownFrom,
-    incomeProducing: earnsIncome === "Y",
+    // incomeProducing: earnsIncome === "Y",
     incomeBucket: earningsBucket === "Y",
     preferredMinAmt: preferredMinAmt ? +preferredMinAmt : undefined,
     percOfEarningsTaxable: +earningsTaxPerc,
+    isRented: isRented === "Y",
     rentalIncomePerMonth: rentalIncome ? +rentalIncome : undefined,
     rentalExpensesPerMonth: rentalExpenses ? +rentalExpenses : undefined,
     incomeEndYear: incomeEndYear ? +incomeEndYear : undefined
@@ -106,12 +109,13 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     income,
     assetOwners = [],
     percOfEarningsTaxable,
-    incomeProducing,
+    // incomeProducing,
     incomeBucket,
     preferredMinAmt,
     canDrawdown,
     drawdownOrder,
     drawdownFrom,
+    isRented,
     rentalExpensesPerMonth,
     rentalIncomePerMonth,
     incomeEndYear
@@ -119,8 +123,9 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
 
   // TODO: I'm sure we can do this better for radio buttons
   const canDrawdownValue = canDrawdown ? "Y" : "N"
-  const incomeEarningValue = incomeProducing ? "Y" : "N"
+  // const incomeEarningValue = incomeProducing ? "Y" : "N"
   const earningsAccumulated = incomeBucket ? "Y" : "N"
+  const isRentedString = isRented ? "Y" : "N"
 
   const {
     handleSubmit,
@@ -136,10 +141,11 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       value,
       income,
       owners: assetOwners,
-      earnsIncome: incomeEarningValue,
+      // earnsIncome: incomeEarningValue,
       earningsBucket: earningsAccumulated,
       preferredMinAmt: preferredMinAmt ?? 0,
       earningsTaxPerc: percOfEarningsTaxable ?? 100,
+      isRented: isRentedString,
       rentalExpenses: rentalExpensesPerMonth,
       rentalIncome: rentalIncomePerMonth,
       canDrawdown: canDrawdownValue,
@@ -168,6 +174,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
 
   const assetType = watch("assetType")
   const drawdownSet = watch("canDrawdown")
+  const isRentedFormValue = watch("isRented") || "N"
 
   return (
     <EditPageLayout
@@ -184,6 +191,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
         control={control}
         assetType={assetType}
         drawdownSet={drawdownSet}
+        isRentedFormValue={isRentedFormValue}
         owners={owners}
         register={register}
       />

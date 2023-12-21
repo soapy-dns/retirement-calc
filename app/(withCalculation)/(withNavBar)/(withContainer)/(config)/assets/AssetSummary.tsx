@@ -16,7 +16,7 @@ interface IAssetItemDisplay {
 }
 
 export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay) => {
-  console.log("assetSummary", asset.id)
+  // console.log("assetSummary", asset.id)
   const navigation = useNavigation()
   const { removeAsset } = useAsset()
 
@@ -26,15 +26,16 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
   }
 
   const handleRemove = () => {
-    console.log("handle remove")
+    // console.log("handle remove")
     if (disabled) return
-    console.log("not disabled")
+    // console.log("not disabled")
 
     const { id } = asset
     removeAsset(id)
 
     // TODO: modal to confirm
   }
+
   const { AssetClassIcon, type } = getAssetDisplayDetails(asset)
 
   const { name, description, value, income, incomeBucket } = asset

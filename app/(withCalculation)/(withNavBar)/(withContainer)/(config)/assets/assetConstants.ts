@@ -31,11 +31,7 @@ export const assetConstants = {
     LABEL: "Asset class",
     HELP_TEXT: "Defines the type of asset."
   },
-  INCOME_EARNING: {
-    LABEL: "Income earning",
-    HELP_TEXT:
-      "Defines whether the asset returns produce an income which leaves the asset.  e.g. Bank interest would be income.  AU super would not as any returns are kept within the super account.  Any income will go into the 'Earnings bucket' defined in context."
-  },
+
   VALUE: {
     LABEL: "Value",
     HELP_TEXT: "The value of the asset at the start of the term."
@@ -47,6 +43,10 @@ export const assetConstants = {
   DESCRIPTION: {
     LABEL: "Description",
     HELP_TEXT: "A meaningful description of the asset."
+  },
+  PROPERTY_IS_RENTED: {
+    LABEL: "Is property rented out?",
+    HELP_TEXT: "If the property is rented out will need to add the expected income and expenses for that."
   },
   PROPERTY_RENTAL_INCOME: {
     LABEL: "Property rental income (monthly)",

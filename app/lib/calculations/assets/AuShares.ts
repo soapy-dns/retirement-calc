@@ -20,7 +20,7 @@ export class AuShares extends Asset {
 
   // TODO: Should we just have one asset class select the calculator and leave it to the calculator to get the config?
   constructor(props: AssetConfig) {
-    super({ ...props, calculator: getCalculator(props) })
+    super({ ...props, incomeProducing: true, calculator: getCalculator(props) })
     this.capitalAsset = true
     this.capitalAsset = true
 
