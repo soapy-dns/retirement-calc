@@ -5,7 +5,7 @@ import { useContext } from "react"
 
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
-import { ALPHA_ONLY } from "@/app/ui/components/common/formRegExes"
+import { ALPHA_NUMERIC } from "@/app/ui/components/common/formRegExes"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { TextAreaQuestion } from "@/app/ui/components/form/TextAreaQuestion"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
@@ -71,7 +71,7 @@ export default function ScenarioPage({ params }: { params: { id: string } }) {
           control={control}
           label={scenarioConstants.NAME.LABEL}
           // validationRules={changeDetailsValidation}
-          restrictedCharSet={ALPHA_ONLY}
+          restrictedCharSet={ALPHA_NUMERIC}
           helpText={scenarioConstants.NAME.HELP_TEXT}
         />
         <TextAreaQuestion

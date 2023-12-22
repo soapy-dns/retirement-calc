@@ -22,7 +22,6 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
 
   const handleRemove = () => {
     if (scenarios && scenarios?.length > 1) {
-      console.log("--handleRemove - deleteSelectedScenaro")
       deleteSelectedScenario()
     }
   }

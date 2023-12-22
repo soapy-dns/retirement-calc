@@ -20,15 +20,6 @@ import { getStartingYear } from "./utils/getStartingYear"
 import { IScenario } from "../data/types"
 import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-
-// export const calculateAsync = async (scenario: IScenario) => {
-//   console.log("calculate ASYNC")
-//   await sleep(5000)
-
-//   return calculate(scenario)
-// }
-
 export const calculate = (scenario: IScenario) => {
   try {
     console.log("calculate for scenario", scenario.name)
