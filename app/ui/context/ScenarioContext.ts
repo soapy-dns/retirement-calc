@@ -28,7 +28,9 @@ export const ScenarioContext = createContext<IScenarioContext>({
   importScenarios: () => {},
   updateScenario: (scenario: IScenario) => {},
   deleteSelectedScenario: () => {},
-  addScenario: () => {},
+  addScenario: () => {
+    console.log("default addScenario")
+  },
   calculationResults: undefined,
   calculationMessage: undefined
 })

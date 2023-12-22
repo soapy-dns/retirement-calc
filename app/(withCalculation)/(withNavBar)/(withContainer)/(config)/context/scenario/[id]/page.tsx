@@ -43,7 +43,6 @@ export default function ScenarioPage({ params }: { params: { id: string } }) {
       updateScenario(updatedScenario)
     }
 
-    console.log("now go back")
     navigation.goBack()
   }
 

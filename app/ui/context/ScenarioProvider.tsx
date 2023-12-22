@@ -134,19 +134,18 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
 
   const addScenario = async (name: string, description: string) => {
     const newScenario = { ...selectedScenario, name, description, id: getRandomKey() }
-
     await doCalculations(newScenario)
 
-    scenarios.concat([newScenario])
+    const mergedScenarios = scenarios.concat([newScenario])
 
-    const scenarioOptions = getScenarioOptions(scenarios)
+    const scenarioOptions = getScenarioOptions(mergedScenarios)
 
     const selectedScenarioOption = scenarioOptions.find((it) => it.value === newScenario.id)
 
-    sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
+    sessionStorage.setItem("scenarios", JSON.stringify(mergedScenarios))
     sessionStorage.setItem("selectedScenario", JSON.stringify(newScenario))
 
-    setScenarios(scenarios)
+    setScenarios(mergedScenarios)
     setScenarioOptions(scenarioOptions)
     setSelectedScenario(newScenario)
     setSelectedScenarioOption(selectedScenarioOption)
