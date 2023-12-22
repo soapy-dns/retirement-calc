@@ -9,6 +9,7 @@ import { getLivingExpensesAmtForYear } from "../utils/livingExpensesUtils"
 import { createAutoDrawdowns } from "./createAutoDrawdowns"
 import { AutomatedDrawdown } from "./types"
 import { BasicYearData } from "../types"
+import { mergeAutoDrawdowns } from "./mergeAutoDrawdowns"
 
 interface IContext {
   year: number
@@ -31,11 +32,9 @@ const drawdownIteration = (
 ) => {
   const existingAutoDrawdowns = automatedDrawdownMap[year] || []
 
-  // new automated drawdowns -> add them to existing
   const newAutoDrawdownsForYear = createAutoDrawdowns(year, groupedAssets, remainingAmtToDrawdown)
-  const automatedDrawdownsForYear = existingAutoDrawdowns.concat(newAutoDrawdownsForYear)
 
-  // console.log("--year, newAutoDrawdownsForYear--", year, newAutoDrawdownsForYear)
+  const automatedDrawdownsForYear = mergeAutoDrawdowns(existingAutoDrawdowns, newAutoDrawdownsForYear)
 
   automatedDrawdownMap[year] = automatedDrawdownsForYear
 

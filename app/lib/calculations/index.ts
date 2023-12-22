@@ -224,7 +224,6 @@ export const calculate = (scenario: IScenario) => {
     const livingExpensesTodaysMoneyToDisplay = livingExpensesTodaysMoney.splice(0, numOfCalculatedYears)
 
     const cleanedTaxes = removeUnusedHistoryFromTaxes(taxes, finalYear)
-    // console.log("--cleanedTaxes--", cleanedTaxes)
     const expensesRowData = cleanedTaxes.reduce(
       (accum: RowData, tax: Tax) => {
         accum[`Tax (${tax.owner})`] = tax.history
@@ -236,8 +235,6 @@ export const calculate = (scenario: IScenario) => {
         "Living expenses": projectedLivingExpensesToDisplay
       }
     )
-
-    // expensesRowData["Total Expenses"] = totalExpenses
 
     const surplusRowData = { "Surplus (if -ve is tax liability for next yr)": surplusYearData }
 

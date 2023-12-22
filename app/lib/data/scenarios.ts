@@ -947,12 +947,9 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 100000,
         assetOwners: ["Him"],
-        // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
-        // preferredMinAmt: 10000,
         drawdownOrder: 20
-        // drawdownTaxed: false
       },
       {
         id: "3",
@@ -961,26 +958,20 @@ export const scenarios: IScenario[] = [
         className: "AuSuper",
         value: 1000000,
         canDrawdown: true,
-
         drawdownOrder: 10,
-
-        // income: 100000, // this isn't the pot, but the guaranteed return value in the first year
         assetOwners: ["Him"],
         percOfEarningsTaxable: 0
       },
       {
         id: "4",
-
         name: "UK_DEFINED_CONTRIBUTIONS",
         description: "UK defined contributions",
         className: "AuSuper",
         value: 1000000,
-        // income: 100000, // this isn't the pot, but the guaranteed return value in the first year
         assetOwners: ["Him"],
         percOfEarningsTaxable: 100,
         drawdownOrder: 10,
         canDrawdown: true
-        // drawdownTaxed: true
       }
     ],
     context: {
@@ -988,7 +979,7 @@ export const scenarios: IScenario[] = [
       au2ukExchangeRate: 0.52,
       currency: "AU",
 
-      // numOfYears: 1,
+      // numOfYears: 2,
       // startingYear: 2023,
       owners: ["Him"],
       auBank: {
