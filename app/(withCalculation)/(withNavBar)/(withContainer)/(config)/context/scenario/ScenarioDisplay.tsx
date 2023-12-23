@@ -33,7 +33,7 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
   return (
     <Card type={AlertType.info}>
       <h2 className="flex items-center justify-between text-primary">
-        Selected scenario
+        Scenario
         <div className="flex">
           <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
             <div className="flex items-center">

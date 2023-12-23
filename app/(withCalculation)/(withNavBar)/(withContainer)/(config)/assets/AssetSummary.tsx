@@ -44,8 +44,8 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
 
   return (
     <Card>
-      <div className="grid grid-cols-3 gap-2">
-        <div className="flex flex-col items-center justify-center  border-r text-primary">
+      <div className="grid grid-cols-3 justify-items-auto ">
+        <div className=" flex-col  border border-primary text-primary justify-center items-center text-center hidden sm:flex">
           <AssetClassIcon className="h-12 w-12" />
           <div className="font-semibold">{type}</div>
         </div>
