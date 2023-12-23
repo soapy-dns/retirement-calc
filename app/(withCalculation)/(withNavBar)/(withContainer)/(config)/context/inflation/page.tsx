@@ -169,7 +169,7 @@ const InflationEditPage: React.FC = () => {
                   <Button onClick={() => handleDelete(index)}>
                     <div className="flex items-center gap-2">
                       <TrashIcon className="h-4 w-4" />
-                      <div className="invisible md:visible">Remove</div>
+                      <div className="hidden md:flex">Remove</div>
                     </div>
                   </Button>
                 </div>
@@ -208,7 +208,7 @@ const InflationEditPage: React.FC = () => {
           <Button buttonType={ButtonType.tertiary} onClick={handleAdd}>
             <div className="flex items-center gap-2">
               <PlusCircleIcon className="h-4 w-4" />
-              Add a row
+              <div className="hidden md:flex">Add a row</div>
             </div>
           </Button>
 
