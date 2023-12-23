@@ -37,7 +37,7 @@ export const EditPageLayout: React.FC<EditPageLayoutProps> = ({
 
       {children}
 
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-1 md:grid-cols-2">
         <Button onClick={handleCancel} buttonType={ButtonType.secondary}>
           {cancelText}
         </Button>
