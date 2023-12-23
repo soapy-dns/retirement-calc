@@ -29,7 +29,8 @@ export const ConfigNavBar = () => {
         className={`${tabColors} ${activeTab === ConfigTab.context ? selectedTabClassNames : null}`}
       >
         <div className="mx-4 flex flex-row p-2">
-          Context <GlobeAltIcon className="ml-2 h-6 w-6" />
+          <div className="hidden md:inline-block">Context</div>
+          <GlobeAltIcon className="ml-2 h-6 w-6" />
         </div>
       </button>
 
@@ -38,7 +39,8 @@ export const ConfigNavBar = () => {
         className={`${tabColors} ${activeTab === ConfigTab.assets ? selectedTabClassNames : null}`}
       >
         <div className="mx-4 flex flex-row">
-          Assets <CurrencyDollarIcon className="ml-2 h-6 w-6" />
+          <div className="hidden md:inline-block">Assets</div>
+          <CurrencyDollarIcon className="ml-2 h-6 w-6" />
         </div>
       </button>
 
@@ -47,7 +49,8 @@ export const ConfigNavBar = () => {
         className={`${tabColors} ${activeTab === ConfigTab.transfers ? selectedTabClassNames : null}`}
       >
         <div className="mx-4 flex flex-row">
-          Transfers <ArrowPathRoundedSquareIcon className="ml-2 h-6 w-6" />
+          <div className="hidden md:inline-block">Transfers</div>
+          <ArrowPathRoundedSquareIcon className="ml-2 h-6 w-6" />
         </div>
       </button>
     </div>

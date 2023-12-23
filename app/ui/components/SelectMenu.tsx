@@ -18,7 +18,7 @@ export const ScenarioMenu = () => {
     <Menu as="div" className="relative flex justify-center">
       <Menu.Button className=" border-x hover:bg-primary-darker">
         <div className="mx-4 flex flex-row">
-          Select Scenario
+          Scenarios
           <ChevronDownIcon className="h-6 w-6" aria-hidden="true" />
         </div>
       </Menu.Button>
