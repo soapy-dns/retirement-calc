@@ -1,4 +1,5 @@
 "use client"
+
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { Container } from "@/app/ui/components/Container"
 import { GenericModal } from "@/app/ui/components/GenericModal"
@@ -6,20 +7,16 @@ import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { currencyFormatter } from "@/app/ui/utils/formatter"
-import {
-  ArrowLongRightIcon,
-  ChevronDoubleLeftIcon,
-  ChevronRightIcon,
-  InformationCircleIcon
-} from "@heroicons/react/24/outline"
+import { ArrowLongRightIcon, ChevronDoubleLeftIcon, InformationCircleIcon } from "@heroicons/react/24/outline"
 import { useContext } from "react"
+
+const heading = "Calculated drawdowns"
 
 const HelpModalContent: React.FC = () => {
   return (
     <>
       <p>
-        These are the drawdowns from capital assets which have been calculated to be required based on your
-        configurations of drawdown order and drawdown start date etc.
+        These are the drawdowns from capital assets which have been calculated using the supplied configurations of drawdown order and drawdown start date etc.
       </p>
       <p>There is no guarantee that this is the best strategy for investment.</p>
     </>
@@ -52,14 +49,13 @@ export default function Drawdowns() {
           </Button>
 
           <h1 className="flex gap-2">
-            Drawdowns
+            {heading}
             <button onClick={toggleHelpText}>
               <InformationCircleIcon className="h-6 w-6 " />
             </button>
           </h1>
         </div>
 
-        {/* <div className="flex flex-col items-center"> */}
         {drawDownRowData &&
           drawDownRowData.map((byYear, index) => {
             return (
@@ -78,11 +74,11 @@ export default function Drawdowns() {
               </div>
             )
           })}
-        {/* </div> */}
       </Container>
+
       <GenericModal
         showModal={showModal}
-        heading="Automated drawdowns"
+        heading={heading}
         content={<HelpModalContent />}
         onToggle={onHelpModalToggle}
       />

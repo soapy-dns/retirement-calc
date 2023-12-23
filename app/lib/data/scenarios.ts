@@ -498,10 +498,8 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 100000,
         assetOwners: ["Her", "Him"],
-        // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
-        // preferredMinAmt: 10000,
         drawdownOrder: 20
         // drawdownTaxed: false
       }

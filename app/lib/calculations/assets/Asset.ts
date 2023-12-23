@@ -6,6 +6,11 @@ interface Props extends AssetConfig {
   incomeProducing: boolean
 }
 
+/**
+ * percOfDrawdownsTaxable for defined benefits in UK - built into the specific asset
+ * percOfEarningsTaxable - when would we need this?
+ * incomeProducing
+ */
 // TODO: need to have sub classes with the relevant properties
 export abstract class Asset {
   calculator?: Calculator
