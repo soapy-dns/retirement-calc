@@ -46,7 +46,7 @@ export const Input: React.FC<IInput> = ({
       <input
         {...rest}
         id={id}
-        className={`my-2 h-8 w-1/2  p-4 ${roundedClasses} ${colorClasses} ${className}`}
+        className={`my-2 h-8 w-3/4 p-4 ${roundedClasses} ${colorClasses} ${className}`}
         value={value}
         placeholder={placeholder}
         disabled={disabled}
