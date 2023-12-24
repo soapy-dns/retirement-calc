@@ -80,7 +80,7 @@ const SheetPage: React.FC = () => {
               </tr>
             </thead>
             {/* assets */}
-            <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
+            <tbody className="divide-y divide-gray-200">
               <HeadingRow text="Capital Assets" />
               {assetRowData &&
                 Object.entries(assetRowData).map(([rowIdentifier, rowData], index) => {
