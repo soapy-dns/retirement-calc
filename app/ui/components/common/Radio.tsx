@@ -40,7 +40,7 @@ export const Radio: React.FC<RadioProps> = ({
                 defaultChecked={value === optionValue}
                 value={optionValue}
                 onClick={onChange}
-                className="mt-1 h-4 w-4 shrink-0 appearance-none rounded-full border-2 border-primary bg-white  ring-primary  checked:border-white checked:bg-primary checked:ring-2"
+                className="mt-1 h-6 w-6 shrink-0 appearance-none rounded-full border-2 border-primary bg-white  ring-primary  checked:border-white checked:bg-primary checked:ring-2"
               />
               <label htmlFor={id} className="my-auto">
                 {label}

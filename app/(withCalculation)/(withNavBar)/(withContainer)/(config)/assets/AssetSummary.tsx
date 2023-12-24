@@ -73,13 +73,13 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
             <div className="flex">
               <Button buttonType={ButtonType.primary} onClick={handleEdit}>
                 <div className="flex items-center">
-                  <PencilSquareIcon className="mx-2 h-4 w-4" />
+                  <PencilSquareIcon className="mx-2 h-6 w-6" />
                   <div>Edit</div>
                 </div>
               </Button>
               <Button buttonType={ButtonType.secondary} onClick={handleRemove} disabled={disabled}>
                 <div className="flex items-center">
-                  <TrashIcon className="mx-2 h-4 w-4" />
+                  <TrashIcon className="mx-2 h-6 w-6" />
                   <div>Remove</div>
                 </div>
               </Button>

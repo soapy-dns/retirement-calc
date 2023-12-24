@@ -60,13 +60,13 @@ export const TransferDisplay: FunctionComponent<Props> = ({ transfers }) => {
             <div className="flex">
               <Button buttonType={ButtonType.primary} onClick={(e) => handleEdit(id)}>
                 <div className="flex items-center">
-                  <PencilSquareIcon className="mx-2 h-4 w-4" />
+                  <PencilSquareIcon className="mx-2 h-6 w-6" />
                   <div>Edit</div>
                 </div>
               </Button>
               <Button buttonType={ButtonType.secondary} onClick={() => handleRemove(id)}>
                 <div className="flex items-center">
-                  <TrashIcon className="mx-2 h-4 w-4" />
+                  <TrashIcon className="mx-2 h-6 w-6" />
                   <div>Remove</div>
                 </div>
               </Button>

@@ -51,7 +51,7 @@ export const CheckboxQuestion = React.forwardRef<HTMLInputElement, CheckboxProps
               value={checkboxValue}
               ref={forwardedRef}
               onChange={handleOnChange}
-              className="mt-1 h-4 w-4 shrink-0  rounded-sm border-2  bg-white"
+              className="mt-1 h-6 w-6 shrink-0  rounded-sm border-2  bg-white"
               // TODO: it is the className that is causing weird stuff to happen!!!  peer, relative or appearance-none
             />
             <label htmlFor={name} className="my-auto">

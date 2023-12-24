@@ -37,12 +37,12 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
         <div className="flex">
           <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
             <div className="flex items-center">
-              <PencilSquareIcon className="mx-2 h-4 w-4" /> <div className="text-base">Edit</div>
+              <PencilSquareIcon className="mx-2 h-6 w-6" /> <div className="text-base">Edit</div>
             </div>
           </Button>
           <Button buttonType={ButtonType.tertiary} onClick={handleRemove} disabled={removeButtonDisabled}>
             <div className="flex items-center">
-              <TrashIcon className="mx-2 h-4 w-4" />
+              <TrashIcon className="mx-6 h-6 w-6" />
               <div className="text-base">Remove</div>
             </div>
           </Button>

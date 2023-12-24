@@ -68,7 +68,7 @@ export default function ToolsPage() {
       <div className="flex flex-col items-center text-primary">
         <Button onClick={handleBack} buttonType={ButtonType.secondary}>
           <div className="flex items-center gap-2">
-            <ChevronDoubleLeftIcon className="h-4 w-4" />
+            <ChevronDoubleLeftIcon className="h-6 w-6" />
             <div>Back</div>
           </div>
         </Button>
@@ -132,10 +132,10 @@ export default function ToolsPage() {
           Calculate
         </Button>
       </Card>
-      <Card>
+      {/* <Card>
         <h2 className="text-primary">Selected scenario config</h2>
         <pre>{JSON.stringify(selectedScenario, null, 4)}</pre>
-      </Card>
+      </Card> */}
     </Container>
   )
 }

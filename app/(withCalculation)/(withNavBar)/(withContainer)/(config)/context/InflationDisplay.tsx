@@ -28,7 +28,7 @@ export const InflationDisplay: React.FC = () => {
         Inflation
         <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
           <div className="flex items-center gap-2">
-            <PencilSquareIcon className="mx-2 h-4 w-4" /> <div className="text-base">Edit</div>
+            <PencilSquareIcon className="mx-2 h-6 w-6" /> <div className="text-base">Edit</div>
           </div>
         </Button>
       </h2>

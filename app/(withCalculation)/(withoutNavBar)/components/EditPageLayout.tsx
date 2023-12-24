@@ -28,7 +28,7 @@ export const EditPageLayout: React.FC<EditPageLayoutProps> = ({
       <div className="flex flex-col items-center text-primary">
         <Button onClick={handleBack} buttonType={ButtonType.secondary}>
           <div className="flex items-center gap-2">
-            <ChevronDoubleLeftIcon className="h-4 w-4" />
+            <ChevronDoubleLeftIcon className="h-6 w-6" />
             <div>{backText}</div>
           </div>
         </Button>
