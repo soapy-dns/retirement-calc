@@ -47,7 +47,8 @@ export const MoreMenu = () => {
                   )}
                 >
                   <div className="flex gap-2">
-                    Drawdowns <ChevronDoubleDownIcon className="h-5 w-5" />
+                    <ChevronDoubleDownIcon className="h-5 w-5" />
+                    Drawdowns
                   </div>
                 </Link>
               )}
@@ -63,7 +64,8 @@ export const MoreMenu = () => {
                   )}
                 >
                   <div className="flex gap-2">
-                    Import <ArrowLeftOnRectangleIcon className="h-5 w-5" />
+                    <ArrowLeftOnRectangleIcon className="h-5 w-5" />
+                    Import
                   </div>
                 </Link>
               )}
@@ -78,7 +80,8 @@ export const MoreMenu = () => {
                   )}
                 >
                   <div className="flex gap-2">
-                    Export <ArrowRightOnRectangleIcon className="h-5 w-5" />
+                    <ArrowRightOnRectangleIcon className="h-5 w-5" />
+                    Export
                   </div>
                 </Link>
               )}
@@ -94,7 +97,8 @@ export const MoreMenu = () => {
                   )}
                 >
                   <div className="flex gap-2">
-                    Tools <WrenchScrewdriverIcon className="h-5 w-5" />
+                    <WrenchScrewdriverIcon className="h-5 w-5" />
+                    Tools
                   </div>
                 </Link>
               )}
@@ -110,7 +114,8 @@ export const MoreMenu = () => {
                   )}
                 >
                   <div className="flex gap-2">
-                    About <ChatBubbleBottomCenterIcon className="h-5 w-5" />
+                    <ChatBubbleBottomCenterIcon className="h-5 w-5" />
+                    About
                   </div>
                 </Link>
               )}
