@@ -21,7 +21,7 @@ export default function About() {
           <p>The calculations are based on:-</p>
           <ul className="list-disc mx-4 mb-4">
             <li>The value of capital assets</li>
-            <li>Any income expected from defined benefit pensions / salaries etc</li>
+            <li>Any expected income e.g. from defined benefit pensions or salaries</li>
             <li>Some assumptions on future returns, rates of inflation etc</li>
           </ul>
 
