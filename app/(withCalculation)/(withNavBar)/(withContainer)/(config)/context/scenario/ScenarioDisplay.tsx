@@ -34,15 +34,16 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
     <Card type={AlertType.info}>
       <h2 className="flex items-center justify-between text-primary">
         Scenario
-        <div className="flex">
+        <div className="flexjustify-end">
           <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
-            <div className="flex items-center">
-              <PencilSquareIcon className="mx-2 h-6 w-6" /> <div className="text-base">Edit</div>
+            <div className="flex gap-2">
+              <PencilSquareIcon className="h-6 w-6" />
+              <div className="text-base">Edit</div>
             </div>
           </Button>
           <Button buttonType={ButtonType.tertiary} onClick={handleRemove} disabled={removeButtonDisabled}>
-            <div className="flex items-center">
-              <TrashIcon className="mx-6 h-6 w-6" />
+            <div className="flex gap-2">
+              <TrashIcon className="h-6 w-6" />
               <div className="text-base">Remove</div>
             </div>
           </Button>
