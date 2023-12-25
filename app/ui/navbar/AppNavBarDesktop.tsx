@@ -1,18 +1,18 @@
 "use client"
 import { Cog8ToothIcon, PresentationChartLineIcon, TableCellsIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
-import { AppPath } from "./types"
+import { AppPath } from "../types"
 import { usePathname } from "next/navigation"
-import { MoreMenu } from "./MoreMenu"
-import { ScenarioMenu } from "./components/SelectMenu"
+import { MoreMenu } from "../MoreMenu"
+import { ScenarioMenu } from "../components/SelectMenu"
 
-export const AppNavBar = () => {
+export const AppNavBarDesktop = () => {
   const pathname = usePathname()
 
   const selectedTabClassNames = "border-b-4"
 
   return (
-    <div className=" flex h-10 flex-row justify-center border-0 bg-primary py-1 pl-3 text-white">
+    <div className=" flex h-10 flex-row justify-center border-0 bg-primary py-1 pl-3 text-white bg-red-500 w-full">
       <ScenarioMenu />
       <Link
         href={AppPath.config}

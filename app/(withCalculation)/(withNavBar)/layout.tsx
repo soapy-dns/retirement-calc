@@ -1,4 +1,4 @@
-import { AppNavBar } from "@/app/ui/AppNavBar"
+import { AppNavBar } from "@/app/ui/navbar/AppNavBar"
 
 export default function WithNavbarLayout({ children }: { children: React.ReactNode }) {
   return (
