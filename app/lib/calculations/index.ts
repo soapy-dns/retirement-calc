@@ -127,7 +127,8 @@ export const calculate = (scenario: IScenario) => {
     // }) // end of year
 
     if (calculatedEndYear !== to)
-      calculationMessage = `Cannot automate further drawdowns after ${calculatedEndYear}.  Some assets need to be sold.`
+      calculationMessage = `Cannot automate further caapital asset drawdowns after ${calculatedEndYear}.  
+      Some assets will need to be sold.  (Go to the Transfers tab under Config)`
 
     const finalYear = year + 1
     const numOfCalculatedYears = calculatedEndYear - startingYear

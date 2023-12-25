@@ -1,8 +1,199 @@
 import { IAsset, IScenario } from "./types"
-// import { validate } from "./validate"
-
-// See Readme for details
 export const scenarios: IScenario[] = [
+  {
+    id: "A",
+    name: "Multi-country example",
+    description: "Complex example.",
+    assets: [
+      {
+        id: "HIS_AU_SUPER",
+        name: "Australian super",
+        description: "Australian super - defined contributions",
+        className: "AuSuper",
+        value: 500000,
+        assetOwners: ["Him"],
+        // incomeProducing: false,
+        canDrawdown: true,
+        drawdownFrom: 2026,
+        drawdownOrder: 50,
+        // // drawdownTaxed: false,
+        percOfEarningsTaxable: 0
+      },
+      {
+        id: "HER_AU_DEFINED_BENEFIT",
+        name: "Final salary",
+        description: "Australian super - defined benefits",
+        className: "AuDefinedBenefits",
+        value: 0,
+        income: 3000, // this isn't the pot, but the guaranteed return value in the first year
+        assetOwners: ["Her"],
+        percOfEarningsTaxable: 0
+      },
+      {
+        id: "HER_AU_SUPER",
+        name: "Her AU super",
+        description: "Australian super - defined contributions",
+        className: "AuSuper",
+        value: 300000,
+        assetOwners: ["Her"],
+        // incomeProducing: false,
+        canDrawdown: true,
+        drawdownOrder: 50,
+        percOfEarningsTaxable: 0
+      },
+      {
+        id: "HIS_UK_SUPER",
+        name: "His Uk pension",
+        description: "UK super - defined contributions",
+        className: "AuSuper",
+        value: 100000,
+        assetOwners: ["Him"],
+        // incomeProducing: false,
+        canDrawdown: true,
+        drawdownFrom: 2026,
+        drawdownOrder: 50,
+        percOfEarningsTaxable: 100
+      },
+      {
+        id: "HER_UK_SUPER",
+        name: "Her Uk pension",
+        description: "UK super - defined benefits",
+        className: "AuDefinedBenefits",
+        value: 0,
+        assetOwners: ["Her"],
+        income: 1000, // this isn't the pot, but the guaranteed return value in the first year
+        drawdownOrder: 50,
+        // drawdownTaxed: true,
+        percOfEarningsTaxable: 100
+      },
+      {
+        id: "JOINT_SHARES",
+        name: "Joint shares",
+        description: "Australian shares",
+        className: "AuShares",
+        value: 20000,
+        assetOwners: ["Her", "Him"],
+        canDrawdown: true,
+        drawdownOrder: 60
+      },
+
+      {
+        id: "JOINT_AU_BANK",
+        name: "Joint Au bank accts",
+        description: "Australian bank accounts",
+        className: "AuBank",
+        value: 10000,
+        assetOwners: ["Her", "Him"],
+        incomeBucket: true, // if this is where income goes to
+        canDrawdown: true,
+        preferredMinAmt: 10000,
+        drawdownOrder: 20
+        // drawdownTaxed: false
+      },
+      {
+        id: "JOINT_UK_BANK",
+        name: "Joint UK bank accts",
+        description: "UK bank accounts",
+        className: "AuBank",
+        value: 1000,
+        assetOwners: ["Her", "Him"],
+        // incomeProducing: true,
+        canDrawdown: true,
+        drawdownOrder: 10
+        // drawdownTaxed: false
+      },
+      {
+        id: "UK_PROPERTY",
+        name: "UK Property",
+        description: "UK property",
+        className: "AuProperty",
+        value: 200000,
+        assetOwners: ["Her", "Him"],
+        // incomeProducing: true,
+        canDrawdown: false,
+        isRented: false
+        // propertyRented: true
+      },
+      {
+        id: "AU_PROPERTY",
+        name: "Au Property",
+        description: "Australian property",
+        className: "AuProperty",
+        value: 500000,
+        assetOwners: ["Her", "Him"],
+        // incomeProducing: false,
+        canDrawdown: false,
+        isRented: true,
+        rentalIncomePerMonth: 600,
+        rentalExpensesPerMonth: 150
+      }
+    ],
+    context: {
+      taxResident: "AU",
+      // au2ukExchangeRate: 0.52,
+      currency: "AU",
+
+      // numOfYears: 2,
+      // startingYear: 2023,
+      owners: ["Him", "Her"],
+      auBank: {
+        interestRate: 0.005
+      },
+      // ukBank: {
+      //   interestRate: 0.005
+      // },
+      superAu: {
+        investmentReturn: 0.05, // net of fees but not taxation
+        taxationRate: 0.15
+      },
+      // superUk: {
+      //   // TODO: need to work out how tax works on this?
+      //   investmentReturn: 0.04, // net of fees but not taxation - UK tax will need to be included in income tax
+      //   taxationRate: 0
+      // },
+      definedBenefitsAu: {
+        useInflationRate: true
+        // indexationRate: 0.03
+      },
+      definedBenefitsUk: {
+        useInflationRate: true
+        // indexationRate: 0.038841 // This is a kind of frig.  It will always return this and will always need a particular value to be removed from it
+      },
+      sharesAu: {
+        growthInterestRate: 0.03,
+        dividendInterestRate: 0.03
+      },
+
+      property: {
+        growthInterestRate: 0.03
+        // rentPercentageOfValue: 0.025, // TODO: work out a better value
+
+        // numOfOwners: 2,
+        // rentalIncomePerMonth: 820,
+        // rentalExpensesPerMonth: 100
+        // rentPercentageOfValue: 0.028 // based on a value of gbp230,000.  This is indivi
+      },
+      inflation: [{ fromYear: 2023, inflationRate: 0.03 }],
+      livingExpenses: [
+        { fromYear: 2023, amountInTodaysTerms: 80000 },
+        { fromYear: 2038, amountInTodaysTerms: 50000 }
+      ]
+    },
+    transfers: [
+      {
+        id: "1",
+        year: 2024,
+        from: "UK_PROPERTY",
+        to: "JOINT_SHARES",
+        migrateAll: true,
+        // value: 498571,
+        costOfTransfer: 20000 // (GBP10,000)
+      }
+    ]
+  }
+]
+// See Readme for details
+export const scenariosMany: IScenario[] = [
   {
     id: "A",
     name: "Example AU",

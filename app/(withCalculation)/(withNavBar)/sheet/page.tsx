@@ -63,7 +63,7 @@ const SheetPage: React.FC = () => {
 
   return (
     <div className="mt-20 flex flex-col">
-      <div className="shadow-md sm:rounded-lg">
+      <div className="">
         <div className="inline-block min-w-full align-middle">
           <table className="min-w-full table-fixed divide-y divide-gray-200 py-4 ">
             <thead className="sticky top-20 z-30 bg-gray-50 ">
