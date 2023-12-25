@@ -9,7 +9,8 @@ import {
   Cog8ToothIcon,
   PresentationChartLineIcon,
   TableCellsIcon,
-  Bars3Icon
+  Bars3Icon,
+  DocumentIcon
 } from "@heroicons/react/24/outline"
 
 import Link from "next/link"
@@ -158,6 +159,22 @@ export const AppNavBarMobile = () => {
                     <div className="flex gap-2">
                       <WrenchScrewdriverIcon className="h-5 w-5" />
                       Tools
+                    </div>
+                  </Link>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <Link
+                    href={AppPath.documentation}
+                    className={classNames(
+                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                      "block w-full px-4 py-2 text-left text-sm"
+                    )}
+                  >
+                    <div className="flex gap-2">
+                      <DocumentIcon className="h-5 w-5" />
+                      Documentation
                     </div>
                   </Link>
                 )}

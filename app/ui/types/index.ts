@@ -21,5 +21,6 @@ export enum AppPath {
   fileImport = "/file/import",
   fileExport = "/file/export",
   tools = "/tools",
+  documentation = "/documentation",
   about = "/about"
 }
