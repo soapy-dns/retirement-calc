@@ -23,14 +23,14 @@ export const ConfigNavBar = () => {
   const selectedTabClassNames = "border-b-4 border-primary "
 
   return (
-    <div className=" mb-4 flex  justify-around bg-primary-lightest py-1 pl-3">
+    <div className=" mb-4 flex  justify-around bg-primary-lightest pt-2 pb-1">
       <button
         onClick={handleContextClick}
         className={`${tabColors} ${activeTab === ConfigTab.context ? selectedTabClassNames : null}`}
       >
-        <div className="mx-4 flex flex-row p-2">
+        <div className="mx-4 flex gap-2">
           <div className="hidden sm:inline">Context</div>
-          <GlobeAltIcon className="ml-2 h-6 w-6" />
+          <GlobeAltIcon className="h-6 w-6" />
         </div>
       </button>
 
@@ -38,9 +38,9 @@ export const ConfigNavBar = () => {
         onClick={handleAssetsClick}
         className={`${tabColors} ${activeTab === ConfigTab.assets ? selectedTabClassNames : null}`}
       >
-        <div className="mx-4 flex flex-row">
+        <div className="mx-4 flex gap-2">
           <div className="hidden sm:inline">Assets</div>
-          <CurrencyDollarIcon className="ml-2 h-6 w-6" />
+          <CurrencyDollarIcon className="h-6 w-6" />
         </div>
       </button>
 
@@ -48,9 +48,9 @@ export const ConfigNavBar = () => {
         onClick={handleTransfersClick}
         className={`${tabColors} ${activeTab === ConfigTab.transfers ? selectedTabClassNames : null}`}
       >
-        <div className="mx-4 flex flex-row">
+        <div className="mx-4 flex gap-2">
           <div className="hidden sm:inline">Transfers</div>
-          <ArrowPathRoundedSquareIcon className="ml-2 h-6 w-6" />
+          <ArrowPathRoundedSquareIcon className="h-6 w-6" />
         </div>
       </button>
     </div>

@@ -38,7 +38,7 @@ export const assetConstants = {
   },
   INCOME: {
     LABEL: "Income",
-    HELP_TEXT: "Defines the income amount for an asset. Only required for defined benefits."
+    HELP_TEXT: "The income amount per year."
   },
   DESCRIPTION: {
     LABEL: "Description",
