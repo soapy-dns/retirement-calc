@@ -11,6 +11,10 @@ import { GeneralContextDisplay } from "./GeneralContextDisplay"
 export const ContextTab: React.FC = () => {
   return (
     <>
+      <p className="mx-4">
+        The operating environment for the calculations e.g. inflation, living expenses, rates of return etc
+      </p>
+
       <GeneralContextDisplay />
 
       <OwnersDisplay />

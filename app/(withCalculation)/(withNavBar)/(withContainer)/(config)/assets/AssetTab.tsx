@@ -23,6 +23,8 @@ export const AssetTab = () => {
 
   return (
     <div className="">
+      <p className="mx-4">Assets / resources used to hold or create economic value.</p>
+
       <div className="my-4 flex justify-center">
         <Button buttonType={ButtonType.secondary} onClick={handleAdd}>
           <div className="flex items-center gap-2">
