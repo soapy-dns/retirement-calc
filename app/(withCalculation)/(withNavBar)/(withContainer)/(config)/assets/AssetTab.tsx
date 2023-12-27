@@ -23,7 +23,9 @@ export const AssetTab = () => {
 
   return (
     <div className="">
-      <p className="mx-4">Assets / resources used to hold or create economic value.</p>
+      <p className="mx-4">
+        Resources <span className="text-primary">(assets)</span> used to hold or create economic value.
+      </p>
 
       <div className="my-4 flex justify-center">
         <Button buttonType={ButtonType.secondary} onClick={handleAdd}>
