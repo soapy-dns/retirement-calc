@@ -23,7 +23,7 @@ export const assetTypeOptions = [
 ]
 
 // TODO: I don't think this is used now
-export const getRealAssets = () => assetTypeOptions.filter((it) => it.assetClass !== AssetClass.income)
+// export const getRealAssets = () => assetTypeOptions.filter((it) => it.assetClass !== AssetClass.income)
 
 export const drawdownOrderOptions: ISelectOption[] = [
   { label: "1st", value: "10" },

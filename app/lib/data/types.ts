@@ -40,6 +40,7 @@ export interface IAsset {
   rentalIncomePerMonth?: number
   rentalExpensesPerMonth?: number
   incomeEndYear?: number
+  country: Country
 }
 
 export interface IncomeConfig {

@@ -8,6 +8,7 @@ import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { useAsset } from "@/app/ui/hooks/useAsset"
 import { useOwner } from "@/app/ui/hooks/useOwner"
+import { Country } from "@/app/lib/calculations/tax/taxCalcs/types"
 
 const getDrawdownFromValue = (enteredYear?: number): number => {
   const startingYear = getStartingYear()
@@ -18,6 +19,7 @@ const getDrawdownFromValue = (enteredYear?: number): number => {
 interface ChangedFormData {
   name: string
   description: string
+  country: Country
   assetType: string // TODO: should be enum?
   value: number
   income: number
@@ -39,6 +41,7 @@ const getAssetValuesFromForm = (data: ChangedFormData): Omit<IAsset, "id"> => {
   const {
     name,
     description,
+    country,
     assetType,
     value,
     income,
@@ -59,6 +62,7 @@ const getAssetValuesFromForm = (data: ChangedFormData): Omit<IAsset, "id"> => {
   return {
     name,
     description,
+    country,
     className: assetType,
     value: value ? +value : 0, // TODO: this should really be undefined but it breaks stuff
     income: income ? +income : undefined,
@@ -104,6 +108,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   const {
     name,
     description,
+    country = "AU",
     className,
     value,
     income,
@@ -137,6 +142,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     defaultValues: {
       name,
       description: description,
+      country,
       assetType: className,
       value,
       income,

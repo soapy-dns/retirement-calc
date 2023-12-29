@@ -1,6 +1,7 @@
 import { Calculator } from "../calculator/Calculator"
 import { AssetConfig, YearData } from "./types"
 import { AssetClass } from "@/app/lib/calculations/types"
+import { Country } from "../tax/taxCalcs/types"
 
 interface Props extends AssetConfig {
   incomeProducing: boolean
@@ -20,7 +21,7 @@ export abstract class Asset {
   description
   incomeProducing = false
   assetOwners
-  scenario
+  scenario // TODO: Why do I need scenarop here?
   percOfEarningsTaxable: number // The % of earnings which are taxable - eg defined benefits may have 25% tax free
   incomeBucket = false
   canDrawdown = true
@@ -30,7 +31,9 @@ export abstract class Asset {
   // propertyRented = false
   rentalIncomePerMonth // TODO: move to subclass
   rentalExpensesPerMonth // move to subclass
+  country: Country
   public abstract capitalAsset: boolean
+  abstract readonly assetClass: AssetClass
 
   // TODO: can this be improved -> https://www.digitalocean.com/community/tutorials/how-to-use-classes-in-typescript
   constructor(props: Props) {
@@ -49,7 +52,8 @@ export abstract class Asset {
       scenario,
       percOfEarningsTaxable = 100,
       rentalIncomePerMonth,
-      rentalExpensesPerMonth
+      rentalExpensesPerMonth,
+      country = "AU"
     } = props
 
     this.id = id
@@ -67,6 +71,7 @@ export abstract class Asset {
     this.drawdownFrom = drawdownFrom
     this.rentalIncomePerMonth = rentalIncomePerMonth
     this.rentalExpensesPerMonth = rentalExpensesPerMonth
+    this.country = country
   }
 
   getName = () => {

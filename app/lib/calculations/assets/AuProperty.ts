@@ -16,6 +16,7 @@ const getCalculator = (assetConfig: AssetConfig, inflationContext: InflationCont
 
 export class AuProperty extends Asset {
   capitalAsset: boolean // if all assets have this, shouldn't it be in the Asset class
+  assetClass: AssetClass
 
   constructor(assetConfig: AssetConfig, inflationContext: InflationContext) {
     super({
@@ -27,6 +28,7 @@ export class AuProperty extends Asset {
     const { value, startingYear } = assetConfig
 
     this.capitalAsset = true
+    this.assetClass = AssetClass.property
 
     this.history.push({ value, year: startingYear, transferAmt: 0, income: 0 })
   }

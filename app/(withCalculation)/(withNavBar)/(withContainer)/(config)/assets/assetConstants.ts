@@ -3,6 +3,10 @@ export const assetConstants = {
     LABEL: "Asset name",
     HELP_TEXT: "A short name for the asset to help you identify it throughout the application."
   },
+  COUNTRY: {
+    LABEL: "Country of asset",
+    HELP_TEXT: "The country the asset is in (defaults to Australia)."
+  },
   EARNINGS_BUCKET: {
     LABEL: "Earnings bucket",
     HELP_TEXT:

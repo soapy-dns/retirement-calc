@@ -22,7 +22,6 @@ import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
 
 export const calculate = (scenario: IScenario) => {
   try {
-    console.log("calculate for scenario", scenario.name)
     // setup
     let calculationMessage = ""
     const totalDrawdowns: DrawdownYearData[] = []
@@ -44,7 +43,6 @@ export const calculate = (scenario: IScenario) => {
       au2ukExchangeRate
     } = context
 
-    console.groupCollapsed("---calculations---")
     const { yearRange, to } = getYearRange(startingYear, numOfYears)
 
     const inflationContext = getInflationContext(yearRange, inflationConfig)
@@ -116,9 +114,9 @@ export const calculate = (scenario: IScenario) => {
 
       const remainingAmtToDrawdown = applyAutoDrawdowns(context)
       if (remainingAmtToDrawdown > 100) {
-        console.log(
-          `REMAINING AMOUNT TO DRAWDOWN = ${remainingAmtToDrawdown} for year ${year} - stopping further calculation`
-        )
+        // console.log(
+        //   `REMAINING AMOUNT TO DRAWDOWN = ${remainingAmtToDrawdown} for year ${year} - stopping further calculation`
+        // )
         break
       }
 
@@ -230,20 +228,6 @@ export const calculate = (scenario: IScenario) => {
 
     const surplusRowData = { "Surplus (if -ve is tax liability for next yr)": surplusYearData }
 
-    // console.log("--yearRange--", calcYearRangeAssets)
-    // console.log("--calculationData--", calculationData)
-    // console.log("--graphCalculatedAssetData--", graphCalculatedAssetData)
-    // console.log("--assetRowData--", assetRowData)
-    // console.log("--earningsRowData--", earningsRowData)
-    // console.log("--drawDownRowData--", JSON.stringify(drawDownRowData, null, 4))
-    // console.log("--expensesRowData--", expensesRowData)
-    // console.log("--surplusRowData--", surplusRowData)
-    // console.log("--inflationContext--", inflationContext)
-    // console.log("totalAssetsData", totalAssetsData)
-    // console.log("--netPresentValue--", netPresentValue)
-
-    console.groupEnd()
-
     return {
       assetRowData,
       earningsRowData,
@@ -268,7 +252,6 @@ export const calculate = (scenario: IScenario) => {
       if (error instanceof Error) return error.message
       return String(error)
     }
-    console.log("--e--", e)
     throw new Error(`Calculation error ${getErrorMessage(e)}`)
   }
 }

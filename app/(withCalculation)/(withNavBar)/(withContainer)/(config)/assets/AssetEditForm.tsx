@@ -52,6 +52,17 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         editable={true}
         helpText={assetConstants.CLASS.HELP_TEXT}
       />
+      <RadioButtonQuestion
+        id="country"
+        control={control}
+        label={assetConstants.COUNTRY.LABEL}
+        values={[
+          { label: "Australia", value: "AU" },
+          { label: "Scotland", value: "SC" }
+        ]}
+        variant={RadioQuestionVariant.VERTICAL}
+        helpText={assetConstants.COUNTRY.HELP_TEXT}
+      />
       <TextAreaQuestion
         id="description"
         control={control}

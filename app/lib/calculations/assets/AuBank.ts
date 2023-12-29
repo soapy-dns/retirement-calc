@@ -14,6 +14,7 @@ const getCalculator = (assetConfig: AssetConfig) => {
 
 export class AuBank extends Asset {
   capitalAsset: boolean
+  assetClass: AssetClass
 
   constructor(props: AssetConfig) {
     // const assetConfig = {...props, this.incomeProducing: true}
@@ -21,6 +22,7 @@ export class AuBank extends Asset {
     const { value, startingYear } = props
 
     this.capitalAsset = true
+    this.assetClass = AssetClass.cash
 
     this.history.push({ value, year: startingYear, income: 0, transferAmt: 0 })
   }

@@ -17,13 +17,13 @@ const getCalculator = (assetConfig: AssetConfig) => {
 
 export class AuShares extends Asset {
   capitalAsset: boolean
+  assetClass: AssetClass
 
   // TODO: Should we just have one asset class select the calculator and leave it to the calculator to get the config?
   constructor(props: AssetConfig) {
     super({ ...props, incomeProducing: true, calculator: getCalculator(props) })
     this.capitalAsset = true
-    this.capitalAsset = true
-
+    this.assetClass = AssetClass.shares
     const { value, startingYear } = props
 
     this.history.push({ value, year: startingYear, transferAmt: 0, income: 0 })

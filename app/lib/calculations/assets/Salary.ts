@@ -15,6 +15,7 @@ const getCalculator = (assetConfig: AssetConfig, inflationContext: InflationCont
 
 export class Salary extends Asset {
   capitalAsset: boolean
+  assetClass: AssetClass
 
   constructor(props: DefinedBenefitAssetProps, inflationContext: InflationContext) {
     // is income producing - it has to be - that is all it does
@@ -25,6 +26,7 @@ export class Salary extends Asset {
       calculator: getCalculator(props, inflationContext)
     })
     this.capitalAsset = false
+    this.assetClass = AssetClass.income
 
     const { value, startingYear, income = 0, scenario } = props
     const {
