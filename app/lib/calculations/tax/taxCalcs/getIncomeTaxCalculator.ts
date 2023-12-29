@@ -17,12 +17,9 @@ export const getIncomeTaxCalculator = ({
   au2ukExchangeRate = 1
 }: // income
 IGetIncomeTaxCalculator): IncomeTaxCalc => {
-  console.log("--taxResident, currency, au2ukExchangeRate--", taxResident, currency, "-", au2ukExchangeRate)
   const factor = taxResident !== currency ? au2ukExchangeRate ?? 1 : 1
 
-  console.log("--taxResident !== currency--", taxResident !== currency)
-  console.log("--au2ukExchangeRate--", au2ukExchangeRate ?? 1)
-
   if (taxResident === "AU") return new AuIncomeTaxCalc(factor)
+
   return new UkIncomeTaxCalc(factor)
 }

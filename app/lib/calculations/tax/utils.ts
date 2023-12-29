@@ -38,10 +38,10 @@ export const getTaxableDrawdownAmt = (scenario: IScenario, transfersForYear: Tra
 
     if (!matchingAssetData) return accum
 
-    // TODO: defaulting percOfEarningsTaxable here seems messy
-    const { assetOwners, percOfEarningsTaxable = 100 } = matchingAssetData || {}
+    // TODO: drawdowns are not taxed unless in a different country
+    const { assetOwners } = matchingAssetData || {}
     if (assetOwners.includes(owner)) {
-      return (((accum + value) / assetOwners.length) * percOfEarningsTaxable) / 100
+      return (accum + value) / assetOwners.length / 100
     }
     return accum
   }, 0)
