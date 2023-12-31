@@ -1,5 +1,5 @@
 import { IAsset, IScenario } from "./types"
-export const scenarios: IScenario[] = [
+export const scenariosSingle: IScenario[] = [
   {
     id: "A",
     name: "Multi-country example",
@@ -203,7 +203,7 @@ export const scenarios: IScenario[] = [
   }
 ]
 // See Readme for details
-export const scenariosMany: IScenario[] = [
+export const scenarios: IScenario[] = [
   {
     id: "A",
     name: "Example AU",
@@ -1173,7 +1173,7 @@ export const scenariosMany: IScenario[] = [
     description: "AU and UK defined contributions - based in AU",
     assets: [
       {
-        id: "2",
+        id: "UK_BANK",
         name: "UK_BANK",
         description: "UK bank accounts",
         country: "SC",
@@ -1185,7 +1185,7 @@ export const scenariosMany: IScenario[] = [
         drawdownOrder: 20
       },
       {
-        id: "3",
+        id: "AU_DEFINED_CONTS",
         name: "AU_DEFINED_CONTS",
         description: "AU defined contributions",
         country: "AU",

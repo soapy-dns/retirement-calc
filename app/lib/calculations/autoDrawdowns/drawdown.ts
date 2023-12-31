@@ -11,7 +11,7 @@ import { AutomatedDrawdown } from "./types"
 import { BasicYearData } from "../types"
 import { mergeAutoDrawdowns } from "./mergeAutoDrawdowns"
 
-interface IContext {
+interface IDrawdownContext {
   year: number
   scenario: IScenario
   assets: Asset[]
@@ -27,7 +27,7 @@ interface IContext {
 }
 
 const drawdownIteration = (
-  { scenario, year, automatedDrawdownMap, taxes, incomeTaxCalculator, owners, groupedAssets }: IContext,
+  { scenario, year, automatedDrawdownMap, taxes, incomeTaxCalculator, owners, groupedAssets }: IDrawdownContext,
   remainingAmtToDrawdown: number
 ) => {
   const existingAutoDrawdowns = automatedDrawdownMap[year] || []
@@ -44,7 +44,12 @@ const drawdownIteration = (
     const taxHistory = taxForOwner.history.find((it) => it.year === year)
     if (!taxHistory) throw new Error("No tax history")
 
-    const taxableAutomatedDrawdownAmt = getTaxableDrawdownAmt(scenario, automatedDrawdownsForYear, owner)
+    const taxableAutomatedDrawdownAmt = getTaxableDrawdownAmt(
+      scenario,
+      automatedDrawdownsForYear,
+      owner,
+      groupedAssets.flat()
+    )
 
     // This isn't right.  We are doubling. TODO:
     const newTotalTaxableAmt =
@@ -63,10 +68,9 @@ const drawdownIteration = (
  * A drawdown is value taken from an asset.
  * Calculate and apply the drawdowns required to math the desired spend / expenses
  * As drawdowns an be taxed, we need to iterate
- * @param context
  */
-export const applyAutoDrawdowns = (context: IContext): number => {
-  const { year, automatedDrawdownMap, taxes, livingExpenses, totalExpenses, totalDrawdowns } = context
+export const applyAutoDrawdowns = (drawdownContext: IDrawdownContext): number => {
+  const { year, automatedDrawdownMap, taxes, livingExpenses, totalExpenses, totalDrawdowns } = drawdownContext
 
   const livingExpenseForYearAmt = getLivingExpensesAmtForYear(year, livingExpenses)
 
@@ -84,7 +88,7 @@ export const applyAutoDrawdowns = (context: IContext): number => {
   while (remainingAmtToDrawdown > 100 && i < 100) {
     i = i + 1
 
-    drawdownIteration(context, remainingAmtToDrawdown)
+    drawdownIteration(drawdownContext, remainingAmtToDrawdown)
 
     totalTaxesAmt = getTaxAmtForYear(taxes, year) //all owners
     totalExpensesAmt = totalTaxesAmt + livingExpenseForYearAmt

@@ -1,11 +1,33 @@
-import { getOwnersTaxableEarningsAmt, getTaxableDrawdownAmt } from "../utils"
+import { getPercDrawdownTaxable, getTaxableDrawdownAmt } from "../utils"
 import * as assetUtilsService from "../../assets/assetUtils"
-import { Earning } from "../../assets/types"
-
-// jest.spyOn(assetUtilsService, "getAssetWithMatchingName")
+import { AssetClass } from "../../types"
 
 const scenarioId = "xxx"
 const owner = "him"
+describe("", () => {
+  it("should have 0% taxable if residency and asset countries both Australia", () => {
+    const result = getPercDrawdownTaxable("AU", "AU", AssetClass.super)
+    expect(result).toBe(0)
+  })
+
+  it("should have 0% taxable if residency and asset countries both Scotland", () => {
+    const result = getPercDrawdownTaxable("SC", "SC", AssetClass.super)
+    expect(result).toBe(0)
+  })
+
+  it("should have 100% taxable if residency = AU and asset country = SC", () => {
+    const result = getPercDrawdownTaxable("AU", "SC", AssetClass.super)
+    expect(result).toBe(100)
+  })
+  it("should have 100% taxable if residency = SC and asset country = AU", () => {
+    const result = getPercDrawdownTaxable("SC", "AU", AssetClass.super)
+    expect(result).toBe(100)
+  })
+  it("should have 0% taxable if residency = SC and asset country = AU, but not super", () => {
+    const result = getPercDrawdownTaxable("SC", "AU", AssetClass.cash)
+    expect(result).toBe(0)
+  })
+})
 
 describe("getTaxableDrawdownAmt", () => {
   it.skip("should add value to accumlated total", () => {

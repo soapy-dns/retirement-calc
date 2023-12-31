@@ -7,7 +7,7 @@ import { Asset } from "./Asset"
 import { getDrawdownableAssets } from "../autoDrawdowns/getDrawdownableAssets"
 import { sortByPreference } from "../utils/sortAssetsByPreference"
 import { groupAssetsByPreference } from "./groupAssetsByPreference"
-import { getAssetData } from "../../data/scenarios"
+// import { getAssetData } from "../../data/scenarios"
 import { Earning } from "./types"
 import { IScenario } from "../../data/types"
 import { InflationContext } from "@/app/lib/calculations/types"
@@ -42,9 +42,9 @@ export const buildInitialAssets = (
   })
 }
 
-export const getAssetWithMatchingName = (scenario: IScenario, assetName: string) => {
-  return getAssetData(scenario, assetName)
-}
+// export const getAssetWithMatchingName = (scenario: IScenario, assetName: string) => {
+//   return getAssetData(scenario, assetName)
+// }
 
 export const getGroupedAssets = (year: number, assets: Asset[]) => {
   // some assets cannot be drawndown eg property

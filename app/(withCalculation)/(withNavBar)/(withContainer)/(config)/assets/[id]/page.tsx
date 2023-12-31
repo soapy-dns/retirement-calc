@@ -68,7 +68,7 @@ const getAssetValuesFromForm = (data: ChangedFormData): Omit<IAsset, "id"> => {
     income: income ? +income : undefined,
     assetOwners: owners,
     canDrawdown: canDrawdown === "Y",
-    drawdownOrder,
+    drawdownOrder: drawdownOrder ? +drawdownOrder : undefined,
     drawdownFrom,
     // incomeProducing: earnsIncome === "Y",
     incomeBucket: earningsBucket === "Y",

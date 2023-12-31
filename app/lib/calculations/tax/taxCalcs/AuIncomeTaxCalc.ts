@@ -18,7 +18,7 @@ export class AuIncomeTaxCalc extends IncomeTaxCalc {
   taxTo4 = (this.bandTop4 - this.bandTop3) * this.taxRate4 + this.taxTo3
 
   getTax(income: number): number {
-    const correctedIncome = income * this.factor
+    const correctedIncome = income * this.currencyConversionFactor
     if (correctedIncome > this.bandTop4)
       return Math.round((correctedIncome - this.bandTop4) * this.taxRate5 + this.taxTo4)
     if (correctedIncome > this.bandTop3)

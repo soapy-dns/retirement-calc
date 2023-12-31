@@ -8,7 +8,7 @@ export interface IScenario {
   name: string
   description?: string
   assets: IAsset[]
-  context: ContextData
+  context: ContextConfig
   transfers?: Transfer[]
 }
 
@@ -87,7 +87,7 @@ export interface LivingExpensesRecord {
   amountInTodaysTerms: number
 }
 
-export interface ContextData {
+export interface ContextConfig {
   taxResident: Country
   au2ukExchangeRate?: number // TODO: make this more generic
   currency: Country

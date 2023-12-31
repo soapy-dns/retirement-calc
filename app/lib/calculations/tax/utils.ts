@@ -1,9 +1,11 @@
 import { Earning, Tax } from "../assets/types"
-import { getAssetWithMatchingName } from "../assets/assetUtils"
 import { IncomeTaxCalc } from "./taxCalcs/incomeTaxCalc"
 import { getScenarioTransfersForYear } from "../transfers/transferUtils"
-import { IScenario } from "../../data/types"
+import { ContextConfig, IScenario } from "../../data/types"
 import { Transfer } from "../transfers/types"
+import { Asset } from "../assets/Asset"
+import { AssetClass } from "../types"
+import { Country } from "./taxCalcs/types"
 
 export const getOwnersTaxableEarningsAmt = (earningsFromAssets: Earning[], owner: string, year: number) => {
   // total income from the owner's assets
@@ -28,20 +30,33 @@ export const getOwnersTaxableEarningsAmt = (earningsFromAssets: Earning[], owner
  *
  * TODO, rather than passing the scenario for the asset config, maybe add relevant info to the asset object?
  */
-export const getTaxableDrawdownAmt = (scenario: IScenario, transfersForYear: Transfer[], owner: string): number => {
+export const getTaxableDrawdownAmt = (
+  scenario: IScenario,
+  transfersForYear: Transfer[],
+  owner: string,
+  assets: Asset[]
+): number => {
   if (!transfersForYear) return 0
 
   const taxableDrawdownAmt = transfersForYear?.reduce((accum, transfer) => {
     const { from, value = 0 } = transfer
 
-    const matchingAssetData = getAssetWithMatchingName(scenario, from)
+    const matchingAsset = assets.find((asset) => {
+      return asset.id === from
+    })
 
-    if (!matchingAssetData) return accum
+    if (!matchingAsset) return accum
 
-    // TODO: drawdowns are not taxed unless in a different country
-    const { assetOwners } = matchingAssetData || {}
+    //  drawdowns are not taxed unless in a different country
+    const { assetOwners, country, assetClass } = matchingAsset || {}
+    const {
+      context: { taxResident }
+    } = scenario
+
+    const percDrawdownTaxable = getPercDrawdownTaxable(taxResident, country, assetClass)
+
     if (assetOwners.includes(owner)) {
-      return (accum + value) / assetOwners.length / 100
+      return ((accum + value) / assetOwners.length) * (percDrawdownTaxable / 100)
     }
     return accum
   }, 0)
@@ -77,14 +92,15 @@ export const calculateTaxes = (
   owners: string[],
   incomeTaxCalculator: IncomeTaxCalc,
   earningsFromAssets: Earning[],
-  taxes: Tax[] // TODO: maybe we create and return?
+  taxes: Tax[], // TODO: maybe we create and return?
+  assets: Asset[]
 ) => {
   const manualTransfersForYear = getScenarioTransfersForYear(scenario, year)
 
   owners.forEach((owner: string) => {
     const tax = taxes.find((it) => it.owner === owner)
     if (!tax) throw new Error(`tax object not foound for ${owner}`)
-    const manualTaxableDrawdownAmt = getTaxableDrawdownAmt(scenario, manualTransfersForYear, owner)
+    const manualTaxableDrawdownAmt = getTaxableDrawdownAmt(scenario, manualTransfersForYear, owner, assets)
 
     const ownersTaxableEarningsAmt = getOwnersTaxableEarningsAmt(earningsFromAssets, owner, year)
 
@@ -101,4 +117,25 @@ export const calculateTaxes = (
 
     taxHistory.value = ownersTaxAmt
   }) // END OF TAX CALCS
+}
+
+export const getPercDrawdownTaxable = (taxResident: Country, assetCountry: Country, assetClass: AssetClass) => {
+  if (taxResident === assetCountry || assetClass !== AssetClass.super) {
+    return 0
+  }
+  return 100
+}
+
+// Not used yet, but will remove field from asset
+// TODO: change to just have the 3 factors we need.  Much easier to test
+export const getPercIncomeTaxable = (context: ContextConfig, asset: Asset) => {
+  const { taxResident } = context
+  const { country, assetClass } = asset
+
+  if (taxResident === "SC" && country === "SC" && assetClass === AssetClass.super) {
+    return 75
+  } else if (taxResident === country) {
+    return 0
+  }
+  return 100
 }

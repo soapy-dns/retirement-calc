@@ -4,7 +4,7 @@ import React, { MouseEvent, SyntheticEvent, useContext, useEffect } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
-import { ContextData, InflationRecord } from "@/app/lib/data/types"
+import { ContextConfig, InflationRecord } from "@/app/lib/data/types"
 import { InputField } from "@/app/ui/components/form/InputField"
 import {
   inflationRateValidationRules,
@@ -111,7 +111,7 @@ const InflationEditPage: React.FC = () => {
       }
     })
 
-    const updatedContext: ContextData = {
+    const updatedContext: ContextConfig = {
       ...context,
       inflation: reformattedDataItems
     }

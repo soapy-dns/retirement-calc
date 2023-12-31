@@ -1,7 +1,7 @@
 "use client"
 
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
-import { ContextData } from "@/app/lib/data/types"
+import { ContextConfig } from "@/app/lib/data/types"
 import { DECIMALS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
@@ -32,7 +32,7 @@ const PropertyPage: React.FC = () => {
     const { growthRate } = data
     const { context } = selectedScenario
 
-    const updatedContext: ContextData = {
+    const updatedContext: ContextConfig = {
       ...context,
       property: {
         growthInterestRate: growthRate

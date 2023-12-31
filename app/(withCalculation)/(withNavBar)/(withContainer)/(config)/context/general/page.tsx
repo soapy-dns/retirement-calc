@@ -1,7 +1,7 @@
 "use client"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { Country } from "@/app/lib/calculations/tax/taxCalcs/types"
-import { ContextData } from "@/app/lib/data/types"
+import { ContextConfig } from "@/app/lib/data/types"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext } from "react"
@@ -30,7 +30,7 @@ const GeneralContextEditPage: React.FC = () => {
   const onSubmit = (data: ChangedFormData) => {
     const { context } = selectedScenario
 
-    const updatedContext: ContextData = {
+    const updatedContext: ContextConfig = {
       ...context,
       taxResident: data.taxResident,
       currency: data.currency,

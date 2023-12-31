@@ -4,7 +4,7 @@ import React, { SyntheticEvent, useContext } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
-import { ContextData, LivingExpensesRecord } from "@/app/lib/data/types"
+import { ContextConfig, LivingExpensesRecord } from "@/app/lib/data/types"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { InputField } from "@/app/ui/components/form/InputField"
 import { inflationYearValidationRules, newInflationRateValidationRules } from "@/app/ui/validation/inflationYear"
@@ -92,7 +92,7 @@ const LivingExpensesPage: React.FC = () => {
       }
     })
 
-    const updatedContext: ContextData = {
+    const updatedContext: ContextConfig = {
       ...context,
       livingExpenses: reformattedDataItems
     }

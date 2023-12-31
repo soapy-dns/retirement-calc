@@ -21,7 +21,7 @@ export class UkIncomeTaxCalc extends IncomeTaxCalc {
   taxTo5 = (this.bandTop5 - this.bandTop4) * this.taxRate4 + this.taxTo4
 
   getTax(income: number): number {
-    const correctedIncome = income * this.factor
+    const correctedIncome = income * this.currencyConversionFactor
 
     if (correctedIncome > this.bandTop5)
       return Math.round((correctedIncome - this.bandTop5) * this.taxRate6 + this.taxTo5)

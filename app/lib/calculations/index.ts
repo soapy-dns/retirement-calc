@@ -71,7 +71,7 @@ export const calculate = (scenario: IScenario) => {
       calculatedEndYear = year + 1
       addAssetEarnings(year, assets, earningsFromAssets)
 
-      calculateTaxes(scenario, year, owners, incomeTaxCalculator, earningsFromAssets, taxes)
+      calculateTaxes(scenario, year, owners, incomeTaxCalculator, earningsFromAssets, taxes, assets)
       // console.log("--year, taxes--", year, taxes)
 
       // TOTAL INCOME FOR THIS YEAR -will be moved to the 'incomeBucket' asset
@@ -97,7 +97,7 @@ export const calculate = (scenario: IScenario) => {
       // console.log("--groupedAssets--", groupedAssets)
 
       // why are we sending (for example) the entire taxes for all years when we are only interested in 1.
-      const context = {
+      const drawdownContext = {
         year,
         scenario,
         assets,
@@ -112,7 +112,7 @@ export const calculate = (scenario: IScenario) => {
         groupedAssets
       }
 
-      const remainingAmtToDrawdown = applyAutoDrawdowns(context)
+      const remainingAmtToDrawdown = applyAutoDrawdowns(drawdownContext)
       if (remainingAmtToDrawdown > 100) {
         // console.log(
         //   `REMAINING AMOUNT TO DRAWDOWN = ${remainingAmtToDrawdown} for year ${year} - stopping further calculation`
@@ -125,7 +125,7 @@ export const calculate = (scenario: IScenario) => {
     // }) // end of year
 
     if (calculatedEndYear !== to)
-      calculationMessage = `Cannot automate further caapital asset drawdowns after ${calculatedEndYear}.  
+      calculationMessage = `Cannot automate further capital asset drawdowns after ${calculatedEndYear}.  
       Some assets will need to be sold.  (Go to the Transfers tab under Config)`
 
     const finalYear = year + 1

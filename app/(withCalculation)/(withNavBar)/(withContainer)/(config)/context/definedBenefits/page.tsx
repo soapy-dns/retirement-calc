@@ -1,7 +1,7 @@
 "use client"
 
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
-import { ContextData } from "@/app/lib/data/types"
+import { ContextConfig } from "@/app/lib/data/types"
 import { RadioButtonQuestion, RadioQuestionVariant } from "@/app/ui/components/form/RadioButtonQuestion"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
@@ -36,7 +36,7 @@ const DefinedBenefitsPage: React.FC = () => {
 
     const useInflationRateConfig = useInflationRateAu === "Y"
 
-    const updatedContext: ContextData = {
+    const updatedContext: ContextConfig = {
       ...context,
       definedBenefitsAu: {
         useInflationRate: useInflationRateConfig

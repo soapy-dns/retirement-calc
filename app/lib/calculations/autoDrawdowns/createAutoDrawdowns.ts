@@ -76,7 +76,7 @@ export const createAutoDrawdowns = (
             automatedDrawdowns.push({
               id: getRandomKey(),
               year,
-              from: asset.name, //TODO: will move to ids in future
+              from: asset.id,
               to: Constants.DRAWDOWN,
               value: amountToRemove,
               migrateAll: false

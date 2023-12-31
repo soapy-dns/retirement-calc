@@ -20,7 +20,7 @@ export class AuSuper extends Asset {
   constructor(props: AssetConfig) {
     super({ ...props, incomeProducing: false, calculator: getCalculator(props) })
     this.capitalAsset = true
-    this.assetClass = AssetClass.shares
+    this.assetClass = AssetClass.super
 
     const { value, startingYear } = props
 
