@@ -62,16 +62,22 @@ export default function Drawdowns() {
             return (
               <div key={index} className="mb-4">
                 <h2 className="text-primary">{byYear.year}</h2>
-                {byYear.automatedDrawdowns.map((it, index) => {
-                  return (
-                    <div key={index} className="grid grid-cols-3">
-                      <div className="">{it.from}</div>
-                      <ArrowLongRightIcon className="w-6 h-6 justify-self-center" />
-                      <div className="justify-self-end">{currencyFormatter.format(it.value)}</div>
-                    </div>
-                  )
-                })}
-                <div className="flex justify-end">Total drawdown:- {currencyFormatter.format(byYear.value)}</div>
+                {byYear.automatedDrawdowns ? (
+                  <>
+                    {byYear.automatedDrawdowns.map((it, index) => {
+                      return (
+                        <div key={index} className="grid grid-cols-3">
+                          <div className="">{it.fromName}</div>
+                          <ArrowLongRightIcon className="w-6 h-6 justify-self-center" />
+                          <div className="justify-self-end">{currencyFormatter.format(it.value)}</div>
+                        </div>
+                      )
+                    })}
+                    <div className="flex justify-end">Total drawdown:- {currencyFormatter.format(byYear.value)}</div>
+                  </>
+                ) : (
+                  <p>N/A</p>
+                )}
               </div>
             )
           })}
