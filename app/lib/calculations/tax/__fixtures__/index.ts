@@ -46,8 +46,7 @@ const definedContributionsAssetConfig: IAsset = {
   assetOwners: ["Her"],
   // incomeProducing: false,
   canDrawdown: true,
-  drawdownOrder: 50,
-  percOfEarningsTaxable: 0
+  drawdownOrder: 50
 }
 
 const simpleAuScenarioWithDefinedContributions: IScenario = {

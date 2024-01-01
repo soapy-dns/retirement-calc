@@ -1,5 +1,5 @@
 import { IAsset, IScenario } from "./types"
-export const scenariosSingle: IScenario[] = [
+export const scenarios: IScenario[] = [
   {
     id: "A",
     name: "Multi-country example",
@@ -16,9 +16,9 @@ export const scenariosSingle: IScenario[] = [
         // incomeProducing: false,
         canDrawdown: true,
         drawdownFrom: 2026,
-        drawdownOrder: 50,
+        drawdownOrder: 50
         // // drawdownTaxed: false,
-        percOfEarningsTaxable: 0
+        // // percOfEarningsTaxable: 0
       },
       {
         id: "HER_AU_DEFINED_BENEFIT",
@@ -28,8 +28,8 @@ export const scenariosSingle: IScenario[] = [
         className: "AuDefinedBenefits",
         value: 0,
         income: 3000, // this isn't the pot, but the guaranteed return value in the first year
-        assetOwners: ["Her"],
-        percOfEarningsTaxable: 0
+        assetOwners: ["Her"]
+        // // percOfEarningsTaxable: 0
       },
       {
         id: "HER_AU_SUPER",
@@ -41,8 +41,8 @@ export const scenariosSingle: IScenario[] = [
         assetOwners: ["Her"],
         // incomeProducing: false,
         canDrawdown: true,
-        drawdownOrder: 50,
-        percOfEarningsTaxable: 0
+        drawdownOrder: 50
+        // percOfEarningsTaxable: 0
       },
       {
         id: "HIS_UK_SUPER",
@@ -52,11 +52,9 @@ export const scenariosSingle: IScenario[] = [
         className: "AuSuper",
         value: 100000,
         assetOwners: ["Him"],
-        // incomeProducing: false,
         canDrawdown: true,
         drawdownFrom: 2026,
-        drawdownOrder: 50,
-        percOfEarningsTaxable: 100
+        drawdownOrder: 50
       },
       {
         id: "HER_UK_SUPER",
@@ -67,9 +65,7 @@ export const scenariosSingle: IScenario[] = [
         value: 0,
         assetOwners: ["Her"],
         income: 1000, // this isn't the pot, but the guaranteed return value in the first year
-        drawdownOrder: 50,
-        // drawdownTaxed: true,
-        percOfEarningsTaxable: 100
+        drawdownOrder: 50
       },
       {
         id: "JOINT_SHARES",
@@ -95,7 +91,6 @@ export const scenariosSingle: IScenario[] = [
         canDrawdown: true,
         preferredMinAmt: 10000,
         drawdownOrder: 20
-        // drawdownTaxed: false
       },
       {
         id: "JOINT_UK_BANK",
@@ -105,10 +100,8 @@ export const scenariosSingle: IScenario[] = [
         className: "AuBank",
         value: 1000,
         assetOwners: ["Her", "Him"],
-        // incomeProducing: true,
         canDrawdown: true,
         drawdownOrder: 10
-        // drawdownTaxed: false
       },
       {
         id: "UK_PROPERTY",
@@ -118,10 +111,8 @@ export const scenariosSingle: IScenario[] = [
         className: "AuProperty",
         value: 200000,
         assetOwners: ["Her", "Him"],
-        // incomeProducing: true,
         canDrawdown: false,
         isRented: false
-        // propertyRented: true
       },
       {
         id: "AU_PROPERTY",
@@ -131,7 +122,6 @@ export const scenariosSingle: IScenario[] = [
         country: "AU",
         value: 500000,
         assetOwners: ["Her", "Him"],
-        // incomeProducing: false,
         canDrawdown: false,
         isRented: true,
         rentalIncomePerMonth: 600,
@@ -142,32 +132,22 @@ export const scenariosSingle: IScenario[] = [
       taxResident: "AU",
       // au2ukExchangeRate: 0.52,
       currency: "AU",
-
       // numOfYears: 2,
-      // startingYear: 2023,
       owners: ["Him", "Her"],
       auBank: {
         interestRate: 0.005
       },
-      // ukBank: {
-      //   interestRate: 0.005
-      // },
+
       superAu: {
         investmentReturn: 0.05, // net of fees but not taxation
         taxationRate: 0.15
       },
-      // superUk: {
-      //   // TODO: need to work out how tax works on this?
-      //   investmentReturn: 0.04, // net of fees but not taxation - UK tax will need to be included in income tax
-      //   taxationRate: 0
-      // },
+
       definedBenefitsAu: {
         useInflationRate: true
-        // indexationRate: 0.03
       },
       definedBenefitsUk: {
         useInflationRate: true
-        // indexationRate: 0.038841 // This is a kind of frig.  It will always return this and will always need a particular value to be removed from it
       },
       sharesAu: {
         growthInterestRate: 0.03,
@@ -176,12 +156,6 @@ export const scenariosSingle: IScenario[] = [
 
       property: {
         growthInterestRate: 0.03
-        // rentPercentageOfValue: 0.025, // TODO: work out a better value
-
-        // numOfOwners: 2,
-        // rentalIncomePerMonth: 820,
-        // rentalExpensesPerMonth: 100
-        // rentPercentageOfValue: 0.028 // based on a value of gbp230,000.  This is indivi
       },
       inflation: [{ fromYear: 2023, inflationRate: 0.03 }],
       livingExpenses: [
@@ -196,14 +170,13 @@ export const scenariosSingle: IScenario[] = [
         from: "UK_PROPERTY",
         to: "JOINT_SHARES",
         migrateAll: true,
-        // value: 498571,
         costOfTransfer: 20000 // (GBP10,000)
       }
     ]
   }
 ]
 // See Readme for details
-export const scenarios: IScenario[] = [
+export const scenariosMultiple: IScenario[] = [
   {
     id: "A",
     name: "Example AU",
@@ -217,12 +190,9 @@ export const scenarios: IScenario[] = [
         className: "AuSuper",
         value: 500000,
         assetOwners: ["Him"],
-        // incomeProducing: false,
         canDrawdown: true,
         drawdownFrom: 2026,
-        drawdownOrder: 50,
-        // // drawdownTaxed: false,
-        percOfEarningsTaxable: 0
+        drawdownOrder: 50
       },
       {
         id: "HER_AU_DEFINED_BENEFIT",
@@ -232,8 +202,7 @@ export const scenarios: IScenario[] = [
         className: "AuDefinedBenefits",
         value: 0,
         income: 5000, // this isn't the pot, but the guaranteed return value in the first year
-        assetOwners: ["Her"],
-        percOfEarningsTaxable: 0
+        assetOwners: ["Her"]
       },
       {
         id: "HER_AU_SUPER",
@@ -243,10 +212,8 @@ export const scenarios: IScenario[] = [
         className: "AuSuper",
         value: 500000,
         assetOwners: ["Her"],
-        // incomeProducing: false,
         canDrawdown: true,
-        drawdownOrder: 50,
-        percOfEarningsTaxable: 0
+        drawdownOrder: 50
       },
       {
         id: "HIS_UK_SUPER",
@@ -256,11 +223,9 @@ export const scenarios: IScenario[] = [
         className: "AuSuper",
         value: 100000,
         assetOwners: ["Him"],
-        // incomeProducing: false,
         canDrawdown: true,
         drawdownFrom: 2026,
-        drawdownOrder: 50,
-        percOfEarningsTaxable: 100
+        drawdownOrder: 50
       },
       {
         id: "HER_UK_SUPER",
@@ -271,9 +236,7 @@ export const scenarios: IScenario[] = [
         value: 0,
         assetOwners: ["Her"],
         income: 1000, // this isn't the pot, but the guaranteed return value in the first year
-        drawdownOrder: 50,
-        // drawdownTaxed: true,
-        percOfEarningsTaxable: 100
+        drawdownOrder: 50
       },
       {
         id: "JOINT_SHARES",
@@ -296,12 +259,10 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 10000,
         assetOwners: ["Her", "Him"],
-        // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
         preferredMinAmt: 10000,
         drawdownOrder: 20
-        // drawdownTaxed: false
       },
       {
         id: "JOINT_UK_BANK",
@@ -311,10 +272,8 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 50000,
         assetOwners: ["Her", "Him"],
-        // incomeProducing: true,
         canDrawdown: true,
         drawdownOrder: 10
-        // drawdownTaxed: false
       },
       {
         id: "UK_PROPERTY",
@@ -324,10 +283,8 @@ export const scenarios: IScenario[] = [
         className: "AuProperty",
         value: 500000,
         assetOwners: ["Her", "Him"],
-        // incomeProducing: true,
         canDrawdown: false,
         isRented: false
-        // propertyRented: true
       },
       {
         id: "AU_PROPERTY",
@@ -337,7 +294,6 @@ export const scenarios: IScenario[] = [
         className: "AuProperty",
         value: 500000,
         assetOwners: ["Her", "Him"],
-        // incomeProducing: false,
         canDrawdown: false,
         isRented: true,
         rentalIncomePerMonth: 600,
@@ -349,31 +305,22 @@ export const scenarios: IScenario[] = [
       // au2ukExchangeRate: 0.52,
       currency: "AU",
 
-      // numOfYears: 2,
-      // startingYear: 2023,
+      // numOfYears: 4,
       owners: ["Him", "Her"],
       auBank: {
         interestRate: 0.005
       },
-      // ukBank: {
-      //   interestRate: 0.005
-      // },
+
       superAu: {
         investmentReturn: 0.05, // net of fees but not taxation
         taxationRate: 0.15
       },
-      // superUk: {
-      //   // TODO: need to work out how tax works on this?
-      //   investmentReturn: 0.04, // net of fees but not taxation - UK tax will need to be included in income tax
-      //   taxationRate: 0
-      // },
+
       definedBenefitsAu: {
         useInflationRate: true
-        // indexationRate: 0.03
       },
       definedBenefitsUk: {
         useInflationRate: true
-        // indexationRate: 0.038841 // This is a kind of frig.  It will always return this and will always need a particular value to be removed from it
       },
       sharesAu: {
         growthInterestRate: 0.03,
@@ -423,9 +370,9 @@ export const scenarios: IScenario[] = [
         // incomeProducing: false,
         canDrawdown: true,
         drawdownFrom: 2026,
-        drawdownOrder: 50,
+        drawdownOrder: 50
         // drawdownTaxed: false,
-        percOfEarningsTaxable: 100
+        // percOfEarningsTaxable: 100
       },
       {
         id: "HER_AU_DEFINED_BENEFIT",
@@ -435,8 +382,8 @@ export const scenarios: IScenario[] = [
         className: "AuDefinedBenefits",
         value: 0,
         income: 5000, // this isn't the pot, but the guaranteed return value in the first year
-        assetOwners: ["Her"],
-        percOfEarningsTaxable: 100
+        assetOwners: ["Her"]
+        // percOfEarningsTaxable: 100
       },
       {
         id: "HER_AU_SUPER",
@@ -449,9 +396,9 @@ export const scenarios: IScenario[] = [
 
         // incomeProducing: false,
         canDrawdown: true,
-        drawdownOrder: 50,
+        drawdownOrder: 50
         // drawdownTaxed: false,
-        percOfEarningsTaxable: 100
+        // percOfEarningsTaxable: 100
       },
       {
         id: "HIS_UK_SUPER",
@@ -464,9 +411,9 @@ export const scenarios: IScenario[] = [
         // incomeProducing: false,
         canDrawdown: true,
         drawdownFrom: 2026,
-        drawdownOrder: 50,
+        drawdownOrder: 50
         // drawdownTaxed: true,
-        percOfEarningsTaxable: 75
+        // percOfEarningsTaxable: 75
       },
       {
         id: "HER_UK_SUPER",
@@ -478,9 +425,9 @@ export const scenarios: IScenario[] = [
         assetOwners: ["Her"],
         income: 1000, // this isn't the pot, but the guaranteed return value in the first year
         // interestRate?: 3,
-        drawdownOrder: 50,
+        drawdownOrder: 50
         // drawdownTaxed: true,
-        percOfEarningsTaxable: 75
+        // percOfEarningsTaxable: 75
       },
       {
         id: "JOINT_SHARES",
@@ -637,9 +584,9 @@ export const scenarios: IScenario[] = [
         // incomeProducing: false,
         canDrawdown: true,
         // drawdownFrom: 2026,
-        drawdownOrder: 50,
+        drawdownOrder: 50
         // drawdownTaxed: true,
-        percOfEarningsTaxable: 75
+        // percOfEarningsTaxable: 75
       },
 
       {
@@ -877,8 +824,8 @@ export const scenarios: IScenario[] = [
         className: "AuDefinedBenefits",
         value: 0,
         income: 100000, // this isn't the pot, but the guaranteed return value in the first year
-        assetOwners: ["Him"],
-        percOfEarningsTaxable: 75
+        assetOwners: ["Him"]
+        // percOfEarningsTaxable: 75
       }
     ],
     context: {
@@ -958,7 +905,7 @@ export const scenarios: IScenario[] = [
       }
     ],
     context: {
-      taxResident: "SC",
+      taxResident: "AU",
       // numOfYears: 1,
       au2ukExchangeRate: 0.52,
       currency: "AU",
@@ -1031,10 +978,10 @@ export const scenarios: IScenario[] = [
         assetOwners: ["Him"],
         canDrawdown: true,
         preferredMinAmt: 100000,
-        drawdownOrder: 20,
+        drawdownOrder: 20
         // drawdownTaxed: true,
 
-        percOfEarningsTaxable: 100
+        // percOfEarningsTaxable: 100
       }
     ],
     context: {
@@ -1083,7 +1030,7 @@ export const scenarios: IScenario[] = [
   },
   {
     id: "H",
-    name: "Defined contributions when based in UK",
+    name: "Defined contributions when based in UK.",
     description: "AU and UK defined contributions - based in UK",
     assets: [
       {
@@ -1097,7 +1044,6 @@ export const scenarios: IScenario[] = [
         // incomeProducing: true,
         incomeBucket: true, // if this is where income goes to
         canDrawdown: true,
-        // preferredMinAmt: 10000,
         drawdownOrder: 20
         // drawdownTaxed: false
       },
@@ -1110,7 +1056,9 @@ export const scenarios: IScenario[] = [
         value: 1000000,
         // income: 100000, // this isn't the pot, but the guaranteed return value in the first year
         assetOwners: ["Him"],
-        percOfEarningsTaxable: 100
+        canDrawdown: true,
+        drawdownOrder: 10
+        // percOfEarningsTaxable: 100
       },
       {
         id: "3",
@@ -1121,7 +1069,9 @@ export const scenarios: IScenario[] = [
         value: 1000000,
         // income: 100000, // this isn't the pot, but the guaranteed return value in the first year
         assetOwners: ["Him"],
-        percOfEarningsTaxable: 75
+        canDrawdown: true,
+        drawdownOrder: 10
+        // percOfEarningsTaxable: 75
       }
     ],
     context: {
@@ -1129,7 +1079,7 @@ export const scenarios: IScenario[] = [
       au2ukExchangeRate: 0.52,
       currency: "AU",
 
-      // numOfYears: 1,
+      numOfYears: 2,
       // startingYear: 2023,
       owners: ["Him"],
       auBank: {
@@ -1163,8 +1113,8 @@ export const scenarios: IScenario[] = [
         growthInterestRate: 0.03
       },
 
-      inflation: [{ fromYear: 2023, inflationRate: 0.0 }],
-      livingExpenses: [{ fromYear: 2023, amountInTodaysTerms: 100000 }]
+      inflation: [{ fromYear: 2024, inflationRate: 0.0 }],
+      livingExpenses: [{ fromYear: 2024, amountInTodaysTerms: 100000 }]
     }
   },
   {
@@ -1193,8 +1143,8 @@ export const scenarios: IScenario[] = [
         value: 1000000,
         canDrawdown: true,
         drawdownOrder: 10,
-        assetOwners: ["Him"],
-        percOfEarningsTaxable: 0
+        assetOwners: ["Him"]
+        // percOfEarningsTaxable: 0
       },
       {
         id: "4",
@@ -1204,7 +1154,7 @@ export const scenarios: IScenario[] = [
         className: "AuSuper",
         value: 1000000,
         assetOwners: ["Him"],
-        percOfEarningsTaxable: 100,
+        // percOfEarningsTaxable: 100,
         drawdownOrder: 10,
         canDrawdown: true
       }
@@ -1341,7 +1291,7 @@ export const scenarios: IScenario[] = [
     assets: [
       {
         id: "1",
-        name: "Ausstralian bank account1",
+        name: "Australian bank account1",
         description: "blah",
         country: "AU",
         className: "AuBank",
@@ -1415,7 +1365,7 @@ export const scenarios: IScenario[] = [
     transfers: [
       {
         id: "1",
-        year: 2023,
+        year: 2024,
         from: "1",
         to: "2",
         migrateAll: false,

@@ -2,6 +2,7 @@ import { SuperCalculator } from "../calculator/SuperCalculator"
 import { Asset } from "./Asset"
 import { AssetClass } from "@/app/lib/calculations/types"
 import { AssetConfig } from "./types"
+import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
 
 const getCalculator = (assetConfig: AssetConfig) => {
   const { scenario, name: assetName } = assetConfig
@@ -16,13 +17,23 @@ const getCalculator = (assetConfig: AssetConfig) => {
 export class AuSuper extends Asset {
   capitalAsset: boolean
   assetClass: AssetClass
+  percOfEarningsTaxable: number
+  percOfDrawdownTaxable: number
 
-  constructor(props: AssetConfig) {
-    super({ ...props, incomeProducing: false, calculator: getCalculator(props) })
+  constructor(assetConfig: AssetConfig) {
+    super({ ...assetConfig, incomeProducing: false, calculator: getCalculator(assetConfig) })
     this.capitalAsset = true
     this.assetClass = AssetClass.super
 
-    const { value, startingYear } = props
+    const {
+      value,
+      startingYear,
+      scenario: {
+        context: { taxResident }
+      }
+    } = assetConfig
+    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetClass)
+    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetClass)
 
     this.history.push({ value, year: startingYear, transferAmt: 0, income: 0 })
   }

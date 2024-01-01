@@ -5,11 +5,11 @@ export const assetTypeOptions = [
   {
     label: "Defined benefits pension",
     value: "AuDefinedBenefits",
-    // income: true,
+    income: true,
     property: false,
-    assetClass: AssetClass.income
+    assetClass: AssetClass.income_defined_benefit
   },
-  { label: "Salary", value: "Salary", income: true, property: false, assetClass: AssetClass.income },
+  { label: "Salary", value: "Salary", income: true, property: false, assetClass: AssetClass.income_salary },
   {
     label: "Defined contributions pension",
     value: "AuSuper",

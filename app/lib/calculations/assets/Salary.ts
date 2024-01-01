@@ -2,6 +2,7 @@ import { Asset } from "./Asset"
 import { AssetClass, InflationContext } from "@/app/lib/calculations/types"
 import { AssetConfig, DefinedBenefitAssetProps } from "./types"
 import { SalaryCalculator } from "../calculator/SalaryCalculator"
+import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
 
 const getCalculator = (assetConfig: AssetConfig, inflationContext: InflationContext) => {
   const { scenario, name: assetName } = assetConfig
@@ -16,22 +17,25 @@ const getCalculator = (assetConfig: AssetConfig, inflationContext: InflationCont
 export class Salary extends Asset {
   capitalAsset: boolean
   assetClass: AssetClass
+  percOfEarningsTaxable: number
+  percOfDrawdownTaxable: number
 
-  constructor(props: DefinedBenefitAssetProps, inflationContext: InflationContext) {
+  constructor(assetConfig: DefinedBenefitAssetProps, inflationContext: InflationContext) {
     // is income producing - it has to be - that is all it does
     super({
-      ...props,
+      ...assetConfig,
       incomeProducing: true,
       canDrawdown: false, // can never drawdown from a defined benefit income stream
-      calculator: getCalculator(props, inflationContext)
+      calculator: getCalculator(assetConfig, inflationContext)
     })
     this.capitalAsset = false
-    this.assetClass = AssetClass.income
-
-    const { value, startingYear, income = 0, scenario } = props
+    this.assetClass = AssetClass.income_salary
+    const { value, startingYear, income = 0, scenario } = assetConfig
     const {
-      context: { definedBenefitsAu }
+      context: { taxResident, definedBenefitsAu }
     } = scenario
+    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetClass)
+    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetClass)
 
     // this is a hack to can recalc income
     const inflationRate = inflationContext[startingYear].inflation

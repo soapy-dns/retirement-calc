@@ -55,12 +55,22 @@ export const calculate = (scenario: IScenario) => {
 
     // SET UP ASSETS
     const assets = buildInitialAssets(startingYear, scenario, inflationContext)
+    // assets.forEach((asset) => {
+    //   console.log(
+    //     "% earnings taxable, % of drawdowns taxable",
+    //     asset.name,
+    //     asset.country,
+    //     asset.percOfEarningsTaxable,
+    //     asset.percOfDrawdownTaxable
+    //   )
+    // })
 
     // if we are 90% in AU and 10% in UK, does that mean we have 2 different tax calculators?
     const incomeTaxCalculator = getIncomeTaxCalculator({ taxResident, currency, au2ukExchangeRate })
 
     const taxes = initTaxes(yearRange, owners)
-    const earningsFromAssets: Earning[] = initialiseEarningsFromAssets(assets, owners)
+    const earningsFromAssets: Earning[] = initialiseEarningsFromAssets(assets)
+    // console.log("--earningsFromAssets--", earningsFromAssets)
     if (!scenario) throw new Error("No scenario found")
     // end of setup
 
@@ -214,6 +224,7 @@ export const calculate = (scenario: IScenario) => {
     const livingExpensesTodaysMoneyToDisplay = livingExpensesTodaysMoney.splice(0, numOfCalculatedYears)
 
     const cleanedTaxes = removeUnusedHistoryFromTaxes(taxes, finalYear)
+    // console.log("--cleanedTaxes--", JSON.stringify(cleanedTaxes, null, 4))
     const expensesRowData = cleanedTaxes.reduce(
       (accum: RowData, tax: Tax) => {
         accum[`Tax (${tax.owner})`] = tax.history

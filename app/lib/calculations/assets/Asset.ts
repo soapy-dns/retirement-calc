@@ -2,6 +2,7 @@ import { Calculator } from "../calculator/Calculator"
 import { AssetConfig, YearData } from "./types"
 import { AssetClass } from "@/app/lib/calculations/types"
 import { Country } from "../tax/taxCalcs/types"
+import { getPercIncomeTaxable } from "../tax/utils"
 
 interface Props extends AssetConfig {
   incomeProducing: boolean
@@ -22,7 +23,8 @@ export abstract class Asset {
   incomeProducing = false
   assetOwners
   scenario // TODO: Why do I need scenarop here?
-  percOfEarningsTaxable: number // The % of earnings which are taxable - eg defined benefits may have 25% tax free
+  abstract readonly percOfEarningsTaxable: number 
+  abstract readonly percOfDrawdownTaxable: number // eg defined contributions which will have 25% tax free in UK
   incomeBucket = false
   canDrawdown = true
   preferredMinAmt
@@ -50,7 +52,7 @@ export abstract class Asset {
       preferredMinAmt,
       drawdownOrder,
       scenario,
-      percOfEarningsTaxable = 100,
+      // percOfEarningsTaxable = 100,
       rentalIncomePerMonth,
       rentalExpensesPerMonth,
       country = "AU"
@@ -67,7 +69,7 @@ export abstract class Asset {
     this.preferredMinAmt = preferredMinAmt || 0
     this.drawdownOrder = drawdownOrder || 99
     this.scenario = scenario
-    this.percOfEarningsTaxable = percOfEarningsTaxable
+    // this.percOfEarningsTaxable = percOfEarningsTaxable
     this.drawdownFrom = drawdownFrom
     this.rentalIncomePerMonth = rentalIncomePerMonth
     this.rentalExpensesPerMonth = rentalExpensesPerMonth

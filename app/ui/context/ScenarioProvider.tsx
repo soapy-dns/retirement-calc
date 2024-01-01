@@ -46,6 +46,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
       }
     } catch (err) {
       setCalculating(false)
+      console.log("--err--", err)
 
       displayErrorAlert("Error doing calculation.  This is likely a configuration issue.")
     }

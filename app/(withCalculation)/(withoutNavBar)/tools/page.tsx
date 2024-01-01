@@ -19,7 +19,6 @@ import { contextConstants } from "../../(withNavBar)/(withContainer)/(config)/co
 const scrollFieldIntoView = (id: string) => {
   const field = document.getElementById(id)
   if (field) {
-    console.log("--field--", field)
     field.focus({ preventScroll: false })
     field.scrollIntoView({ block: "end", inline: "nearest", behavior: "smooth" })
   }

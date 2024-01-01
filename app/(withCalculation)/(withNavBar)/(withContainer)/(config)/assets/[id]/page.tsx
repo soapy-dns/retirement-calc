@@ -26,7 +26,6 @@ interface ChangedFormData {
   owners: string[]
   earnsIncome: YesNo
   earningsBucket: YesNo
-  earningsTaxPerc: number
   isRented?: YesNo
   rentalIncome?: number
   rentalExpenses?: number
@@ -52,7 +51,7 @@ const getAssetValuesFromForm = (data: ChangedFormData): Omit<IAsset, "id"> => {
     earnsIncome,
     earningsBucket,
     preferredMinAmt,
-    earningsTaxPerc,
+    // earningsTaxPerc,
     isRented,
     rentalIncome,
     rentalExpenses,
@@ -73,7 +72,7 @@ const getAssetValuesFromForm = (data: ChangedFormData): Omit<IAsset, "id"> => {
     // incomeProducing: earnsIncome === "Y",
     incomeBucket: earningsBucket === "Y",
     preferredMinAmt: preferredMinAmt ? +preferredMinAmt : undefined,
-    percOfEarningsTaxable: +earningsTaxPerc,
+    // percOfEarningsTaxable: +earningsTaxPerc,
     isRented: isRented === "Y",
     rentalIncomePerMonth: rentalIncome ? +rentalIncome : undefined,
     rentalExpensesPerMonth: rentalExpenses ? +rentalExpenses : undefined,
@@ -113,7 +112,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     value,
     income,
     assetOwners = [],
-    percOfEarningsTaxable,
+    // percOfEarningsTaxable,
     // incomeProducing,
     incomeBucket,
     preferredMinAmt,
@@ -150,7 +149,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       // earnsIncome: incomeEarningValue,
       earningsBucket: earningsAccumulated,
       preferredMinAmt: preferredMinAmt ?? 0,
-      earningsTaxPerc: percOfEarningsTaxable ?? 100,
+      // earningsTaxPerc: percOfEarningsTaxable ?? 100,
       isRented: isRentedString,
       rentalExpenses: rentalExpensesPerMonth,
       rentalIncome: rentalIncomePerMonth,

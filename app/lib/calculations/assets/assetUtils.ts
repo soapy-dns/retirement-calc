@@ -7,11 +7,11 @@ import { Asset } from "./Asset"
 import { getDrawdownableAssets } from "../autoDrawdowns/getDrawdownableAssets"
 import { sortByPreference } from "../utils/sortAssetsByPreference"
 import { groupAssetsByPreference } from "./groupAssetsByPreference"
-// import { getAssetData } from "../../data/scenarios"
 import { Earning } from "./types"
 import { IScenario } from "../../data/types"
-import { InflationContext } from "@/app/lib/calculations/types"
+import { AssetClass, InflationContext } from "@/app/lib/calculations/types"
 import { Salary } from "./Salary"
+import { getPercIncomeTaxable } from "../tax/utils"
 
 export const buildInitialAssets = (
   startingYear: number,
@@ -20,8 +20,9 @@ export const buildInitialAssets = (
 ): Asset[] => {
   const { assets: assetsData } = scenario
 
-  return assetsData.map((data) => {
-    const { className, ...options } = data
+  return assetsData.map((asset) => {
+    const { className, ...options } = asset
+    const { country } = options
     switch (className) {
       case "AuBank":
         return new AuBank({ ...options, startingYear, scenario })

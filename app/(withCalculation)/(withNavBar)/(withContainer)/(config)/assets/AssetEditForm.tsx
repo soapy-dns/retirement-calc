@@ -21,6 +21,10 @@ interface Props {
   isRentedFormValue: YesNo
   owners: string[]
 }
+const isIncome = (assetType: string) => {
+  const assetTypeOption = assetTypeOptions.find((it) => it.value === assetType)
+  return assetTypeOption?.income
+}
 
 export const AssetEditForm: FunctionComponent<Props> = ({
   control,
@@ -30,7 +34,8 @@ export const AssetEditForm: FunctionComponent<Props> = ({
   owners,
   register
 }) => {
-  const isIncome = assetTypeOptions.find((it) => it.value === assetType)?.assetClass === AssetClass.income || false
+  // const isIncomeFlag = assetTypeOptions.find((it) => it.value === assetType)?.assetClass === AssetClass.income || false
+  const isIncomeFlag = isIncome(assetType)
   const isProperty = assetTypeOptions.find((it) => it.value === assetType)?.assetClass === AssetClass.property || false
   const showDrawdown = drawdownSet === "Y"
   const ownersOptions = owners.map((it) => ({ label: it, value: it }))
@@ -79,7 +84,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         })}
         helpText={assetConstants.OWNERS.HELP_TEXT}
       />
-      {!isIncome && (
+      {!isIncomeFlag && (
         <>
           <InputQuestion
             id="value"
@@ -140,7 +145,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
           )}
         </>
       )}
-      {isIncome && (
+      {isIncomeFlag && (
         <>
           {assetType === "Salary" && (
             <InputQuestion
@@ -162,14 +167,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         </>
       )}
 
-      <InputQuestion
-        id="earningsTaxPerc"
-        control={control}
-        label={assetConstants.PERCENTAGE_OF_EARNINGS_TAXED.LABEL}
-        suffix="%"
-        restrictedCharSet={INTEGERS_ONLY}
-        helpText={assetConstants.PERCENTAGE_OF_EARNINGS_TAXED.HELP_TEXT}
-      />
       {isProperty && (
         <>
           <RadioButtonQuestion

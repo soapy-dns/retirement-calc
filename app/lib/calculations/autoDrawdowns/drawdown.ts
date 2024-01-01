@@ -54,12 +54,19 @@ const drawdownIteration = (
     // This isn't right.  We are doubling. TODO:
     const newTotalTaxableAmt =
       taxHistory.taxableEarningsAmt + taxHistory.taxableDrawdownsAmt + taxableAutomatedDrawdownAmt
+    // console.log(
+    //   "--newTotalTaxableAmt, taxHistory.taxableEarningsAmt , taxHistory.taxableDrawdownsAmt , taxableAutomatedDrawdownAmt--",
+    //   newTotalTaxableAmt,
+    //   taxHistory.taxableEarningsAmt,
+    //   taxHistory.taxableDrawdownsAmt,
+    //   taxableAutomatedDrawdownAmt
+    // )
 
     const ownersTaxAmt = incomeTaxCalculator.getTax(newTotalTaxableAmt)
 
     // UPDATE TAX DETAILS
     taxHistory.totalTaxableAmt = Math.round(newTotalTaxableAmt)
-    taxHistory.taxableAutomatedDrawdownAmt = Math.round(ownersTaxAmt) - taxHistory.value // temp
+    taxHistory.taxableAutomatedDrawdownAmt = Math.round(taxableAutomatedDrawdownAmt)
     taxHistory.value = Math.round(ownersTaxAmt)
   })
 }

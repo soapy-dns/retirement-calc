@@ -137,6 +137,7 @@ export enum AssetClass {
   shares = "shares",
   cash = "cash",
   super = "super",
-  income = "income",
+  income_defined_benefit = "income_defined_benefit",
+  income_salary = "income_salary",
   other = "other"
 }

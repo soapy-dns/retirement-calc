@@ -1,15 +1,13 @@
 import { Earning, Tax } from "../assets/types"
 import { IncomeTaxCalc } from "./taxCalcs/incomeTaxCalc"
 import { getScenarioTransfersForYear } from "../transfers/transferUtils"
-import { ContextConfig, IScenario } from "../../data/types"
+import { IScenario } from "../../data/types"
 import { Transfer } from "../transfers/types"
 import { Asset } from "../assets/Asset"
 import { AssetClass } from "../types"
 import { Country } from "./taxCalcs/types"
 
 export const getOwnersTaxableEarningsAmt = (earningsFromAssets: Earning[], owner: string, year: number) => {
-  // total income from the owner's assets
-  // FIXME: The problem is the total joint income === 0
   const ownersTaxableEarningsFromAssets = earningsFromAssets.filter(
     (earning) => earning.owner === owner && earning.percOfEarningsTaxable > 0
   )
@@ -48,15 +46,11 @@ export const getTaxableDrawdownAmt = (
     if (!matchingAsset) return accum
 
     //  drawdowns are not taxed unless in a different country
-    const { assetOwners, country, assetClass } = matchingAsset || {}
-    const {
-      context: { taxResident }
-    } = scenario
-
-    const percDrawdownTaxable = getPercDrawdownTaxable(taxResident, country, assetClass)
+    const { assetOwners } = matchingAsset || {}
 
     if (assetOwners.includes(owner)) {
-      return ((accum + value) / assetOwners.length) * (percDrawdownTaxable / 100)
+      const increment = (value * matchingAsset.percOfDrawdownTaxable) / 100 / assetOwners.length
+      return accum + increment
     }
     return accum
   }, 0)
@@ -105,6 +99,12 @@ export const calculateTaxes = (
     const ownersTaxableEarningsAmt = getOwnersTaxableEarningsAmt(earningsFromAssets, owner, year)
 
     const ownersTotalTaxableAmt = ownersTaxableEarningsAmt + manualTaxableDrawdownAmt
+    // console.log(
+    //   "--ownersTotalTaxableAmt, ownersTaxableEarningsAmt, manualTaxableDrawdownAmt--",
+    //   ownersTotalTaxableAmt,
+    //   ownersTaxableEarningsAmt,
+    //   manualTaxableDrawdownAmt
+    // )
 
     const ownersTaxAmt = incomeTaxCalculator.getTax(ownersTotalTaxableAmt)
 
@@ -119,22 +119,20 @@ export const calculateTaxes = (
   }) // END OF TAX CALCS
 }
 
+// TODO: this function to Asset?
 export const getPercDrawdownTaxable = (taxResident: Country, assetCountry: Country, assetClass: AssetClass) => {
-  if (taxResident === assetCountry || assetClass !== AssetClass.super) {
+  if (taxResident === "SC" && assetCountry === "SC" && assetClass === AssetClass.super) {
+    return 75
+  } else if (taxResident === assetCountry || assetClass !== AssetClass.super) {
     return 0
   }
   return 100
 }
 
-// Not used yet, but will remove field from asset
-// TODO: change to just have the 3 factors we need.  Much easier to test
-export const getPercIncomeTaxable = (context: ContextConfig, asset: Asset) => {
-  const { taxResident } = context
-  const { country, assetClass } = asset
-
-  if (taxResident === "SC" && country === "SC" && assetClass === AssetClass.super) {
-    return 75
-  } else if (taxResident === country) {
+// TODO: this function to Asset?
+export const getPercIncomeTaxable = (taxResident: Country, assetCountry: Country, assetClass: AssetClass) => {
+  // maybe for things like ISAs?
+  if (taxResident === assetCountry && assetClass === AssetClass.income_defined_benefit) {
     return 0
   }
   return 100

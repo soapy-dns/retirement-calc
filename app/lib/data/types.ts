@@ -34,7 +34,7 @@ export interface IAsset {
   drawdownFrom?: number
   drawdownOrder?: number
   // drawdownTaxed?: boolean
-  percOfEarningsTaxable?: number
+  // percOfEarningsTaxable?: number
   preferredMinAmt?: number
   isRented?: boolean
   rentalIncomePerMonth?: number

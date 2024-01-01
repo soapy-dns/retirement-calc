@@ -1,7 +1,8 @@
 import { AutomatedDrawdown } from "../../autoDrawdowns/types"
 import { Calculator } from "../../calculator/Calculator"
 import { IAsset, IScenario } from "../../../data/types"
-import { BasicYearData } from "../../types"
+import { AssetClass, BasicYearData } from "../../types"
+import { Country } from "../../tax/taxCalcs/types"
 
 export interface YearData extends BasicYearData {
   transferAmt?: number
@@ -34,8 +35,10 @@ export interface Earning {
   id: string
   name: string
   description?: string
+  // country: Country
   owner: string
   income?: number
+  // assetClass: AssetClass
   percOfEarningsTaxable: number
   proportion: number
   history: BasicYearData[]

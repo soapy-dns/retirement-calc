@@ -12,7 +12,7 @@ describe("", () => {
 
   it("should have 0% taxable if residency and asset countries both Scotland", () => {
     const result = getPercDrawdownTaxable("SC", "SC", AssetClass.super)
-    expect(result).toBe(0)
+    expect(result).toBe(75)
   })
 
   it("should have 100% taxable if residency = AU and asset country = SC", () => {

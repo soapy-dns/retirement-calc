@@ -1,11 +1,13 @@
 import { Asset } from "../assets/Asset"
 import { Earning } from "../assets/types"
+import { Country } from "../tax/taxCalcs/types"
+import { getPercIncomeTaxable } from "../tax/utils"
 
 /**
  * Builds an array of 'earnings' details based on the Assets
  * TODO: asset proportion
  */
-export const initialiseEarningsFromAssets = (assets: Asset[], owners: string[]): Earning[] => {
+export const initialiseEarningsFromAssets = (assets: Asset[]): Earning[] => {
   const earningsFromAssets: Earning[] = []
 
   const incomeProducingAssets = assets.filter((it) => it.incomeProducing === true)

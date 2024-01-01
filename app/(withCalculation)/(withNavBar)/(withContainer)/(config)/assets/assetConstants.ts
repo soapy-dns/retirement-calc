@@ -17,11 +17,11 @@ export const assetConstants = {
     HELP_TEXT:
       "The amount we'd prefer to maintain in an asset.  This is useful for banks where you might want to keep some cash handy for rainy days."
   },
-  PERCENTAGE_OF_EARNINGS_TAXED: {
-    LABEL: "Percentage of earnings which will be taxed",
-    HELP_TEXT:
-      "Usually the earnings will either be fully taxed (100%) or not at all (0%).  However one example where this is not the case, is for pension income from the UK when based in the UK (currently 25% tax free as of 2023).  Also Au super when resident in Au will have a value of zero, but when resident in the UK would be 100%"
-  },
+  // PERCENTAGE_OF_EARNINGS_TAXED: {
+  //   LABEL: "Percentage of earnings which will be taxed",
+  //   HELP_TEXT:
+  //     "Usually the earnings will either be fully taxed (100%) or not at all (0%).  However one example where this is not the case, is for pension income from the UK when based in the UK (currently 25% tax free as of 2023).  Also Au super when resident in Au will have a value of zero, but when resident in the UK would be 100%"
+  // },
   CAN_DRAWDOWN: {
     LABEL: "Can drawdown",
     HELP_TEXT:
