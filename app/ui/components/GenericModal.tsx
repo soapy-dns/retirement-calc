@@ -1,3 +1,4 @@
+import { XMarkIcon } from "@heroicons/react/24/outline"
 import React from "react"
 import { Button, ButtonType } from "./common/Button"
 
@@ -31,7 +32,12 @@ export const GenericModal = (props: IGenericModalProps) => {
             onClick={dontCloseModal}
             className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
           >
-            <h1 className="mx-2 p-2">{heading}</h1>
+            <h1 className="mx-2 p-2 text-primary flex justify-between items-center">
+              {heading}
+              <button onClick={closeModal}>
+                <XMarkIcon className="h-6 w-6 font-bold text-primary" />
+              </button>
+            </h1>
             <div className="mx-2">{content}</div>
             <div className="flex justify-center">
               <Button
