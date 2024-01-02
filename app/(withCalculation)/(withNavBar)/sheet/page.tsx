@@ -1,5 +1,5 @@
 "use client"
-
+import { useSearchParams } from "next/navigation"
 import React, { useContext, useState } from "react"
 import { Cell as HeadingCell } from "./heading/Cell"
 import { Row } from "./row/Row"
@@ -23,6 +23,10 @@ const SheetPage: React.FC = () => {
   const helpModalContext = useContext(HelpModalContext)
   const scenarioContext = useContext(ScenarioContext)
   const [showEarningInfo, setShowEarningInfo] = useState<boolean>(false)
+  const searchParams = useSearchParams()
+
+  const debug = searchParams.get("debug")
+
   const earningInfo = "Income from a capital asset or an income stream."
 
   const toggleEarningInfo = () => {
@@ -126,12 +130,14 @@ const SheetPage: React.FC = () => {
           </table>
         </div>
       </div>
-      <GenericModal
-        showModal={showHelpModal}
-        heading="Cell Data"
-        content={HelpModalContent}
-        onToggle={onHelpModalToggle}
-      />
+      {debug && (
+        <GenericModal
+          showModal={showHelpModal}
+          heading="Cell Data"
+          content={HelpModalContent}
+          onToggle={onHelpModalToggle}
+        />
+      )}
       {showEarningInfo && (
         <GenericModal showModal={showEarningInfo} heading="Income" content={earningInfo} onToggle={toggleEarningInfo} />
       )}

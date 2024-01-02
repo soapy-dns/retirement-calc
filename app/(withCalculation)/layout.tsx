@@ -1,7 +1,6 @@
 "use client"
 
 import { Toaster } from "react-hot-toast"
-// this is just to include context
 
 import { HelpModalProvider } from "../ui/context/HelpModalProvider"
 import { ScenarioProvider } from "../ui/context/ScenarioProvider"

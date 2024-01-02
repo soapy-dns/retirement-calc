@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+
 import { inter } from "./ui/fonts"
 import "./globals.css"
 import { AppBanner } from "./ui/AppBanner"
