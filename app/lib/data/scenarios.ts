@@ -157,9 +157,9 @@ export const scenarios: IScenario[] = [
       property: {
         growthInterestRate: 0.03
       },
-      inflation: [{ fromYear: 2023, inflationRate: 0.03 }],
+      inflation: [{ fromYear: 2024, inflationRate: 0.03 }],
       livingExpenses: [
-        { fromYear: 2023, amountInTodaysTerms: 80000 },
+        { fromYear: 2024, amountInTodaysTerms: 80000 },
         { fromYear: 2038, amountInTodaysTerms: 50000 }
       ]
     },
