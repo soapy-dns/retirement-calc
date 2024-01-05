@@ -20,7 +20,6 @@ export class AuBank extends Asset {
   percOfDrawdownTaxable: number
 
   constructor(assetConfig: AssetConfig) {
-    // const assetConfig = {...props, this.incomeProducing: true}
     super({ ...assetConfig, incomeProducing: true, calculator: getCalculator(assetConfig) })
     const {
       value,
