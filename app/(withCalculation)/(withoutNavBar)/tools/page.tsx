@@ -1,4 +1,6 @@
 "use client"
+import { useSearchParams } from "next/navigation"
+
 import { getIncomeTaxCalculator } from "@/app/lib/calculations/tax/taxCalcs/getIncomeTaxCalculator"
 import { Country } from "@/app/lib/calculations/tax/taxCalcs/types"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
@@ -8,10 +10,11 @@ import { DECIMALS_ONLY, INTEGERS_ONLY } from "@/app/ui/components/common/formReg
 import { Container } from "@/app/ui/components/Container"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { SelectQuestion } from "@/app/ui/components/form/SelectQuestion"
+
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
-import { useContext, useState } from "react"
+import { useState, useContext } from "react"
 import { useForm } from "react-hook-form"
 import { contextConstants } from "../../(withNavBar)/(withContainer)/(config)/context/contextConstants"
 
@@ -34,9 +37,13 @@ interface ChangedFormData {
 
 export default function ToolsPage() {
   const [tax, setTax] = useState<number>()
+  const searchParams = useSearchParams()
+
   const { selectedScenario } = useContext(ScenarioContext)
 
   const navigation = useNavigation()
+
+  const debug = searchParams.get("debug")
 
   const {
     handleSubmit,
@@ -131,10 +138,12 @@ export default function ToolsPage() {
           Calculate
         </Button>
       </Card>
-      {/* <Card>
-        <h2 className="text-primary">Selected scenario config</h2>
-        <pre>{JSON.stringify(selectedScenario, null, 4)}</pre>
-      </Card> */}
+      {debug && (
+        <Card>
+          <h2 className="text-primary">Selected scenario config</h2>
+          <pre>{JSON.stringify(selectedScenario, null, 4)}</pre>
+        </Card>
+      )}
     </Container>
   )
 }

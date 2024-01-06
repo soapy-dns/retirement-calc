@@ -1,4 +1,5 @@
 "use client"
+import { useSearchParams } from "next/navigation"
 
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { Container } from "@/app/ui/components/Container"
@@ -25,10 +26,15 @@ const HelpModalContent: React.FC = () => {
 }
 
 export default function Drawdowns() {
-  const { calculationResults } = useContext(ScenarioContext)
+  const { calculationResults, selectedScenario } = useContext(ScenarioContext)
   const { onToggle: onHelpModalToggle, showModal } = useContext(HelpModalContext)
+  const searchParams = useSearchParams()
+  const debug = searchParams.get("debug")
+
   const { drawDownRowData } = calculationResults || {}
   const navigation = useNavigation()
+
+  const { assets } = selectedScenario
 
   const toggleHelpText = () => {
     onHelpModalToggle()
@@ -56,6 +62,20 @@ export default function Drawdowns() {
             </button>
           </h1>
         </div>
+
+        {debug && (
+          <div className="mb-4">
+            <h2 className="text-primary">Drawdown order</h2>
+
+            {assets.map((asset) => {
+              return asset.canDrawdown ? (
+                <div>
+                  {asset.name}, {asset.drawdownOrder}, {asset.drawdownFrom}
+                </div>
+              ) : null
+            })}
+          </div>
+        )}
 
         {drawDownRowData &&
           drawDownRowData.map((byYear, index) => {

@@ -24,13 +24,13 @@ export abstract class Calculator {
     const { value: prevValue, year } = yearData
     const { id: assetId } = this.assetConfig
 
-    const fullTransferFrom = transfersForYear.find((it) => it.from === assetId && it.value === undefined)
-    const fullTransferTo = transfersForYear.find((it) => it.to === assetId && it.value === undefined)
+    const fullTransferFrom = transfersForYear.find((it) => it.from === assetId && it.migrateAll)
+    const fullTransferTo = transfersForYear.find((it) => it.to === assetId && it.migrateAll)
 
     if (fullTransferFrom || fullTransferTo) {
       // TODO: validate don't have a full transfer from and a full transfer too.  probably need a validation section
-      const partialtransfer = transfersForYear.find((it) => (it.from === assetId || it.to === assetId) && it.value)
-      if (partialtransfer) throw new Error(`Cannot have full and partial transfers ${assetId}`)
+      // const partialtransfer = transfersForYear.find((it) => (it.from === assetId || it.to === assetId) && it.value)
+      // if (partialtransfer) throw new Error(`Cannot have full and partial transfers ${assetId}`)
 
       const costOfTransfer = fullTransferTo?.costOfTransfer || 0
       // no need to calc the amt in the middle of the year - subsequent calculations will do this
@@ -51,8 +51,8 @@ export abstract class Calculator {
 
     const partialTransferAmt =
       transfers?.reduce((accum: number, transfer: Transfer) => {
-        const { from, to, value: transferValue, costOfTransfer = 0 } = transfer
-        if (!transferValue) return accum
+        const { from, to, value: transferValue, costOfTransfer = 0, migrateAll } = transfer
+        if (!transferValue || migrateAll) return accum
         if (from === assetId) {
           return Math.round(accum - transferValue)
         } else if (to === assetId) {

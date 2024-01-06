@@ -61,7 +61,6 @@ const LivingExpensesPage: React.FC = () => {
       if (!fromYear || !amountInTodaysTerms) return null // This stops us from adding a new row with nothing in it could also null the button
       const newRecord = { fromYear, amountInTodaysTerms }
 
-      debugger
       let insertIndex = 0
       const findIndex = fields.findIndex((it) => it.fromYear > fromYear)
 
