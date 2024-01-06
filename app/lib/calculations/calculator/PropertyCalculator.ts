@@ -37,10 +37,12 @@ export class PropertyCalculator extends Calculator {
 
     const inflationFactor = this.inflationContext[year].factor
 
+    const { rentalIncomePerMonth = 0, rentalExpensesPerMonth = 0 } = this.assetConfig
+
     let rentalIncome = 0
     rentalIncome =
-      this.assetConfig.rentalIncomePerMonth && this.assetConfig.rentalExpensesPerMonth
-        ? (this.assetConfig.rentalIncomePerMonth - this.assetConfig.rentalExpensesPerMonth) * 12 * inflationFactor
+      rentalIncomePerMonth > 0 || rentalExpensesPerMonth > 0
+        ? (rentalIncomePerMonth - rentalExpensesPerMonth) * 12 * inflationFactor
         : 0 // TODO: income tax
 
     const growth = (prevValue + transferAmt) * growthInterestRate

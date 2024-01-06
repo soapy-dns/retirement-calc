@@ -28,7 +28,6 @@ export class AuProperty extends Asset {
       incomeProducing: assetConfig.isRented || false,
       calculator: getCalculator(assetConfig, inflationContext)
     })
-    // const { value, startingYear } = assetConfig
     const {
       value,
       startingYear,
