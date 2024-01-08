@@ -121,7 +121,8 @@ export interface CalculationResults {
   totalEarningsData: BasicYearData[]
   totalExpensesData: ExpenseYearData[]
   earningsRowData: RowData
-  drawDownRowData: DrawdownYearData[]
+  totalDrawdownData: DrawdownYearData[]
+  drawdownRowData: RowData
   surplusRowData: SurplusRowData
   expensesRowData: RowData
   calculationMessage: string

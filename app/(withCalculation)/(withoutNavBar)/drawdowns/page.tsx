@@ -31,7 +31,7 @@ export default function Drawdowns() {
   const searchParams = useSearchParams()
   const debug = searchParams.get("debug")
 
-  const { drawDownRowData } = calculationResults || {}
+  const { totalDrawdownData } = calculationResults || {}
   const navigation = useNavigation()
 
   const { assets } = selectedScenario
@@ -77,8 +77,8 @@ export default function Drawdowns() {
           </div>
         )}
 
-        {drawDownRowData &&
-          drawDownRowData.map((byYear, index) => {
+        {totalDrawdownData &&
+          totalDrawdownData.map((byYear, index) => {
             return (
               <div key={index} className="mb-4">
                 <h2 className="text-primary">{byYear.year}</h2>

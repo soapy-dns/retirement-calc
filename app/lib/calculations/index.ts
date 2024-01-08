@@ -19,6 +19,7 @@ import { getCalculatedNpvData, getGraphIncomeNpvData } from "./utils/getCalculat
 import { getStartingYear } from "./utils/getStartingYear"
 import { IScenario } from "../data/types"
 import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
+import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
 
 export const calculate = (scenario: IScenario) => {
   try {
@@ -218,13 +219,12 @@ export const calculate = (scenario: IScenario) => {
 
     const graphIncomeNpvData = getGraphIncomeNpvData(earningsFromAssets, inflationContext)
 
-    const drawDownRowData = totalDrawdowns
+    const drawdownData = getAutoDrawdownCellData(totalDrawdowns, calcYearRangeEarnings)
 
     const projectedLivingExpensesToDisplay = projectedLivingExpenses.splice(0, numOfCalculatedYears)
     const livingExpensesTodaysMoneyToDisplay = livingExpensesTodaysMoney.splice(0, numOfCalculatedYears)
 
     const cleanedTaxes = removeUnusedHistoryFromTaxes(taxes, finalYear)
-    // console.log("--cleanedTaxes--", JSON.stringify(cleanedTaxes, null, 4))
     const expensesRowData = cleanedTaxes.reduce(
       (accum: RowData, tax: Tax) => {
         accum[`Tax (${tax.owner})`] = tax.history
@@ -242,7 +242,8 @@ export const calculate = (scenario: IScenario) => {
     return {
       assetRowData,
       earningsRowData,
-      drawDownRowData,
+      drawdownRowData: drawdownData,
+      totalDrawdownData: totalDrawdowns,
       expensesRowData,
       surplusRowData,
       calculationData,

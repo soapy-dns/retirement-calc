@@ -27,7 +27,8 @@ const SheetPage: React.FC = () => {
 
   const debug = searchParams.get("debug")
 
-  const earningInfo = "Income from a capital asset or an income stream."
+  const earningInfo =
+    "Income from a capital asset or an income stream.  This all ends up in the capital asset which is marked as the 'Earnings Bucket' in the asset configuration."
 
   const toggleEarningInfo = () => {
     setShowEarningInfo(!showEarningInfo)
@@ -43,12 +44,15 @@ const SheetPage: React.FC = () => {
     earningsRowData,
     totalEarningsData,
     totalExpensesData,
-    inflationContext,
-    drawDownRowData,
+    // inflationContext,
+    drawdownRowData,
+    totalDrawdownData,
     expensesRowData,
     surplusRowData
   } = calculationResults
 
+  console.log("--assetRowData--", assetRowData)
+  console.log("--drawdownRowData--", drawdownRowData)
   // console.log("--inflationContext--", inflationContext)
   // const inflationRateData = Object.entries(inflationContext).map(([key, value]) => {
   //   return { year: key.toString(), value: value.inflation * 100 }
@@ -103,6 +107,19 @@ const SheetPage: React.FC = () => {
                 })}
               <Row rowIdentifier="Total Income" bold={true} row={totalEarningsData} onToggle={onHelpModalToggle} />
               <EmptyLine />
+              <HeadingRow text="Drawdowns" />
+              {drawdownRowData &&
+                Object.entries(drawdownRowData).map(([rowIdentifier, rowData], index) => {
+                  return <Row key={index} rowIdentifier={rowIdentifier} row={rowData} onToggle={onHelpModalToggle} />
+                })}
+              <Row
+                rowIdentifier="Total asset drawdowns"
+                row={totalDrawdownData}
+                bold={true}
+                onToggle={onHelpModalToggle}
+              />
+
+              <EmptyLine />
               {/* expenses */}
               <HeadingRow text="Expenses" />
               {expensesRowData &&
@@ -123,7 +140,7 @@ const SheetPage: React.FC = () => {
                   )
                 })}
               {/* drawdowns */}
-              <Row rowIdentifier="Asset drawdowns" row={drawDownRowData} onToggle={onHelpModalToggle} />)
+
               {/* <Row rowIdentifier="Inflation percentage" row={inflationRateData} onToggle={onHelpModalToggle} />
               <Row rowIdentifier="Inflation factor" row={inflationFactorData} onToggle={onHelpModalToggle} /> */}
             </tbody>
