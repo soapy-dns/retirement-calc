@@ -48,6 +48,7 @@ export const calculate = (scenario: IScenario) => {
 
     const inflationContext = getInflationContext(yearRange, inflationConfig)
 
+    
     const { livingExpensesTodaysMoney, projectedLivingExpenses } = getLivingExpenses(
       yearRange,
       livingExpenses,

@@ -37,6 +37,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## find out what is running on port 3000
 
+pkill next-serv
+
 lsof -i :3000
 
 kill -9 pid

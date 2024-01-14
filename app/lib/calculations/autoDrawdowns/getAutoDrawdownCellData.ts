@@ -25,8 +25,9 @@ const getYearData = (initialRowData: Record<string, BasicYearData[]>, allDrawdow
 
 export const getAutoDrawdownCellData = (totalDrawdownYearData: DrawdownYearData[], yearRange: number[]) => {
   const allDrawdowns: AutomatedDrawdown[] = totalDrawdownYearData.reduce((accum, it) => {
-    const concated = accum.concat(it.automatedDrawdowns)
-    return concated
+    if (!it.automatedDrawdowns) return accum
+    const concatenated = accum.concat(it.automatedDrawdowns)
+    return concatenated
   }, [] as AutomatedDrawdown[])
 
   const getInitYearData = () =>
