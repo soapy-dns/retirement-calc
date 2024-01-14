@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react"
-import { Controller, Control } from "react-hook-form"
+import { Controller, Control, useFormState } from "react-hook-form"
 import { useError } from "../../hooks/useError"
 import { Input } from "../common/Input"
 // import { useError } from "../hooks/useError"
@@ -65,25 +65,27 @@ export const InputField: React.FC<InputProps> = ({
   const nameOfEl = name ?? id
 
   const errorMsg = useError(control, nameOfEl)
+  const { errors } = useFormState({ control })
 
   const handleOnChange = (value: string, onChange: Function) => {
     // const {
     //   target: { value }
     // } = event
-    console.log(
-      "--restrictedCharSet, value, value.match(restrictedCharSet)--",
-      restrictedCharSet,
-      "-",
-      value,
-      "-",
-      value.match(restrictedCharSet || "")
-    )
+    // console.log(
+    //   "--restrictedCharSet, value, value.match(restrictedCharSet)--",
+    //   restrictedCharSet,
+    //   "-",
+    //   value,
+    //   "-",
+    //   value.match(restrictedCharSet || "")
+    // )
     // Assumes empty input is always valid
     const validInput = !value || (restrictedCharSet && value.match(restrictedCharSet)) || !restrictedCharSet
     if (validInput) {
       onChange(value)
     }
   }
+  console.log("--id--", id, errorMsg, errors)
 
   return (
     <>
