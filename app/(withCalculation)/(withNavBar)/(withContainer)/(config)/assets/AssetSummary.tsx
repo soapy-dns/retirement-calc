@@ -1,4 +1,5 @@
 import type { IAsset } from "@/app/lib/data/types"
+import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { Card } from "@/app/ui/components/Card"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { useAsset } from "@/app/ui/hooks/useAsset"
@@ -17,7 +18,7 @@ interface IAssetItemDisplay {
 
 export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay) => {
   const navigation = useNavigation()
-  const { removeAsset } = useAsset()
+  const { removeAsset, hasTransfers } = useAsset()
 
   const handleEdit = () => {
     const { id } = asset
@@ -37,7 +38,9 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
 
   const { name, description, value, income, incomeBucket } = asset
 
-  const disabled = removeAllowed || incomeBucket
+  const transfersExist = hasTransfers(asset)
+
+  const disabled = removeAllowed || incomeBucket || transfersExist === true
 
   return (
     <Card>
@@ -51,6 +54,11 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
             <h2 className="my-auto text-primary">{name}</h2>
           </div>
           <div>
+            {hasTransfers(asset) && (
+              <div className="mb-4">
+                <Alert alertType={AlertType.info} heading="Asset has transfers" />
+              </div>
+            )}
             <p className="flex gap-2">
               <b>Description:</b>
               {description}

@@ -11,15 +11,21 @@ export const useAsset = () => {
     return foundAsset
   }
 
+  const hasTransfers = (asset: IAsset): boolean => {
+    if (!selectedScenario?.transfers) return false
+    const foundTransfer = selectedScenario?.transfers?.find(
+      (transfer) => transfer.from === asset.id || transfer.to === asset.id
+    )
+    return !!foundTransfer
+  }
+
   const updateAsset = (asset: IAsset) => {
-    console.log("updateAsset")
     const assets = [...selectedScenario.assets]
     const index = assets.findIndex((it) => it.id === asset.id) || 0
 
     assets.splice(index, 1, asset)
     selectedScenario.assets = assets
 
-    console.log("update scenario")
     updateScenario(selectedScenario)
   }
 
@@ -53,6 +59,7 @@ export const useAsset = () => {
     getAssetDetails,
     addAsset,
     updateAsset,
-    removeAsset
+    removeAsset,
+    hasTransfers
   }
 }

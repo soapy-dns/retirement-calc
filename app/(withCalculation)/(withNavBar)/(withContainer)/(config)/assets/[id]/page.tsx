@@ -9,6 +9,7 @@ import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/E
 import { useAsset } from "@/app/ui/hooks/useAsset"
 import { useOwner } from "@/app/ui/hooks/useOwner"
 import { Country } from "@/app/lib/calculations/tax/taxCalcs/types"
+import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 
 const getDrawdownFromValue = (enteredYear?: number): number => {
   const startingYear = getStartingYear()
@@ -101,7 +102,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   let { id } = params
   const navigation = useNavigation()
 
-  const { getAssetDetails, updateAsset, addAsset } = useAsset()
+  const { getAssetDetails, updateAsset, addAsset, hasTransfers } = useAsset()
   const { getOwners } = useOwner()
   const asset = getAssetDetails(id)
   const owners = getOwners()
@@ -165,7 +166,6 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   const onSubmit = (data: ChangedFormData) => {
     if (asset) {
       const newAssetConfig = marshall(data, asset)
-      console.log("--newAssetConfig--", newAssetConfig)
       updateAsset(newAssetConfig)
     } else {
       addAsset(getAssetValuesFromForm(data))
@@ -192,6 +192,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       handleBack={handleBack}
       handleCancel={handleBack}
     >
+      {asset && hasTransfers(asset) && <Alert alertType={AlertType.info} heading="Asset has transfers" />}
       {/* @ts-ignore */}
       <AssetEditForm
         control={control}
