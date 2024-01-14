@@ -20,13 +20,19 @@ export class DefinedBenefitsCalculator extends Calculator {
 
   // call this for each year
   calculate = (yearData: YearData, assets: Asset[]): YearData => {
-    const { income: prevIncome, year } = yearData
+    const { year } = yearData
 
-    const inflationRate = this.inflationContext[year].inflation
+    const { incomeEndYear, incomeStartYear, income } = this.assetConfig
 
-    const indexationRate = this.config.indexationRate || inflationRate
-    const increase = prevIncome * indexationRate
-    const newIncome = prevIncome + increase
+    let newIncome
+
+    if (!income || (incomeEndYear && incomeEndYear < year) || (incomeStartYear && incomeStartYear > year)) {
+      newIncome = 0
+    } else {
+      const inflationFactor = this.inflationContext[year - 1] ? this.inflationContext[year - 1].factor : 1
+
+      newIncome = income * inflationFactor
+    }
 
     return {
       year: year + 1,

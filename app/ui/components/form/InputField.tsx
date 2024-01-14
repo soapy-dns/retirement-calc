@@ -85,7 +85,6 @@ export const InputField: React.FC<InputProps> = ({
       onChange(value)
     }
   }
-  console.log("--id--", id, errorMsg, errors)
 
   return (
     <>

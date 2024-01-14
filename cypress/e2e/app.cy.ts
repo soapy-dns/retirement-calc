@@ -6,7 +6,7 @@ describe.only("Pricing", () => {
 
     cy.get("@cells").should("have.length", 24)
     cy.get("@cells").first().contains("1,631,000")
-    cy.get("@cells").last().contains("471,526")
+    cy.get("@cells").last().contains("471,534")
   })
 
   it("should check the last total income is as expected", () => {
@@ -16,7 +16,7 @@ describe.only("Pricing", () => {
 
     cy.get("@cells").should("have.length", 23)
     cy.get("@cells").first().contains("12,918")
-    cy.get("@cells").last().contains("18,689")
+    cy.get("@cells").last().contains("18,690")
   })
 
   it("should check the last total expenses is as expected", () => {

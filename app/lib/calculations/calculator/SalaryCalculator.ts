@@ -19,19 +19,17 @@ export class SalaryCalculator extends Calculator {
 
   // call this for each year
   calculate = (yearData: YearData, assets: Asset[]): YearData => {
-    const { income: prevIncome, year } = yearData
+    const { year } = yearData
 
-    const { incomeEndYear } = this.assetConfig
+    const { incomeEndYear, incomeStartYear, income } = this.assetConfig
 
     let newIncome
-    if (incomeEndYear && incomeEndYear < year) {
+    if (!income || (incomeEndYear && incomeEndYear < year) || (incomeStartYear && incomeStartYear > year)) {
       newIncome = 0
     } else {
-      const inflationRate = this.inflationContext[year].inflation
+      const inflationFactor = this.inflationContext[year - 1] ? this.inflationContext[year - 1].factor : 1
 
-      const indexationRate = this.config.indexationRate || inflationRate
-      const increase = prevIncome * indexationRate
-      newIncome = prevIncome + increase
+      newIncome = income * inflationFactor
     }
 
     return {
