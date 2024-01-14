@@ -5,7 +5,7 @@ import { AssetTab } from "../(config)/assets/AssetTab"
 import { ContextTab } from "../(config)/context/ContextTab"
 import { TransfersTab } from "../(config)/transfers/TransferTab"
 import { ScenarioDisplay } from "../(config)/context/scenario/ScenarioDisplay"
-import { GenericModal } from "@/app/ui/components/GenericModal"
+import { NoActionModal } from "@/app/ui/components/NoActionModal"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ConfigTab } from "@/app/ui/context/types"
 import { AppPath } from "@/app/ui/types"
@@ -80,7 +80,7 @@ const ConfigPage: React.FC = () => {
       {activeTab === ConfigTab.context && <ContextTab />}
       {activeTab === ConfigTab.assets && <AssetTab />}
       {activeTab === ConfigTab.transfers && <TransfersTab />}
-      <GenericModal
+      <NoActionModal
         showModal={showModal}
         heading={headingText}
         content={<HelpModalContent />}

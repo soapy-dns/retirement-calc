@@ -4,7 +4,7 @@ import React, { useContext, useState } from "react"
 import { Cell as HeadingCell } from "./heading/Cell"
 import { Row } from "./row/Row"
 import { HeadingRow } from "./row/HeadingRow"
-import { GenericModal } from "@/app/ui/components/GenericModal"
+import { NoActionModal } from "@/app/ui/components/NoActionModal"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 
@@ -50,16 +50,6 @@ const SheetPage: React.FC = () => {
     expensesRowData,
     surplusRowData
   } = calculationResults
-
-  console.log("--assetRowData--", assetRowData)
-  console.log("--drawdownRowData--", drawdownRowData)
-  // console.log("--inflationContext--", inflationContext)
-  // const inflationRateData = Object.entries(inflationContext).map(([key, value]) => {
-  //   return { year: key.toString(), value: value.inflation * 100 }
-  // })
-  // const inflationFactorData = Object.entries(inflationContext).map(([key, value]) => {
-  //   return { year: key.toString(), value: value.factor.toFixed(2) }
-  // })
 
   // @ts-ignore
   const headingRow = [""].concat(yearRange)
@@ -148,7 +138,7 @@ const SheetPage: React.FC = () => {
         </div>
       </div>
       {debug && (
-        <GenericModal
+        <NoActionModal
           showModal={showHelpModal}
           heading="Cell Data"
           content={HelpModalContent}
@@ -156,7 +146,12 @@ const SheetPage: React.FC = () => {
         />
       )}
       {showEarningInfo && (
-        <GenericModal showModal={showEarningInfo} heading="Income" content={earningInfo} onToggle={toggleEarningInfo} />
+        <NoActionModal
+          showModal={showEarningInfo}
+          heading="Income"
+          content={earningInfo}
+          onToggle={toggleEarningInfo}
+        />
       )}
     </div>
   )

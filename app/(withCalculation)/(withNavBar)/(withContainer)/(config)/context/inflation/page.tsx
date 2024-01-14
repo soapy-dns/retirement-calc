@@ -18,6 +18,10 @@ import { ValidationError } from "@/app/ui/components/common/ValidationError"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { useError } from "@/app/ui/hooks/useError"
+import { GenericModal } from "@/app/ui/components/GenericModal"
+import { YearValue } from "@/app/ui/components/YearValue"
+import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
+import { contextConstants } from "../contextConstants"
 
 const inflationAddId = "inflationAdd"
 const yearAddId = "yearAdd"
@@ -44,6 +48,7 @@ interface ChangedFormData {
 
 const InflationEditPage: React.FC = () => {
   const navigation = useNavigation()
+  const { showModal, onToggle } = useContext(HelpModalContext)
 
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
   const { context } = selectedScenario
@@ -70,35 +75,24 @@ const InflationEditPage: React.FC = () => {
     remove(index)
   }
 
-  const handleAdd = async (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+  const handleAdd = (fromYear: number, inflationRate: number) => {
+    if (!fromYear || !inflationRate) return null // This stops us from adding a new row with nothing in it could also null the button
+    const newRecord = { fromYear, inflationRate }
 
-    const valid = await trigger([yearAddId])
-    if (valid) {
-      const values = getValues()
-      const fromYear = +values[yearAddId]
-      const inflationRate = +values[inflationAddId]
-      if (!fromYear || !inflationRate) return null // This stops us from adding a new row with nothing in it could also null the button
-      const newRecord = { fromYear, inflationRate }
+    let insertIndex = 0
+    const findIndex = fields.findIndex((it) => it.fromYear > fromYear)
 
-      let insertIndex = 0
-      const findIndex = fields.findIndex((it) => it.fromYear > fromYear)
-
-      if (findIndex === -1) {
-        insertIndex = fields.length
-      } else {
-        insertIndex = findIndex
-      }
-
-      // TODO: if value already found??
-
-      insert(insertIndex, newRecord)
-
-      // @ts-ignore
-      setValue(yearAddId, "")
-      // @ts-ignore
-      setValue(inflationAddId, "")
+    if (findIndex === -1) {
+      insertIndex = fields.length
+    } else {
+      insertIndex = findIndex
     }
+
+    // TODO: if value already found??
+
+    insert(insertIndex, newRecord)
+
+    onToggle() // This closes in this situation.  I think we could improve this
   }
 
   const onSubmit = (data: ChangedFormData) => {
@@ -138,6 +132,15 @@ const InflationEditPage: React.FC = () => {
     >
       <form>
         <>
+          <div className="flex justify-center mb-4">
+            <Button buttonType={ButtonType.tertiary} onClick={onToggle}>
+              <div className="flex gap-2 items-center justify-center">
+                <PlusCircleIcon className="h-6 w-6" />
+                <div>Add a new row</div>
+              </div>
+            </Button>
+          </div>
+
           <div className="grid grid-cols-3  gap-2">
             <div className="font-bold">From year</div>
             <div className="font-bold">Inflation rate</div>
@@ -194,50 +197,21 @@ const InflationEditPage: React.FC = () => {
             )
           })}
         </>
-
-        <div className="mt-6 grid grid-cols-3 justify-items-center gap-2">
-          <InputField id={yearAddId} control={control} restrictedCharSet={INTEGERS_ONLY} />
-
-          <InputField
-            id={inflationAddId}
-            control={control}
-            // validationRules={newInflationRateValidationRules}
-            restrictedCharSet={DECIMALS_ONLY}
-          />
-
-          <Button buttonType={ButtonType.tertiary} onClick={handleAdd}>
-            <div className="flex items-center gap-2">
-              <PlusCircleIcon className="h-6 w-6" />
-              <div className="hidden md:flex">Add a row</div>
-            </div>
-          </Button>
-
-          {/* <ErrorMessage errors={errors} name="yearAddId" render={({ message }) => <p>{message}</p>} /> */}
-          {errors.yearAdd && (
-            <div className="col-span-3 justify-self-start">
-              <ValidationError id={`yearAdd_error`} errorMsg={errors.yearAdd.message || ""} />
-            </div>
-          )}
-          {errors.inflationAdd && (
-            <div className="col-span-3 justify-self-start">
-              <ValidationError id={`inflationAdd_error`} errorMsg={errors.inflationAdd.message || ""} />
-            </div>
-          )}
-          {/* {useError(control, yearAddId) && (
-            <div className="col-span-3">
-              <ValidationError
-                id={`${yearAddId}_error`}
-                errorMsg={errors[yearAddId] ? errors[yearAddId].message : ""}
-              />
-            </div>
-          )}
-          {getError(inflationAddId) && (
-            <div className="col-span-3">
-              <ValidationError id={`${inflationAddId}_error`} errorMsg={getError(inflationAddId).message} />
-            </div>
-          )} */}
-        </div>
       </form>
+
+      <GenericModal
+        showModal={showModal}
+        heading="Add living expense row"
+        content={
+          <YearValue
+            handleCancel={onToggle}
+            handleAdd={handleAdd}
+            valueLabel={contextConstants.RATE.LABEL}
+            valueHelpText={contextConstants.RATE.HELP_TEXT}
+          />
+        }
+        handleCancel={onToggle}
+      />
     </EditPageLayout>
   )
 }

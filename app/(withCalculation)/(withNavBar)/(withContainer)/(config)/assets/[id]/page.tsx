@@ -33,6 +33,7 @@ interface ChangedFormData {
   drawdownOrder?: number // TODO: should be required if canDrawdown true
   drawdownFrom?: number // TODO: should be required if canDrawdown true
   preferredMinAmt?: number
+  incomeStartYear?: number
   incomeEndYear?: number
 }
 
@@ -48,15 +49,15 @@ const getAssetValuesFromForm = (data: ChangedFormData): Omit<IAsset, "id"> => {
     canDrawdown,
     drawdownOrder,
     drawdownFrom,
-    earnsIncome,
     earningsBucket,
     preferredMinAmt,
-    // earningsTaxPerc,
     isRented,
     rentalIncome,
     rentalExpenses,
+    incomeStartYear,
     incomeEndYear
   } = data
+  console.log("#1", incomeStartYear)
 
   return {
     name,
@@ -76,6 +77,7 @@ const getAssetValuesFromForm = (data: ChangedFormData): Omit<IAsset, "id"> => {
     isRented: isRented === "Y",
     rentalIncomePerMonth: rentalIncome ? +rentalIncome : undefined,
     rentalExpensesPerMonth: rentalExpenses ? +rentalExpenses : undefined,
+    incomeStartYear: incomeStartYear ? +incomeStartYear : undefined,
     incomeEndYear: incomeEndYear ? +incomeEndYear : undefined
   }
 }
@@ -91,9 +93,9 @@ const marshall = (data: ChangedFormData, asset: IAsset) => {
   return newAssets
 }
 
-interface Props {
-  add: boolean
-}
+// interface Props {
+//   add: boolean
+// }
 
 export default function AssetEditPage({ params }: { params: { id: string } }) {
   let { id } = params
@@ -108,12 +110,10 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     name,
     description,
     country = "AU",
-    className,
+    className, // assetType
     value,
     income,
     assetOwners = [],
-    // percOfEarningsTaxable,
-    // incomeProducing,
     incomeBucket,
     preferredMinAmt,
     canDrawdown,
@@ -122,6 +122,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     isRented,
     rentalExpensesPerMonth,
     rentalIncomePerMonth,
+    incomeStartYear,
     incomeEndYear
   } = asset || {}
 
@@ -146,16 +147,15 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       value,
       income,
       owners: assetOwners,
-      // earnsIncome: incomeEarningValue,
       earningsBucket: earningsAccumulated,
       preferredMinAmt: preferredMinAmt ?? 0,
-      // earningsTaxPerc: percOfEarningsTaxable ?? 100,
       isRented: isRentedString,
       rentalExpenses: rentalExpensesPerMonth,
       rentalIncome: rentalIncomePerMonth,
       canDrawdown: canDrawdownValue,
       drawdownOrder,
       drawdownFrom: getDrawdownFromValue(drawdownFrom),
+      incomeStartYear,
       incomeEndYear
     }
   })
@@ -165,6 +165,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   const onSubmit = (data: ChangedFormData) => {
     if (asset) {
       const newAssetConfig = marshall(data, asset)
+      console.log("--newAssetConfig--", newAssetConfig)
       updateAsset(newAssetConfig)
     } else {
       addAsset(getAssetValuesFromForm(data))

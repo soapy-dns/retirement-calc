@@ -67,13 +67,20 @@ export const assetConstants = {
     HELP_TEXT:
       "Specifies the order to automatically drawdown on if required.  For example if some assets need to be sold (drawn down) to cover expenses.  If there are multiple assets with the same order the drawdown will be split equally amoungst them.  Note: drawdownOrder does not have any effect unless the 'canDrawdown' flag is set."
   },
+
   DRAWDOWN_FROM: {
-    LABEL: "Possible drawdown commencement year",
+    LABEL: "Possible drawdown commencement year.",
     HELP_TEXT:
       "The year we can start drawing down on this asset (if required).  For example we might not want to start drawing down on super until age 60 when the tax benefits kick in.  If this is not entered, it will be assumed that drawing down on the asset is fine from the start."
   },
+  INCOME_START_YEAR: {
+    LABEL: "Income start year (optional)",
+    HELP_TEXT:
+      "The year the income stream begins.  If there is no value, the income will be taken as being available immediately."
+  },
   INCOME_END_YEAR: {
-    LABEL: "Income end year",
-    HELP_TEXT: "The year the income will end.  eg on retiremnt.  Without a date it is assumed it will never end"
+    LABEL: "Income end year (optional)",
+    HELP_TEXT:
+      "The year the income will end.  eg on retirement.  Without a date it is assumed it will never end.  If there is no value, the income will continue indefinitely."
   }
 }

@@ -3,7 +3,7 @@ import { useSearchParams } from "next/navigation"
 
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { Container } from "@/app/ui/components/Container"
-import { GenericModal } from "@/app/ui/components/GenericModal"
+import { NoActionModal } from "@/app/ui/components/NoActionModal"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
@@ -103,7 +103,7 @@ export default function Drawdowns() {
           })}
       </Container>
 
-      <GenericModal
+      <NoActionModal
         showModal={showModal}
         heading={heading}
         content={<HelpModalContent />}

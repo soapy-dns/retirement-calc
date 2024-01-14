@@ -1,7 +1,14 @@
 import { Country } from "@/app/lib/calculations/tax/taxCalcs/types"
-import { BasicYearData } from "@/app/lib/calculations/types"
-import { DrawdownYearData, YearData } from "@/app/lib/calculations/assets/types"
 import { Transfer } from "@/app/lib/calculations/transfers/types"
+
+export const AssetType = {
+  AuBank: "AuBank",
+  AuDefinedBenefits: "AuDefinedBenefits",
+  AuProperty: "AuProperty",
+  AuShares: "AuShares",
+  AuSuper: "AuSuper",
+  Salary: "Salary"
+}
 
 export interface IScenario {
   id: string
@@ -28,7 +35,6 @@ export interface IAsset {
   value: number
   assetOwners: string[]
   income?: number
-  // incomeProducing?: boolean
   incomeBucket?: boolean
   canDrawdown?: boolean
   drawdownFrom?: number
@@ -39,6 +45,7 @@ export interface IAsset {
   isRented?: boolean
   rentalIncomePerMonth?: number
   rentalExpensesPerMonth?: number
+  incomeStartYear?: number
   incomeEndYear?: number
   country: Country
 }

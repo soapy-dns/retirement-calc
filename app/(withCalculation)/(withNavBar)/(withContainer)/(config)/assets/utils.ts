@@ -15,16 +15,10 @@ export const getAssetDisplayDetails = (assetConfig: IAsset) => {
   switch (className) {
     case "AuBank":
       return { AssetClassIcon: BanknotesIcon, type: "CASH" }
-    case "UkBank":
-      return { AssetClassIcon: BanknotesIcon, type: "CASH" }
     case "AuSuper":
       return { AssetClassIcon: ArrowTrendingDownIcon, type: "DEFINED CONTRIBUTIONS" }
     case "AuDefinedBenefits":
       return { AssetClassIcon: CurrencyDollarIcon, type: "DEFINED BENEFITS" }
-    case "UkSuper":
-      return { AssetClassIcon: ArrowTrendingDownIcon, type: "SUPER DC" }
-    case "UkDefinedBenefits":
-      return { AssetClassIcon: CurrencyDollarIcon, type: "SUPER DB" }
     case "AuShares":
       return { AssetClassIcon: ArrowTrendingUpIcon, type: "SHARES" }
     case "AuProperty":

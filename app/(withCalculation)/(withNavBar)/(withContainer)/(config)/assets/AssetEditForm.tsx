@@ -12,6 +12,7 @@ import { assetConstants } from "./assetConstants"
 import { assetTypeOptions, drawdownOrderOptions } from "./assetTypeOptions"
 import { validateOwners } from "@/app/ui/validation/ownersValidation"
 import { YesNo } from "../types"
+import { AssetType } from "@/app/lib/data/types"
 
 interface Props {
   control: Control<any, object>
@@ -34,11 +35,12 @@ export const AssetEditForm: FunctionComponent<Props> = ({
   owners,
   register
 }) => {
-  // const isIncomeFlag = assetTypeOptions.find((it) => it.value === assetType)?.assetClass === AssetClass.income || false
   const isIncomeFlag = isIncome(assetType)
   const isProperty = assetTypeOptions.find((it) => it.value === assetType)?.assetClass === AssetClass.property || false
   const showDrawdown = drawdownSet === "Y"
   const ownersOptions = owners.map((it) => ({ label: it, value: it }))
+
+  const showStartDate = [AssetType.AuDefinedBenefits, AssetType.Salary].includes(assetType)
 
   return (
     <form>
@@ -94,14 +96,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
             restrictedCharSet={INTEGERS_ONLY}
             helpText={assetConstants.VALUE.HELP_TEXT}
           />
-          {/* <RadioButtonQuestion
-            id="earnsIncome"
-            control={control}
-            label={assetConstants.INCOME_EARNING.LABEL}
-            values={yesNoOptions}
-            variant={RadioQuestionVariant.BLOCK}
-            helpText={assetConstants.INCOME_EARNING.HELP_TEXT}
-          /> */}
+
           <RadioButtonQuestion
             id="earningsBucket"
             control={control}
@@ -125,6 +120,15 @@ export const AssetEditForm: FunctionComponent<Props> = ({
             variant={RadioQuestionVariant.BLOCK}
             helpText={assetConstants.CAN_DRAWDOWN.HELP_TEXT}
           />
+          {showStartDate && (
+            <InputQuestion
+              id="incomeStartYear"
+              control={control}
+              label={assetConstants.INCOME_START_YEAR.LABEL}
+              restrictedCharSet={INTEGERS_ONLY}
+              helpText={assetConstants.INCOME_START_YEAR.HELP_TEXT}
+            />
+          )}
           {showDrawdown && (
             <>
               <SelectQuestion
@@ -147,15 +151,23 @@ export const AssetEditForm: FunctionComponent<Props> = ({
       )}
       {isIncomeFlag && (
         <>
-          {assetType === "Salary" && (
+          {showStartDate && (
             <InputQuestion
-              id="incomeEndYear"
+              id="incomeStartYear"
               control={control}
-              label={assetConstants.INCOME_END_YEAR.LABEL}
+              label={assetConstants.INCOME_START_YEAR.LABEL}
               restrictedCharSet={INTEGERS_ONLY}
-              helpText={assetConstants.INCOME_END_YEAR.HELP_TEXT}
+              helpText={assetConstants.INCOME_START_YEAR.HELP_TEXT}
             />
           )}
+          <InputQuestion
+            id="incomeEndYear"
+            control={control}
+            label={assetConstants.INCOME_END_YEAR.LABEL}
+            restrictedCharSet={INTEGERS_ONLY}
+            helpText={assetConstants.INCOME_END_YEAR.HELP_TEXT}
+          />
+
           <InputQuestion
             id="income"
             control={control}

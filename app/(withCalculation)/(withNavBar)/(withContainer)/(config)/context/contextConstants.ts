@@ -1,4 +1,8 @@
-export const contextConstants = {
+type ItemProps = {
+  LABEL: string
+  HELP_TEXT?: string
+}
+export const contextConstants: Record<string, ItemProps> = {
   TAX_RESIDENCY: {
     LABEL: "Tax Residency",
     HELP_TEXT: "The country you live in for tax (there are no partial years)"
@@ -76,5 +80,13 @@ export const contextConstants = {
     LABEL: "Indexed in line with inflation",
     HELP_TEXT:
       "If 'Yes', then the inflation rate (for the year) will be used, otherwise an indexation rate will need to be defined and that value will be applied to all years"
+  },
+  FROM_YEAR: {
+    LABEL: "From year",
+    HELP_TEXT: "Year the rate will take affect from. This rate will continue until the next (if any) year entered."
+  },
+  RATE: {
+    LABEL: "Rate",
+    HELP_TEXT: "The rate (not the %)"
   }
 }

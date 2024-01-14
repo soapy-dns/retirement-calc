@@ -12,28 +12,29 @@ import { DECIMALS_ONLY, INTEGERS_ONLY } from "@/app/ui/components/common/formReg
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ValidationError } from "@/app/ui/components/common/ValidationError"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
+import { YearValue } from "@/app/ui/components/YearValue"
+import { GenericModal } from "@/app/ui/components/GenericModal"
+import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
+import { contextConstants } from "../contextConstants"
 
 const amountInTodaysTermsAddId = "amountInTodaysTermsAdd"
 const yearAddId = "yearAdd"
 
 interface ChangedFormData {
   items: LivingExpensesRecord[]
-  [amountInTodaysTermsAddId]: number
-  [yearAddId]: number
+  // [amountInTodaysTermsAddId]: number
+  // [yearAddId]: number
 }
 
 const LivingExpensesPage: React.FC = () => {
   const navigation = useNavigation()
 
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
+  const { showModal, onToggle } = useContext(HelpModalContext)
   const { context } = selectedScenario
   const { livingExpenses } = context
 
   const {
-    // watch,
-    trigger,
-    getValues,
-    setValue,
     handleSubmit,
     control,
     // reset,
@@ -50,35 +51,24 @@ const LivingExpensesPage: React.FC = () => {
     remove(index)
   }
 
-  const handleAdd = async (e: SyntheticEvent) => {
-    e.preventDefault()
+  const handleAdd = (fromYear: number, amountInTodaysTerms: number) => {
+    if (!fromYear || !amountInTodaysTerms) return null // This stops us from adding a new row with nothing in it could also null the button
+    const newRecord = { fromYear, amountInTodaysTerms }
 
-    const valid = await trigger([yearAddId])
-    if (valid) {
-      const values = getValues()
-      const fromYear = +values[yearAddId]
-      const amountInTodaysTerms = +values[amountInTodaysTermsAddId]
-      if (!fromYear || !amountInTodaysTerms) return null // This stops us from adding a new row with nothing in it could also null the button
-      const newRecord = { fromYear, amountInTodaysTerms }
+    let insertIndex = 0
+    const findIndex = fields.findIndex((it) => it.fromYear > fromYear)
 
-      let insertIndex = 0
-      const findIndex = fields.findIndex((it) => it.fromYear > fromYear)
-
-      if (findIndex === -1) {
-        insertIndex = fields.length
-      } else {
-        insertIndex = findIndex
-      }
-
-      // TODO: if value already found??
-
-      insert(insertIndex, newRecord)
-
-      // @ts-ignore
-      setValue(yearAddId, "")
-      // @ts-ignore
-      setValue(amountInTodaysTermsAddId, "")
+    if (findIndex === -1) {
+      insertIndex = fields.length
+    } else {
+      insertIndex = findIndex
     }
+
+    // TODO: if value already found??
+
+    insert(insertIndex, newRecord)
+
+    onToggle() // This closes in this situation.  I think we could improve this
   }
 
   const onSubmit = (data: ChangedFormData) => {
@@ -116,8 +106,17 @@ const LivingExpensesPage: React.FC = () => {
       handleBack={handleBack}
       handleCancel={handleBack}
     >
-      <form>
-        <>
+      <>
+        <div className="flex justify-center mb-4">
+          <Button buttonType={ButtonType.tertiary} onClick={onToggle}>
+            <div className="flex gap-2 items-center justify-center">
+              <PlusCircleIcon className="h-6 w-6" />
+              <div>Add a new row</div>
+            </div>
+          </Button>
+        </div>
+
+        <form className="mb-4">
           <div className="grid grid-cols-3 gap-2">
             <div className="font-bold">From year</div>
             <div className="font-bold">Value at today&apos;s date</div>
@@ -171,45 +170,22 @@ const LivingExpensesPage: React.FC = () => {
               </div>
             )
           })}
-        </>
+        </form>
+      </>
 
-        <div className="mt-6 grid grid-cols-3 justify-items-center justify-self-start gap-2">
-          <InputField
-            id={yearAddId}
-            control={control}
-            // validationRules={newInflationYearValidationRules}
-            restrictedCharSet={INTEGERS_ONLY}
+      <GenericModal
+        showModal={showModal}
+        heading="Add inflation row"
+        content={
+          <YearValue
+            handleCancel={onToggle}
+            handleAdd={handleAdd}
+            valueLabel={contextConstants.LIVING_EXPENSES.LABEL}
+            valueHelpText={contextConstants.LIVING_EXPENSES.HELP_TEXT}
           />
-
-          <InputField
-            id={amountInTodaysTermsAddId}
-            control={control}
-            validationRules={newInflationRateValidationRules}
-            restrictedCharSet={DECIMALS_ONLY}
-          />
-
-          <Button buttonType={ButtonType.tertiary} onClick={handleAdd}>
-            <div className="flex items-center gap-2">
-              <PlusCircleIcon className="h-6 w-6" />
-              <div className="hidden md:flex">Add a row</div>
-            </div>
-          </Button>
-
-          {errors.yearAdd && (
-            <div className="col-span-3 justify-self-start">
-              <ValidationError id={`yearAdd_error`} errorMsg={errors.yearAdd.message || ""} />
-            </div>
-          )}
-          {errors.amountInTodaysTermsAdd && (
-            <div className="col-span-3 justify-self-start">
-              <ValidationError
-                id={`amountInTodaysTermsAdd_error`}
-                errorMsg={errors.amountInTodaysTermsAdd.message || ""}
-              />
-            </div>
-          )}
-        </div>
-      </form>
+        }
+        handleCancel={onToggle}
+      />
     </EditPageLayout>
   )
 }
