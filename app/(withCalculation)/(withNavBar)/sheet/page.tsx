@@ -86,7 +86,9 @@ const SheetPage: React.FC = () => {
                 })}
               <Row rowIdentifier="Total Assets" bold={true} row={totalAssetsData} onToggle={onHelpModalToggle} />
               <Row rowIdentifier="Present value" bold={true} row={netPresentValue} onToggle={onHelpModalToggle} />
+
               <EmptyLine />
+
               {/* earnings */}
               <HeadingRow text="Income" onToggle={toggleEarningInfo} />
               {earningsRowData &&
@@ -96,7 +98,21 @@ const SheetPage: React.FC = () => {
                   )
                 })}
               <Row rowIdentifier="Total Income" bold={true} row={totalEarningsData} onToggle={onHelpModalToggle} />
+
               <EmptyLine />
+
+              {/* expenses */}
+              <HeadingRow text="Expenses" />
+              {expensesRowData &&
+                Object.entries(expensesRowData).map(([rowIdentifier, expensesData], index) => {
+                  return (
+                    <Row key={index} rowIdentifier={rowIdentifier} row={expensesData} onToggle={onHelpModalToggle} />
+                  )
+                })}
+              <Row rowIdentifier="Total Expenses" bold={true} row={totalExpensesData} onToggle={onHelpModalToggle} />
+
+              <EmptyLine />
+
               <HeadingRow text="Drawdowns" />
               {drawdownRowData &&
                 Object.entries(drawdownRowData).map(([rowIdentifier, rowData], index) => {
@@ -110,16 +126,7 @@ const SheetPage: React.FC = () => {
               />
 
               <EmptyLine />
-              {/* expenses */}
-              <HeadingRow text="Expenses" />
-              {expensesRowData &&
-                Object.entries(expensesRowData).map(([rowIdentifier, expensesData], index) => {
-                  return (
-                    <Row key={index} rowIdentifier={rowIdentifier} row={expensesData} onToggle={onHelpModalToggle} />
-                  )
-                })}
-              <Row rowIdentifier="Total Expenses" bold={true} row={totalExpensesData} onToggle={onHelpModalToggle} />
-              <EmptyLine />
+
               {/* calculated values */}
               <HeadingRow text="Calculated values" />
               {/* surplus */}

@@ -192,7 +192,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       handleBack={handleBack}
       handleCancel={handleBack}
     >
-      {asset && hasTransfers(asset) && <Alert alertType={AlertType.info} heading="Asset has transfers" />}
+      {asset && hasTransfers(asset) && <Alert alertType={AlertType.info} heading="This asset has transfers" />}
       {/* @ts-ignore */}
       <AssetEditForm
         control={control}
