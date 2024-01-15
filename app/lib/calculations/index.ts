@@ -21,7 +21,8 @@ import { IScenario } from "../data/types"
 import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
 import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
 
-export const calculate = (scenario: IScenario) => {
+export const calculate = (data: unknown) => {
+  const scenario = data as IScenario // assuming successful validation
   try {
     // setup
     let calculationMessage = ""
@@ -48,7 +49,6 @@ export const calculate = (scenario: IScenario) => {
 
     const inflationContext = getInflationContext(yearRange, inflationConfig)
 
-    
     const { livingExpensesTodaysMoney, projectedLivingExpenses } = getLivingExpenses(
       yearRange,
       livingExpenses,
