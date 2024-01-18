@@ -1,4 +1,4 @@
-import { IAsset, IScenario } from "./types"
+import { IAsset, IScenario } from "./schema"
 export const scenarios: IScenario[] = [
   {
     id: "A",
@@ -146,9 +146,9 @@ export const scenarios: IScenario[] = [
       definedBenefitsAu: {
         useInflationRate: true
       },
-      definedBenefitsUk: {
-        useInflationRate: true
-      },
+      // definedBenefitsUk: {
+      //   useInflationRate: true
+      // },
       sharesAu: {
         growthInterestRate: 0.03,
         dividendInterestRate: 0.03
@@ -319,9 +319,9 @@ export const scenariosMultiple: IScenario[] = [
       definedBenefitsAu: {
         useInflationRate: true
       },
-      definedBenefitsUk: {
-        useInflationRate: true
-      },
+      // definedBenefitsUk: {
+      //   useInflationRate: true
+      // },
       sharesAu: {
         growthInterestRate: 0.03,
         dividendInterestRate: 0.03
@@ -526,10 +526,10 @@ export const scenariosMultiple: IScenario[] = [
         useInflationRate: true
         // indexationRate: 0.03
       },
-      definedBenefitsUk: {
-        useInflationRate: true
-        // indexationRate: 0.038841 // This is a kind of frig.  It will always return this and will always need a particular value to be removed from it
-      },
+      // definedBenefitsUk: {
+      //   useInflationRate: true
+      //   // indexationRate: 0.038841 // This is a kind of frig.  It will always return this and will always need a particular value to be removed from it
+      // },
       sharesAu: {
         growthInterestRate: 0.03,
         dividendInterestRate: 0.03
@@ -631,10 +631,10 @@ export const scenariosMultiple: IScenario[] = [
         useInflationRate: true
         // indexationRate: 0.03
       },
-      definedBenefitsUk: {
-        useInflationRate: true
-        // indexationRate: 0.038841 // This is a kind of frig.  It will always return this and will always need a particular value to be removed from it
-      },
+      // definedBenefitsUk: {
+      //   useInflationRate: true
+      //   // indexationRate: 0.038841 // This is a kind of frig.  It will always return this and will always need a particular value to be removed from it
+      // },
       sharesAu: {
         growthInterestRate: 0.03,
         dividendInterestRate: 0.03
@@ -702,10 +702,10 @@ export const scenariosMultiple: IScenario[] = [
         useInflationRate: true
         // indexationRate: 0.03
       },
-      definedBenefitsUk: {
-        useInflationRate: true
-        // indexationRate: 0.038841 // This is a kind of frig.  It will always return this and will always need a particular value to be removed from it
-      },
+      // definedBenefitsUk: {
+      //   useInflationRate: true
+      //   // indexationRate: 0.038841 // This is a kind of frig.  It will always return this and will always need a particular value to be removed from it
+      // },
       sharesAu: {
         growthInterestRate: 0.03,
         dividendInterestRate: 0.03
@@ -778,10 +778,10 @@ export const scenariosMultiple: IScenario[] = [
         useInflationRate: true
         // indexationRate: 0.03
       },
-      definedBenefitsUk: {
-        useInflationRate: true
-        // indexationRate: 0.038841 // This is a kind of frig.  It will always return this and will always need a particular value to be removed from it
-      },
+      // definedBenefitsUk: {
+      //   useInflationRate: true
+      //   // indexationRate: 0.038841 // This is a kind of frig.  It will always return this and will always need a particular value to be removed from it
+      // },
       sharesAu: {
         growthInterestRate: 0.03,
         dividendInterestRate: 0.03
@@ -856,10 +856,10 @@ export const scenariosMultiple: IScenario[] = [
         useInflationRate: true
         // indexationRate: 0.03
       },
-      definedBenefitsUk: {
-        useInflationRate: true
-        // indexationRate: 0.03
-      },
+      // definedBenefitsUk: {
+      //   useInflationRate: true
+      //   // indexationRate: 0.03
+      // },
       sharesAu: {
         growthInterestRate: 0.03,
         dividendInterestRate: 0.03
@@ -930,10 +930,10 @@ export const scenariosMultiple: IScenario[] = [
         useInflationRate: true
         // indexationRate: 0.03
       },
-      definedBenefitsUk: {
-        useInflationRate: true
-        // indexationRate: 0.03
-      },
+      // definedBenefitsUk: {
+      //   useInflationRate: true
+      //   // indexationRate: 0.03
+      // },
       sharesAu: {
         growthInterestRate: 0.03,
         dividendInterestRate: 0.03
@@ -1012,10 +1012,10 @@ export const scenariosMultiple: IScenario[] = [
         useInflationRate: true
         // indexationRate: 0.03
       },
-      definedBenefitsUk: {
-        useInflationRate: true
-        // indexationRate: 0.03
-      },
+      // definedBenefitsUk: {
+      //   useInflationRate: true
+      //   // indexationRate: 0.03
+      // },
       sharesAu: {
         growthInterestRate: 0.03,
         dividendInterestRate: 0.03
@@ -1101,10 +1101,10 @@ export const scenariosMultiple: IScenario[] = [
         useInflationRate: true
         // indexationRate: 0.03
       },
-      definedBenefitsUk: {
-        useInflationRate: true
-        // indexationRate: 0.03
-      },
+      // definedBenefitsUk: {
+      //   useInflationRate: true
+      //   // indexationRate: 0.03
+      // },
       sharesAu: {
         growthInterestRate: 0.03,
         dividendInterestRate: 0.03
@@ -1186,10 +1186,10 @@ export const scenariosMultiple: IScenario[] = [
         useInflationRate: true
         // indexationRate: 0.03
       },
-      definedBenefitsUk: {
-        useInflationRate: true
-        // indexationRate: 0.03
-      },
+      // definedBenefitsUk: {
+      //   useInflationRate: true
+      //   // indexationRate: 0.03
+      // },
       sharesAu: {
         growthInterestRate: 0.03,
         dividendInterestRate: 0.03
@@ -1265,10 +1265,10 @@ export const scenariosMultiple: IScenario[] = [
         useInflationRate: true
         // indexationRate: 0.03
       },
-      definedBenefitsUk: {
-        useInflationRate: true
-        // indexationRate: 0.038841 // This is a kind of frig.  It will always return this and will always need a particular value to be removed from it
-      },
+      // definedBenefitsUk: {
+      //   useInflationRate: true
+      //   // indexationRate: 0.038841 // This is a kind of frig.  It will always return this and will always need a particular value to be removed from it
+      // },
       sharesAu: {
         growthInterestRate: 0.03,
         dividendInterestRate: 0.03
@@ -1347,10 +1347,10 @@ export const scenariosMultiple: IScenario[] = [
         useInflationRate: true
         // indexationRate: 0.03
       },
-      definedBenefitsUk: {
-        useInflationRate: true
-        // indexationRate: 0.03
-      },
+      // definedBenefitsUk: {
+      //   useInflationRate: true
+      //   // indexationRate: 0.03
+      // },
       sharesAu: {
         growthInterestRate: 0.03,
         dividendInterestRate: 0.03
@@ -1436,10 +1436,10 @@ export const scenariosMultiple: IScenario[] = [
         useInflationRate: true
         // indexationRate: 0.03
       },
-      definedBenefitsUk: {
-        useInflationRate: true
-        // indexationRate: 0.03
-      },
+      // definedBenefitsUk: {
+      //   useInflationRate: true
+      //   // indexationRate: 0.03
+      // },
       sharesAu: {
         growthInterestRate: 0.03,
         dividendInterestRate: 0.03

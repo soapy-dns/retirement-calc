@@ -1,6 +1,6 @@
 import { Asset } from "../assets/Asset"
 import { AssetConfig, YearData } from "../assets/types"
-import { Transfer } from "../transfers/types"
+import { Transfer } from "@/app/lib/data/schema"
 
 // export interface incomeCalculator {
 //   config: unknown

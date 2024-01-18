@@ -1,4 +1,5 @@
-import { IAsset, IScenario } from "../../data/types"
+import { IAsset, IScenario } from "../../data/schema"
+
 import { AutomatedDrawdown } from "../autoDrawdowns/types"
 import { Calculator } from "../calculator/Calculator"
 

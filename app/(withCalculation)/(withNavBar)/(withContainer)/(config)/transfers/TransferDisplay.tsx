@@ -1,4 +1,4 @@
-import { Transfer } from "@/app/lib/calculations/transfers/types"
+import { Transfer } from "@/app/lib/data/schema"
 import { Card } from "@/app/ui/components/Card"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { TextDisplayField } from "@/app/ui/components/TextDisplayField"

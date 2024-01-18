@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { ScenarioContext } from "./ScenarioContext"
-import { IScenario, ISelectOption } from "@/app/lib/data/types"
+import { ISelectOption } from "@/app/lib/data/types"
+import { IScenario } from "@/app/lib/data/schema"
+
 import { scenarios as defaultScenarios } from "@/app/lib/data/scenarios"
 import { calculate } from "@/app/lib/calculations"
 import { CalculationResults } from "@/app/lib/calculations/types"

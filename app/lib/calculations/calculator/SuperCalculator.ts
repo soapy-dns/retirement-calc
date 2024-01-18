@@ -1,6 +1,5 @@
 import { AssetConfig, YearData } from "../assets/types"
-import { SuperContext } from "../../data/types"
-import { Transfer } from "../transfers/types"
+import { Transfer, SuperContext } from "@/app/lib/data/schema"
 import { Calculator } from "./Calculator"
 import { filterTransfersForYear } from "../transfers/transferUtils"
 // import { filterTransfersForYear } from "calculations/transfers/transferUtils"

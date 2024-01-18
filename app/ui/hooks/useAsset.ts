@@ -1,4 +1,4 @@
-import { IAsset } from "@/app/lib/data/types"
+import { IAsset } from "@/app/lib/data/schema"
 import { getRandomKey } from "@/app/lib/utils/getRandomKey"
 import { useContext } from "react"
 import { ScenarioContext } from "../context/ScenarioContext"

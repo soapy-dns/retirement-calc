@@ -1,11 +1,9 @@
 import { Earning, Tax } from "../assets/types"
 import { IncomeTaxCalc } from "./taxCalcs/incomeTaxCalc"
 import { getScenarioTransfersForYear } from "../transfers/transferUtils"
-import { IScenario } from "../../data/types"
-import { Transfer } from "../transfers/types"
+import { IScenario, Transfer, Country } from "../../data/schema"
 import { Asset } from "../assets/Asset"
 import { AssetClass } from "../types"
-import { Country } from "./taxCalcs/types"
 
 export const getOwnersTaxableEarningsAmt = (earningsFromAssets: Earning[], owner: string, year: number) => {
   const ownersTaxableEarningsFromAssets = earningsFromAssets.filter(
@@ -120,7 +118,7 @@ export const calculateTaxes = (
 }
 
 // TODO: this function to Asset?
-export const getPercDrawdownTaxable = (taxResident: Country, assetCountry: Country, assetClass: AssetClass) => {
+export const getPercDrawdownTaxable = (taxResident: Country, assetCountry: Country = "AU", assetClass: AssetClass) => {
   if (taxResident === "SC" && assetCountry === "SC" && assetClass === AssetClass.super) {
     return 75
   } else if (taxResident === assetCountry || assetClass !== AssetClass.super) {
@@ -130,7 +128,7 @@ export const getPercDrawdownTaxable = (taxResident: Country, assetCountry: Count
 }
 
 // TODO: this function to Asset?
-export const getPercIncomeTaxable = (taxResident: Country, assetCountry: Country, assetClass: AssetClass) => {
+export const getPercIncomeTaxable = (taxResident: Country, assetCountry: Country = "AU", assetClass: AssetClass) => {
   // maybe for things like ISAs?
   if (taxResident === assetCountry && assetClass === AssetClass.income_defined_benefit) {
     return 0

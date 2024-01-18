@@ -1,7 +1,7 @@
 "use client"
 
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
-import { ContextConfig } from "@/app/lib/data/types"
+import { ContextConfig } from "@/app/lib/data/schema"
 import { DECIMALS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
@@ -36,10 +36,11 @@ const SuperPage: React.FC = () => {
     const updatedContext: ContextConfig = {
       ...context,
       superAu: {
-        investmentReturn,
-        taxationRate
+        investmentReturn: +investmentReturn,
+        taxationRate: +taxationRate
       }
     }
+    console.log("--updatedContext--", updatedContext)
 
     const updatedScenario = { ...selectedScenario, context: updatedContext }
 

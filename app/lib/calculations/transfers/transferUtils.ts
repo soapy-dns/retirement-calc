@@ -1,5 +1,4 @@
-import { IScenario } from "../../data/types"
-import { Transfer } from "./types"
+import { Transfer, IScenario } from "@/app/lib/data/schema"
 
 // export const getTransferAmt = (yearData: YearData, assetName: string, scenario: IScenario): number => {
 //   const { value: prevValue, year } = yearData

@@ -1,4 +1,5 @@
-import { ContextConfig, IAsset, IScenario } from "@/app/lib/data/types"
+import { IScenario, IAsset, ContextConfig } from "@/app/lib/data/schema"
+
 import { Asset } from "../../assets/Asset"
 import { buildInitialAssets } from "../../assets/assetUtils"
 import { getInflationContext } from "../../utils/getInflationContext"
@@ -19,9 +20,9 @@ export const simpleAuContext: ContextConfig = {
   definedBenefitsAu: {
     useInflationRate: true
   },
-  definedBenefitsUk: {
-    useInflationRate: true
-  },
+  // definedBenefitsUk: {
+  //   useInflationRate: true
+  // },
   sharesAu: {
     growthInterestRate: 0.03,
     dividendInterestRate: 0.03

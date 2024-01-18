@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { AssetEditForm } from "../AssetEditForm"
 import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
 import { YesNo } from "../../types"
-import { IAsset } from "@/app/lib/data/types"
+import { IAsset } from "@/app/lib/data/schema"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { useAsset } from "@/app/ui/hooks/useAsset"
@@ -14,7 +14,7 @@ import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 const getDrawdownFromValue = (enteredYear?: number): number => {
   const startingYear = getStartingYear()
   if (!enteredYear || enteredYear < startingYear) return startingYear
-  return enteredYear
+  return +enteredYear
 }
 
 interface ChangedFormData {

@@ -1,6 +1,7 @@
 import { AutomatedDrawdown } from "../../autoDrawdowns/types"
 import { Calculator } from "../../calculator/Calculator"
-import { IAsset, IScenario } from "../../../data/types"
+import { IScenario, IAsset } from "../../../data/schema"
+
 import { AssetClass, BasicYearData } from "../../types"
 import { Country } from "../../tax/taxCalcs/types"
 

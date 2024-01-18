@@ -1,6 +1,6 @@
 import { Asset } from "../assets/Asset"
 import { DrawdownYearData, Earning, ExpenseYearData, Tax } from "../assets/types"
-import { IScenario } from "../../data/types"
+import { IScenario } from "../../data/schema"
 import { getDrawdownAmt } from "../income/getDrawdowns"
 import { getTaxAmtForYear } from "../tax/getTaxAmt"
 import { IncomeTaxCalc } from "../tax/taxCalcs/incomeTaxCalc"

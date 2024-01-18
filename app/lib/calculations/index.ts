@@ -1,6 +1,7 @@
 "use server"
 
 import range from "lodash/range.js"
+
 import { addAssetEarnings, canDrawdownAssets, getGroupedAssets, buildInitialAssets } from "./assets/assetUtils"
 import { calculateTaxes, initTaxes } from "./tax/utils"
 import { DrawdownYearData, Earning, ExpenseYearData, Tax } from "./assets/types"
@@ -17,12 +18,41 @@ import { AssetData, BasicYearData, CalculationData, RowData, SurplusYearData } f
 import { getAssetSplit } from "./assets/getAssetClasses"
 import { getCalculatedNpvData, getGraphIncomeNpvData } from "./utils/getCalculatedNpvData"
 import { getStartingYear } from "./utils/getStartingYear"
-import { IScenario } from "../data/types"
 import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
 import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
+import { IScenario, scenarioSchema } from "../data/schema"
 
 export const calculate = (data: unknown) => {
-  const scenario = data as IScenario // assuming successful validation
+  const result = scenarioSchema.safeParse(data)
+
+  if (!result.success) {
+    console.log("--result--", result.error.issues)
+    let errorMessage = ""
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + `${issue.path[0]}: ${issue.message}`
+    })
+    console.log("error message", errorMessage)
+    throw new Error(errorMessage)
+  }
+
+  const scenario = result.data as IScenario
+
+  // let scenario: IScenario
+  // try {
+  //   // TODO: safeParsed (doesnt need catch)
+  //   const parsedScenario = scenarioSchema.parse(data)
+  //   scenario = parsedScenario
+
+  //   console.log("--SUCCESSFULLY PARSED SCENARIO CONFIG--")
+  //   console.log("--parsedScenario--", JSON.stringify(parsedScenario, null, 4))
+  // } catch (err) {
+  //   console.log("--err--", err.errors)
+  // }
+
+  // const scenario = data as IScenario
+  // const scenario = data as IScenario // assuming successful validation
+  // console.log("--scenario--", JSON.stringify(scenario, null, 4))
+  // const scenario
   try {
     // setup
     let calculationMessage = ""
@@ -57,15 +87,6 @@ export const calculate = (data: unknown) => {
 
     // SET UP ASSETS
     const assets = buildInitialAssets(startingYear, scenario, inflationContext)
-    // assets.forEach((asset) => {
-    //   console.log(
-    //     "% earnings taxable, % of drawdowns taxable",
-    //     asset.name,
-    //     asset.country,
-    //     asset.percOfEarningsTaxable,
-    //     asset.percOfDrawdownTaxable
-    //   )
-    // })
 
     // if we are 90% in AU and 10% in UK, does that mean we have 2 different tax calculators?
     const incomeTaxCalculator = getIncomeTaxCalculator({ taxResident, currency, au2ukExchangeRate })

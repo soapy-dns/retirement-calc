@@ -1,4 +1,4 @@
-import { IAsset } from "@/app/lib/data/types"
+import { IAsset } from "@/app/lib/data/schema"
 
 type YesNo = "Y" | "N"
 

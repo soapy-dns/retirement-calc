@@ -1,5 +1,5 @@
 "use client"
-import { IScenario } from "@/app/lib/data/types"
+import { IScenario } from "@/app/lib/data/schema"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
@@ -7,11 +7,6 @@ import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
 import { ChangeEvent, ChangeEventHandler, useContext } from "react"
 
 import { useState } from "react"
-// import { IScenario } from "../../../data/types"
-// import { Button, ButtonType } from "../../components/form/Button"
-// import { Container } from "../../components/form/Container"
-// import { ScenarioContext } from "../../context/ScenarioContext"
-// import { useNavigation } from "view/hooks/useNavigation"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 

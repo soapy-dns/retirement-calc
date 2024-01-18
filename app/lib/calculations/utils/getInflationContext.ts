@@ -1,16 +1,6 @@
 import range from "lodash/range.js"
-import { InflationRecord } from "../../data/types"
+import { InflationRecord } from "../../data/schema"
 import { InflationContext } from "../types"
-
-// export const getInflationForEachYear = (yearRange: number[], inflationConfig: number[] | undefined) => {
-//   let inflationValue = 0 // default to 0
-//   const inflationContext = yearRange.reduce((accum, value, index) => {
-//     inflationValue = inflationConfig?.[index] || inflationValue
-//     return { ...accum, [value]: { inflation: inflationValue } }
-//   }, {})
-
-//   return inflationContext
-// }
 
 export const getInflationForEachYear = (yearRange: number[], inflationConfig: InflationRecord[]) => {
   const sortedConfig = inflationConfig.sort((a, b) => {
@@ -54,27 +44,3 @@ export const getInflationContext = (yearRange: number[], inflationConfig: Inflat
 
   return inflationContext
 }
-
-// export const getInflationContextOld = (
-//   yearRange: number[],
-//   inflationConfig: number[] | undefined
-// ): InflationContext => {
-//   const context = getInflationForEachYear(yearRange, inflationConfig)
-
-//   yearRange.forEach((year: number, index: number) => {
-//     const thisYearsData = context[year]
-//     if (index === 0) {
-//       thisYearsData.factor = 1
-//     } else {
-//       const previousYear = year - 1
-
-//       const previousYearsData = context[previousYear]
-
-//       const addOnFactor = 1 + previousYearsData.inflation
-
-//       thisYearsData.factor = previousYearsData.factor * addOnFactor
-//     }
-//   })
-
-//   return context
-// }

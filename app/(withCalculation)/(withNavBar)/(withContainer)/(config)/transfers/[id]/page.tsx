@@ -1,7 +1,7 @@
 "use client"
 import { useForm } from "react-hook-form"
 import { TransferForm } from "../TransferForm"
-import type { Transfer } from "@/app/lib/calculations/transfers/types"
+import type { Transfer } from "@/app/lib/data/schema"
 import { YesNo } from "../../types"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useTransfer } from "@/app/ui/hooks/useTransfer"
@@ -12,7 +12,8 @@ const getTransferValuesFromForm = (data: ChangedFormData): Omit<Transfer, "id"> 
     ...data,
     year: +data.year,
     value: data.value ? +data.value : undefined,
-    migrateAll: data.migrateAll === "Y"
+    migrateAll: data.migrateAll === "Y",
+    costOfTransfer: data.costOfTransfer ? +data.costOfTransfer : undefined
   }
 }
 

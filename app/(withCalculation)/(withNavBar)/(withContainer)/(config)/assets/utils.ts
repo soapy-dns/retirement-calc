@@ -7,7 +7,7 @@ import {
   HomeIcon,
   QuestionMarkCircleIcon
 } from "@heroicons/react/24/outline"
-import { IAsset } from "@/app/lib/data/types"
+import { IAsset } from "@/app/lib/data/schema"
 
 export const getAssetDisplayDetails = (assetConfig: IAsset) => {
   const { className } = assetConfig
