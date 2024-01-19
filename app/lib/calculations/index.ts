@@ -293,6 +293,8 @@ export const calculate = (data: unknown): CalculationResults => {
       if (error instanceof Error) return error.message
       return String(error)
     }
-    throw new Error(`Calculation error ${getErrorMessage(e)}`)
+    const errMsg = getErrorMessage(e)
+    console.log("**ERROR**", errMsg)
+    throw new Error(`Calculation error ${errMsg}`)
   }
 }

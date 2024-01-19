@@ -13,11 +13,14 @@ const ChartPage = () => {
   const { selectedScenario, calculationResults } = useContext(ScenarioContext)
   const [showIt, setShowIt] = useState<boolean>(false)
 
-    if (!calculationResults?.success) redirect(AppPath.config)
+  if (!calculationResults?.success) return null
+
+  // if (!calculationResults?.success) redirect(AppPath.config)
+  //localhost:3000/sheet
 
   // const [animationClass, setAnimationClass] = useState<string>("")
 
-  const toggleShowIt = () => {
+  http: const toggleShowIt = () => {
     // if (animationClass === "") setAnimationClass("animate-fade-in")
     // if (animationClass === "animate-fade-out") setAnimationClass("animate-fade-in")
     // if (animationClass === "animate-fade-in") setAnimationClass("animate-fade-out")

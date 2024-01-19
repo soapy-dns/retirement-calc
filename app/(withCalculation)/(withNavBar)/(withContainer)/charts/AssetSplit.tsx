@@ -1,13 +1,10 @@
 import React, { useContext, useState } from "react"
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js"
 import { Pie } from "react-chartjs-2"
-// import { ScenarioContext } from "../../context/ScenarioContext"
 import { useEffect } from "react"
 import { graphColors } from "./colorConstants"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { AssetSplitItem } from "@/app/lib/calculations/types"
-import { redirect } from "next/navigation"
-import { AppPath } from "@/app/ui/types"
 // import { AssetSplitItem } from "calculations/assets/getAssetClasses"
 
 ChartJS.register(ArcElement, Tooltip, Legend)
@@ -37,10 +34,6 @@ const defaultBorderColours = [
 
 export function AssetSplit() {
   const { selectedScenario, calculationResults } = useContext(ScenarioContext)
-  // if (!calculationResults) throw new Error("no calculated results")
-  if (!calculationResults?.success) redirect(AppPath.config)
-
-  const { assetSplit: calculatedAssetSplit } = calculationResults
   const [filteredAssetSplit, setFilteredAssetSplit] = useState<AssetSplitItem[]>()
 
   useEffect(() => {
@@ -49,6 +42,9 @@ export function AssetSplit() {
       setFilteredAssetSplit(filtered)
     }
   }, [])
+  if (!calculationResults?.success) return null
+
+  const { assetSplit: calculatedAssetSplit } = calculationResults
 
   if (!filteredAssetSplit) return <div>select a scenario</div>
 

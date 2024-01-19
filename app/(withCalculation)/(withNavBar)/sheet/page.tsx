@@ -1,5 +1,5 @@
 "use client"
-import { redirect, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import React, { useContext, useState } from "react"
 import { Cell as HeadingCell } from "./heading/Cell"
 import { Row } from "./row/Row"
@@ -35,8 +35,8 @@ const SheetPage: React.FC = () => {
     setShowEarningInfo(!showEarningInfo)
   }
   const { selectedScenario, calculationResults } = scenarioContext
-  // if (!calculationResults) return null
-  if (!calculationResults?.success) redirect(AppPath.config)
+
+  if (!calculationResults?.success) return null
 
   const {
     yearRange,
