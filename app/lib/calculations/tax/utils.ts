@@ -1,7 +1,7 @@
 import { Earning, Tax } from "../assets/types"
 import { IncomeTaxCalc } from "./taxCalcs/incomeTaxCalc"
 import { getScenarioTransfersForYear } from "../transfers/transferUtils"
-import { IScenario, Transfer, Country } from "../../data/schema"
+import { IScenario, Transfer, Country } from "../../data/schema/config"
 import { Asset } from "../assets/Asset"
 import { AssetClass } from "../types"
 

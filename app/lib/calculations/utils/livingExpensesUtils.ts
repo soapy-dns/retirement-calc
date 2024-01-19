@@ -1,5 +1,5 @@
 import range from "lodash/range"
-import { LivingExpensesRecord } from "../../data/schema"
+import { LivingExpensesRecord } from "../../data/schema/config"
 import { BasicYearData, InflationContext } from "../types"
 
 // Exposed for testing

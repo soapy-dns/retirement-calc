@@ -1,5 +1,5 @@
 import range from "lodash/range.js"
-import { InflationRecord } from "../../data/schema"
+import { InflationRecord } from "../../data/schema/config"
 import { InflationContext } from "../types"
 
 export const getInflationForEachYear = (yearRange: number[], inflationConfig: InflationRecord[]) => {

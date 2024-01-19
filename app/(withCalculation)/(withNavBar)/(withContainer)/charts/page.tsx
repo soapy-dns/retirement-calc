@@ -6,10 +6,15 @@ import { AssetSplit } from "./AssetSplit"
 import { ArrowsPointingOutIcon } from "@heroicons/react/24/outline"
 import { ArrowsPointingInIcon } from "@heroicons/react/24/solid"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { redirect } from "next/navigation"
+import { AppPath } from "@/app/ui/types"
 
 const ChartPage = () => {
   const { selectedScenario, calculationResults } = useContext(ScenarioContext)
   const [showIt, setShowIt] = useState<boolean>(false)
+
+    if (!calculationResults?.success) redirect(AppPath.config)
+
   // const [animationClass, setAnimationClass] = useState<string>("")
 
   const toggleShowIt = () => {

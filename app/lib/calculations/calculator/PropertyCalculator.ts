@@ -1,6 +1,6 @@
 import { Asset } from "../assets/Asset"
 import { AssetConfig, YearData } from "../assets/types"
-import { Transfer, PropertyContext } from "@/app/lib/data/schema"
+import { Transfer, PropertyContext } from "@/app/lib/data/schema/config"
 import { Calculator } from "./Calculator"
 import { InflationContext } from "../types"
 import { filterTransfersForYear } from "../transfers/transferUtils"

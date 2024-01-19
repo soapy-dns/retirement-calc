@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { ScenarioContext } from "./ScenarioContext"
 import { ISelectOption } from "@/app/lib/data/types"
-import { IScenario } from "@/app/lib/data/schema"
+import { IScenario } from "@/app/lib/data/schema/config"
 
 import { scenarios as defaultScenarios } from "@/app/lib/data/scenarios"
 import { calculate } from "@/app/lib/calculations"
@@ -42,9 +42,11 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
       setCalculationResults(calculationResults)
       setCalculating(false)
 
-      const { calculationMessage } = calculationResults
-      if (calculationMessage) {
+      const { success, calculationMessage } = calculationResults
+      if (success && calculationMessage) {
         displayWarningAlert(calculationMessage, { duration: 1000 })
+      } else if (!success && calculationMessage) {
+        displayErrorAlert(`${calculationMessage}`)
       }
     } catch (err) {
       setCalculating(false)

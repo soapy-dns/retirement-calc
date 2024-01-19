@@ -4,7 +4,7 @@ import React, { MouseEvent, SyntheticEvent, useContext, useEffect } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
-import { ContextConfig, InflationRecord } from "@/app/lib/data/schema"
+import { ContextConfig, InflationRecord } from "@/app/lib/data/schema/config"
 import { InputField } from "@/app/ui/components/form/InputField"
 import {
   inflationRateValidationRules,

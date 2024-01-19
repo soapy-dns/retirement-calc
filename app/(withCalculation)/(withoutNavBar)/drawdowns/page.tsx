@@ -1,5 +1,5 @@
 "use client"
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, redirect } from "next/navigation"
 
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { Container } from "@/app/ui/components/Container"
@@ -10,6 +10,7 @@ import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { currencyFormatter } from "@/app/ui/utils/formatter"
 import { ArrowLongRightIcon, ChevronDoubleLeftIcon, InformationCircleIcon } from "@heroicons/react/24/outline"
 import { useContext } from "react"
+import { AppPath } from "@/app/ui/types"
 
 const heading = "Calculated drawdowns"
 
@@ -30,6 +31,8 @@ export default function Drawdowns() {
   const { onToggle: onHelpModalToggle, showModal } = useContext(HelpModalContext)
   const searchParams = useSearchParams()
   const debug = searchParams.get("debug")
+
+  if (!calculationResults?.success) redirect(AppPath.config)
 
   const { totalDrawdownData } = calculationResults || {}
   const navigation = useNavigation()
@@ -78,7 +81,7 @@ export default function Drawdowns() {
         )}
 
         {totalDrawdownData &&
-          totalDrawdownData.map((byYear, index) => {
+          totalDrawdownData.map((byYear, index: number) => {
             return (
               <div key={index} className="mb-4">
                 <h2 className="text-primary">{byYear.year}</h2>

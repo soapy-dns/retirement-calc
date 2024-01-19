@@ -1,4 +1,4 @@
-import { IAsset, IScenario } from "./schema"
+import { IAsset, IScenario } from "./schema/config"
 export const scenarios: IScenario[] = [
   {
     id: "A",

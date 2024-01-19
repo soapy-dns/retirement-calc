@@ -1,4 +1,4 @@
-import type { IAsset } from "@/app/lib/data/schema"
+import type { IAsset } from "@/app/lib/data/schema/config"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { Card } from "@/app/ui/components/Card"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"

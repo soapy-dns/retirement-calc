@@ -1,5 +1,6 @@
 import { z } from "zod"
-import { getStartingYear } from "../../calculations/utils/getStartingYear"
+import { getStartingYear } from "../../../calculations/utils/getStartingYear"
+import { validateLivingExpensesVsInflation } from "./validation"
 
 const countryEnum = z.enum(["AU", "SC"])
 
@@ -86,20 +87,30 @@ const assetSchema = z.object({
   country: countryEnum.optional() // defaults to AU
 })
 
-const contextSchema = z.object({
-  taxResident: countryEnum,
-  au2ukExchangeRate: z.number().optional(),
-  currency: countryEnum,
-  numOfYears: z.number().optional(),
-  owners: z.array(z.string()),
-  auBank: cashContextSchema,
-  definedBenefitsAu: definedBenefitsContextSchema,
-  property: propertyContextSchema,
-  sharesAu: sharesContextSchema,
-  superAu: superContextSchema,
-  inflation: z.array(inflationSchema),
-  livingExpenses: z.array(livingExpensesSchema)
-})
+const contextSchema = z
+  .object({
+    taxResident: countryEnum,
+    au2ukExchangeRate: z.number().optional(),
+    currency: countryEnum,
+    numOfYears: z.number().optional(),
+    owners: z.array(z.string()),
+    auBank: cashContextSchema,
+    definedBenefitsAu: definedBenefitsContextSchema,
+    property: propertyContextSchema,
+    sharesAu: sharesContextSchema,
+    superAu: superContextSchema,
+    inflation: z.array(inflationSchema),
+    livingExpenses: z.array(livingExpensesSchema)
+  })
+  .refine(
+    ({ livingExpenses, inflation }) => validateLivingExpensesVsInflation(livingExpenses, inflation),
+    ({ livingExpenses }) => {
+      return {
+        message: `Living expenses for ${livingExpenses[0].fromYear} has no matching inflation rate.`
+      }
+    }
+  )
+
 export const scenarioSchema = z.object({
   id: z.string(),
   test: z.string().optional(),

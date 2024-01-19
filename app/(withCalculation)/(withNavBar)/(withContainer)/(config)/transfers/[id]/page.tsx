@@ -1,7 +1,7 @@
 "use client"
 import { useForm } from "react-hook-form"
 import { TransferForm } from "../TransferForm"
-import type { Transfer } from "@/app/lib/data/schema"
+import type { Transfer } from "@/app/lib/data/schema/config"
 import { YesNo } from "../../types"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useTransfer } from "@/app/ui/hooks/useTransfer"

@@ -1,6 +1,6 @@
 import { createContext } from "react"
 import { ISelectOption } from "@/app/lib/data/types"
-import { IScenario } from "@/app/lib/data/schema"
+import { IScenario } from "@/app/lib/data/schema/config"
 
 import { scenarios } from "@/app/lib/data/scenarios"
 import { CalculationResults } from "@/app/lib/calculations/types"

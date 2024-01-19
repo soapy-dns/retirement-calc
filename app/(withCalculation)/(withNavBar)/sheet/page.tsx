@@ -1,5 +1,5 @@
 "use client"
-import { useSearchParams } from "next/navigation"
+import { redirect, useSearchParams } from "next/navigation"
 import React, { useContext, useState } from "react"
 import { Cell as HeadingCell } from "./heading/Cell"
 import { Row } from "./row/Row"
@@ -7,6 +7,7 @@ import { HeadingRow } from "./row/HeadingRow"
 import { NoActionModal } from "@/app/ui/components/NoActionModal"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
+import { AppPath } from "@/app/ui/types"
 
 const EmptyLine = () => {
   return (
@@ -34,7 +35,8 @@ const SheetPage: React.FC = () => {
     setShowEarningInfo(!showEarningInfo)
   }
   const { selectedScenario, calculationResults } = scenarioContext
-  if (!calculationResults) return null
+  // if (!calculationResults) return null
+  if (!calculationResults?.success) redirect(AppPath.config)
 
   const {
     yearRange,

@@ -1,5 +1,4 @@
-import { IAsset, IScenario } from "../../data/schema"
-
+import { IAsset, IScenario } from "../../data/schema/config"
 import { AutomatedDrawdown } from "../autoDrawdowns/types"
 import { Calculator } from "../calculator/Calculator"
 
@@ -114,7 +113,14 @@ export interface AssetSplitItem {
   fraction: number
 }
 
-export interface CalculationResults {
+interface CalculationResultsFail {
+  success: false
+  calculationMessage: string
+}
+
+interface CalculationResultsSuccess {
+  success: true
+  calculationMessage: string
   yearRange: number[]
   assetRowData: AssetData
   totalAssetsData: BasicYearData[]
@@ -126,13 +132,15 @@ export interface CalculationResults {
   drawdownRowData: RowData
   surplusRowData: SurplusRowData
   expensesRowData: RowData
-  calculationMessage: string
+  // calculationMessage: string
   inflationContext: InflationContext
   assetSplit: AssetSplitItem[]
   calculatedAssetData: AssetData
   calculatedAssetNpvData: AssetData
   graphIncomeNpvData: AssetData
 }
+
+export type CalculationResults = CalculationResultsSuccess | CalculationResultsFail
 
 export enum AssetClass {
   property = "property",

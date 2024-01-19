@@ -1,4 +1,4 @@
-import { IScenario, IAsset, ContextConfig } from "@/app/lib/data/schema"
+import { IScenario, IAsset, ContextConfig } from "@/app/lib/data/schema/config"
 
 import { Asset } from "../../assets/Asset"
 import { buildInitialAssets } from "../../assets/assetUtils"

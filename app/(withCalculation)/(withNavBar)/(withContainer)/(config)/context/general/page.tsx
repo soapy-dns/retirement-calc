@@ -1,7 +1,7 @@
 "use client"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { Country } from "@/app/lib/calculations/tax/taxCalcs/types"
-import { ContextConfig } from "@/app/lib/data/schema"
+import { ContextConfig } from "@/app/lib/data/schema/config"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext } from "react"

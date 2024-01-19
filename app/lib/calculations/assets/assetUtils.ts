@@ -8,7 +8,7 @@ import { getDrawdownableAssets } from "../autoDrawdowns/getDrawdownableAssets"
 import { sortByPreference } from "../utils/sortAssetsByPreference"
 import { groupAssetsByPreference } from "./groupAssetsByPreference"
 import { Earning } from "./types"
-import { IScenario } from "../../data/schema"
+import { IScenario } from "../../data/schema/config"
 import { InflationContext } from "@/app/lib/calculations/types"
 import { Salary } from "./Salary"
 

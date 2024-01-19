@@ -1,4 +1,4 @@
-import { Transfer, IScenario } from "@/app/lib/data/schema"
+import { Transfer, IScenario } from "@/app/lib/data/schema/config"
 
 // export const getTransferAmt = (yearData: YearData, assetName: string, scenario: IScenario): number => {
 //   const { value: prevValue, year } = yearData

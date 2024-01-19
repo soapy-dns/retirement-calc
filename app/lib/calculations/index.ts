@@ -14,15 +14,15 @@ import { calculateTotalEarnings } from "./earnings/utils"
 import { removeUnusedHistoryFromTaxes } from "./tax/removeUnusedHistoryFromTaxes"
 import { getYearRange } from "./utils/yearRange"
 import { getIncomeTaxCalculator } from "./tax/taxCalcs/getIncomeTaxCalculator"
-import { AssetData, BasicYearData, CalculationData, RowData, SurplusYearData } from "./types"
+import { AssetData, BasicYearData, CalculationData, CalculationResults, RowData, SurplusYearData } from "./types"
 import { getAssetSplit } from "./assets/getAssetClasses"
 import { getCalculatedNpvData, getGraphIncomeNpvData } from "./utils/getCalculatedNpvData"
 import { getStartingYear } from "./utils/getStartingYear"
 import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
 import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
-import { IScenario, scenarioSchema } from "../data/schema"
+import { IScenario, scenarioSchema } from "../data/schema/config"
 
-export const calculate = (data: unknown) => {
+export const calculate = (data: unknown): CalculationResults => {
   const result = scenarioSchema.safeParse(data)
 
   if (!result.success) {
@@ -32,7 +32,13 @@ export const calculate = (data: unknown) => {
       errorMessage = errorMessage + `${issue.path[0]}: ${issue.message}`
     })
     console.log("error message", errorMessage)
-    throw new Error(errorMessage)
+
+    const firstCustomError = result.error.issues.find((it) => it.code === "custom")
+
+    return {
+      success: false,
+      calculationMessage: firstCustomError?.message || "Invalid configuration"
+    }
   }
 
   const scenario = result.data as IScenario
@@ -262,13 +268,14 @@ export const calculate = (data: unknown) => {
     const surplusRowData = { "Surplus (if -ve is tax liability for next yr)": surplusYearData }
 
     return {
+      success: true,
       assetRowData,
       earningsRowData,
       drawdownRowData: drawdownData,
       totalDrawdownData: totalDrawdowns,
       expensesRowData,
       surplusRowData,
-      calculationData,
+      // calculationData,
       yearRange: calcYearRangeAssets,
       calculatedAssetData: graphCalculatedAssetData,
       calculatedAssetNpvData: graphCalculatedAssetNpvData,

@@ -1,6 +1,6 @@
 import { Asset } from "../assets/Asset"
 import { AssetConfig, YearData } from "../assets/types"
-import { DefinedBenefitsContext } from "../../data/schema"
+import { DefinedBenefitsContext } from "../../data/schema/config"
 import { Calculator } from "./Calculator"
 import { InflationContext } from "../types"
 
