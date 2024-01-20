@@ -58,7 +58,6 @@ const getAssetValuesFromForm = (data: ChangedFormData): Omit<IAsset, "id"> => {
     incomeStartYear,
     incomeEndYear
   } = data
-  console.log("#1", incomeStartYear)
 
   return {
     name,

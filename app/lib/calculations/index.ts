@@ -23,15 +23,15 @@ import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData
 import { IScenario, scenarioSchema } from "../data/schema/config"
 
 export const calculate = (data: unknown): CalculationResults => {
+  // console.log("--calculate data--", data)
   const result = scenarioSchema.safeParse(data)
 
   if (!result.success) {
-    console.log("--result--", result.error.issues)
     let errorMessage = ""
+    console.log("--result.error.issues--", result.error.issues)
     result.error.issues.forEach((issue) => {
       errorMessage = errorMessage + `${issue.path[0]}: ${issue.message}`
     })
-    console.log("error message", errorMessage)
 
     const firstCustomError = result.error.issues.find((it) => it.code === "custom")
 

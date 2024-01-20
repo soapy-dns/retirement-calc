@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { getStartingYear } from "../../../calculations/utils/getStartingYear"
-import { validateLivingExpensesVsInflation } from "./validation"
+import { validateEarningsBucket, validateLivingExpensesVsInflation } from "./validation"
 
 const countryEnum = z.enum(["AU", "SC"])
 
@@ -69,7 +69,7 @@ const transferSchema = z.discriminatedUnion("migrateAll", [transferWithMigrateAl
 const assetSchema = z.object({
   id: z.string(),
   name: z.string(),
-  description: z.string(),
+  description: z.string().optional(),
   value: z.number(), // can we make this optional?
   income: z.number().optional(), // value and income should be mutually exclusive
   assetOwners: z.array(z.string()),
@@ -111,15 +111,19 @@ const contextSchema = z
     }
   )
 
-export const scenarioSchema = z.object({
-  id: z.string(),
-  test: z.string().optional(),
-  name: z.string(),
-  description: z.string(),
-  assets: z.array(assetSchema),
-  context: contextSchema,
-  transfers: z.array(transferSchema).optional()
-})
+export const scenarioSchema = z
+  .object({
+    id: z.string(),
+    test: z.string().optional(),
+    name: z.string(),
+    description: z.string().optional(),
+    assets: z.array(assetSchema),
+    context: contextSchema,
+    transfers: z.array(transferSchema).optional()
+  })
+  .refine(({ assets }) => validateEarningsBucket(assets), {
+    message: "1 and only 1 asset should be marked as an 'earnings bucket'"
+  })
 
 export type IScenario = z.infer<typeof scenarioSchema>
 export type ContextConfig = z.infer<typeof contextSchema>
