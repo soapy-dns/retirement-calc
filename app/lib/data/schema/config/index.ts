@@ -41,6 +41,7 @@ const livingExpensesSchema = z
     fromYear: z.number(),
     amountInTodaysTerms: z.number()
   })
+  // TODO: put this directly against fromYear
   .refine(({ fromYear }) => fromYear >= getStartingYear(), {
     message: "From year cannot be in the past."
   })
@@ -71,7 +72,11 @@ const transferWithoutMigrateAll = transferBaseSchema.extend({
   value: z.number()
 })
 
-const transferSchema = z.discriminatedUnion("migrateAll", [transferWithMigrateAll, transferWithoutMigrateAll])
+const transferSchema = z
+  .discriminatedUnion("migrateAll", [transferWithMigrateAll, transferWithoutMigrateAll])
+  .refine(({ costOfTransfer = 0, value = 0 }) => costOfTransfer <= value, {
+    message: "Cost of transfer cannot be more than the value to transfer"
+  })
 
 const assetSchema = z.object({
   id: z.string(),
