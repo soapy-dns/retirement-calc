@@ -1,5 +1,8 @@
 "use client"
 
+import { useContext } from "react"
+
+import { ScenarioContext } from "../context/ScenarioContext"
 import { AppNavBarDesktop } from "./AppNavBarDesktop"
 import { AppNavBarMobile } from "./AppNavBarMobile"
 

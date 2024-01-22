@@ -8,19 +8,19 @@ import { ArrowsPointingInIcon } from "@heroicons/react/24/solid"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { redirect } from "next/navigation"
 import { AppPath } from "@/app/ui/types"
+import { Container } from "@/app/ui/components/Container"
+import { ErrorDetails } from "@/app/ui/components/ErrorDetails"
 
 const ChartPage = () => {
   const { selectedScenario, calculationResults } = useContext(ScenarioContext)
   const [showIt, setShowIt] = useState<boolean>(false)
-
-  if (!calculationResults?.success) return null
 
   // if (!calculationResults?.success) redirect(AppPath.config)
   //localhost:3000/sheet
 
   // const [animationClass, setAnimationClass] = useState<string>("")
 
-  http: const toggleShowIt = () => {
+  const toggleShowIt = () => {
     // if (animationClass === "") setAnimationClass("animate-fade-in")
     // if (animationClass === "animate-fade-out") setAnimationClass("animate-fade-in")
     // if (animationClass === "animate-fade-in") setAnimationClass("animate-fade-out")
@@ -29,7 +29,17 @@ const ChartPage = () => {
     setShowIt(!showIt)
   }
 
-  if (!selectedScenario || !calculationResults) return <div>select a scenario</div>
+  // if (!selectedScenario || !calculationResults) return <div>select a scenario</div>
+
+  if (!calculationResults?.success) {
+    return (
+      <div className="pt-8 ">
+        <Container>
+          <ErrorDetails />
+        </Container>
+      </div>
+    )
+  }
 
   const { yearRange, calculatedAssetNpvData, calculatedAssetData, graphIncomeNpvData } = calculationResults
 

@@ -8,6 +8,8 @@ import { NoActionModal } from "@/app/ui/components/NoActionModal"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { AppPath } from "@/app/ui/types"
+import { ErrorDetails } from "@/app/ui/components/ErrorDetails"
+import { Container } from "@/app/ui/components/Container"
 
 const EmptyLine = () => {
   return (
@@ -36,7 +38,15 @@ const SheetPage: React.FC = () => {
   }
   const { selectedScenario, calculationResults } = scenarioContext
 
-  if (!calculationResults?.success) return null
+  if (!calculationResults?.success) {
+    return (
+      <div className="pt-8 ">
+        <Container>
+          <ErrorDetails />
+        </Container>
+      </div>
+    )
+  }
 
   const {
     yearRange,

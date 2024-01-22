@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react"
+import { usePathname } from "next/navigation"
+
 import { ScenarioContext } from "./ScenarioContext"
 import { ISelectOption } from "@/app/lib/data/types"
 import { IScenario } from "@/app/lib/data/schema/config"
@@ -9,6 +11,7 @@ import { CalculationResults } from "@/app/lib/calculations/types"
 import { useAppAlert } from "../hooks/useAppAlert"
 import { getRandomKey } from "@/app/lib/utils/getRandomKey"
 import { Spinner } from "../components/common/Spinner"
+import { AppPath } from "../types"
 
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
   const scenarioOptions = scenarios.map((scenario) => ({
@@ -19,6 +22,9 @@ const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
 }
 
 export const ScenarioProvider = ({ children }: { children: React.ReactNode }) => {
+  const pathname = usePathname()
+  console.log("--pathname--", pathname)
+
   const [calculating, setCalculating] = useState<boolean>(false)
 
   const [scenarioOptions, setScenarioOptions] = useState<ISelectOption[]>()
@@ -45,14 +51,21 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
       const { success, calculationMessage } = calculationResults
       if (success && calculationMessage) {
         displayWarningAlert(calculationMessage, { duration: 1000 })
-      } else if (!success && calculationMessage) {
+        // server actions will return a 200 error for validation messages.  This may change in future
+        // FIXME: if updating an asset this doesn't trigger.  probably shouldn't move on if update is not successful
+        // although update locally has been successful
+      } else if (!success && pathname === AppPath.config) {
+        // if (pathname.includes(AppP))
+        // Only do Error alert if on config page?  Otherwise alert on page?
         displayErrorAlert(`${calculationMessage}`)
       }
     } catch (err) {
+      // server error
       setCalculating(false)
       console.log("--err--", err)
-
-      displayErrorAlert("Error doing calculation.  This is likely a configuration issue.")
+      if (pathname === AppPath.config) {
+        displayErrorAlert("Error doing calculation.  This is likely a configuration issue.")
+      }
     }
   }
 

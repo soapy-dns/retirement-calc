@@ -22,6 +22,10 @@ import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
 import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
 import { IScenario, scenarioSchema } from "../data/schema/config"
 
+// export const calculate = (data: unknown): CalculationResults => {
+//   // console.log("--calculate data--", data)
+//   throw new Error("Test error")
+// }
 export const calculate = (data: unknown): CalculationResults => {
   // console.log("--calculate data--", data)
   const result = scenarioSchema.safeParse(data)
@@ -94,7 +98,7 @@ export const calculate = (data: unknown): CalculationResults => {
     // SET UP ASSETS
     const assets = buildInitialAssets(startingYear, scenario, inflationContext)
 
-    // if we are 90% in AU and 10% in UK, does that mean we have 2 different tax calculators?
+    // if we are 90% in AU and 10% in hrow, does that mean we have 2 different tax calculators?
     const incomeTaxCalculator = getIncomeTaxCalculator({ taxResident, currency, au2ukExchangeRate })
 
     const taxes = initTaxes(yearRange, owners)
@@ -295,6 +299,6 @@ export const calculate = (data: unknown): CalculationResults => {
     }
     const errMsg = getErrorMessage(e)
     console.log("**ERROR**", errMsg)
-    throw new Error(`Calculation error ${errMsg}`)
+    throw new Error(`Server error ${errMsg}`)
   }
 }
