@@ -1,3 +1,4 @@
+import { currencyFormatter } from "@/app/ui/utils/formatter"
 import { z } from "zod"
 import { getStartingYear } from "../../../calculations/utils/getStartingYear"
 import { validateEarningsBucket, validateLivingExpensesVsInflation, yearNotPassed } from "./validation"
@@ -72,11 +73,16 @@ const transferWithoutMigrateAll = transferBaseSchema.extend({
   value: z.number()
 })
 
-const transferSchema = z
-  .discriminatedUnion("migrateAll", [transferWithMigrateAll, transferWithoutMigrateAll])
-  .refine(({ costOfTransfer = 0, value = 0 }) => costOfTransfer <= value, {
-    message: "Cost of transfer cannot be more than the value to transfer"
+const transferSchema = z.discriminatedUnion("migrateAll", [transferWithMigrateAll, transferWithoutMigrateAll]).refine(
+  ({ costOfTransfer = 0, value, migrateAll }) => {
+    return !migrateAll && value && costOfTransfer <= value
+  },
+  ({ costOfTransfer = 0, value }) => ({
+    message: `Cost of transfer (${currencyFormatter.format(
+      costOfTransfer
+    )}) cannot be more than the value to transfer (${currencyFormatter.format(value || 0)})`
   })
+)
 
 const assetSchema = z.object({
   id: z.string(),
