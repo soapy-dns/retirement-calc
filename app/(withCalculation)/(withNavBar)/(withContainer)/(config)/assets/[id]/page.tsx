@@ -69,7 +69,7 @@ const getAssetValuesFromForm = (data: ChangedFormData): Omit<IAsset, "id"> => {
     assetOwners: owners,
     canDrawdown: canDrawdown === "Y",
     drawdownOrder: drawdownOrder ? +drawdownOrder : undefined,
-    drawdownFrom,
+    drawdownFrom: drawdownFrom ? +drawdownFrom : undefined,
     // incomeProducing: earnsIncome === "Y",
     incomeBucket: earningsBucket === "Y",
     preferredMinAmt: preferredMinAmt ? +preferredMinAmt : undefined,
@@ -154,7 +154,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       rentalIncome: rentalIncomePerMonth,
       canDrawdown: canDrawdownValue,
       drawdownOrder,
-      drawdownFrom: getDrawdownFromValue(drawdownFrom),
+      drawdownFrom: drawdownFrom,
       incomeStartYear,
       incomeEndYear
     }

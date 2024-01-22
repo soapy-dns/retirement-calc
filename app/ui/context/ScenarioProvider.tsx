@@ -23,7 +23,6 @@ const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
 
 export const ScenarioProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname()
-  console.log("--pathname--", pathname)
 
   const [calculating, setCalculating] = useState<boolean>(false)
 

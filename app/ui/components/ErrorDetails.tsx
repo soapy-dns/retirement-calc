@@ -12,7 +12,6 @@ export const ErrorDetails: React.FC = () => {
   const router = useRouter()
 
   const { calculationResults } = scenarioContext
-  console.log("--calculationResults--", calculationResults)
 
   const { calculationMessage } = calculationResults || {}
 

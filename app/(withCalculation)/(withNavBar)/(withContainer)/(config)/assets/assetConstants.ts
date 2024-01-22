@@ -69,9 +69,9 @@ export const assetConstants = {
   },
 
   DRAWDOWN_FROM: {
-    LABEL: "Possible drawdown commencement year.",
+    LABEL: "Drawdown start year. (optional)",
     HELP_TEXT:
-      "The year we can start drawing down on this asset (if required).  For example we might not want to start drawing down on super until age 60 when the tax benefits kick in.  If this is not entered, it will be assumed that drawing down on the asset is fine from the start."
+      "This value is optional and will default to the current year.  The year we can start drawing down on this asset.  For example we might not want to start drawing down on super until age 60 when the tax benefits kick in.  If this is not entered, it will be assumed that drawing down on the asset is fine from the start."
   },
   INCOME_START_YEAR: {
     LABEL: "Income start year (optional)",
