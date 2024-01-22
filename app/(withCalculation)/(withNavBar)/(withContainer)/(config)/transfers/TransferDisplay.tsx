@@ -1,6 +1,7 @@
 import { Transfer } from "@/app/lib/data/schema/config"
 import { Card } from "@/app/ui/components/Card"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
+import { ButtonGroup } from "@/app/ui/components/common/ButtonGroup"
 import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
@@ -57,20 +58,20 @@ export const TransferDisplay: FunctionComponent<Props> = ({ transfers }) => {
               label={transferConstants.TRANSFER_COST.LABEL}
               value={costOfTransfer ? currencyFormatter.format(costOfTransfer) : ""}
             />
-            <div className="flex">
+            <ButtonGroup>
               <Button buttonType={ButtonType.primary} onClick={(e) => handleEdit(id)}>
-                <div className="flex items-center">
+                <div className="flex items-center justify-center">
                   <PencilSquareIcon className="mx-2 h-6 w-6" />
                   <div>Edit</div>
                 </div>
               </Button>
               <Button buttonType={ButtonType.secondary} onClick={() => handleRemove(id)}>
-                <div className="flex items-center">
+                <div className="flex items-center justify-center">
                   <TrashIcon className="mx-2 h-6 w-6" />
                   <div>Remove</div>
                 </div>
               </Button>
-            </div>
+            </ButtonGroup>
           </Card>
         )
       })}

@@ -17,31 +17,18 @@ import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ValidationError } from "@/app/ui/components/common/ValidationError"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
-import { useError } from "@/app/ui/hooks/useError"
 import { GenericModal } from "@/app/ui/components/GenericModal"
 import { YearValue } from "@/app/ui/components/YearValue"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
 
-const inflationAddId = "inflationAdd"
-const yearAddId = "yearAdd"
-
-// const sortInflationState = (inflationState) => {
-//   inflationState.sort((a, b) => {
-//     const aYear = a.fromYear
-//     const bYear = b.fromYear
-//     if (aYear > bYear) return 1
-//     if (aYear < bYear) return -1
-//     return 0
-//   })
-
-//   return inflationState
-// }
+// const inflationAddId = "inflationAdd"
+// const yearAddId = "yearAdd"
 
 interface ChangedFormData {
   items: InflationRecord[]
-  [inflationAddId]: number
-  [yearAddId]: number
+  // [inflationAddId]: number
+  // [yearAddId]: number
 }
 
 // const marshall = (formData: ChangedFormData) => {}

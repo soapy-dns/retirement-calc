@@ -2,6 +2,7 @@ import type { IAsset } from "@/app/lib/data/schema/config"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { Card } from "@/app/ui/components/Card"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
+import { ButtonGroup } from "@/app/ui/components/common/ButtonGroup"
 import { useAsset } from "@/app/ui/hooks/useAsset"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
@@ -75,7 +76,7 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
                 <span>{currencyFormatter.format(income)}</span>
               </p>
             )}
-            <div className="flex">
+            <ButtonGroup>
               <Button buttonType={ButtonType.primary} onClick={handleEdit}>
                 <div className="flex items-center">
                   <PencilSquareIcon className="mx-2 h-6 w-6" />
@@ -88,7 +89,7 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
                   <div>Remove</div>
                 </div>
               </Button>
-            </div>
+            </ButtonGroup>
           </div>
         </div>
       </div>

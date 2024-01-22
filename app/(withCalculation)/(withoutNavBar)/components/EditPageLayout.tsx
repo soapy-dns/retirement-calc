@@ -1,4 +1,5 @@
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
+import { ButtonGroup } from "@/app/ui/components/common/ButtonGroup"
 import { Container } from "@/app/ui/components/Container"
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
 
@@ -37,14 +38,14 @@ export const EditPageLayout: React.FC<EditPageLayoutProps> = ({
 
       {children}
 
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      <ButtonGroup>
         <Button onClick={handleCancel} buttonType={ButtonType.secondary}>
           {cancelText}
         </Button>
         <Button onClick={handleSubmit} buttonType={ButtonType.primary}>
           {saveText}
         </Button>
-      </div>
+      </ButtonGroup>
     </Container>
   )
 }
