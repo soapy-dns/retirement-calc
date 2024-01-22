@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { getStartingYear } from "../../../calculations/utils/getStartingYear"
-import { validateEarningsBucket, validateLivingExpensesVsInflation } from "./validation"
+import { validateEarningsBucket, validateLivingExpensesVsInflation, yearNotPassed } from "./validation"
 
 const countryEnum = z.enum(["AU", "SC"])
 
@@ -47,7 +47,14 @@ const livingExpensesSchema = z
 
 const transferBaseSchema = z.object({
   id: z.string(),
-  year: z.number(),
+  year: z.number().refine(
+    (val) => yearNotPassed(val),
+    (val) => {
+      return {
+        message: `Transfer year ${val} is in the past`
+      }
+    }
+  ),
   from: z.string(),
   to: z.string(),
   migrateAll: z.boolean(),
