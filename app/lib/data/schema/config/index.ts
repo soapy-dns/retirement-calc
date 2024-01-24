@@ -75,7 +75,8 @@ const transferWithoutMigrateAll = transferBaseSchema.extend({
 
 const transferSchema = z.discriminatedUnion("migrateAll", [transferWithMigrateAll, transferWithoutMigrateAll]).refine(
   ({ costOfTransfer = 0, value, migrateAll }) => {
-    return !migrateAll && value && costOfTransfer <= value
+    if (migrateAll) return true
+    return value && costOfTransfer <= value
   },
   ({ costOfTransfer = 0, value }) => ({
     message: `Cost of transfer (${currencyFormatter.format(
