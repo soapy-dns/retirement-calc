@@ -10,6 +10,7 @@ import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { AppPath } from "@/app/ui/types"
 import { ErrorDetails } from "@/app/ui/components/ErrorDetails"
 import { Container } from "@/app/ui/components/Container"
+import { Spinner } from "@/app/ui/components/common/Spinner"
 
 const EmptyLine = () => {
   return (
@@ -37,6 +38,10 @@ const SheetPage: React.FC = () => {
     setShowEarningInfo(!showEarningInfo)
   }
   const { selectedScenario, calculationResults } = scenarioContext
+
+  if (!calculationResults) {
+    return <Spinner text="calculating" />
+  }
 
   if (!calculationResults?.success) {
     return (

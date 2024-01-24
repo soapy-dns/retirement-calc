@@ -10,6 +10,7 @@ import { redirect } from "next/navigation"
 import { AppPath } from "@/app/ui/types"
 import { Container } from "@/app/ui/components/Container"
 import { ErrorDetails } from "@/app/ui/components/ErrorDetails"
+import { Spinner } from "@/app/ui/components/common/Spinner"
 
 const ChartPage = () => {
   const { selectedScenario, calculationResults } = useContext(ScenarioContext)
@@ -30,6 +31,9 @@ const ChartPage = () => {
   }
 
   // if (!selectedScenario || !calculationResults) return <div>select a scenario</div>
+  if (!calculationResults) {
+    return <Spinner text="calculating" />
+  }
 
   if (!calculationResults?.success) {
     return (
