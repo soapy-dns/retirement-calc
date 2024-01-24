@@ -53,17 +53,23 @@ export default function Import() {
   }
 
   return (
-    <div className="flex flex-col items-center text-primary">
+    <div className="flex flex-col items-center">
       <Button onClick={handleBack} buttonType={ButtonType.secondary}>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 text-primary">
           <ChevronDoubleLeftIcon className="h-6 w-6" />
           <div>Back</div>
         </div>
       </Button>
-      <h1>Import a scenario file</h1>
+      <h1 className="text-primary">Import a scenario file</h1>
       <form>
         <div className="flex flex-col justify-center">
-          <input id="file" className="border-2" name="scenarioFile" type="file" onChange={changeHandler} />
+          <input
+            id="file"
+            className="border-2 file:bg-primary-lighter file:border-0 file:text-white"
+            name="scenarioFile"
+            type="file"
+            onChange={changeHandler}
+          />
 
           <Button
             onClick={handleOnClick}
