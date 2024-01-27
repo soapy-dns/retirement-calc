@@ -69,7 +69,7 @@ const SheetPage: React.FC = () => {
   } = calculationResults
 
   // @ts-ignore
-  const headingRow = [""].concat(yearRange)
+  const headingRow = yearRange
 
   const { showModal: showHelpModal, onToggle: onHelpModalToggle, modalData: helpModalData = {} } = helpModalContext
   const HelpModalContent = getHelpContent(helpModalData)
@@ -77,89 +77,79 @@ const SheetPage: React.FC = () => {
   if (!selectedScenario) return <div>Select a scenario</div>
 
   return (
-    <div className="mt-20 flex flex-col">
-      <div className="">
-        <div className="inline-block min-w-full align-middle">
-          <table className="min-w-full table-fixed divide-y divide-gray-200 py-4 ">
-            <thead className="sticky top-20 z-30 bg-gray-50 ">
-              <tr>
-                {headingRow.map((value, index) => {
-                  if (index === 0)
-                    return (
-                      <th key={index} className="z-30 w-1/6 bg-gray-50 italic text-primary first:sticky first:left-0">
-                        {selectedScenario.name}
-                      </th>
-                    )
-                  return <HeadingCell key={index} value={value} index={index} />
-                })}
-              </tr>
-            </thead>
-            {/* assets */}
-            <tbody className="divide-y divide-gray-200">
-              <HeadingRow text="Capital Assets" />
-              {assetRowData &&
-                Object.entries(assetRowData).map(([rowIdentifier, rowData], index) => {
-                  return <Row key={index} rowIdentifier={rowIdentifier} row={rowData} onToggle={onHelpModalToggle} />
-                })}
-              <Row rowIdentifier="Total Assets" bold={true} row={totalAssetsData} onToggle={onHelpModalToggle} />
-              <Row rowIdentifier="Present value" bold={true} row={netPresentValue} onToggle={onHelpModalToggle} />
+    <div className="flex flex-col h-screen">
+      <div className="overflow-auto">
+        <table className="relative min-w-full table-fixed divide-y divide-gray-200 py-4">
+          <thead className="sticky top-0 z-30 bg-gray-50 ">
+            <tr>
+              <th key="name" className="z-30 bg-gray-50 italic text-primary first:sticky first:left-0">
+                {selectedScenario.name}
+              </th>
+              {headingRow.map((value, index) => {
+                return <HeadingCell key={index} value={value} index={index} />
+              })}
+            </tr>
+          </thead>
 
-              <EmptyLine />
+          {/* assets */}
+          <tbody className="divide-y divide-gray-200">
+            <HeadingRow text="Capital Assets" />
+            {assetRowData &&
+              Object.entries(assetRowData).map(([rowIdentifier, rowData], index) => {
+                return <Row key={index} rowIdentifier={rowIdentifier} row={rowData} onToggle={onHelpModalToggle} />
+              })}
+            <Row rowIdentifier="Total Assets" bold={true} row={totalAssetsData} onToggle={onHelpModalToggle} />
+            <Row rowIdentifier="Present value" bold={true} row={netPresentValue} onToggle={onHelpModalToggle} />
 
-              {/* earnings */}
-              <HeadingRow text="Income" onToggle={toggleEarningInfo} />
-              {earningsRowData &&
-                Object.entries(earningsRowData).map(([rowIdentifier, earningsData], index) => {
-                  return (
-                    <Row key={index} rowIdentifier={rowIdentifier} row={earningsData} onToggle={onHelpModalToggle} />
-                  )
-                })}
-              <Row rowIdentifier="Total Income" bold={true} row={totalEarningsData} onToggle={onHelpModalToggle} />
+            <EmptyLine />
 
-              <EmptyLine />
+            {/* earnings */}
+            <HeadingRow text="Income" onToggle={toggleEarningInfo} />
+            {earningsRowData &&
+              Object.entries(earningsRowData).map(([rowIdentifier, earningsData], index) => {
+                return <Row key={index} rowIdentifier={rowIdentifier} row={earningsData} onToggle={onHelpModalToggle} />
+              })}
+            <Row rowIdentifier="Total Income" bold={true} row={totalEarningsData} onToggle={onHelpModalToggle} />
 
-              {/* expenses */}
-              <HeadingRow text="Expenses" />
-              {expensesRowData &&
-                Object.entries(expensesRowData).map(([rowIdentifier, expensesData], index) => {
-                  return (
-                    <Row key={index} rowIdentifier={rowIdentifier} row={expensesData} onToggle={onHelpModalToggle} />
-                  )
-                })}
-              <Row rowIdentifier="Total Expenses" bold={true} row={totalExpensesData} onToggle={onHelpModalToggle} />
+            <EmptyLine />
 
-              <EmptyLine />
+            {/* expenses */}
+            <HeadingRow text="Expenses" />
+            {expensesRowData &&
+              Object.entries(expensesRowData).map(([rowIdentifier, expensesData], index) => {
+                return <Row key={index} rowIdentifier={rowIdentifier} row={expensesData} onToggle={onHelpModalToggle} />
+              })}
+            <Row rowIdentifier="Total Expenses" bold={true} row={totalExpensesData} onToggle={onHelpModalToggle} />
 
-              <HeadingRow text="Drawdowns" />
-              {drawdownRowData &&
-                Object.entries(drawdownRowData).map(([rowIdentifier, rowData], index) => {
-                  return <Row key={index} rowIdentifier={rowIdentifier} row={rowData} onToggle={onHelpModalToggle} />
-                })}
-              <Row
-                rowIdentifier="Total asset drawdowns"
-                row={totalDrawdownData}
-                bold={true}
-                onToggle={onHelpModalToggle}
-              />
+            <EmptyLine />
 
-              <EmptyLine />
+            <HeadingRow text="Drawdowns" />
+            {drawdownRowData &&
+              Object.entries(drawdownRowData).map(([rowIdentifier, rowData], index) => {
+                return <Row key={index} rowIdentifier={rowIdentifier} row={rowData} onToggle={onHelpModalToggle} />
+              })}
+            <Row
+              rowIdentifier="Total asset drawdowns"
+              row={totalDrawdownData}
+              bold={true}
+              onToggle={onHelpModalToggle}
+            />
 
-              {/* calculated values */}
-              <HeadingRow text="Calculated values" />
-              {/* surplus */}
-              {surplusRowData &&
-                Object.entries(surplusRowData).map(([rowIdentifier, surplusData], index) => {
-                  return (
-                    <Row key={index} rowIdentifier={rowIdentifier} row={surplusData} onToggle={onHelpModalToggle} />
-                  )
-                })}
-              {/* drawdowns */}
+            <EmptyLine />
 
-              {/* <Row rowIdentifier="Inflation percentage" row={inflationRateData} onToggle={onHelpModalToggle} />
+            {/* calculated values */}
+            <HeadingRow text="Calculated values" />
+            {/* surplus */}
+            {surplusRowData &&
+              Object.entries(surplusRowData).map(([rowIdentifier, surplusData], index) => {
+                return <Row key={index} rowIdentifier={rowIdentifier} row={surplusData} onToggle={onHelpModalToggle} />
+              })}
+            {/* drawdowns */}
+
+            {/* <Row rowIdentifier="Inflation percentage" row={inflationRateData} onToggle={onHelpModalToggle} />
               <Row rowIdentifier="Inflation factor" row={inflationFactorData} onToggle={onHelpModalToggle} /> */}
-            </tbody>
-          </table>
-        </div>
+          </tbody>
+        </table>
       </div>
       {debug && (
         <NoActionModal
