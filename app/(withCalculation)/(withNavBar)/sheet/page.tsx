@@ -80,13 +80,13 @@ const SheetPage: React.FC = () => {
     <div className="mt-20 flex flex-col">
       <div className="">
         <div className="inline-block min-w-full align-middle">
-          <table className="min-w-full table-fixed divide-y divide-gray-200 py-4 ">
+          <table className=" min-w-full table-fixed divide-y divide-gray-200 py-4 ">
             <thead className="sticky top-20 z-30 bg-gray-50 ">
               <tr>
                 {headingRow.map((value, index) => {
                   if (index === 0)
                     return (
-                      <th key={index} className="z-30 w-1/6 bg-gray-50 italic text-primary first:sticky first:left-0">
+                      <th key={index} className="z-30 w-16 bg-gray-50 italic text-primary first:sticky first:left-0">
                         {selectedScenario.name}
                       </th>
                     )

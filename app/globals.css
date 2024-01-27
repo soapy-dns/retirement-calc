@@ -26,6 +26,10 @@
   h6 {
     @apply mb-4;
   }
+  td,
+  th {
+    @apply p-4;
+  }
 }
 
 @tailwind components;
