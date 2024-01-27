@@ -2,7 +2,7 @@ describe.only("Pricing", () => {
   it("should check the last present value is as expected", () => {
     cy.visit("sheet")
 
-    cy.contains("td", "Present value").nextAll().as("cells")
+    cy.contains("th", "Present value").nextAll().as("cells")
 
     cy.get("@cells").should("have.length", 24)
     cy.get("@cells").first().contains("1,631,000")
@@ -11,8 +11,13 @@ describe.only("Pricing", () => {
 
   it("should check the last total income is as expected", () => {
     cy.visit("sheet")
+    // cy.get('[data-testid="scrollableTable"]').scrollTo(0, 1400)
+    // cy.get("table").scrollTo("bottom")
+    // cy.get("Total Income").scrollIntoView()
 
-    cy.contains("td", "Total Income").nextAll().as("cells")
+    // nextAll().as("cells")
+
+    cy.contains("th", "Total Income").nextAll().as("cells")
 
     cy.get("@cells").should("have.length", 23)
     cy.get("@cells").first().contains("12,918")
@@ -22,7 +27,7 @@ describe.only("Pricing", () => {
   it("should check the last total expenses is as expected", () => {
     cy.visit("sheet")
 
-    cy.contains("td", "Total Expenses").nextAll().as("cells")
+    cy.contains("th", "Total Expenses").nextAll().as("cells")
 
     cy.get("@cells").should("have.length", 23)
     cy.get("@cells").first().contains("80,000")
