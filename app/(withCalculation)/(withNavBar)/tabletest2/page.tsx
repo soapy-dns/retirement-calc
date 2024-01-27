@@ -2,10 +2,11 @@
 import React from "react"
 
 const SheetPage: React.FC = () => {
+  // h-screen is fine if we want to use the entire screen
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen border-2 border-green-700 pb-20">
       <div className="flex-grow overflow-auto">
-        <table className="relative w-full border">
+        <table className="relative w-full border-2 border-red-500">
           <thead>
             <tr>
               <th className="sticky top-0 px-6 py-3 text-red-900 bg-red-300">Header</th>

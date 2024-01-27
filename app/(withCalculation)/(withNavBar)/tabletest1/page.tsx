@@ -1,6 +1,5 @@
 "use client"
-import { useSearchParams } from "next/navigation"
-import React, { useContext, useState } from "react"
+import React from "react"
 
 const EmptyLine = () => {
   return (
@@ -12,8 +11,8 @@ const EmptyLine = () => {
 
 const SheetPage: React.FC = () => {
   return (
-    <div className="w-screen">
-      <div className="inline-block min-w-full">
+    <div className="w-screen h-screen">
+      <div className="min-w-full overflow-auto">
         <table className="table-fixed bg-white">
           <thead className="sticky top-20 z-30 bg-gray-100">
             <tr>
