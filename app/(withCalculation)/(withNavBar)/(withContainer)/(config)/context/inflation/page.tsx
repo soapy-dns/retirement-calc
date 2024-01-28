@@ -41,6 +41,11 @@ const InflationEditPage: React.FC = () => {
   const { context } = selectedScenario
   const { inflation } = context
 
+  const inflationWithPerc = inflation.map((it) => ({
+    fromYear: it.fromYear,
+    inflationRate: Math.round(it.inflationRate * 10000) / 100
+  }))
+
   const {
     // watch,
     trigger,
@@ -51,7 +56,7 @@ const InflationEditPage: React.FC = () => {
     // reset,
     formState: { isDirty, errors }
     // clearErrors
-  } = useForm<ChangedFormData>({ defaultValues: { items: inflation } })
+  } = useForm<ChangedFormData>({ defaultValues: { items: inflationWithPerc } })
 
   const { fields, insert, remove } = useFieldArray({
     control,
@@ -87,8 +92,8 @@ const InflationEditPage: React.FC = () => {
 
     const reformattedDataItems = data.items.map((it) => {
       return {
-        fromYear: Number(it.fromYear),
-        inflationRate: Number(it.inflationRate)
+        fromYear: it.fromYear,
+        inflationRate: it.inflationRate / 100
       }
     })
 
@@ -109,7 +114,7 @@ const InflationEditPage: React.FC = () => {
 
   return (
     <EditPageLayout
-      heading={"Edit estimated inflation rates"}
+      heading={"Edit estimated inflation values"}
       backText="Back to main context"
       cancelText="Cancel and return to context"
       saveText="Save changes"
@@ -130,7 +135,7 @@ const InflationEditPage: React.FC = () => {
 
           <div className="grid grid-cols-3  gap-2">
             <div className="font-bold">From year</div>
-            <div className="font-bold">Inflation rate</div>
+            <div className="font-bold">Inflation (%)</div>
             <div></div>
           </div>
 
