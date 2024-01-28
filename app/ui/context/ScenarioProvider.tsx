@@ -106,6 +106,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
   const updateScenario = async (updatedScenario: IScenario) => {
     await doCalculations(updatedScenario)
 
+    // irrespective of whether the calculation works or not we update the scenario.  The customer can change it.
     setSelectedScenario(updatedScenario)
 
     const index = scenarios.findIndex((it) => it.id === updatedScenario.id) || 0
