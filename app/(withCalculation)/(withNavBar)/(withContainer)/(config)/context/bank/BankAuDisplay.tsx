@@ -8,7 +8,7 @@ import * as React from "react"
 import { contextConstants } from "../contextConstants"
 
 export const BankAuDisplay: React.FunctionComponent = (props) => {
-  const heading = "Bank"
+  const heading = "Cash"
   const navigation = useNavigation()
 
   const handleEdit = () => {

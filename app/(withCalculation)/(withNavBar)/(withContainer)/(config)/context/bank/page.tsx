@@ -46,7 +46,7 @@ const BankPage: React.FC = () => {
 
   return (
     <EditPageLayout
-      heading="Bank"
+      heading="Cash"
       backText="Back to context"
       cancelText="Cancel and return to context"
       saveText="Save changes"

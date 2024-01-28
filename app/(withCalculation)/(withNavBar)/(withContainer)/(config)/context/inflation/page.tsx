@@ -42,7 +42,7 @@ const InflationEditPage: React.FC = () => {
   const { inflation } = context
 
   const inflationWithPerc = inflation.map((it) => ({
-    fromYear: it.fromYear,
+    fromYear: +it.fromYear,
     inflationRate: Math.round(it.inflationRate * 10000) / 100
   }))
 
