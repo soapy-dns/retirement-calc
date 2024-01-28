@@ -3,6 +3,14 @@ import { z } from "zod"
 import { getStartingYear } from "../../../calculations/utils/getStartingYear"
 import { validateEarningsBucket, validateLivingExpensesVsInflation, yearNotPassed } from "./validation"
 
+const YearConstraint = z.number().refine(
+  (val) => yearNotPassed(val),
+  (val) => {
+    return {
+      message: `Year ${val} is in the past`
+    }
+  }
+)
 const countryEnum = z.enum(["AU", "SC"])
 
 const cashContextSchema = z.object({
@@ -37,26 +45,14 @@ const inflationSchema = z
     message: "From year cannot be in the past."
   })
 
-const livingExpensesSchema = z
-  .object({
-    fromYear: z.number(),
-    amountInTodaysTerms: z.number()
-  })
-  // TODO: put this directly against fromYear
-  .refine(({ fromYear }) => fromYear >= getStartingYear(), {
-    message: "From year cannot be in the past."
-  })
+const livingExpensesSchema = z.object({
+  fromYear: YearConstraint,
+  amountInTodaysTerms: z.number()
+})
 
 const transferBaseSchema = z.object({
   id: z.string(),
-  year: z.number().refine(
-    (val) => yearNotPassed(val),
-    (val) => {
-      return {
-        message: `Transfer year ${val} is in the past`
-      }
-    }
-  ),
+  year: YearConstraint,
   from: z.string(),
   to: z.string(),
   migrateAll: z.boolean(),
@@ -95,14 +91,14 @@ const assetSchema = z.object({
   className: z.string(),
   incomeBucket: z.boolean().optional(),
   canDrawdown: z.boolean().optional(),
-  drawdownFrom: z.number().optional(),
+  drawdownFrom: YearConstraint.optional(),
   drawdownOrder: z.number().optional(),
   preferredMinAmt: z.number().optional(),
   isRented: z.boolean().optional(),
   rentalIncomePerMonth: z.number().optional(),
   rentalExpensesPerMonth: z.number().optional(),
-  incomeStartYear: z.number().optional(),
-  incomeEndYear: z.number().optional(),
+  incomeStartYear: YearConstraint.optional(),
+  incomeEndYear: YearConstraint.optional(),
   country: countryEnum.optional() // defaults to AU
 })
 
