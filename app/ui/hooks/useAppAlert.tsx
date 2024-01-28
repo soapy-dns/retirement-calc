@@ -23,8 +23,8 @@ const useAppAlert = () => {
     toastOptions?: CustomToastOptions,
     onClose?: Function
   ): string => {
+    toast.remove()
     const { dismissible = true } = toastOptions || {}
-    console.log("--displaying warning alert...")
 
     const id = toast.custom(
       (t) => (
@@ -47,6 +47,7 @@ const useAppAlert = () => {
   }
 
   const displayInfoAlert = (message: string | JSX.Element, toastOptions?: CustomToastOptions): string => {
+    toast.remove()
     const { dismissible = true } = toastOptions || {}
 
     const id = toast.custom(
@@ -67,6 +68,7 @@ const useAppAlert = () => {
   }
 
   const displayErrorAlert = (message: string | JSX.Element, toastOptions?: CustomToastOptions): string => {
+    toast.remove()
     const { dismissible = true } = toastOptions || {}
     const id = toast.custom(
       (t) => (
