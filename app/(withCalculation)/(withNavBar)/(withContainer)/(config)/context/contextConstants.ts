@@ -40,9 +40,9 @@ export const contextConstants: Record<string, ItemProps> = {
     HELP_TEXT: "All the owners that own assets"
   },
   CASH_INTEREST_RATE: {
-    LABEL: "Interest rate",
+    LABEL: "Interest percentage",
     HELP_TEXT:
-      "The interest rate applied to all 'CASH' type assets.  At the moment it is not possible to override this on a per asset basis"
+      "The interest percentage applied to all 'CASH' type assets.  At the moment it is not possible to override this on a per asset basis"
   },
   SUPER_INVESTMENT_RETURN: {
     LABEL: "Investment return",

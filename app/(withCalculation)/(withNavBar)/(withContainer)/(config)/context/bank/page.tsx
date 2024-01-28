@@ -32,7 +32,7 @@ const BankPage: React.FC = () => {
     const updatedContext: ContextConfig = {
       ...context,
       auBank: {
-        interestRate: +interestRate
+        interestRate: interestRate / 100
       }
     }
 
