@@ -22,7 +22,10 @@ const SuperPage: React.FC = () => {
   const { context } = selectedScenario
   const { superAu } = context
   const { control, handleSubmit } = useForm<ChangedFormData>({
-    defaultValues: { investmentReturn: superAu?.investmentReturn, taxationRate: superAu?.taxationRate }
+    defaultValues: {
+      investmentReturn: Math.round(superAu?.investmentReturn * 10000) / 100,
+      taxationRate: Math.round(superAu?.taxationRate * 10000) / 100
+    }
   })
 
   const handleBack = () => {
@@ -36,8 +39,8 @@ const SuperPage: React.FC = () => {
     const updatedContext: ContextConfig = {
       ...context,
       superAu: {
-        investmentReturn: +investmentReturn,
-        taxationRate: +taxationRate
+        investmentReturn: investmentReturn / 100,
+        taxationRate: taxationRate / 100
       }
     }
     console.log("--updatedContext--", updatedContext)

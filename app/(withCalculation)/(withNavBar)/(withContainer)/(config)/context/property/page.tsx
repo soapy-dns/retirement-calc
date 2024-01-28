@@ -21,7 +21,7 @@ const PropertyPage: React.FC = () => {
   const { context } = selectedScenario
   const { property } = context
   const { control, handleSubmit } = useForm<ChangedFormData>({
-    defaultValues: { growthRate: property.growthInterestRate }
+    defaultValues: { growthRate: Math.round(property.growthInterestRate * 10000) / 100 }
   })
 
   const handleBack = () => {
@@ -35,7 +35,7 @@ const PropertyPage: React.FC = () => {
     const updatedContext: ContextConfig = {
       ...context,
       property: {
-        growthInterestRate: growthRate
+        growthInterestRate: growthRate / 100
       }
     }
 

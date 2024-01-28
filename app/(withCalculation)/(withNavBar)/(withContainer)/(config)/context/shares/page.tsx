@@ -23,8 +23,8 @@ const SharesPage: React.FC = () => {
   const { sharesAu } = context
   const { control, handleSubmit } = useForm<ChangedFormData>({
     defaultValues: {
-      growthInterestRate: sharesAu?.growthInterestRate,
-      dividendInterestRate: sharesAu?.dividendInterestRate
+      growthInterestRate: Math.round(sharesAu?.growthInterestRate * 10000) / 100,
+      dividendInterestRate: Math.round(sharesAu?.dividendInterestRate * 10000) / 100
     }
   })
 
@@ -39,8 +39,8 @@ const SharesPage: React.FC = () => {
     const updatedContext: ContextConfig = {
       ...context,
       sharesAu: {
-        growthInterestRate,
-        dividendInterestRate
+        growthInterestRate: growthInterestRate / 100,
+        dividendInterestRate: dividendInterestRate / 100
       }
     }
 
@@ -67,7 +67,7 @@ const SharesPage: React.FC = () => {
           control={control}
           label={contextConstants.SHARES_GROWTH.LABEL}
           suffix="%"
-          defaultValue={context.sharesAu ? context.sharesAu.growthInterestRate * 100 : "n/a"}
+          // defaultValue={context.sharesAu ? context.sharesAu.growthInterestRate * 100 : "n/a"}
           editable={true}
           // validationRules={changeDetailsValidation}
           restrictedCharSet={DECIMALS_ONLY}
@@ -78,7 +78,7 @@ const SharesPage: React.FC = () => {
           control={control}
           label={contextConstants.SHARES_INCOME.LABEL}
           suffix="%"
-          defaultValue={context.sharesAu ? context.sharesAu.dividendInterestRate * 100 : "n/a"}
+          // defaultValue={context.sharesAu ? context.sharesAu.dividendInterestRate * 100 : "n/a"}
           editable={true}
           // validationRules={changeDetailsValidation}
           restrictedCharSet={DECIMALS_ONLY}

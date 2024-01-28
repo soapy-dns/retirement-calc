@@ -40,21 +40,21 @@ export const contextConstants: Record<string, ItemProps> = {
     HELP_TEXT: "All the owners that own assets"
   },
   CASH_INTEREST_RATE: {
-    LABEL: "Interest percentage",
+    LABEL: "Interest (%)",
     HELP_TEXT:
       "The interest percentage applied to all 'CASH' type assets.  At the moment it is not possible to override this on a per asset basis"
   },
   SUPER_INVESTMENT_RETURN: {
-    LABEL: "Investment return",
+    LABEL: "Investment return (%)",
     HELP_TEXT: "The average forecast return on investment"
   },
   SUPER_TAXATION_RATE: {
-    LABEL: "Taxation rate",
-    HELP_TEXT: "This is the rate at which income to super (including investment income *Check*) is taxed."
+    LABEL: "Taxation (%)",
+    HELP_TEXT: "This is the percentage at which income to super (including investment income *Check*) is taxed."
   },
   PROPERTY_GROWTH_RATE: {
-    LABEL: "Property growth rate",
-    HELP_TEXT: "The average rate that property is expected to increase by per year"
+    LABEL: "Property growth (%)",
+    HELP_TEXT: "The average percentage that property is expected to increase by per year"
   },
   RENTAL_INCOME_PER_MONTH: {
     LABEL: "Rental income per month",

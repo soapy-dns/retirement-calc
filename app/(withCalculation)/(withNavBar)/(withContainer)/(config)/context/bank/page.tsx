@@ -19,7 +19,9 @@ const BankPage: React.FC = () => {
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
   const { context } = selectedScenario
   const { auBank } = context
-  const { control, handleSubmit } = useForm<ChangedFormData>({ defaultValues: { interestRate: auBank.interestRate } })
+  const { control, handleSubmit } = useForm<ChangedFormData>({
+    defaultValues: { interestRate: Math.round(auBank.interestRate * 10000) / 100 }
+  })
 
   const handleBack = () => {
     navigation.goBack()
