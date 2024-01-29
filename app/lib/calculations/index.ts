@@ -26,8 +26,11 @@ import { IScenario, scenarioSchema } from "../data/schema/config"
 //   // console.log("--calculate data--", data)
 //   throw new Error("Test error")
 // }
-export const calculate = (data: unknown): CalculationResults => {
-  // console.log("--calculate data--", data)
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+export const calculate = async (data: unknown): Promise<CalculationResults> => {
+  // console.log("--*******calculate data--", data)
+  await sleep(1)
   const result = scenarioSchema.safeParse(data)
 
   if (!result.success) {

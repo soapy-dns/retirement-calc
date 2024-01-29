@@ -53,15 +53,15 @@ export default function TransferEditPage({ params }: { params: { id: string } })
     defaultValues: { from, to, value, year, migrateAll: migrateAllFormVal, costOfTransfer }
   })
 
-  const onSubmit = (data: ChangedFormData) => {
+  const onSubmit = async (data: ChangedFormData) => {
     if (transfer) {
       const newTransferConfig = marshall(data, transfer)
-      updateTransfer(newTransferConfig)
+      const { success } = await updateTransfer(newTransferConfig)
+      if (success) navigation.goBack()
     } else {
-      addTransfer(getTransferValuesFromForm(data))
+      const { success } = await addTransfer(getTransferValuesFromForm(data))
+      if (success) navigation.goBack()
     }
-
-    navigation.goBack()
   }
 
   const handleBack = () => {

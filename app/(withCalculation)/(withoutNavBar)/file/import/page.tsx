@@ -8,7 +8,7 @@ import { ChangeEvent, ChangeEventHandler, useContext } from "react"
 
 import { useState } from "react"
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+// const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 enum ButtonStatus {
   disabled,
@@ -37,7 +37,7 @@ export default function Import() {
   const handleOnClick = async () => {
     setButtonStatus(ButtonStatus.busy)
 
-    await sleep(1000)
+    // await sleep(1)
 
     if (selectedFile) {
       const data = await selectedFile.text()

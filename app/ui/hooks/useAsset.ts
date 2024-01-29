@@ -19,17 +19,18 @@ export const useAsset = () => {
     return !!foundTransfer
   }
 
-  const updateAsset = (asset: IAsset) => {
+  const updateAsset = async (asset: IAsset): Promise<{ success: boolean }> => {
     const assets = [...selectedScenario.assets]
     const index = assets.findIndex((it) => it.id === asset.id) || 0
 
     assets.splice(index, 1, asset)
     selectedScenario.assets = assets
 
-    updateScenario(selectedScenario)
+    const { success } = await updateScenario(selectedScenario)
+    return { success }
   }
 
-  const removeAsset = (id: string) => {
+  const removeAsset = async (id: string): Promise<{ success: boolean }> => {
     const newAssets = [...selectedScenario.assets]
 
     const index = selectedScenario?.assets.findIndex((it) => it.id === id) || 0
@@ -38,10 +39,11 @@ export const useAsset = () => {
     newAssets.splice(index, 1)
     selectedScenario.assets = newAssets
 
-    updateScenario(selectedScenario)
+    const { success } = await updateScenario(selectedScenario)
+    return { success }
   }
 
-  const addAsset = (asset: Omit<IAsset, "id">) => {
+  const addAsset = async (asset: Omit<IAsset, "id">): Promise<{ success: boolean }> => {
     const newAssets = [...selectedScenario.assets].concat({ ...asset, id: getRandomKey() })
 
     newAssets.sort((a, b) => {
@@ -52,7 +54,8 @@ export const useAsset = () => {
 
     selectedScenario.assets = newAssets
 
-    updateScenario(selectedScenario)
+    const { success } = await updateScenario(selectedScenario)
+    return { success }
   }
 
   return {

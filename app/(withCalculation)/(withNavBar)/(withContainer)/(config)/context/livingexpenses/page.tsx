@@ -71,7 +71,7 @@ const LivingExpensesPage: React.FC = () => {
     onToggle() // This closes in this situation.  I think we could improve this
   }
 
-  const onSubmit = (data: ChangedFormData) => {
+  const onSubmit = async (data: ChangedFormData) => {
     const { context } = selectedScenario
 
     const reformattedDataItems = data.items.map((it) => {
@@ -88,8 +88,8 @@ const LivingExpensesPage: React.FC = () => {
 
     const updatedScenario = { ...selectedScenario, context: updatedContext }
 
-    updateScenario(updatedScenario)
-    navigation.goBack()
+    const { success } = await updateScenario(updatedScenario)
+    if (success) navigation.goBack()
   }
 
   const handleBack = () => {
@@ -131,7 +131,7 @@ const LivingExpensesPage: React.FC = () => {
                   id={`items.${index}.fromYear`}
                   control={control}
                   // defaultValue={it.fromYear}
-                  validationRules={inflationYearValidationRules} // TODO: should also think of doing via zod
+                  // validationRules={inflationYearValidationRules} // TODO: should also think of doing via zod ----REINSTATE---
                   restrictedCharSet={INTEGERS_ONLY}
                   type="number"
                 />

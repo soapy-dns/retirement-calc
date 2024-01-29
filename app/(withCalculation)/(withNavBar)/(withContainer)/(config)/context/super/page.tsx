@@ -32,7 +32,7 @@ const SuperPage: React.FC = () => {
     navigation.goBack()
   }
 
-  const onSubmit = (data: ChangedFormData) => {
+  const onSubmit = async (data: ChangedFormData) => {
     const { investmentReturn, taxationRate } = data
     const { context } = selectedScenario
 
@@ -43,12 +43,11 @@ const SuperPage: React.FC = () => {
         taxationRate: taxationRate / 100
       }
     }
-    console.log("--updatedContext--", updatedContext)
 
     const updatedScenario = { ...selectedScenario, context: updatedContext }
 
-    updateScenario(updatedScenario)
-    navigation.goBack()
+    const { success } = await updateScenario(updatedScenario)
+    if (success) navigation.goBack()
   }
 
   return (

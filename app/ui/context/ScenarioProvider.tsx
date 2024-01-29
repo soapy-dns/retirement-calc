@@ -40,7 +40,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     return assetOptions
   }
 
-  const doCalculations = async (selectedScenario: IScenario): Promise<void> => {
+  const doCalculations = async (selectedScenario: IScenario): Promise<{ success: boolean }> => {
     try {
       setCalculating(true)
       const calculationResults = await calculate(selectedScenario)
@@ -51,20 +51,16 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
       if (success && calculationMessage) {
         displayWarningAlert(calculationMessage, { duration: 1000 })
         // server actions will return a 200 error for validation messages.  This may change in future
-        // FIXME: if updating an asset this doesn't trigger.  probably shouldn't move on if update is not successful
-        // although update locally has been successful
-      } else if (!success && pathname === AppPath.config) {
-        // if (pathname.includes(AppP))
-        // Only do Error alert if on config page?  Otherwise alert on page?
+      } else if (!success) {
         displayErrorAlert(`${calculationMessage}`)
       }
+      return { success }
     } catch (err) {
       // server error
       setCalculating(false)
       console.log("--err--", err)
-      if (pathname === AppPath.config) {
-        displayErrorAlert("Error doing calculation.  This is likely a configuration issue.")
-      }
+      displayErrorAlert("Error doing calculation.  This is likely a configuration issue.")
+      return { success: false }
     }
   }
 
@@ -93,7 +89,8 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
       throw new Error("ScenarioProvider - Scenario not found")
     }
 
-    const calculationResults = await doCalculations(newSelectedScenario)
+    // no subsequent navigation, so don't need to return the success flag
+    await doCalculations(newSelectedScenario)
 
     if (newSelectedScenario) setSelectedScenario(newSelectedScenario)
 
@@ -103,8 +100,8 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     sessionStorage.setItem("selectedScenario", JSON.stringify(newSelectedScenario))
   }
 
-  const updateScenario = async (updatedScenario: IScenario) => {
-    await doCalculations(updatedScenario)
+  const updateScenario = async (updatedScenario: IScenario): Promise<{ success: boolean }> => {
+    const { success } = await doCalculations(updatedScenario)
 
     // irrespective of whether the calculation works or not we update the scenario.  The customer can change it.
     setSelectedScenario(updatedScenario)
@@ -123,9 +120,10 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     setScenarios(scenarios)
     setSelectedScenario(updatedScenario)
     setScenarioOptions(scenarioOptions)
+    return { success }
   }
 
-  const deleteSelectedScenario = async () => {
+  const deleteSelectedScenario = async (): Promise<{ success: boolean }> => {
     if (scenarios.length > 1) {
       const index = scenarios.findIndex((it) => it.id === selectedScenario.id)
       if (index === undefined) throw new Error("No scenario found to delete")
@@ -136,7 +134,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
       const scenarioOptions = getScenarioOptions(remainingScenarios)
 
       const newSelectedScenario = remainingScenarios[0]
-      await doCalculations(newSelectedScenario)
+      const { success } = await doCalculations(newSelectedScenario)
 
       const selectedScenarioOption = scenarioOptions.find((it) => it.value === newSelectedScenario.id)
 
@@ -147,12 +145,15 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
       setScenarioOptions(scenarioOptions)
       setSelectedScenario(newSelectedScenario)
       setSelectedScenarioOption(selectedScenarioOption)
+
+      return { success }
     }
+    return { success: false }
   }
 
-  const addScenario = async (name: string, description: string) => {
+  const addScenario = async (name: string, description: string): Promise<{ success: boolean }> => {
     const newScenario = { ...selectedScenario, name, description, id: getRandomKey() }
-    await doCalculations(newScenario)
+    const { success } = await doCalculations(newScenario)
 
     const mergedScenarios = scenarios.concat([newScenario])
 
@@ -167,6 +168,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     setScenarioOptions(scenarioOptions)
     setSelectedScenario(newScenario)
     setSelectedScenarioOption(selectedScenarioOption)
+    return { success }
   }
 
   // Need to store.  This is remounted because the <Route> is remounted (I think)

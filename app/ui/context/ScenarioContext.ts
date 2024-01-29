@@ -13,9 +13,9 @@ interface IScenarioContext {
   scenarioOptions?: ISelectOption[]
   onSelectScenario: (option: string) => void
   importScenarios: (scenarios: IScenario[]) => void
-  updateScenario: (scenario: IScenario) => void
-  deleteSelectedScenario: () => void
-  addScenario: (name: string, description: string) => void
+  updateScenario: (scenario: IScenario) => Promise<{ success: boolean }>
+  deleteSelectedScenario: () => Promise<{ success: boolean }>
+  addScenario: (name: string, description: string) => Promise<{ success: boolean }>
   calculationResults?: CalculationResults
   calculationMessage?: string
 }
@@ -28,11 +28,9 @@ export const ScenarioContext = createContext<IScenarioContext>({
   scenarioOptions: [],
   onSelectScenario: (scenarioOption): void => {},
   importScenarios: () => {},
-  updateScenario: (scenario: IScenario) => {},
-  deleteSelectedScenario: () => {},
-  addScenario: () => {
-    console.log("default addScenario")
-  },
+  updateScenario: (scenario: IScenario) => Promise.resolve({ success: false }),
+  deleteSelectedScenario: () => Promise.resolve({ success: false }),
+  addScenario: () => Promise.resolve({ success: false }),
   calculationResults: undefined,
   calculationMessage: undefined
 })
