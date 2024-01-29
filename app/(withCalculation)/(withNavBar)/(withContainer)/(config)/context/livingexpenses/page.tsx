@@ -131,7 +131,7 @@ const LivingExpensesPage: React.FC = () => {
                   id={`items.${index}.fromYear`}
                   control={control}
                   // defaultValue={it.fromYear}
-                  // validationRules={inflationYearValidationRules} // TODO: should also think of doing via zod ----REINSTATE---
+                  validationRules={inflationYearValidationRules} // TODO: should also think of doing via zod
                   restrictedCharSet={INTEGERS_ONLY}
                   type="number"
                 />

@@ -42,7 +42,6 @@ const BankPage: React.FC = () => {
     const updatedScenario = { ...selectedScenario, context: updatedContext }
 
     const { success } = await updateScenario(updatedScenario)
-    console.log("--success--", success)
     if (success) navigation.goBack()
   }
 
