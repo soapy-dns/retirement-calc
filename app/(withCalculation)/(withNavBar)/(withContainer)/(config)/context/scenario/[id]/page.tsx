@@ -32,18 +32,18 @@ export default function ScenarioPage({ params }: { params: { id: string } }) {
     navigation.goBack()
   }
 
-  const onSubmit = (data: ChangedFormData) => {
+  const onSubmit = async (data: ChangedFormData) => {
     const { name, description } = data
 
     if (id === "add") {
-      addScenario(name, description)
+      const { success } = await addScenario(name, description)
+      if (success) navigation.goBack()
     } else {
       const updatedScenario = { ...selectedScenario, name, description }
 
-      updateScenario(updatedScenario)
+      const { success } = await updateScenario(updatedScenario)
+      if (success) navigation.goBack()
     }
-
-    navigation.goBack()
   }
 
   return (

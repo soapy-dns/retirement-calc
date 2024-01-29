@@ -27,7 +27,7 @@ const GeneralContextEditPage: React.FC = () => {
     formState: { isDirty }
   } = useForm<ChangedFormData>({ defaultValues: context })
 
-  const onSubmit = (data: ChangedFormData) => {
+  const onSubmit = async (data: ChangedFormData) => {
     const { context } = selectedScenario
 
     const updatedContext: ContextConfig = {
@@ -39,8 +39,8 @@ const GeneralContextEditPage: React.FC = () => {
 
     const updatedScenario = { ...selectedScenario, context: updatedContext }
 
-    updateScenario(updatedScenario)
-    navigation.goBack()
+    const { success } = await updateScenario(updatedScenario)
+    if (success) navigation.goBack()
   }
   const handleBack = () => {
     navigation.goBack()

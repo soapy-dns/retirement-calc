@@ -81,26 +81,38 @@ const transferSchema = z.discriminatedUnion("migrateAll", [transferWithMigrateAl
   })
 )
 
-const assetSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  description: z.string().optional(),
-  value: z.number(), // can we make this optional?
-  income: z.number().optional(), // value and income should be mutually exclusive
-  assetOwners: z.array(z.string()),
-  className: z.string(),
-  incomeBucket: z.boolean().optional(),
-  canDrawdown: z.boolean().optional(),
-  drawdownFrom: YearConstraint.optional(),
-  drawdownOrder: z.number().optional(),
-  preferredMinAmt: z.number().optional(),
-  isRented: z.boolean().optional(),
-  rentalIncomePerMonth: z.number().optional(),
-  rentalExpensesPerMonth: z.number().optional(),
-  incomeStartYear: YearConstraint.optional(),
-  incomeEndYear: YearConstraint.optional(),
-  country: countryEnum.optional() // defaults to AU
-})
+const assetSchema = z
+  .object({
+    id: z.string(),
+    name: z.string(),
+    description: z.string().optional(),
+    value: z.number(), // can we make this optional?
+    income: z.number().optional(), // value and income should be mutually exclusive
+    assetOwners: z.array(z.string()),
+    className: z.string(),
+    incomeBucket: z.boolean().optional(),
+    canDrawdown: z.boolean().optional(),
+    drawdownFrom: YearConstraint.optional(),
+    drawdownOrder: z.number().optional(),
+    preferredMinAmt: z.number().optional(),
+    isRented: z.boolean().optional(),
+    rentalIncomePerMonth: z.number().optional(),
+    rentalExpensesPerMonth: z.number().optional(),
+    incomeStartYear: YearConstraint.optional(),
+    incomeEndYear: YearConstraint.optional(),
+    country: countryEnum.optional() // defaults to AU
+  })
+  .refine(
+    ({ incomeStartYear, incomeEndYear }) => {
+      if (!incomeStartYear || !incomeEndYear) return true
+      return incomeStartYear < incomeEndYear
+    },
+    ({ incomeStartYear, incomeEndYear }) => {
+      return {
+        message: `The income start year ${incomeStartYear} should be before the income end year ${incomeEndYear}`
+      }
+    }
+  )
 
 const contextSchema = z
   .object({

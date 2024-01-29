@@ -87,7 +87,7 @@ const InflationEditPage: React.FC = () => {
     onToggle() // This closes in this situation.  I think we could improve this
   }
 
-  const onSubmit = (data: ChangedFormData) => {
+  const onSubmit = async (data: ChangedFormData) => {
     const { context } = selectedScenario
 
     const reformattedDataItems = data.items.map((it) => {
@@ -104,8 +104,8 @@ const InflationEditPage: React.FC = () => {
 
     const updatedScenario = { ...selectedScenario, context: updatedContext }
 
-    updateScenario(updatedScenario)
-    navigation.goBack()
+    const { success } = await updateScenario(updatedScenario)
+    if (success) navigation.goBack()
   }
 
   const handleBack = () => {

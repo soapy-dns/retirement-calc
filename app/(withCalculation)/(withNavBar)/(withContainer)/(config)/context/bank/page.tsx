@@ -27,7 +27,8 @@ const BankPage: React.FC = () => {
     navigation.goBack()
   }
 
-  const onSubmit = (data: ChangedFormData) => {
+  const onSubmit = async (data: ChangedFormData) => {
+    console.log("--onSubmit bank--")
     const { interestRate } = data
     const { context } = selectedScenario
 
@@ -40,8 +41,8 @@ const BankPage: React.FC = () => {
 
     const updatedScenario = { ...selectedScenario, context: updatedContext }
 
-    updateScenario(updatedScenario)
-    navigation.goBack()
+    const { success } = await updateScenario(updatedScenario)
+    if (success) navigation.goBack()
   }
 
   return (

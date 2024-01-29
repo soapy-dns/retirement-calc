@@ -162,15 +162,18 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
 
   if (!owners) return <div>No owners found</div>
 
-  const onSubmit = (data: ChangedFormData) => {
+  const onSubmit = async (data: ChangedFormData) => {
+    let success = false
     if (asset) {
       const newAssetConfig = marshall(data, asset)
-      updateAsset(newAssetConfig)
+      const { success: updateSuccess } = await updateAsset(newAssetConfig)
+      success = updateSuccess
     } else {
-      addAsset(getAssetValuesFromForm(data))
+      const { success: addSuccess } = await addAsset(getAssetValuesFromForm(data))
+      success = addSuccess
     }
 
-    navigation.goBack()
+    if (success) navigation.goBack()
   }
 
   const handleBack = () => {
