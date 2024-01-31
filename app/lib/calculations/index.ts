@@ -29,22 +29,22 @@ import { IScenario, scenarioSchema } from "../data/schema/config"
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const calculate = async (data: unknown): Promise<CalculationResults> => {
-  // console.log("--*******calculate data--", data)
   await sleep(1)
   const result = scenarioSchema.safeParse(data)
 
   if (!result.success) {
-    let errorMessage = ""
+    // let errorMessage = ""
     console.log("--result.error.issues--", result.error.issues)
-    result.error.issues.forEach((issue) => {
-      errorMessage = errorMessage + `${issue.path[0]}: ${issue.message}`
-    })
+    // result.error.issues.forEach((issue) => {
+    //   errorMessage = errorMessage + `${issue.path[0]}: ${issue.message}`
+    // })
 
     const firstCustomError = result.error.issues.find((it) => it.code === "custom")
 
     return {
       success: false,
-      calculationMessage: firstCustomError?.message || "Invalid configuration"
+      calculationMessage: firstCustomError?.message || "Invalid configuration",
+      errors: result.error.issues
     }
   }
 

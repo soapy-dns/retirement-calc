@@ -11,6 +11,7 @@ import { Earning } from "./types"
 import { IScenario } from "../../data/schema/config"
 import { InflationContext } from "@/app/lib/calculations/types"
 import { Salary } from "./Salary"
+import { getAssetData } from "../../data/scenarios"
 
 // const classNameSortOrder = {
 //   AuSuper: 10,
@@ -55,9 +56,10 @@ export const buildInitialAssets = (
   })
 }
 
-// export const getAssetWithMatchingName = (scenario: IScenario, assetName: string) => {
-//   return getAssetData(scenario, assetName)
-// }
+// TODO: I think this is only being used by tests
+export const getAssetWithMatchingName = (scenario: IScenario, assetName: string) => {
+  return getAssetData(scenario, assetName)
+}
 
 export const getGroupedAssets = (year: number, assets: Asset[]) => {
   // some assets cannot be drawndown eg property

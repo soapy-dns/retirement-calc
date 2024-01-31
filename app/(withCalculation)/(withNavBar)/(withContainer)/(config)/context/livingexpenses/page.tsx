@@ -7,7 +7,7 @@ import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { ContextConfig, LivingExpensesRecord } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { InputField } from "@/app/ui/components/form/InputField"
-import { inflationYearValidationRules, newInflationRateValidationRules } from "@/app/ui/validation/inflationYear"
+import { inflationRateValidationRules, inflationYearValidationRules, newInflationRateValidationRules } from "@/app/ui/validation/inflationYear"
 import { DECIMALS_ONLY, INTEGERS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ValidationError } from "@/app/ui/components/common/ValidationError"
@@ -138,7 +138,7 @@ const LivingExpensesPage: React.FC = () => {
                 <InputField
                   id={`items.${index}.amountInTodaysTerms`}
                   control={control}
-                  // validationRules={inflationRateValidationRules}
+                  validationRules={inflationRateValidationRules}
                   restrictedCharSet={DECIMALS_ONLY}
                   type="number"
                 />

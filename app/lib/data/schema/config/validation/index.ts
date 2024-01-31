@@ -6,12 +6,14 @@ export const validateLivingExpensesVsInflation = (
   livingExpenses: LivingExpensesRecord[],
   inflation: InflationRecord[]
 ) => {
+  // return false
   // TODO: sort - just getting the 1st for simplicity
   return livingExpenses[0].fromYear >= inflation[0].fromYear
 }
 
 // VALIDATE ASSETS
 export const validateEarningsBucket = (assets: IAsset[]) => {
+  // return false
   const earningsBucketAssets = assets.filter((it) => it.incomeBucket === true)
 
   return earningsBucketAssets.length === 1
@@ -19,6 +21,7 @@ export const validateEarningsBucket = (assets: IAsset[]) => {
 
 // VALIDATE TRANSFERS
 export const yearNotPassed = (year: number) => {
+  // return false
   const nowYear = getStartingYear()
 
   return nowYear <= year

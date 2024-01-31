@@ -19,7 +19,7 @@ interface IAssetItemDisplay {
 
 export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay) => {
   const navigation = useNavigation()
-  const { removeAsset, hasTransfers } = useAsset()
+  const { removeAsset, hasTransfers, hasValidationErrors } = useAsset()
 
   const handleEdit = () => {
     const { id } = asset
@@ -56,6 +56,11 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
             <h2 className="my-auto text-primary">{name}</h2>
           </div>
           <div>
+            {hasValidationErrors(asset) && (
+              <div className="mb-4">
+                <Alert alertType={AlertType.error} heading="Asset configuration has errors" />
+              </div>
+            )}
             {hasTransfers(asset) && (
               <div className="mb-4">
                 <Alert alertType={AlertType.info} heading="Asset has transfers" />

@@ -1,7 +1,7 @@
-import { LivingExpensesRecord } from "../../../data/types"
 import { getLivingExpenses, getLivingExpensesInTodaysMoney } from "../livingExpensesUtils"
-import { getStartingYear } from "../getStartingYear"
-import { range } from "lodash"
+// import { getStartingYear } from "../getStartingYear"
+// import { range } from "lodash"
+import { LivingExpensesRecord } from "@/app/lib/data/schema/config"
 
 describe("test", () => {
   it("should get living expenses in todays money without gaps", () => {

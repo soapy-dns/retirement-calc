@@ -24,10 +24,10 @@ const config: Config = {
         },
         error: "#dc2626",
         alert: {
-          error: "#ffcdd2",
+          error: "#ffebee",
           warning: "#fff7ed",
-          success: "#dcfce7",
-          info: "#e4deff"
+          success: "#e3f2fd",
+          info: "#e8eaf6"
         },
         monochrome: {
           50: "#fafafa",

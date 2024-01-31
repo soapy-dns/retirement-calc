@@ -30,12 +30,6 @@ describe("", () => {
 })
 
 describe("getTaxableDrawdownAmt", () => {
-  it.skip("should add value to accumlated total", () => {
-    const automatedDrawdownsForYear = [{ from: "HIS_BANK", to: "DRAWDOWN", value: 1000, assetOwner: owner }]
-    assetUtilsService.getAssetWithMatchingName.mockReturnValue({ assetOwner: owner, drawdownTaxed: true })
-    const result = getTaxableDrawdownAmt(scenarioId, automatedDrawdownsForYear, owner)
-    expect(result).toBe(automatedDrawdownsForYear[0].value)
-  })
   // it("should not add value to accumlated total when no match", () => {
   //   const automatedDrawdownsForYear = [{ from: "HIS_BANK", to: "NOT_DRAWDOWN", value: 1000, assetOwner: owner }]
   //   assetUtilsService.getAssetWithMatchingName.mockReturnValue({ assetOwner: owner })

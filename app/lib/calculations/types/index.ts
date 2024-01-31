@@ -113,9 +113,15 @@ export interface AssetSplitItem {
   fraction: number
 }
 
+export interface ValidationIssue {
+  code: string
+  message: string
+  path: Array<number | string>
+}
 interface CalculationResultsFail {
   success: false
   calculationMessage: string
+  errors?: ValidationIssue[]
 }
 
 interface CalculationResultsSuccess {

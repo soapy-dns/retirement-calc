@@ -1,4 +1,3 @@
-import { util } from "chai"
 import { DrawdownYearData, YearData } from "../assets/types"
 import { BasicYearData } from "../types"
 import { AutomatedDrawdown } from "./types"

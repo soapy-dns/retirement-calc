@@ -4,11 +4,27 @@ import { useContext } from "react"
 import { ScenarioContext } from "../context/ScenarioContext"
 
 export const useAsset = () => {
-  const { selectedScenario, updateScenario } = useContext(ScenarioContext)
+  const { selectedScenario, updateScenario, calculationResults } = useContext(ScenarioContext)
 
   const getAssetDetails = (id: string) => {
     const foundAsset = selectedScenario?.assets.find((asset) => asset.id === id)
     return foundAsset
+  }
+
+  const hasValidationErrors = (asset: IAsset): boolean => {
+    if (!calculationResults || calculationResults.success) return false
+
+    const { errors } = calculationResults
+
+    if (!errors) return false
+    const assetErrors = errors.filter((it) => it.path[0] === "assets")
+
+    if (!assetErrors) return false
+    const assets = [...selectedScenario.assets]
+    const index = assets.findIndex((it) => it.id === asset.id) || 0
+    const matchingAssets = assetErrors.filter((it) => it.path[1] === index)
+
+    return matchingAssets.length > 0
   }
 
   const hasTransfers = (asset: IAsset): boolean => {
@@ -63,6 +79,7 @@ export const useAsset = () => {
     addAsset,
     updateAsset,
     removeAsset,
-    hasTransfers
+    hasTransfers,
+    hasValidationErrors
   }
 }
