@@ -20,6 +20,7 @@ export const buildInitialAssets = (
 ): Asset[] => {
   const { assets: assetsData } = scenario
 
+  // TODO: don't need to pass startingYear down.  Probably shouldn't have to pass scenario
   return assetsData.map((asset) => {
     const { className, ...options } = asset
     switch (className) {

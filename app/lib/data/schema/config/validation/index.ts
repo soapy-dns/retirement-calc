@@ -31,7 +31,6 @@ type Props = { incomeStartYear?: number; incomeEndYear?: number }
 
 export const incomeValidator = {
   validator: ({ incomeStartYear, incomeEndYear }: Props) => {
-    console.log("incomeValidator")
     if (!incomeStartYear || !incomeEndYear) return true
     return incomeStartYear < incomeEndYear
   },

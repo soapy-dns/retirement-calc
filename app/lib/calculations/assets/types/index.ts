@@ -1,9 +1,7 @@
 import { AutomatedDrawdown } from "../../autoDrawdowns/types"
-import { Calculator } from "../../calculator/Calculator"
 import { IScenario, IAsset } from "../../../data/schema/config"
 
-import { AssetClass, BasicYearData } from "../../types"
-import { Country } from "../../tax/taxCalcs/types"
+import { BasicYearData } from "../../types"
 
 export interface YearData extends BasicYearData {
   transferAmt?: number
@@ -65,7 +63,6 @@ export interface Tax {
 export interface AssetConfig extends Omit<IAsset, "className"> {
   scenario: IScenario
   startingYear: number
-  calculator?: Calculator
 }
 
 export interface DefinedBenefitAssetProps extends AssetConfig {

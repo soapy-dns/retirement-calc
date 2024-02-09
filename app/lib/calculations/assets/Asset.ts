@@ -1,4 +1,3 @@
-import { Calculator } from "../calculator/Calculator"
 import { AssetConfig, YearData } from "./types"
 import { AssetClass } from "@/app/lib/calculations/types"
 import { Country } from "../tax/taxCalcs/types"
@@ -15,7 +14,6 @@ interface Props extends AssetConfig {
  */
 // TODO: need to have sub classes with the relevant properties
 export abstract class Asset {
-  calculator?: Calculator
   history: YearData[] = [] // Maybe better not an array
   id: string
   name = "UnNamed Asset"
@@ -23,7 +21,7 @@ export abstract class Asset {
   incomeProducing = false
   assetOwners
   scenario // TODO: Why do I need scenarop here?
-  abstract readonly percOfEarningsTaxable: number 
+  abstract readonly percOfEarningsTaxable: number
   abstract readonly percOfDrawdownTaxable: number // eg defined contributions which will have 25% tax free in UK
   incomeBucket = false
   canDrawdown = true
@@ -45,7 +43,6 @@ export abstract class Asset {
       description,
       incomeProducing,
       assetOwners,
-      calculator,
       incomeBucket,
       canDrawdown,
       drawdownFrom,
@@ -63,7 +60,6 @@ export abstract class Asset {
     this.description = description
     this.incomeProducing = incomeProducing
     this.assetOwners = assetOwners
-    this.calculator = calculator
     this.incomeBucket = incomeBucket || false
     this.canDrawdown = canDrawdown || false
     this.preferredMinAmt = preferredMinAmt || 0
@@ -106,14 +102,5 @@ export abstract class Asset {
   }
 
   // TODO: this is calculating and storing which is a bit ugly
-  calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
-    if (!this.calculator) throw new Error(`No calculator set for ${this.name}`)
-
-    // TODO: just pass the latest Values (which is yearData) to the calculate metho
-    const nextYearData = this.calculator.calculate(yearData, assets)
-
-    this.history.push(nextYearData)
-
-    return nextYearData
-  }
+  abstract calcNextYear(yearData: YearData, assets: Asset[]): YearData
 }
