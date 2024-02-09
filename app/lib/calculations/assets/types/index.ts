@@ -65,9 +65,6 @@ export interface Tax {
 export interface AssetConfig extends Omit<IAsset, "className"> {
   scenario: IScenario
   startingYear: number
-  // incomeProducing: boolean
-  // rentalIncomePerMonth?: number // Really?
-  // rentalExpensesPerMonth?: number
   calculator?: Calculator
 }
 

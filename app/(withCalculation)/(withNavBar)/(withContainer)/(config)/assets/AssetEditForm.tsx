@@ -98,7 +98,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
           />
 
           <RadioButtonQuestion
-            id="earningsBucket"
+            id="incomeBucket"
             control={control}
             label={assetConstants.EARNINGS_BUCKET.LABEL}
             values={yesNoOptions}

@@ -3,12 +3,13 @@ import { AssetConfig, YearData } from "../assets/types"
 import { Transfer, PropertyContext } from "@/app/lib/data/schema/config"
 import { Calculator } from "./Calculator"
 import { InflationContext } from "../types"
-import { filterTransfersForYear } from "../transfers/transferUtils"
+import { filterTransfersForYear, getPartialTransfers, getFullTransfers } from "../transfers/transferUtils"
 
 export class PropertyCalculator extends Calculator {
   protected config: PropertyContext
   protected assetConfig: AssetConfig
   protected inflationContext: InflationContext
+  assetId: string
 
   constructor(
     config: PropertyContext,
@@ -20,6 +21,7 @@ export class PropertyCalculator extends Calculator {
     this.config = config
     this.assetConfig = assetConfig
     this.inflationContext = inflationContext
+    this.assetId = assetConfig.id // TODO: won't need this after refactoring to remove calculator
   }
 
   // call this for each year
@@ -30,8 +32,8 @@ export class PropertyCalculator extends Calculator {
     const { growthInterestRate } = this.config
     const transfersForYear = this.transfers ? filterTransfersForYear(this.transfers, year) : []
 
-    const partialTransfersAmt = this.getPartialTransfers(transfersForYear)
-    const fullTransfersAmt = this.getFullTransfers(yearData, transfersForYear, assets)
+    const partialTransfersAmt = getPartialTransfers(this.assetId, transfersForYear)
+    const fullTransfersAmt = getFullTransfers(this.assetId, yearData, transfersForYear, assets)
     const transferAmt = partialTransfersAmt + fullTransfersAmt
 
     const inflationFactor = this.inflationContext[year].factor

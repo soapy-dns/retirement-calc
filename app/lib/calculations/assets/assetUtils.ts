@@ -13,14 +13,6 @@ import { InflationContext } from "@/app/lib/calculations/types"
 import { Salary } from "./Salary"
 import { getAssetData } from "../../data/scenarios"
 
-// const classNameSortOrder = {
-//   AuSuper: 10,
-//   AuDefinedBenefits: 20,
-//   AuShares: 30,
-//   Cash: 40,
-//   AuProperty: 50,
-//   Salary: 60
-// }
 export const buildInitialAssets = (
   startingYear: number,
   scenario: IScenario,
@@ -28,14 +20,8 @@ export const buildInitialAssets = (
 ): Asset[] => {
   const { assets: assetsData } = scenario
 
-  // assetsData.sort((a, b) => {
-  //   if (classNameSortOrder[a.className] > classNameSortOrder[b.className]) return 1
-  //   return -1
-  // })
-
   return assetsData.map((asset) => {
     const { className, ...options } = asset
-    const { country } = options
     switch (className) {
       case "AuBank":
         return new AuBank({ ...options, startingYear, scenario })

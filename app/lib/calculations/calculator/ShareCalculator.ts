@@ -3,15 +3,16 @@ import { AssetConfig, YearData } from "../assets/types"
 import { SharesContext } from "../../data/schema/config"
 import { Transfer } from "@/app/lib/data/schema/config"
 import { Calculator } from "./Calculator"
-import { filterTransfersForYear } from "../transfers/transferUtils"
-// import { filterTransfersForYear } from "calculations/transfers/transferUtils"
+import { filterTransfersForYear, getPartialTransfers, getFullTransfers } from "../transfers/transferUtils"
 
 export class ShareCalculator extends Calculator {
   protected config: SharesContext
+  assetId: string
 
   constructor(config: SharesContext, assetConfig: AssetConfig, transfers: Transfer[] = []) {
     super(assetConfig, transfers)
     this.config = config
+    this.assetId = assetConfig.id // TODO: won't need this after refactoring to remove calculator
   }
 
   // call this for each year
@@ -21,9 +22,9 @@ export class ShareCalculator extends Calculator {
 
     const transfersForYear = this.transfers ? filterTransfersForYear(this.transfers, year) : []
 
-    const partialTransfersAmt = this.getPartialTransfers(transfersForYear)
+    const partialTransfersAmt = getPartialTransfers(this.assetId, transfersForYear)
 
-    const fullTransfersAmt = this.getFullTransfers(yearData, transfersForYear, assets)
+    const fullTransfersAmt = getFullTransfers(this.assetId, yearData, transfersForYear, assets)
 
     const transferAmt = partialTransfersAmt + fullTransfersAmt
 
