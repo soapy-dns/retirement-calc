@@ -15,6 +15,7 @@ export class AuBank extends Asset {
   transfers?: Transfer[]
 
   // TODO: transfers and scenario shouldn't really be passed down into this.
+  // scenario is passed in just for context and transfers
   constructor(assetConfig: AssetConfig) {
     super({ ...assetConfig, incomeProducing: true })
     const { scenario, value } = assetConfig

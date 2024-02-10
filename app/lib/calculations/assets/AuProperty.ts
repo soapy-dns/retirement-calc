@@ -48,6 +48,7 @@ export class AuProperty extends Asset {
     this.history.push({ value, year: startingYear, transferAmt: 0, income: 0 })
   }
 
+  // assets passed in so can calculate full transfers
   calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
     const { value: prevValue, year } = yearData
     const { growthInterestRate } = this.propertyContext
