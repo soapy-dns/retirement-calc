@@ -77,12 +77,12 @@ const SheetPage: React.FC = () => {
   if (!selectedScenario) return <div>Select a scenario</div>
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen pb-20">
       <div className="overflow-auto">
         <table className="relative min-w-full table-fixed divide-y divide-gray-200 py-4">
           <thead className="sticky top-0 z-30 bg-gray-50 ">
             <tr>
-              <th key="name" className="z-30 bg-gray-50 italic text-primary first:sticky first:left-0">
+              <th key="name" className="z-30 bg-gray-50 italic text-primary md:first:sticky md:first:left-0">
                 {selectedScenario.name}
               </th>
               {headingRow.map((value, index) => {
