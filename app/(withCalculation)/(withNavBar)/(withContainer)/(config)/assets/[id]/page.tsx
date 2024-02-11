@@ -1,44 +1,53 @@
 "use client"
 import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+
 import { AssetEditForm } from "../AssetEditForm"
-import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
-import { YesNo } from "../../types"
-import { IAsset } from "@/app/lib/data/schema/config"
+// import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
+// import { YesNo } from "../../types"
+import { AssetType, IAsset, CountryEnum, YearConstraint, YesNoSchema } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { useAsset } from "@/app/ui/hooks/useAsset"
 import { useOwner } from "@/app/ui/hooks/useOwner"
 import { Country } from "@/app/lib/calculations/tax/taxCalcs/types"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
+import { incomeValidator } from "@/app/lib/data/schema/config/validation"
 
-const getDrawdownFromValue = (enteredYear?: number): number => {
-  const startingYear = getStartingYear()
-  if (!enteredYear || enteredYear < startingYear) return startingYear
-  return +enteredYear
-}
+// const getDrawdownFromValue = (enteredYear?: number): number => {
+//   const startingYear = getStartingYear()
+//   if (!enteredYear || enteredYear < startingYear) return startingYear
+//   return +enteredYear
+// }
 
-interface ChangedFormData {
-  name: string
-  description: string
-  country: Country
-  assetType: string // TODO: should be enum?
-  value: number
-  income: number
-  owners: string[]
-  earnsIncome: YesNo
-  earningsBucket: YesNo
-  isRented?: YesNo
-  rentalIncome?: number
-  rentalExpenses?: number
-  canDrawdown: YesNo
-  drawdownOrder?: number // TODO: should be required if canDrawdown true
-  drawdownFrom?: number // TODO: should be required if canDrawdown true
-  preferredMinAmt?: number
-  incomeStartYear?: number
-  incomeEndYear?: number
-}
+// There is some duplication with AssetSchema - how can we minimise this?
+const FormSchema = z
+  .object({
+    name: z.string(),
+    description: z.string(),
+    country: CountryEnum,
+    assetType: z.string(),
+    value: z.coerce.number().gte(0).optional(), // can we make this optional?
+    income: z.coerce.number().optional(), // value and income should be mutually exclusive
+    owners: z.string().array(),
+    // assetOwners: z.string().array().nonempty(),
+    incomeBucket: YesNoSchema.optional(),
+    canDrawdown: YesNoSchema.optional(),
+    drawdownFrom: YearConstraint.optional(),
+    drawdownOrder: z.coerce.number().optional(),
+    preferredMinAmt: z.coerce.number().optional(),
+    isRented: YesNoSchema.optional(),
+    rentalIncome: z.coerce.number().gte(0).optional(),
+    rentalExpenses: z.coerce.number().gte(0).optional(),
+    incomeStartYear: YearConstraint.optional(),
+    incomeEndYear: YearConstraint.optional()
+  })
+  .refine(incomeValidator.validator, incomeValidator.options)
 
-const getAssetValuesFromForm = (data: ChangedFormData): Omit<IAsset, "id"> => {
+type FormDataType = z.infer<typeof FormSchema>
+
+const getAssetValuesFromForm = (data: FormDataType): Omit<AssetType, "id"> => {
   const {
     name,
     description,
@@ -50,7 +59,7 @@ const getAssetValuesFromForm = (data: ChangedFormData): Omit<IAsset, "id"> => {
     canDrawdown,
     drawdownOrder,
     drawdownFrom,
-    earningsBucket,
+    incomeBucket,
     preferredMinAmt,
     isRented,
     rentalIncome,
@@ -59,21 +68,21 @@ const getAssetValuesFromForm = (data: ChangedFormData): Omit<IAsset, "id"> => {
     incomeEndYear
   } = data
 
+  // strings should already be coerced into strings by zod
   return {
     name,
     description,
     country,
     className: assetType,
-    value: value ? +value : 0, // TODO: this should really be undefined but it breaks stuff
+    value: value || 0, // TODO: make value optional
+    // value: value ? +value : 0, // TODO: this should really be undefined but it breaks stuff
     income: income ? +income : undefined,
     assetOwners: owners,
     canDrawdown: canDrawdown === "Y",
     drawdownOrder: drawdownOrder ? +drawdownOrder : undefined,
     drawdownFrom: drawdownFrom ? +drawdownFrom : undefined,
-    // incomeProducing: earnsIncome === "Y",
-    incomeBucket: earningsBucket === "Y",
+    incomeBucket: incomeBucket === "Y",
     preferredMinAmt: preferredMinAmt ? +preferredMinAmt : undefined,
-    // percOfEarningsTaxable: +earningsTaxPerc,
     isRented: isRented === "Y",
     rentalIncomePerMonth: rentalIncome ? +rentalIncome : undefined,
     rentalExpensesPerMonth: rentalExpenses ? +rentalExpenses : undefined,
@@ -82,7 +91,7 @@ const getAssetValuesFromForm = (data: ChangedFormData): Omit<IAsset, "id"> => {
   }
 }
 
-const marshall = (data: ChangedFormData, asset: IAsset) => {
+const marshall = (data: FormDataType, asset: IAsset) => {
   const newFields = getAssetValuesFromForm(data)
 
   const newAssets = {
@@ -92,10 +101,6 @@ const marshall = (data: ChangedFormData, asset: IAsset) => {
 
   return newAssets
 }
-
-// interface Props {
-//   add: boolean
-// }
 
 export default function AssetEditPage({ params }: { params: { id: string } }) {
   let { id } = params
@@ -128,7 +133,6 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
 
   // TODO: I'm sure we can do this better for radio buttons
   const canDrawdownValue = canDrawdown ? "Y" : "N"
-  // const incomeEarningValue = incomeProducing ? "Y" : "N"
   const earningsAccumulated = incomeBucket ? "Y" : "N"
   const isRentedString = isRented ? "Y" : "N"
 
@@ -137,8 +141,9 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     watch,
     control,
     register,
-    formState: { isDirty }
-  } = useForm<ChangedFormData>({
+    // formState: { isDirty }
+    formState: { isDirty, errors }
+  } = useForm<FormDataType>({
     defaultValues: {
       name,
       description: description,
@@ -147,7 +152,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       value,
       income,
       owners: assetOwners,
-      earningsBucket: earningsAccumulated,
+      incomeBucket: earningsAccumulated,
       preferredMinAmt: preferredMinAmt ?? 0,
       isRented: isRentedString,
       rentalExpenses: rentalExpensesPerMonth,
@@ -157,12 +162,13 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       drawdownFrom: drawdownFrom,
       incomeStartYear,
       incomeEndYear
-    }
+    },
+    resolver: zodResolver(FormSchema)
   })
 
   if (!owners) return <div>No owners found</div>
 
-  const onSubmit = async (data: ChangedFormData) => {
+  const onSubmit = async (data: FormDataType) => {
     let success = false
     if (asset) {
       const newAssetConfig = marshall(data, asset)
@@ -173,7 +179,9 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       success = addSuccess
     }
 
-    if (success) navigation.goBack()
+    // backend could still say it an error, but I don't think we should stop nav at this point
+    // because the bakend could be complaining about another asset, not this one.
+    navigation.goBack()
   }
 
   const handleBack = () => {
@@ -181,7 +189,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   }
 
   const assetType = watch("assetType")
-  const drawdownSet = watch("canDrawdown")
+  const drawdownSet = watch("canDrawdown") || "N"
   const isRentedFormValue = watch("isRented") || "N"
 
   return (
@@ -194,6 +202,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       handleBack={handleBack}
       handleCancel={handleBack}
     >
+      {/* {errors && <pre>{JSON.stringify(errors, null, 4)}</pre>} */}
       {asset && hasTransfers(asset) && <Alert alertType={AlertType.info} heading="This asset has transfers" />}
       {/* @ts-ignore */}
       <AssetEditForm

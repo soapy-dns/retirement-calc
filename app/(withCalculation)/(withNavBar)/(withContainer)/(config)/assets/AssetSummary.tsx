@@ -70,7 +70,7 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
               <b>Description:</b>
               {description}
             </p>
-            {asset.value > 0 && (
+            {value > 0 && (
               <p className="flex gap-2">
                 <b>Initial value:</b>
                 <span>{currencyFormatter.format(value)}</span>

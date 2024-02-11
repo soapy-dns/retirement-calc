@@ -1,6 +1,5 @@
 import { IAsset, IScenario } from "../../data/schema/config"
 import { AutomatedDrawdown } from "../autoDrawdowns/types"
-import { Calculator } from "../calculator/Calculator"
 
 export interface BasicYearData {
   year: number
@@ -70,7 +69,6 @@ export interface AssetConfig extends Omit<IAsset, "className"> {
   startingYear: number
   rentalIncomePerMonth?: number
   rentalExpensesPerMonth?: number
-  calculator?: Calculator
 }
 
 export interface DefinedBenefitAssetProps extends AssetConfig {
