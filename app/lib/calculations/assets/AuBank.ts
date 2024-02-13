@@ -2,9 +2,9 @@ import { Asset } from "./Asset"
 import { AssetConfig, YearData } from "../assets/types"
 import { AssetClass } from "@/app/lib/calculations/types"
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
-import { filterTransfersForYear, getPartialTransfers, getFullTransfers } from "../transfers/transferUtils"
 import { CashContext, Transfer } from "../../data/schema/config"
 import { getStartingYear } from "../utils/getStartingYear"
+import { getTransferAmt } from "../transfers/getTransfers"
 
 export class AuBank extends Asset {
   capitalAsset: boolean
@@ -39,13 +39,14 @@ export class AuBank extends Asset {
   calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
     const { value: prevValue, year } = yearData
 
-    const transfersForYear = this.transfers ? filterTransfersForYear(this.transfers, year) : []
+    // const transfersForYear = this.transfers ? filterTransfersForYear(this.transfers, year) : []
 
-    const partialTransfersAmt = getPartialTransfers(this.id, transfersForYear)
+    // const partialTransfersAmt = getPartialTransfers(this.id, transfersForYear)
 
-    const fullTransfersAmt = getFullTransfers(this.id, yearData, transfersForYear, assets)
+    // const fullTransfersAmt = getFullTransfers(this.id, yearData, transfersForYear, assets)
 
-    const transferAmt = partialTransfersAmt + fullTransfersAmt
+    // const transferAmt = partialTransfersAmt + fullTransfersAmt
+    const transferAmt = getTransferAmt(this.id, yearData, this.transfers, assets)
 
     const income = (prevValue + transferAmt / 2) * this.cashContext.interestRate
 

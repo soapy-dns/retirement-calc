@@ -4,7 +4,7 @@ import { AssetClass, InflationContext } from "@/app/lib/calculations/types"
 import { AssetConfig, YearData } from "./types"
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
 import { PropertyContext, Transfer } from "../../data/schema/config"
-import { filterTransfersForYear, getPartialTransfers, getFullTransfers } from "../transfers/transferUtils"
+import { getTransferAmt } from "../transfers/getTransfers"
 
 export class AuProperty extends Asset {
   capitalAsset: boolean // if all assets have this, shouldn't it be in the Asset class
@@ -52,11 +52,9 @@ export class AuProperty extends Asset {
   calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
     const { value: prevValue, year } = yearData
     const { growthInterestRate } = this.propertyContext
-    const transfersForYear = this.transfers ? filterTransfersForYear(this.transfers, year) : []
 
-    const partialTransfersAmt = getPartialTransfers(this.id, transfersForYear)
-    const fullTransfersAmt = getFullTransfers(this.id, yearData, transfersForYear, assets)
-    const transferAmt = partialTransfersAmt + fullTransfersAmt
+    const transferAmt = getTransferAmt(this.id, yearData, this.transfers, assets)
+    // console.log("--year, transferAmt--", year, transferAmt)
 
     const inflationFactor = this.inflationContext[year].factor
 
