@@ -27,7 +27,9 @@ export const ScenarioContext = createContext<IScenarioContext>({
   getSelectedScenarioAssetsOptions: () => [],
   scenarioOptions: [],
   onSelectScenario: (scenarioOption): void => {},
-  importScenarios: () => {},
+  importScenarios: () => {
+    console.log("import scenarios dummy")
+  },
   updateScenario: (scenario: IScenario) => Promise.resolve({ success: false }),
   deleteSelectedScenario: () => Promise.resolve({ success: false }),
   addScenario: () => Promise.resolve({ success: false }),

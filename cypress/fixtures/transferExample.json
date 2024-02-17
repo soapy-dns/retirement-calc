@@ -1,0 +1,81 @@
+[
+  {
+    "id": "K",
+    "name": "Transfer example",
+    "description": "blah",
+    "assets": [
+      {
+        "id": "1",
+        "name": "Australian bank account1",
+        "description": "blah",
+        "country": "AU",
+        "className": "AuBank",
+        "value": 100000,
+        "assetOwners": ["Him"],
+        "incomeBucket": true,
+        "canDrawdown": true,
+        "drawdownOrder": 20
+      },
+      {
+        "id": "2",
+        "name": "Australian bank account2",
+        "description": "blah",
+        "country": "AU",
+        "className": "AuBank",
+        "value": 100000,
+        "assetOwners": ["Him"],
+        "incomeBucket": false,
+        "canDrawdown": true,
+        "drawdownOrder": 20
+      }
+    ],
+    "context": {
+      "taxResident": "AU",
+      "au2ukExchangeRate": 0.52,
+      "currency": "AU",
+      "numOfYears": 1,
+      "owners": ["Him"],
+      "auBank": {
+        "interestRate": 0
+      },
+      "superAu": {
+        "investmentReturn": 0.1,
+        "taxationRate": 0.15
+      },
+      "definedBenefitsAu": {
+        "useInflationRate": true
+      },
+      "sharesAu": {
+        "growthInterestRate": 0.03,
+        "dividendInterestRate": 0.03
+      },
+      "property": {
+        "growthInterestRate": 0.03
+      },
+      "inflation": [
+        {
+          "$comment": "need to make from year configurable",
+          "fromYear": 2024,
+          "inflationRate": 0
+        }
+      ],
+      "livingExpenses": [
+        {
+          "fromYear": 2024,
+          "amountInTodaysTerms": 0
+        }
+      ]
+    },
+    "transfers": [
+      {
+        "id": "1",
+        "year": 2024,
+        "from": "1",
+        "to": "2",
+        "migrateAll": false,
+        "value": 25000,
+        "costOfTransfer": 20000
+      }
+    ]
+  }
+]

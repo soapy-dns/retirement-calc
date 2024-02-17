@@ -65,11 +65,13 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
   }
 
   const importScenarios = async (scenarios: IScenario[]) => {
+    console.log("...importing...", scenarios)
     const defaultSelectedScenario = scenarios[0]
 
     if (!defaultSelectedScenario) throw new Error("No scenario found in import file")
 
-    await doCalculations(defaultSelectedScenario)
+    const x = await doCalculations(defaultSelectedScenario)
+    console.log("calculations", x)
 
     const scenarioOptions = getScenarioOptions(scenarios)
     const selectedScenarioOption = scenarioOptions.find((it) => it.value === defaultSelectedScenario.id)
