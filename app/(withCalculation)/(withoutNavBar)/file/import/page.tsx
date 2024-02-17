@@ -18,7 +18,7 @@ enum ButtonStatus {
 
 export default function Import() {
   const [selectedFile, setSelectedFile] = useState<File>()
-  const [buttonStatus, setButtonStatus] = useState<ButtonStatus>(ButtonStatus.active)
+  const [buttonStatus, setButtonStatus] = useState<ButtonStatus>(ButtonStatus.disabled)
   const { importScenarios } = useContext(ScenarioContext)
   const navigation = useNavigation()
 
@@ -38,24 +38,17 @@ export default function Import() {
     setButtonStatus(ButtonStatus.busy)
 
     // await sleep(1)
-    // console.log("selectedFile", selectedFile)
 
     if (selectedFile) {
-      // console.log("FILE SELECTED!!!")
       const data = await selectedFile.text()
-      // console.log("selected data", data)
       try {
         const scenarios: IScenario[] = JSON.parse(data)
-        // console.log("do import", importScenarios)
 
         await importScenarios(scenarios)
-        // console.log("successful import")
       } catch (e) {
-        console.log("e", e)
         throw new Error("Error importing file")
       }
     }
-    // console.log("go back")
     navigation.goBack()
     setButtonStatus(ButtonStatus.disabled)
   }
