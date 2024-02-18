@@ -1,0 +1,71 @@
+[
+  {
+    "id": "C",
+    "name": "UK money purchase pension - one individual",
+    "description": "Demonstration of UK pension for a single individual and the tax implications. The rate of return matches inflation to keep things simple.",
+    "assets": [
+      {
+        "id": "1",
+        "name": "HIS_UK_SUPER",
+        "description": "UK super - defined contributions",
+        "country": "SC",
+        "className": "AuSuper",
+        "value": 100000,
+        "assetOwners": ["Him"],
+        "canDrawdown": true,
+        "drawdownOrder": 50
+      },
+      {
+        "id": "2",
+        "name": "UK_BANK",
+        "description": "UK bank",
+        "country": "SC",
+        "className": "AuBank",
+        "value": 0,
+        "assetOwners": ["Him"],
+        "incomeBucket": true,
+        "canDrawdown": true,
+        "drawdownOrder": 10
+      }
+    ],
+    "context": {
+      "taxResident": "SC",
+      "au2ukExchangeRate": 0.52,
+      "currency": "AU",
+      "owners": ["Him"],
+      "auBank": {
+        "interestRate": 0.005
+      },
+      "superAu": {
+        "investmentReturn": 0.05,
+        "taxationRate": 0.15
+      },
+      "definedBenefitsAu": {
+        "useInflationRate": true
+      },
+      "sharesAu": {
+        "growthInterestRate": 0.03,
+        "dividendInterestRate": 0.03
+      },
+      "property": {
+        "growthInterestRate": 0.03
+      },
+      "inflation": [
+        {
+          "fromYear": 2023,
+          "inflationRate": 0.03
+        }
+      ],
+      "livingExpenses": [
+        {
+          "fromYear": 2023,
+          "amountInTodaysTerms": 80000
+        },
+        {
+          "fromYear": 2038,
+          "amountInTodaysTerms": 50000
+        }
+      ]
+    }
+  }
+]

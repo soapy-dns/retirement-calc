@@ -22,6 +22,8 @@ export const validateEarningsBucket = (assets: IAsset[]) => {
 // VALIDATE TRANSFERS
 export const yearNotPassed = (year: number) => {
   // return false
+  // if (!year) return true
+  console.log("year", year)
   const nowYear = getStartingYear()
 
   return nowYear <= year

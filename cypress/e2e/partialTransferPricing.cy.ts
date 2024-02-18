@@ -1,4 +1,4 @@
-describe.only("Importing", () => {
+describe.only("Partial transfer pricing", () => {
   beforeEach(() => {
     cy.visit("sheet")
   })
@@ -11,8 +11,12 @@ describe.only("Importing", () => {
 
     cy.get("@InputFile").selectFile("cypress/fixtures/transferExample.json")
 
-    cy.contains("Upload")
-
     cy.contains("Upload").click()
+
+    cy.contains("th", "Present value").nextAll().as("cells")
+
+    cy.get("@cells").should("have.length", 2)
+    cy.get("@cells").first().contains("200,00")
+    cy.get("@cells").last().contains("180,000")
   })
 })

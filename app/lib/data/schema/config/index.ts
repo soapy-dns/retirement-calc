@@ -2,16 +2,52 @@ import { currencyFormatter } from "@/app/ui/utils/formatter"
 import { z } from "zod"
 import { getStartingYear } from "../../../calculations/utils/getStartingYear"
 import { incomeValidator, validateEarningsBucket, validateLivingExpensesVsInflation, yearNotPassed } from "./validation"
-import { AssetEditForm } from "@/app/(withCalculation)/(withNavBar)/(withContainer)/(config)/assets/AssetEditForm"
 
-export const YearConstraint = z.coerce.number().refine(
-  (val) => yearNotPassed(val),
-  (val) => {
-    return {
-      message: `Year ${val} is in the past`
+// export const zodInputStringPipe = (zodPipe: z.ZodTypeAny) =>
+//   z
+//     .string()
+//     .transform((value) => (value === "" ? null : value))
+//     .nullable()
+//     .refine((value) => value === null || !isNaN(Number(value)), {
+//       message: "Nombre Invalide"
+//     })
+//     .transform((value) => (value === null ? 0 : Number(value)))
+//     .pipe(zodPipe)
+
+// export const YearConstraint = zodInputStringPipe(
+//   z.number().refine(
+//     (val) => yearNotPassed(val),
+//     (val) => {
+//       return {
+//         message: `Year ${val} is in the past`
+//       }
+//     }
+//   )
+// )
+// export const YearConstraint = z // .optional() // .transform((value) => (value === "" ? null : value)) // .string()
+//   .string()
+//   .transform((value) => (value === "" ? null : value))
+//   // .nullable()
+//   .refine(
+//     (val) => yearNotPassed(val),
+//     (val) => {
+//       return {
+//         message: `Year ${val} is in the past`
+//       }
+//     }
+//   )
+
+export const YearConstraint = z// .optional() // .transform((value) => (value === "" ? null : value)) // .string()
+.coerce
+  .number() // FIXME: this changes empty string to 0!!!
+  .refine(
+    (val) => yearNotPassed(val),
+    (val) => {
+      return {
+        message: `Year ${val} is in the past`
+      }
     }
-  }
-)
+  )
 export const CountryEnum = z.enum(["AU", "SC"])
 export const YesNoSchema = z.enum(["Y", "N"])
 export const AssetTypeEnum = z.enum(["AuBank", "AuSuper", "AuProperty", "Salary", "AuDefinedBenefits", "AuShares"])

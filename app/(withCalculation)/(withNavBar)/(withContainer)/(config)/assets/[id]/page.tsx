@@ -111,6 +111,8 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   const asset = getAssetDetails(id)
   const owners = getOwners()
 
+  console.log("asset", asset)
+
   const {
     name,
     description,

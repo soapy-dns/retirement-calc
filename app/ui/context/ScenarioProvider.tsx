@@ -3,15 +3,17 @@ import { usePathname } from "next/navigation"
 
 import { ScenarioContext } from "./ScenarioContext"
 import { ISelectOption } from "@/app/lib/data/types"
-import { IScenario } from "@/app/lib/data/schema/config"
+import { IAsset, IScenario } from "@/app/lib/data/schema/config"
 
 import { scenarios as defaultScenarios } from "@/app/lib/data/scenarios"
 import { calculate } from "@/app/lib/calculations"
-import { CalculationResults } from "@/app/lib/calculations/types"
+import { CalculationResults, ValidationIssue } from "@/app/lib/calculations/types"
 import { useAppAlert } from "../hooks/useAppAlert"
 import { getRandomKey } from "@/app/lib/utils/getRandomKey"
 import { Spinner } from "../components/common/Spinner"
-import { AppPath } from "../types"
+import { error } from "console"
+import path from "path"
+import Link from "next/link"
 
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
   const scenarioOptions = scenarios.map((scenario) => ({
@@ -19,6 +21,68 @@ const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
     label: scenario.name
   }))
   return scenarioOptions
+}
+
+const getFormattedErrors = (scenario: IScenario, errors?: ValidationIssue[]) => {
+  debugger
+  const { assets, transfers } = scenario
+  if (!errors) return <div>No errors</div>
+  const formattedErrors = errors.map((error, index) => {
+    let path, linkText
+    if (error.path[0] === "context") {
+      path = `/context/${error.path[1]}`
+
+      switch (error.path[1]) {
+        case "inflation":
+          linkText = "Inflation"
+          break
+        case "livingExpenses":
+          linkText = "Living Expenses"
+          break
+        case "auBank":
+          linkText = "Cash"
+          path = `/context/bank`
+
+          break
+        default:
+          linkText = "Context"
+      }
+    } else if (error.path[0] === "assets" && typeof error.path[1] === "number") {
+      const asset = assets[error.path[1]]
+      path = `/assets/${asset.id}`
+      linkText = asset.name
+    } else if (error.path[0] === "transfers" && typeof error.path[1] === "number") {
+      if (!transfers) {
+        return " Error with transfers"
+      }
+      const transfer = transfers[error.path[1]]
+      path = `/transfers/${transfer.id}`
+      linkText = "transfer"
+    } else {
+      linkText = `${error.path[0]} ${error.path[1]}`
+    }
+    return (
+      <li key={index}>
+        {error.message} &nbsp;- &nbsp;
+        {path && linkText && (
+          <span>
+            Go to{" "}
+            <Link className="text-primary underline" href={path}>
+              {linkText}
+            </Link>
+          </span>
+        )}
+      </li>
+    )
+  })
+
+  return (
+    <ul>
+      {formattedErrors.map((err, index) => {
+        return <li key={index}>{err}</li>
+      })}
+    </ul>
+  )
 }
 
 export const ScenarioProvider = ({ children }: { children: React.ReactNode }) => {
@@ -52,7 +116,14 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
         displayWarningAlert(calculationMessage, { duration: 1000 })
         // server actions will return a 200 error for validation messages.  This may change in future
       } else if (!success) {
-        displayErrorAlert(`${calculationMessage}`)
+        if ("errors" in calculationResults) {
+          console.log("errors---", calculationResults.errors)
+          const { errors } = calculationResults
+          const element = getFormattedErrors(selectedScenario, errors)
+          displayErrorAlert(element)
+        } else {
+          displayErrorAlert(`${calculationMessage}`)
+        }
       }
       return { success }
     } catch (err) {

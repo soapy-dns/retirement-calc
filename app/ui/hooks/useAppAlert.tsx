@@ -67,6 +67,7 @@ const useAppAlert = () => {
     return id
   }
 
+  // don't think it even passes in a JSX.eLEMENT
   const displayErrorAlert = (message: string | JSX.Element, toastOptions?: CustomToastOptions): string => {
     toast.remove()
     const { dismissible = true } = toastOptions || {}
