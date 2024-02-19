@@ -54,7 +54,6 @@ export class AuProperty extends Asset {
     const { growthInterestRate } = this.propertyContext
 
     const transferAmt = getTransferAmt(this.id, yearData, this.transfers, assets)
-    // console.log("--year, transferAmt--", year, transferAmt)
 
     const inflationFactor = this.inflationContext[year].factor
 

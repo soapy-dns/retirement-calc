@@ -39,13 +39,6 @@ export class AuBank extends Asset {
   calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
     const { value: prevValue, year } = yearData
 
-    // const transfersForYear = this.transfers ? filterTransfersForYear(this.transfers, year) : []
-
-    // const partialTransfersAmt = getPartialTransfers(this.id, transfersForYear)
-
-    // const fullTransfersAmt = getFullTransfers(this.id, yearData, transfersForYear, assets)
-
-    // const transferAmt = partialTransfersAmt + fullTransfersAmt
     const transferAmt = getTransferAmt(this.id, yearData, this.transfers, assets)
 
     const income = (prevValue + transferAmt / 2) * this.cashContext.interestRate
