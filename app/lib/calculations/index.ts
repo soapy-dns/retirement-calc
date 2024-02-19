@@ -106,7 +106,6 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     const taxes = initTaxes(yearRange, owners)
     const earningsFromAssets: Earning[] = initialiseEarningsFromAssets(assets)
-    // console.log("--earningsFromAssets--", earningsFromAssets)
     if (!scenario) throw new Error("No scenario found")
     // end of setup
 
@@ -118,7 +117,6 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       addAssetEarnings(year, assets, earningsFromAssets)
 
       calculateTaxes(scenario, year, owners, incomeTaxCalculator, earningsFromAssets, taxes, assets)
-      // console.log("--year, taxes--", year, taxes)
 
       // TOTAL INCOME FOR THIS YEAR -will be moved to the 'incomeBucket' asset
       const totalEarningsFromAssetsAmt = calculateTotalEarnings(year, earningsFromAssets, totalEarnings)

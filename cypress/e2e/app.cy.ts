@@ -1,4 +1,4 @@
-describe.only("Pricing", () => {
+describe("Pricing", () => {
   it("should check the last present value is as expected", () => {
     cy.visit("sheet")
 

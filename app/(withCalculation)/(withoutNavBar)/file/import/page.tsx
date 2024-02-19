@@ -43,7 +43,8 @@ export default function Import() {
       const data = await selectedFile.text()
       try {
         const scenarios: IScenario[] = JSON.parse(data)
-        importScenarios(scenarios)
+
+        await importScenarios(scenarios)
       } catch (e) {
         throw new Error("Error importing file")
       }

@@ -2,12 +2,12 @@ import { Asset } from "./Asset"
 import { AssetClass } from "@/app/lib/calculations/types"
 import { AssetConfig, YearData } from "./types"
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
-import { filterTransfersForYear, getPartialTransfers } from "../transfers/transferUtils"
 import { SuperContext, Transfer } from "../../data/schema/config"
+import { getTransferAmt } from "../transfers/getTransfers"
 
-const getFullTransfers = (transfers: Transfer[]) => {
-  return 0
-}
+// const getFullTransfers = (transfers: Transfer[]) => {
+//   return 0
+// }
 
 export class AuSuper extends Asset {
   capitalAsset: boolean
@@ -41,13 +41,7 @@ export class AuSuper extends Asset {
   calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
     const { value: prevValue, year } = yearData
 
-    const transfersForYear = this.transfers ? filterTransfersForYear(this.transfers, year) : []
-
-    const partialTransfersAmt = getPartialTransfers(this.id, transfersForYear)
-
-    const fullTransfersAmt = getFullTransfers(transfersForYear)
-
-    const transferAmt = partialTransfersAmt + fullTransfersAmt
+    const transferAmt = getTransferAmt(this.id, yearData, this.transfers, assets)
 
     const income = (prevValue + transferAmt / 2) * this.superContext.investmentReturn
 

@@ -57,7 +57,7 @@ export class AuDefinedBenefits extends Asset {
     this.history.push({ value, year: startingYear, income: previousYearsIncome, transferAmt: 0 })
   }
 
-  calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
+  calcNextYear = (yearData: YearData): YearData => {
     const { year } = yearData
 
     let newIncome

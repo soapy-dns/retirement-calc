@@ -7,7 +7,11 @@ import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { ContextConfig, LivingExpensesRecord } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { InputField } from "@/app/ui/components/form/InputField"
-import { inflationRateValidationRules, inflationYearValidationRules, newInflationRateValidationRules } from "@/app/ui/validation/inflationYear"
+import {
+  inflationRateValidationRules,
+  inflationYearValidationRules,
+  newInflationRateValidationRules
+} from "@/app/ui/validation/inflationYear"
 import { DECIMALS_ONLY, INTEGERS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ValidationError } from "@/app/ui/components/common/ValidationError"
@@ -16,6 +20,7 @@ import { YearValue } from "@/app/ui/components/YearValue"
 import { GenericModal } from "@/app/ui/components/GenericModal"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
+import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
 
 const amountInTodaysTermsAddId = "amountInTodaysTermsAdd"
 const yearAddId = "yearAdd"
@@ -56,7 +61,7 @@ const LivingExpensesPage: React.FC = () => {
     const newRecord = { fromYear, amountInTodaysTerms }
 
     let insertIndex = 0
-    const findIndex = fields.findIndex((it) => it.fromYear > fromYear)
+    const findIndex = fields.findIndex((it) => it?.fromYear || getStartingYear() > fromYear)
 
     if (findIndex === -1) {
       insertIndex = fields.length

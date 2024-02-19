@@ -42,3 +42,7 @@ pkill next-serv
 lsof -i :3000
 
 kill -9 pid
+
+killall -9 next-serv // might work
+
+npx kill-port 3000

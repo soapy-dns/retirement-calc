@@ -2,15 +2,54 @@ import { currencyFormatter } from "@/app/ui/utils/formatter"
 import { z } from "zod"
 import { getStartingYear } from "../../../calculations/utils/getStartingYear"
 import { incomeValidator, validateEarningsBucket, validateLivingExpensesVsInflation, yearNotPassed } from "./validation"
-import { AssetEditForm } from "@/app/(withCalculation)/(withNavBar)/(withContainer)/(config)/assets/AssetEditForm"
 
-export const YearConstraint = z.coerce.number().refine(
-  (val) => yearNotPassed(val),
-  (val) => {
-    return {
-      message: `Year ${val} is in the past`
-    }
-  }
+// export const zodInputStringPipe = (zodPipe: z.ZodTypeAny) =>
+//   z
+//     .string()
+//     .transform((value) => (value === "" ? null : value))
+//     .nullable()
+//     .refine((value) => value === null || !isNaN(Number(value)), {
+//       message: "Nombre Invalide"
+//     })
+//     .transform((value) => (value === null ? 0 : Number(value)))
+//     .pipe(zodPipe)
+
+// export const YearConstraint = zodInputStringPipe(
+//   z.number().refine(
+//     (val) => yearNotPassed(val),
+//     (val) => {
+//       return {
+//         message: `Year ${val} is in the past`
+//       }
+//     }
+//   )
+// )
+// export const YearConstraint = z // .optional() // .transform((value) => (value === "" ? null : value)) // .string()
+//   .string()
+//   .transform((value) => (value === "" ? null : value))
+//   // .nullable()
+//   .refine(
+//     (val) => yearNotPassed(val),
+//     (val) => {
+//       return {
+//         message: `Year ${val} is in the past`
+//       }
+//     }
+//   )
+
+export const YearConstraint = z.preprocess(
+  (val) => (val === "" ? undefined : val),
+  z.coerce
+    .number()
+    // .optional()
+    .refine(
+      (val) => val === undefined || yearNotPassed(val),
+      (val) => {
+        return {
+          message: `Year ${val} is in the past`
+        }
+      }
+    )
 )
 export const CountryEnum = z.enum(["AU", "SC"])
 export const YesNoSchema = z.enum(["Y", "N"])
@@ -44,9 +83,15 @@ const inflationSchema = z
     fromYear: z.number(),
     inflationRate: z.number()
   })
-  .refine(({ fromYear }) => fromYear >= getStartingYear(), {
-    message: "From year cannot be in the past."
-  })
+  .refine(
+    ({ fromYear }) => {
+      // return true is ok, false is error
+      return fromYear >= getStartingYear()
+    },
+    {
+      message: "The 'From year' cannot be in the past."
+    }
+  )
 
 const livingExpensesSchema = z.object({
   fromYear: YearConstraint,
