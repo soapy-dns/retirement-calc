@@ -14,6 +14,7 @@ import { Spinner } from "../components/common/Spinner"
 import { error } from "console"
 import path from "path"
 import Link from "next/link"
+import { FormattedErrors } from "../components/formattedErrors/FormattedErrors"
 
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
   const scenarioOptions = scenarios.map((scenario) => ({
@@ -21,68 +22,6 @@ const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
     label: scenario.name
   }))
   return scenarioOptions
-}
-
-const getFormattedErrors = (scenario: IScenario, errors?: ValidationIssue[]) => {
-  debugger
-  const { assets, transfers } = scenario
-  if (!errors) return <div>No errors</div>
-  const formattedErrors = errors.map((error, index) => {
-    let path, linkText
-    if (error.path[0] === "context") {
-      path = `/context/${error.path[1]}`
-
-      switch (error.path[1]) {
-        case "inflation":
-          linkText = "Inflation"
-          break
-        case "livingExpenses":
-          linkText = "Living Expenses"
-          break
-        case "auBank":
-          linkText = "Cash"
-          path = `/context/bank`
-
-          break
-        default:
-          linkText = "Context"
-      }
-    } else if (error.path[0] === "assets" && typeof error.path[1] === "number") {
-      const asset = assets[error.path[1]]
-      path = `/assets/${asset.id}`
-      linkText = asset.name
-    } else if (error.path[0] === "transfers" && typeof error.path[1] === "number") {
-      if (!transfers) {
-        return " Error with transfers"
-      }
-      const transfer = transfers[error.path[1]]
-      path = `/transfers/${transfer.id}`
-      linkText = "transfer"
-    } else {
-      linkText = `${error.path[0]} ${error.path[1]}`
-    }
-    return (
-      <li key={index}>
-        {error.message} &nbsp;- &nbsp;
-        {path && linkText && (
-          <span>
-            Go to{" "}
-            <Link className="text-primary underline" href={path}>
-              {linkText}
-            </Link>
-          </span>
-        )}
-      </li>
-    )
-  })
-
-  return (
-    <ul>
-      {formattedErrors.map((err, index) => {
-        return <li key={index}>{err}</li>
-      })}
-    </ul>
-  )
 }
 
 export const ScenarioProvider = ({ children }: { children: React.ReactNode }) => {
@@ -119,8 +58,16 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
         if ("errors" in calculationResults) {
           console.log("errors---", calculationResults.errors)
           const { errors } = calculationResults
-          const element = getFormattedErrors(selectedScenario, errors)
-          displayErrorAlert(element)
+          // const element = getFormattedErrors(selectedScenario, errors)
+          if (errors) {
+            displayErrorAlert(
+              <FormattedErrors
+                errors={errors}
+                assets={selectedScenario.assets}
+                transfers={selectedScenario.transfers || []}
+              />
+            )
+          }
         } else {
           displayErrorAlert(`${calculationMessage}`)
         }

@@ -2,10 +2,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-
 import { AssetEditForm } from "../AssetEditForm"
-// import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
-// import { YesNo } from "../../types"
 import { AssetType, IAsset, CountryEnum, YearConstraint, YesNoSchema } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
@@ -14,12 +11,6 @@ import { useOwner } from "@/app/ui/hooks/useOwner"
 import { Country } from "@/app/lib/calculations/tax/taxCalcs/types"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { incomeValidator } from "@/app/lib/data/schema/config/validation"
-
-// const getDrawdownFromValue = (enteredYear?: number): number => {
-//   const startingYear = getStartingYear()
-//   if (!enteredYear || enteredYear < startingYear) return startingYear
-//   return +enteredYear
-// }
 
 // There is some duplication with AssetSchema - how can we minimise this?
 const FormSchema = z
@@ -34,14 +25,14 @@ const FormSchema = z
     // assetOwners: z.string().array().nonempty(),
     incomeBucket: YesNoSchema.optional(),
     canDrawdown: YesNoSchema.optional(),
-    drawdownFrom: YearConstraint.optional(),
+    drawdownFrom: YearConstraint,
     drawdownOrder: z.coerce.number().optional(),
     preferredMinAmt: z.coerce.number().optional(),
     isRented: YesNoSchema.optional(),
     rentalIncome: z.coerce.number().gte(0).optional(),
     rentalExpenses: z.coerce.number().gte(0).optional(),
-    incomeStartYear: YearConstraint.optional(),
-    incomeEndYear: YearConstraint.optional()
+    incomeStartYear: YearConstraint,
+    incomeEndYear: YearConstraint
   })
   .refine(incomeValidator.validator, incomeValidator.options)
 

@@ -37,17 +37,20 @@ import { incomeValidator, validateEarningsBucket, validateLivingExpensesVsInflat
 //     }
 //   )
 
-export const YearConstraint = z// .optional() // .transform((value) => (value === "" ? null : value)) // .string()
-.coerce
-  .number() // FIXME: this changes empty string to 0!!!
-  .refine(
-    (val) => yearNotPassed(val),
-    (val) => {
-      return {
-        message: `Year ${val} is in the past`
+export const YearConstraint = z.preprocess(
+  (val) => (val === "" ? undefined : val),
+  z.coerce
+    .number()
+    // .optional()
+    .refine(
+      (val) => val === undefined || yearNotPassed(val),
+      (val) => {
+        return {
+          message: `Year ${val} is in the past`
+        }
       }
-    }
-  )
+    )
+)
 export const CountryEnum = z.enum(["AU", "SC"])
 export const YesNoSchema = z.enum(["Y", "N"])
 export const AssetTypeEnum = z.enum(["AuBank", "AuSuper", "AuProperty", "Salary", "AuDefinedBenefits", "AuShares"])
@@ -80,9 +83,15 @@ const inflationSchema = z
     fromYear: z.number(),
     inflationRate: z.number()
   })
-  .refine(({ fromYear }) => fromYear >= getStartingYear(), {
-    message: "From year cannot be in the past."
-  })
+  .refine(
+    ({ fromYear }) => {
+      // return true is ok, false is error
+      return fromYear >= getStartingYear()
+    },
+    {
+      message: "The 'From year' cannot be in the past."
+    }
+  )
 
 const livingExpensesSchema = z.object({
   fromYear: YearConstraint,

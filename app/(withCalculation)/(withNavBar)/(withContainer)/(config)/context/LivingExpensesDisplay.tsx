@@ -1,3 +1,4 @@
+import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
 import { Card } from "@/app/ui/components/Card"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { Table } from "@/app/ui/components/common/Table"
@@ -17,7 +18,7 @@ export const LivingExpensesDisplay: React.FC = () => {
 
   const headingData = ["From year", "Value at today's date"]
   const rowData = livingExpenses.map((it) => {
-    return [it.fromYear.toString(), currencyFormatter.format(it.amountInTodaysTerms)]
+    return [it?.fromYear?.toString() || getStartingYear().toString(), currencyFormatter.format(it.amountInTodaysTerms)]
   })
 
   const handleEdit = () => {
