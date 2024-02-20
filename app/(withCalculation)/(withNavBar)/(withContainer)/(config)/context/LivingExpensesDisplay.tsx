@@ -1,8 +1,10 @@
 import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
 import { Card } from "@/app/ui/components/Card"
+import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { Table } from "@/app/ui/components/common/Table"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ContextType, useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
 import { currencyFormatter } from "@/app/ui/utils/formatter"
@@ -13,6 +15,8 @@ export const LivingExpensesDisplay: React.FC = () => {
   const navigation = useNavigation()
 
   const { selectedScenario } = useContext(ScenarioContext)
+  const { hasValidationErrors } = useContextConfig()
+
   const { context } = selectedScenario
   const { livingExpenses } = context
 
@@ -36,6 +40,11 @@ export const LivingExpensesDisplay: React.FC = () => {
         </Button>
       </h2>
       <div>
+        {hasValidationErrors(ContextType.inflation) && (
+          <div className="mb-4">
+            <Alert alertType={AlertType.error} heading="Has configuration errors" />
+          </div>
+        )}
         <Table caption="Living expenses configuration" headingData={headingData} rowData={rowData} border={false} />
       </div>{" "}
     </Card>

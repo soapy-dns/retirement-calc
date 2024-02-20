@@ -3,6 +3,7 @@ import { IScenario } from "@/app/lib/data/schema/config"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
+import { AppPath } from "@/app/ui/types"
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
 import { ChangeEvent, ChangeEventHandler, useContext } from "react"
 
@@ -49,8 +50,9 @@ export default function Import() {
         throw new Error("Error importing file")
       }
     }
-    navigation.goBack()
     setButtonStatus(ButtonStatus.disabled)
+    // navigation.goTo(AppPath.config)
+    navigation.goBack()
   }
 
   return (

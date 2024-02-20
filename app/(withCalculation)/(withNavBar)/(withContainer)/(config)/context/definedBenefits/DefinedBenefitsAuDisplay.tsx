@@ -6,10 +6,13 @@ import { AppPath } from "@/app/ui/types"
 import * as React from "react"
 
 import { contextConstants } from "../contextConstants"
+import { ContextType, useContextConfig } from "@/app/ui/hooks/useContextConfig"
+import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 
 export const DefinedBenefitsAuDisplay: React.FunctionComponent = (props) => {
   const heading = "Defined benefits pension"
   const navigation = useNavigation()
+  const { hasValidationErrors } = useContextConfig()
 
   const handleEdit = () => {
     navigation.goTo(AppPath.contextDefinedBenefitsEdit)
@@ -21,6 +24,11 @@ export const DefinedBenefitsAuDisplay: React.FunctionComponent = (props) => {
 
   return (
     <DisplayCardWithEdit heading={heading} handleEdit={handleEdit}>
+      {hasValidationErrors(ContextType.definedBenefits) && (
+        <div className="mb-4">
+          <Alert alertType={AlertType.error} heading="Has configuration errors" />
+        </div>
+      )}
       <>
         <TextDisplayField
           label={contextConstants.USE_INFLATION_RATE.LABEL}

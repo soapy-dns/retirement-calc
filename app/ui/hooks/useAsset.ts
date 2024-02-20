@@ -23,7 +23,6 @@ export const useAsset = () => {
     const assets = [...selectedScenario.assets]
     const index = assets.findIndex((it) => it.id === asset.id) || 0
     const matchingAssets = assetErrors.filter((it) => it.path[1] === index)
-    console.log("--assetErrors--", asset.name, assetErrors)
 
     return matchingAssets.length > 0
   }
