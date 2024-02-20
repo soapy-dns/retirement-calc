@@ -7,7 +7,6 @@ import { HeadingRow } from "./row/HeadingRow"
 import { NoActionModal } from "@/app/ui/components/NoActionModal"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
-import { AppPath } from "@/app/ui/types"
 import { ErrorDetails } from "@/app/ui/components/ErrorDetails"
 import { Container } from "@/app/ui/components/Container"
 import { Spinner } from "@/app/ui/components/common/Spinner"
@@ -19,7 +18,8 @@ const EmptyLine = () => {
     </tr>
   )
 }
-const getHelpContent = (modalData: unknown): React.ReactElement => (
+
+const HelpContent = ({ modalData }: { modalData: unknown }) => (
   <pre>{modalData ? JSON.stringify(modalData, null, 4) : "N/A"}</pre>
 )
 
@@ -30,9 +30,6 @@ const SheetPage: React.FC = () => {
   const searchParams = useSearchParams()
 
   const debug = searchParams.get("debug")
-
-  const earningInfo =
-    "Income from a capital asset or an income stream.  This all ends up in the capital asset which is marked as the 'Earnings Bucket' in the asset configuration."
 
   const toggleEarningInfo = () => {
     setShowEarningInfo(!showEarningInfo)
@@ -72,7 +69,7 @@ const SheetPage: React.FC = () => {
   const headingRow = yearRange
 
   const { showModal: showHelpModal, onToggle: onHelpModalToggle, modalData: helpModalData = {} } = helpModalContext
-  const HelpModalContent = getHelpContent(helpModalData)
+  // const HelpModalContent = getHelpContent(helpModalData)
 
   if (!selectedScenario) return <div>Select a scenario</div>
 
@@ -155,17 +152,19 @@ const SheetPage: React.FC = () => {
         <NoActionModal
           showModal={showHelpModal}
           heading="Cell Data"
-          content={HelpModalContent}
+          // content={HelpModalContent}
           onToggle={onHelpModalToggle}
-        />
+        >
+          <HelpContent modalData={helpModalData} />
+        </NoActionModal>
       )}
       {showEarningInfo && (
-        <NoActionModal
-          showModal={showEarningInfo}
-          heading="Income"
-          content={earningInfo}
-          onToggle={toggleEarningInfo}
-        />
+        <NoActionModal showModal={showEarningInfo} heading="Income" onToggle={toggleEarningInfo}>
+          <div>
+            Income from a capital asset or an income stream. This all ends up in the capital asset which is marked as
+            the &apos;Earnings Bucket&apos; in the asset configuration.
+          </div>
+        </NoActionModal>
       )}
     </div>
   )
