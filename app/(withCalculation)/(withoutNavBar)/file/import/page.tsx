@@ -1,9 +1,6 @@
 "use client"
-import { ValidationIssue } from "@/app/lib/calculations/types"
 import { IScenario } from "@/app/lib/data/schema/config"
-import { GenericModal } from "@/app/ui/components/GenericModal"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
-import { FormattedErrors } from "@/app/ui/components/formattedErrors/FormattedErrors"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
@@ -22,13 +19,8 @@ enum ButtonStatus {
 export default function ImportPage() {
   const [selectedFile, setSelectedFile] = useState<File>()
   const [buttonStatus, setButtonStatus] = useState<ButtonStatus>(ButtonStatus.disabled)
-  const { importScenarios, selectedScenario } = useContext(ScenarioContext)
+  const { importScenarios } = useContext(ScenarioContext)
   const navigation = useNavigation()
-  const [showModal, setShowModal] = useState<boolean>(true)
-
-  const onToggle = () => {
-    setShowModal(false)
-  }
 
   const handleBack = () => {
     navigation.goBack()
