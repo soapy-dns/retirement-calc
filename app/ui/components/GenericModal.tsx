@@ -3,7 +3,6 @@ import React from "react"
 
 interface IGenericModalProps {
   heading: string
-  content: React.ReactNode
   showModal: boolean
   // onToggle: Function
   // cancelText?: string
@@ -11,9 +10,10 @@ interface IGenericModalProps {
   // handleCancel: React.MouseEventHandler<HTMLButtonElement>
   handleCancel: Function
   handleSubmit?: React.MouseEventHandler<HTMLButtonElement>
+  children: React.ReactNode
 }
 export const GenericModal = (props: IGenericModalProps) => {
-  const { heading, showModal, content, handleCancel, handleSubmit } = props
+  const { heading, showModal, handleCancel, handleSubmit, children } = props
 
   const modalHiddenClass = showModal ? "" : "hidden"
 
@@ -37,7 +37,7 @@ export const GenericModal = (props: IGenericModalProps) => {
                 <XMarkIcon className="h-6 w-6 font-bold text-primary" />
               </button>
             </h1>
-            <div className="mx-2">{content}</div>
+            <div className="mx-2">{children}</div>
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ interface ComponentProps {
 }
 
 export const FormattedErrors: React.FC<ComponentProps> = ({ errors = [], assets, transfers = [] }) => {
-  if (!errors) return <div>No errors</div>
+  if (errors.length === 0) return <div>No errors</div>
 
   return (
     <ul>

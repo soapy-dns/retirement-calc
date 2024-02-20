@@ -178,19 +178,14 @@ const LivingExpensesPage: React.FC = () => {
         </form>
       </>
 
-      <GenericModal
-        showModal={showModal}
-        heading="Add inflation row"
-        content={
-          <YearValue
-            handleCancel={onToggle}
-            handleAdd={handleAdd}
-            valueLabel={contextConstants.LIVING_EXPENSES.LABEL}
-            valueHelpText={contextConstants.LIVING_EXPENSES.HELP_TEXT}
-          />
-        }
-        handleCancel={onToggle}
-      />
+      <GenericModal showModal={showModal} heading="Add inflation row" handleCancel={onToggle}>
+        <YearValue
+          handleCancel={onToggle}
+          handleAdd={handleAdd}
+          valueLabel={contextConstants.LIVING_EXPENSES.LABEL}
+          valueHelpText={contextConstants.LIVING_EXPENSES.HELP_TEXT}
+        />
+      </GenericModal>
     </EditPageLayout>
   )
 }

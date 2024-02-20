@@ -13,5 +13,9 @@ interface Props {
 export const NoActionModal = (props: Props) => {
   const { heading, showModal, content, onToggle } = props
 
-  return <GenericModal heading={heading} content={content} showModal={showModal} handleCancel={onToggle} />
+  return (
+    <GenericModal heading={heading} showModal={showModal} handleCancel={onToggle}>
+      {content}
+    </GenericModal>
+  )
 }
