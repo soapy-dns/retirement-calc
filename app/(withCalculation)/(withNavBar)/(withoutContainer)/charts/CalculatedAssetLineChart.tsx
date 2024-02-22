@@ -69,8 +69,10 @@ export const CalculatedAssetLineChart: React.FC<Props> = ({ yearRange, graphData
   }
 
   return (
-    <div>
-      <Line options={options} data={data} />
+    <div className="relative bg-white">
+      <div className="w-full h-full">
+        <Line options={options} data={data} />
+      </div>
     </div>
   )
 }

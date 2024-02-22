@@ -12,7 +12,8 @@ interface ISelect {
   options?: ISelectOption[]
   //   ref: RefCallback<HTMLDivElement>
   //   onChange: (event: ChangeEvent<HTMLSelectElement>) => void
-  onChange: (x?: string) => void
+  onChange: (value?: string) => void
+  allowsNull?: boolean
 }
 export const Select: React.FC<ISelect> = ({
   id,
@@ -23,6 +24,7 @@ export const Select: React.FC<ISelect> = ({
   disabled,
   value,
   onChange,
+  allowsNull = true,
   ...rest
 }) => {
   //   const colorClasses = isError ? "border-error text-error border-2" : "border"
@@ -39,7 +41,7 @@ export const Select: React.FC<ISelect> = ({
       value={value}
       className="my-2 mb-4 h-8 rounded border border-solid border-gray-500 focus:border-primary"
     >
-      <option value="">--Select--</option>
+      {allowsNull && <option value="">--Select--</option>}
 
       {options &&
         options.map((it) => (
