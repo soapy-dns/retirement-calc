@@ -3,15 +3,13 @@
 import React, { MouseEvent, SyntheticEvent, useContext, useEffect } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
+// import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
-import { ContextConfig, InflationRecord } from "@/app/lib/data/schema/config"
+import { ContextConfig, InflationRecord, InflationSchema } from "@/app/lib/data/schema/config"
 import { InputField } from "@/app/ui/components/form/InputField"
-import {
-  inflationRateValidationRules,
-  inflationYearValidationRules,
-  newInflationRateValidationRules,
-  newInflationYearValidationRules
-} from "@/app/ui/validation/inflationYear"
+import { inflationRateValidationRules, inflationYearValidationRules } from "@/app/ui/validation/inflationYear"
 import { DECIMALS_ONLY, INTEGERS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ValidationError } from "@/app/ui/components/common/ValidationError"
@@ -21,17 +19,34 @@ import { GenericModal } from "@/app/ui/components/GenericModal"
 import { YearValue } from "@/app/ui/components/YearValue"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
+import { FormDataType, FormSchema } from "./types"
+// import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
 
-// const inflationAddId = "inflationAdd"
-// const yearAddId = "yearAdd"
+// const sortByFromDate = (inflationRows: InflationRecord[]): InflationRecord[] => {
+//   return inflationRows.sort((a, b) => {
+//     if (a.fromYear > b.fromYear) return 1
+//     if (a.fromYear < b.fromYear) return -1
+//     return 0
+//   })
+// }
 
-interface ChangedFormData {
-  items: InflationRecord[]
-  // [inflationAddId]: number
-  // [yearAddId]: number
-}
+// const FormSchema = z
+//   .object({
+//     items: z.array(InflationSchema)
+//   })
+//   .refine(
+//     ({ items }) => {
+//       sortByFromDate(items)
+//       const startYear = getStartingYear()
+//       return items[0].fromYear <= startYear
+//     },
+//     {
+//       message: `There should be a row from ${getStartingYear()}`,
+//       path: ["items", 0, "fromYear"]
+//     }
+//   )
 
-// const marshall = (formData: ChangedFormData) => {}
+// type FormDataType = z.infer<typeof FormSchema>
 
 const InflationEditPage: React.FC = () => {
   const navigation = useNavigation()
@@ -56,7 +71,7 @@ const InflationEditPage: React.FC = () => {
     // reset,
     formState: { isDirty, errors }
     // clearErrors
-  } = useForm<ChangedFormData>({ defaultValues: { items: inflationWithPerc } })
+  } = useForm<FormDataType>({ defaultValues: { items: inflationWithPerc }, resolver: zodResolver(FormSchema) })
 
   const { fields, insert, remove } = useFieldArray({
     control,
@@ -80,14 +95,12 @@ const InflationEditPage: React.FC = () => {
       insertIndex = findIndex
     }
 
-    // TODO: if value already found??
-
     insert(insertIndex, newRecord)
 
     onToggle() // This closes in this situation.  I think we could improve this
   }
 
-  const onSubmit = async (data: ChangedFormData) => {
+  const onSubmit = async (data: FormDataType) => {
     const { context } = selectedScenario
 
     const reformattedDataItems = data.items.map((it) => {
@@ -122,6 +135,8 @@ const InflationEditPage: React.FC = () => {
       handleBack={handleBack}
       handleCancel={handleBack}
     >
+      {/* {errors && <pre>{JSON.stringify(errors, null, 4)}</pre>} */}
+
       <form>
         <>
           <div className="flex justify-center mb-4">
@@ -149,7 +164,7 @@ const InflationEditPage: React.FC = () => {
                   defaultValue={it.fromYear}
                   validationRules={inflationYearValidationRules}
                   restrictedCharSet={INTEGERS_ONLY}
-                  type="number"
+                  // type="number"
                 />
 
                 <InputField

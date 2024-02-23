@@ -1,56 +1,18 @@
 import { currencyFormatter } from "@/app/ui/utils/formatter"
 import { z } from "zod"
-import { getStartingYear } from "../../../calculations/utils/getStartingYear"
 import { incomeValidator, validateEarningsBucket, validateLivingExpensesVsInflation, yearNotPassed } from "./validation"
 
-// export const zodInputStringPipe = (zodPipe: z.ZodTypeAny) =>
-//   z
-//     .string()
-//     .transform((value) => (value === "" ? null : value))
-//     .nullable()
-//     .refine((value) => value === null || !isNaN(Number(value)), {
-//       message: "Nombre Invalide"
-//     })
-//     .transform((value) => (value === null ? 0 : Number(value)))
-//     .pipe(zodPipe)
-
-// export const YearConstraint = zodInputStringPipe(
-//   z.number().refine(
-//     (val) => yearNotPassed(val),
-//     (val) => {
-//       return {
-//         message: `Year ${val} is in the past`
-//       }
-//     }
-//   )
-// )
-// export const YearConstraint = z // .optional() // .transform((value) => (value === "" ? null : value)) // .string()
-//   .string()
-//   .transform((value) => (value === "" ? null : value))
-//   // .nullable()
-//   .refine(
-//     (val) => yearNotPassed(val),
-//     (val) => {
-//       return {
-//         message: `Year ${val} is in the past`
-//       }
-//     }
-//   )
-
-export const YearConstraint = z.preprocess(
-  (val) => (val === "" ? undefined : val),
-  z.coerce
-    .number()
-    // .optional()
-    .refine(
-      (val) => val === undefined || yearNotPassed(val),
-      (val) => {
-        return {
-          message: `Year ${val} is in the past`
+export const YearConstraint = z.coerce.number().refine(
+  (val) => val === undefined || yearNotPassed(val),
+  (val) => {
+    return val === 0
+      ? { message: "This value is required." }
+      : {
+          message: `${val} is in the past.`
         }
-      }
-    )
+  }
 )
+
 export const CountryEnum = z.enum(["AU", "SC"])
 export const YesNoSchema = z.enum(["Y", "N"])
 export const AssetTypeEnum = z.enum(["AuBank", "AuSuper", "AuProperty", "Salary", "AuDefinedBenefits", "AuShares"])
@@ -78,24 +40,23 @@ const superContextSchema = z.object({
   taxationRate: z.number()
 })
 
-const inflationSchema = z
-  .object({
-    fromYear: z.number(),
-    inflationRate: z.number()
-  })
-  .refine(
-    ({ fromYear }) => {
-      // return true is ok, false is error
-      return fromYear >= getStartingYear()
-    },
-    {
-      message: "The 'From year' cannot be in the past."
-    }
-  )
+// const px = z.custom<`${number}px`>((val) => {
+//   return typeof val === "string" ? /^\d+px$/.test(val) : false
+// })
+
+// // not empty string number
+// export const ExistsConstraint = z.custom<string>((val) => {
+//   if (!val || val === "") return false
+// }, "Value must be entered")
+
+export const InflationSchema = z.object({
+  fromYear: YearConstraint,
+  inflationRate: z.coerce.number()
+})
 
 const livingExpensesSchema = z.object({
   fromYear: YearConstraint,
-  amountInTodaysTerms: z.number()
+  amountInTodaysTerms: z.coerce.number()
 })
 
 const transferBaseSchema = z.object({
@@ -249,7 +210,7 @@ const contextSchema = z
     property: propertyContextSchema,
     sharesAu: sharesContextSchema,
     superAu: superContextSchema,
-    inflation: z.array(inflationSchema),
+    inflation: z.array(InflationSchema),
     livingExpenses: z.array(livingExpensesSchema)
   })
   .refine(
@@ -278,7 +239,7 @@ export const scenarioSchema = z
 export type IScenario = z.infer<typeof scenarioSchema>
 export type ContextConfig = z.infer<typeof contextSchema>
 export type LivingExpensesRecord = z.infer<typeof livingExpensesSchema>
-export type InflationRecord = z.infer<typeof inflationSchema>
+export type InflationRecord = z.infer<typeof InflationSchema>
 export type CashContext = z.infer<typeof cashContextSchema>
 export type DefinedBenefitsContext = z.infer<typeof definedBenefitsContextSchema>
 export type PropertyContext = z.infer<typeof propertyContextSchema>
