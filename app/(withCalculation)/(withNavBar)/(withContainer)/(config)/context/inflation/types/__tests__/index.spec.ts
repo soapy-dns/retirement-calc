@@ -34,7 +34,7 @@ describe("", () => {
 
     // TODO: make this better
     try {
-      const result = FormSchema.parse(inflationData)
+      FormSchema.parse(inflationData)
     } catch (e) {
       expect(e).not.toBe(null)
       //   console.log("--e--", e.toString())
@@ -68,5 +68,19 @@ describe("", () => {
     // ] as ZodError
 
     // expect(error).toEqual(expectedZodError)
+  })
+
+  it("should fail because no from years at starting year", () => {
+    const inflationData: FormDataType = {
+      items: [{ fromYear: 2025, inflationRate: 3 }]
+    }
+
+    // TODO: make this better
+    try {
+      FormSchema.parse(inflationData)
+    } catch (e) {
+      expect(e).not.toBe(null)
+      //   console.log("--e--", e.toString())
+    }
   })
 })
