@@ -2,6 +2,8 @@
 
 import { useForm } from "react-hook-form"
 import { useContext } from "react"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
@@ -13,10 +15,11 @@ import { useNavigation } from "@/app/ui/hooks/useNavigation"
 
 import { scenarioConstants } from "../scenarioConstants"
 
-interface ChangedFormData {
-  name: string
-  description: string
-}
+const FormSchema = z.object({
+  name: z.string().min(3),
+  description: z.string().min(10)
+})
+export type FormDataType = z.infer<typeof FormSchema>
 
 export default function ScenarioPage({ params }: { params: { id: string } }) {
   const { id } = params
@@ -24,15 +27,16 @@ export default function ScenarioPage({ params }: { params: { id: string } }) {
   const { selectedScenario, updateScenario, addScenario } = useContext(ScenarioContext)
   const { name, description } = selectedScenario
   const defaultValues = id === "add" ? {} : { name, description }
-  const { control, handleSubmit } = useForm<ChangedFormData>({
-    defaultValues
+  const { control, handleSubmit } = useForm<FormDataType>({
+    defaultValues,
+    resolver: zodResolver(FormSchema)
   })
 
   const handleBack = () => {
     navigation.goBack()
   }
 
-  const onSubmit = async (data: ChangedFormData) => {
+  const onSubmit = async (data: FormDataType) => {
     const { name, description } = data
 
     if (id === "add") {
