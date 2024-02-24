@@ -86,7 +86,7 @@ export const contextConstants: Record<string, ItemProps> = {
     HELP_TEXT: "Year the rate will take affect from. This rate will continue until the next (if any) year entered."
   },
   RATE: {
-    LABEL: "Rate",
-    HELP_TEXT: "The rate (not the %)"
+    LABEL: "Percentage",
+    HELP_TEXT: "The percentage, eg 3 rather than 0.03"
   }
 }

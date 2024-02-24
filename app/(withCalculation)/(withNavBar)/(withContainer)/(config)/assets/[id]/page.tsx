@@ -8,7 +8,6 @@ import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { useAsset } from "@/app/ui/hooks/useAsset"
 import { useOwner } from "@/app/ui/hooks/useOwner"
-import { Country } from "@/app/lib/calculations/tax/taxCalcs/types"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { incomeValidator } from "@/app/lib/data/schema/config/validation"
 
@@ -101,8 +100,6 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   const { getOwners } = useOwner()
   const asset = getAssetDetails(id)
   const owners = getOwners()
-
-  console.log("asset", asset)
 
   const {
     name,

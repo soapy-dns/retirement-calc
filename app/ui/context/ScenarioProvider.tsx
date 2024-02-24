@@ -3,17 +3,15 @@ import { usePathname } from "next/navigation"
 
 import { ScenarioContext } from "./ScenarioContext"
 import { ISelectOption } from "@/app/lib/data/types"
-import { IAsset, IScenario } from "@/app/lib/data/schema/config"
+import { IScenario } from "@/app/lib/data/schema/config"
 
 import { scenarios as defaultScenarios } from "@/app/lib/data/scenarios"
 import { calculate } from "@/app/lib/calculations"
-import { CalculationResults, ValidationIssue } from "@/app/lib/calculations/types"
+import { CalculationResults } from "@/app/lib/calculations/types"
 import { useAppAlert } from "../hooks/useAppAlert"
 import { getRandomKey } from "@/app/lib/utils/getRandomKey"
 import { Spinner } from "../components/common/Spinner"
-import { error } from "console"
-import path from "path"
-import Link from "next/link"
+
 import { FormattedErrors } from "../components/formattedErrors/FormattedErrors"
 
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
@@ -43,7 +41,9 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     return assetOptions
   }
 
-  const doCalculations = async (selectedScenario: IScenario): Promise<{ success: boolean }> => {
+  const doCalculations = async (
+    selectedScenario: IScenario
+  ): Promise<{ success: boolean; calculationResults?: CalculationResults }> => {
     try {
       setCalculating(true)
       const calculationResults = await calculate(selectedScenario)
@@ -56,9 +56,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
         // server actions will return a 200 error for validation messages.  This may change in future
       } else if (!success) {
         if ("errors" in calculationResults) {
-          console.log("errors---", calculationResults.errors)
           const { errors } = calculationResults
-          // const element = getFormattedErrors(selectedScenario, errors)
           if (errors) {
             displayErrorAlert(
               <FormattedErrors
@@ -72,22 +70,24 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
           displayErrorAlert(`${calculationMessage}`)
         }
       }
-      return { success }
+      return { success, calculationResults }
     } catch (err) {
       // server error
       setCalculating(false)
       console.log("--err--", err)
-      displayErrorAlert("Error doing calculation.  This is likely a configuration issue.")
+      displayErrorAlert("Error doing calculation.  Please check your configuration")
       return { success: false }
     }
   }
 
-  const importScenarios = async (scenarios: IScenario[]) => {
+  const importScenarios = async (
+    scenarios: IScenario[]
+  ): Promise<{ success: boolean; calculationResults?: CalculationResults }> => {
     const defaultSelectedScenario = scenarios[0]
 
     if (!defaultSelectedScenario) throw new Error("No scenario found in import file")
 
-    await doCalculations(defaultSelectedScenario)
+    const { success, calculationResults } = await doCalculations(defaultSelectedScenario)
 
     const scenarioOptions = getScenarioOptions(scenarios)
     const selectedScenarioOption = scenarioOptions.find((it) => it.value === defaultSelectedScenario.id)
@@ -99,6 +99,8 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
 
     sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
     sessionStorage.setItem("selectedScenario", JSON.stringify(defaultSelectedScenario))
+
+    return { success, calculationResults }
   }
 
   const onSelectScenario = async (selectedValue: string) => {

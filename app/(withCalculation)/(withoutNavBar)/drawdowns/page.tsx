@@ -106,12 +106,9 @@ export default function Drawdowns() {
           })}
       </Container>
 
-      <NoActionModal
-        showModal={showModal}
-        heading={heading}
-        content={<HelpModalContent />}
-        onToggle={onHelpModalToggle}
-      />
+      <NoActionModal showModal={showModal} heading={heading} onToggle={onHelpModalToggle}>
+        <HelpModalContent />
+      </NoActionModal>
     </>
   )
 }

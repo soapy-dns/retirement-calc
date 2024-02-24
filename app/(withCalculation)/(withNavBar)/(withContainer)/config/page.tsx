@@ -80,12 +80,9 @@ const ConfigPage: React.FC = () => {
       {activeTab === ConfigTab.context && <ContextTab />}
       {activeTab === ConfigTab.assets && <AssetTab />}
       {activeTab === ConfigTab.transfers && <TransfersTab />}
-      <NoActionModal
-        showModal={showModal}
-        heading={headingText}
-        content={<HelpModalContent />}
-        onToggle={onHelpModalToggle}
-      />
+      <NoActionModal showModal={showModal} heading={headingText} onToggle={onHelpModalToggle}>
+        <HelpModalContent />
+      </NoActionModal>
     </>
   )
 }

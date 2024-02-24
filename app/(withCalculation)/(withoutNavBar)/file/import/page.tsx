@@ -4,7 +4,7 @@ import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
-import { ChangeEvent, ChangeEventHandler, useContext } from "react"
+import { ChangeEvent, useContext } from "react"
 
 import { useState } from "react"
 
@@ -16,7 +16,7 @@ enum ButtonStatus {
   active
 }
 
-export default function Import() {
+export default function ImportPage() {
   const [selectedFile, setSelectedFile] = useState<File>()
   const [buttonStatus, setButtonStatus] = useState<ButtonStatus>(ButtonStatus.disabled)
   const { importScenarios } = useContext(ScenarioContext)
@@ -34,7 +34,7 @@ export default function Import() {
     setButtonStatus(ButtonStatus.active)
   }
 
-  const handleOnClick = async () => {
+  const handleOnClick = async (): Promise<void> => {
     setButtonStatus(ButtonStatus.busy)
 
     // await sleep(1)
@@ -45,12 +45,24 @@ export default function Import() {
         const scenarios: IScenario[] = JSON.parse(data)
 
         await importScenarios(scenarios)
+        // if (success) return navigation.goBack()
+        // console.log("should stay on this page")
+        // console.log("calculationResults", calculationResults)
+        // if (calculationResults && "errors" in calculationResults) {
+        //   const { errors = [{ code: "custom", message: "test msg", path: ["assets", 3, "something"] }] } =
+        //     calculationResults
+        //   console.log("errors>>>>>>>", errors)
+        //   setErrorsToFormat(errors)
+        //   // calculation has been done, so entire app is refreshed and modal is set back to not shown, as are the errors
+        //   setShowModal(true)
+        // }
       } catch (e) {
         throw new Error("Error importing file")
       }
     }
-    navigation.goBack()
     setButtonStatus(ButtonStatus.disabled)
+    // navigation.goTo(AppPath.config)
+    navigation.goBack()
   }
 
   return (
