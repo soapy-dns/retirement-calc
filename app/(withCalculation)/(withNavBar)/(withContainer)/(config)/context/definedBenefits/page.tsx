@@ -1,7 +1,10 @@
 "use client"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
-import { ContextConfig } from "@/app/lib/data/schema/config"
+import { ContextConfig, YesNoSchema } from "@/app/lib/data/schema/config"
 import { RadioButtonQuestion, RadioQuestionVariant } from "@/app/ui/components/form/RadioButtonQuestion"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
@@ -10,9 +13,13 @@ import { useContext } from "react"
 import { useForm } from "react-hook-form"
 import { contextConstants } from "../contextConstants"
 
-interface ChangedFormData {
-  useInflationRateAu: string
-}
+// interface ChangedFormData {
+//   useInflationRateAu: string
+// }
+const FormSchema = z.object({
+  useInflationRateAu: YesNoSchema.optional()
+})
+export type FormDataType = z.infer<typeof FormSchema>
 
 const getStringValue = (bool: boolean): "Y" | "N" => {
   return bool ? "Y" : "N"
@@ -22,15 +29,16 @@ const DefinedBenefitsPage: React.FC = () => {
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
   const { context } = selectedScenario
   const { definedBenefitsAu } = context
-  const { control, handleSubmit } = useForm<ChangedFormData>({
-    defaultValues: { useInflationRateAu: getStringValue(definedBenefitsAu.useInflationRate) }
+  const { control, handleSubmit } = useForm<FormDataType>({
+    defaultValues: { useInflationRateAu: getStringValue(definedBenefitsAu.useInflationRate) },
+    resolver: zodResolver(FormSchema)
   })
 
   const handleBack = () => {
     navigation.goBack()
   }
 
-  const onSubmit = async (data: ChangedFormData) => {
+  const onSubmit = async (data: FormDataType) => {
     const { useInflationRateAu } = data
     const { context } = selectedScenario
 
