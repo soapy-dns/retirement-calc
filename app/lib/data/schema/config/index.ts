@@ -14,16 +14,6 @@ export const YearConstraint = z.coerce.number().refine(
 )
 
 const rfhNumeric = z.union([z.number(), z.string().min(1, { message: "This value is required" })])
-// export const IsNumber = rfhNumeric.optional().refine(
-//   (val) => {
-//     if (val && val === "") return false
-//     if (val && Number.isNaN(Number(val))) return false
-//     return true
-//   },
-//   (val) => {
-//     return { message: `This value is required.` }
-//   }
-// )
 
 // Note: Can use with optional()
 export const IsNumber = rfhNumeric
@@ -66,15 +56,6 @@ const superContextSchema = z.object({
   investmentReturn: z.number(), // net of fees but not taxation
   taxationRate: z.number()
 })
-
-// const px = z.custom<`${number}px`>((val) => {
-//   return typeof val === "string" ? /^\d+px$/.test(val) : false
-// })
-
-// // not empty string number
-// export const ExistsConstraint = z.custom<string>((val) => {
-//   if (!val || val === "") return false
-// }, "Value must be entered")
 
 export const InflationSchema = z.object({
   fromYear: YearConstraint,

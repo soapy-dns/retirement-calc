@@ -3,7 +3,6 @@
 import React, { MouseEvent, SyntheticEvent, useContext, useEffect } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
-// import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
@@ -20,33 +19,6 @@ import { YearValue } from "@/app/ui/components/YearValue"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
 import { FormDataType, FormSchema } from "./types"
-// import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
-
-// const sortByFromDate = (inflationRows: InflationRecord[]): InflationRecord[] => {
-//   return inflationRows.sort((a, b) => {
-//     if (a.fromYear > b.fromYear) return 1
-//     if (a.fromYear < b.fromYear) return -1
-//     return 0
-//   })
-// }
-
-// const FormSchema = z
-//   .object({
-//     items: z.array(InflationSchema)
-//   })
-//   .refine(
-//     ({ items }) => {
-//       sortByFromDate(items)
-//       const startYear = getStartingYear()
-//       return items[0].fromYear <= startYear
-//     },
-//     {
-//       message: `There should be a row from ${getStartingYear()}`,
-//       path: ["items", 0, "fromYear"]
-//     }
-//   )
-
-// type FormDataType = z.infer<typeof FormSchema>
 
 const InflationEditPage: React.FC = () => {
   const navigation = useNavigation()
