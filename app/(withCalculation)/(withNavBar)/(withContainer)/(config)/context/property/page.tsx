@@ -1,7 +1,10 @@
 "use client"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
-import { ContextConfig } from "@/app/lib/data/schema/config"
+import { ContextConfig, IsNumber } from "@/app/lib/data/schema/config"
 import { DECIMALS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
@@ -11,24 +14,26 @@ import { useForm } from "react-hook-form"
 
 import { contextConstants } from "../contextConstants"
 
-interface ChangedFormData {
-  growthRate: number
-}
+const FormSchema = z.object({
+  growthRate: IsNumber
+})
+export type FormDataType = z.infer<typeof FormSchema>
 
 const PropertyPage: React.FC = () => {
   const navigation = useNavigation()
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
   const { context } = selectedScenario
   const { property } = context
-  const { control, handleSubmit } = useForm<ChangedFormData>({
-    defaultValues: { growthRate: Math.round(property.growthInterestRate * 10000) / 100 }
+  const { control, handleSubmit } = useForm<FormDataType>({
+    defaultValues: { growthRate: Math.round(property.growthInterestRate * 10000) / 100 },
+    resolver: zodResolver(FormSchema)
   })
 
   const handleBack = () => {
     navigation.goBack()
   }
 
-  const onSubmit = async (data: ChangedFormData) => {
+  const onSubmit = async (data: FormDataType) => {
     const { growthRate } = data
     const { context } = selectedScenario
 
@@ -62,9 +67,8 @@ const PropertyPage: React.FC = () => {
           control={control}
           label={contextConstants.PROPERTY_GROWTH_RATE.LABEL}
           suffix="%"
-          defaultValue={context?.property?.growthInterestRate}
+          // defaultValue={context?.property?.growthInterestRate}
           editable={true}
-          // validationRules={changeDetailsValidation}
           restrictedCharSet={DECIMALS_ONLY}
           helpText={contextConstants.PROPERTY_GROWTH_RATE.HELP_TEXT}
         />

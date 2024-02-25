@@ -7,7 +7,6 @@ import { Control } from "react-hook-form"
 import { contextConstants } from "../contextConstants"
 
 import { currencyOptions, taxResidentOptions } from "../options"
-// import { useNavigation } from "view/hooks/useNavigation"
 
 interface Props {
   control: Control<any, object>
@@ -16,15 +15,6 @@ interface Props {
 }
 
 const GeneralContextForm: React.FC<Props> = ({ control, taxResident, currency }) => {
-  // const { selectedScenario } = useContext(ScenarioContext)
-  // const navigation = useNavigation()
-
-  // const { context } = selectedScenario
-
-  // const handleBack = () => {
-  //   navigation.goBack()
-  // }
-
   return (
     <form>
       <SelectQuestion

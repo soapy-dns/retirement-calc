@@ -23,7 +23,7 @@ describe("", () => {
     }
 
     const result = FormSchema.parse(inflationData)
-    console.log("--result--", result)
+    // console.log("--result--", result)
     expect(result).toEqual(inflationData)
   })
 
