@@ -14,10 +14,22 @@ export const YearConstraint = z.coerce.number().refine(
 )
 
 const rfhNumeric = z.union([z.number(), z.string().min(1)])
-export const IsNumber = rfhNumeric.optional().refine(
+// export const IsNumber = rfhNumeric.optional().refine(
+//   (val) => {
+//     if (val && val === "") return false
+//     if (val && Number.isNaN(Number(val))) return false
+//     return true
+//   },
+//   (val) => {
+//     return { message: `This value is required.` }
+//   }
+// )
+
+// Can use with optional()
+export const IsNumber = rfhNumeric.refine(
   (val) => {
-    if (val && val === "") return false
-    if (val && Number.isNaN(Number(val))) return false
+    if (val === "") return false
+    if (Number.isNaN(Number(val))) return false
     return true
   },
   (val) => {
