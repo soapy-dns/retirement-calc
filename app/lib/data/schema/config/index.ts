@@ -13,6 +13,23 @@ export const YearConstraint = z.coerce.number().refine(
   }
 )
 
+const rfhNumeric = z.union([z.number(), z.string().min(1, { message: "This value is required" })])
+
+// Note: Can use with optional()
+export const IsNumber = rfhNumeric
+  .transform((val) => {
+    return Number(val)
+  })
+  .refine(
+    (val) => {
+      if (Number.isNaN(val)) return false
+      return true
+    },
+    (val) => {
+      return { message: `This value is required.` }
+    }
+  )
+
 export const CountryEnum = z.enum(["AU", "SC"])
 export const YesNoSchema = z.enum(["Y", "N"])
 export const AssetTypeEnum = z.enum(["AuBank", "AuSuper", "AuProperty", "Salary", "AuDefinedBenefits", "AuShares"])
@@ -40,21 +57,12 @@ const superContextSchema = z.object({
   taxationRate: z.number()
 })
 
-// const px = z.custom<`${number}px`>((val) => {
-//   return typeof val === "string" ? /^\d+px$/.test(val) : false
-// })
-
-// // not empty string number
-// export const ExistsConstraint = z.custom<string>((val) => {
-//   if (!val || val === "") return false
-// }, "Value must be entered")
-
 export const InflationSchema = z.object({
   fromYear: YearConstraint,
   inflationRate: z.coerce.number()
 })
 
-const livingExpensesSchema = z.object({
+export const LivingExpensesSchema = z.object({
   fromYear: YearConstraint,
   amountInTodaysTerms: z.coerce.number()
 })
@@ -211,7 +219,7 @@ const contextSchema = z
     sharesAu: sharesContextSchema,
     superAu: superContextSchema,
     inflation: z.array(InflationSchema),
-    livingExpenses: z.array(livingExpensesSchema)
+    livingExpenses: z.array(LivingExpensesSchema)
   })
   .refine(
     ({ livingExpenses, inflation }) => validateLivingExpensesVsInflation(livingExpenses, inflation),
@@ -238,7 +246,7 @@ export const scenarioSchema = z
 
 export type IScenario = z.infer<typeof scenarioSchema>
 export type ContextConfig = z.infer<typeof contextSchema>
-export type LivingExpensesRecord = z.infer<typeof livingExpensesSchema>
+export type LivingExpensesRecord = z.infer<typeof LivingExpensesSchema>
 export type InflationRecord = z.infer<typeof InflationSchema>
 export type CashContext = z.infer<typeof cashContextSchema>
 export type DefinedBenefitsContext = z.infer<typeof definedBenefitsContextSchema>

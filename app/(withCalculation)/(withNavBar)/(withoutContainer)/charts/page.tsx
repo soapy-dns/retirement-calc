@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { Select } from "@/app/ui/components/common/Select"
 import ChartDisplay from "./ChartDisplay"
@@ -27,10 +27,18 @@ const ChartPage = () => {
       label: "Asset Split at start of term"
     }
   ]
+
+  useEffect(() => {
+    // check session storage and use that if found, else use 'capital assets'
+    const chartType = sessionStorage.getItem("chartType")
+    if (chartType) setSelectedChart(ChartType[chartType as keyof typeof ChartType])
+  }, [])
+
   const onChange = (val?: string) => {
     if (val) {
       if (val in ChartType) {
         setSelectedChart(ChartType[val as keyof typeof ChartType])
+        sessionStorage.setItem("chartType", val)
       }
     }
   }

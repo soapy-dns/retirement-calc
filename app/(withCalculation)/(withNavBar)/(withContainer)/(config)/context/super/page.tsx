@@ -1,7 +1,10 @@
 "use client"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
-import { ContextConfig } from "@/app/lib/data/schema/config"
+import { ContextConfig, IsNumber } from "@/app/lib/data/schema/config"
 import { DECIMALS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
@@ -10,10 +13,11 @@ import { useContext } from "react"
 import { useForm } from "react-hook-form"
 import { contextConstants } from "../contextConstants"
 
-interface ChangedFormData {
-  investmentReturn: number
-  taxationRate: number
-}
+const FormSchema = z.object({
+  investmentReturn: IsNumber,
+  taxationRate: IsNumber
+})
+export type FormDataType = z.infer<typeof FormSchema>
 
 const SuperPage: React.FC = () => {
   const navigation = useNavigation()
@@ -21,18 +25,19 @@ const SuperPage: React.FC = () => {
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
   const { context } = selectedScenario
   const { superAu } = context
-  const { control, handleSubmit } = useForm<ChangedFormData>({
+  const { control, handleSubmit } = useForm<FormDataType>({
     defaultValues: {
       investmentReturn: Math.round(superAu?.investmentReturn * 10000) / 100,
       taxationRate: Math.round(superAu?.taxationRate * 10000) / 100
-    }
+    },
+    resolver: zodResolver(FormSchema)
   })
 
   const handleBack = () => {
     navigation.goBack()
   }
 
-  const onSubmit = async (data: ChangedFormData) => {
+  const onSubmit = async (data: FormDataType) => {
     const { investmentReturn, taxationRate } = data
     const { context } = selectedScenario
 

@@ -1,17 +1,15 @@
 "use client"
 
-import React, { SyntheticEvent, useContext } from "react"
+import React, { useContext } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
-import { ContextConfig, LivingExpensesRecord } from "@/app/lib/data/schema/config"
+import { ContextConfig } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { InputField } from "@/app/ui/components/form/InputField"
-import {
-  inflationRateValidationRules,
-  inflationYearValidationRules,
-  newInflationRateValidationRules
-} from "@/app/ui/validation/inflationYear"
+import { inflationRateValidationRules, inflationYearValidationRules } from "@/app/ui/validation/inflationYear"
 import { DECIMALS_ONLY, INTEGERS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ValidationError } from "@/app/ui/components/common/ValidationError"
@@ -21,15 +19,11 @@ import { GenericModal } from "@/app/ui/components/GenericModal"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
 import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
+import { FormDataType, FormSchema } from "./types"
 
-const amountInTodaysTermsAddId = "amountInTodaysTermsAdd"
-const yearAddId = "yearAdd"
-
-interface ChangedFormData {
-  items: LivingExpensesRecord[]
-  // [amountInTodaysTermsAddId]: number
-  // [yearAddId]: number
-}
+// interface ChangedFormData {
+//   items: LivingExpensesRecord[]
+// }
 
 const LivingExpensesPage: React.FC = () => {
   const navigation = useNavigation()
@@ -45,7 +39,7 @@ const LivingExpensesPage: React.FC = () => {
     // reset,
     formState: { isDirty, errors }
     // clearErrors
-  } = useForm<ChangedFormData>({ defaultValues: { items: livingExpenses } })
+  } = useForm<FormDataType>({ defaultValues: { items: livingExpenses }, resolver: zodResolver(FormSchema) })
 
   const { fields, insert, remove } = useFieldArray({
     control,
@@ -57,11 +51,15 @@ const LivingExpensesPage: React.FC = () => {
   }
 
   const handleAdd = (fromYear: number, amountInTodaysTerms: number) => {
+    console.log("handleAdd - living expenses")
     if (!fromYear || !amountInTodaysTerms) return null // This stops us from adding a new row with nothing in it could also null the button
     const newRecord = { fromYear, amountInTodaysTerms }
 
     let insertIndex = 0
+    console.log("fields", fields)
+    // FIXME: this is incorrect
     const findIndex = fields.findIndex((it) => it?.fromYear || getStartingYear() > fromYear)
+    console.log("findIndex", findIndex)
 
     if (findIndex === -1) {
       insertIndex = fields.length
@@ -76,7 +74,7 @@ const LivingExpensesPage: React.FC = () => {
     onToggle() // This closes in this situation.  I think we could improve this
   }
 
-  const onSubmit = async (data: ChangedFormData) => {
+  const onSubmit = async (data: FormDataType) => {
     const { context } = selectedScenario
 
     const reformattedDataItems = data.items.map((it) => {
@@ -113,7 +111,7 @@ const LivingExpensesPage: React.FC = () => {
     >
       <>
         <div className="flex justify-center mb-4">
-          <Button buttonType={ButtonType.tertiary} onClick={onToggle}>
+          <Button buttonType={ButtonType.secondary} onClick={onToggle}>
             <div className="flex gap-2 items-center justify-center">
               <PlusCircleIcon className="h-6 w-6" />
               <div>Add a new row</div>
@@ -136,14 +134,14 @@ const LivingExpensesPage: React.FC = () => {
                   id={`items.${index}.fromYear`}
                   control={control}
                   // defaultValue={it.fromYear}
-                  validationRules={inflationYearValidationRules} // TODO: should also think of doing via zod
+                  // validationRules={inflationYearValidationRules} // TODO: should also think of doing via zod
                   restrictedCharSet={INTEGERS_ONLY}
                   type="number"
                 />
                 <InputField
                   id={`items.${index}.amountInTodaysTerms`}
                   control={control}
-                  validationRules={inflationRateValidationRules}
+                  // validationRules={inflationRateValidationRules}
                   restrictedCharSet={DECIMALS_ONLY}
                   type="number"
                 />

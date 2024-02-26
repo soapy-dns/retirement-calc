@@ -5,15 +5,12 @@ import { PencilSquareIcon } from "@heroicons/react/24/outline"
 import { useContext } from "react"
 
 export const OwnersDisplay: React.FC = () => {
-  // const navigation = useNavigation()
-
   const { selectedScenario } = useContext(ScenarioContext)
   const { context } = selectedScenario
   const { owners } = context
 
   const handleEdit = () => {
     alert("To be implemented")
-    // history.push(`/context/inflation/edit`)
   }
 
   return (

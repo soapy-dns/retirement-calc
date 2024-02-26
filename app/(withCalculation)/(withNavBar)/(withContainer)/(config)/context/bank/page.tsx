@@ -1,7 +1,9 @@
 "use client"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
 
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
-import { ContextConfig } from "@/app/lib/data/schema/config"
+import { ContextConfig, IsNumber } from "@/app/lib/data/schema/config"
 import { DECIMALS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
@@ -10,24 +12,26 @@ import { useContext } from "react"
 import { useForm } from "react-hook-form"
 import { contextConstants } from "../contextConstants"
 
-interface ChangedFormData {
-  interestRate: number
-}
+const FormSchema = z.object({
+  interestRate: IsNumber
+})
+export type FormDataType = z.infer<typeof FormSchema>
 
 const BankPage: React.FC = () => {
   const navigation = useNavigation()
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
   const { context } = selectedScenario
   const { auBank } = context
-  const { control, handleSubmit } = useForm<ChangedFormData>({
-    defaultValues: { interestRate: Math.round(auBank.interestRate * 10000) / 100 }
+  const { control, handleSubmit } = useForm<FormDataType>({
+    defaultValues: { interestRate: Math.round(auBank.interestRate * 10000) / 100 },
+    resolver: zodResolver(FormSchema)
   })
 
   const handleBack = () => {
     navigation.goBack()
   }
 
-  const onSubmit = async (data: ChangedFormData) => {
+  const onSubmit = async (data: FormDataType) => {
     console.log("--onSubmit bank--")
     const { interestRate } = data
     const { context } = selectedScenario

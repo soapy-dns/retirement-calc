@@ -1,18 +1,19 @@
 import { z } from "zod"
 import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
-import { InflationRecord, InflationSchema } from "@/app/lib/data/schema/config"
+import { LivingExpensesSchema } from "@/app/lib/data/schema/config"
+import { sortByFromDate } from "../utils"
 
-const sortByFromDate = (inflationRows: InflationRecord[]): InflationRecord[] => {
-  return inflationRows.toSorted((a, b) => {
-    if (a.fromYear > b.fromYear) return 1
-    if (a.fromYear < b.fromYear) return -1
-    return 0
-  })
-}
+// const sortByFromDate = (rows: LivingExpensesRecord[]): LivingExpensesRecord[] => {
+//   return rows.toSorted((a, b) => {
+//     if (a.fromYear > b.fromYear) return 1
+//     if (a.fromYear < b.fromYear) return -1
+//     return 0
+//   })
+// }
 
 export const FormSchema = z
   .object({
-    items: z.array(InflationSchema)
+    items: z.array(LivingExpensesSchema)
   })
   .refine(
     ({ items }) => {
