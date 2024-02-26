@@ -112,7 +112,7 @@ const InflationEditPage: React.FC = () => {
       <form>
         <>
           <div className="flex justify-center mb-4">
-            <Button buttonType={ButtonType.tertiary} onClick={onToggle}>
+            <Button buttonType={ButtonType.secondary} onClick={onToggle}>
               <div className="flex gap-2 items-center justify-center">
                 <PlusCircleIcon className="h-6 w-6" />
                 <div>Add a new row</div>
