@@ -134,14 +134,14 @@ const LivingExpensesPage: React.FC = () => {
                   id={`items.${index}.fromYear`}
                   control={control}
                   // defaultValue={it.fromYear}
-                  validationRules={inflationYearValidationRules} // TODO: should also think of doing via zod
+                  // validationRules={inflationYearValidationRules} // TODO: should also think of doing via zod
                   restrictedCharSet={INTEGERS_ONLY}
                   type="number"
                 />
                 <InputField
                   id={`items.${index}.amountInTodaysTerms`}
                   control={control}
-                  validationRules={inflationRateValidationRules}
+                  // validationRules={inflationRateValidationRules}
                   restrictedCharSet={DECIMALS_ONLY}
                   type="number"
                 />
