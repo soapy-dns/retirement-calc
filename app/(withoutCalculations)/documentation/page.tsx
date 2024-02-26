@@ -18,7 +18,7 @@ export default function Documentation() {
     <div className="mt-10 py-8 ">
       <Container>
         <div className="flex flex-col items-center text-primary">
-          <Button onClick={handleBack} buttonType={ButtonType.secondary}>
+          <Button onClick={handleBack} buttonType={ButtonType.tertiary}>
             <div className="flex items-center gap-2">
               <ChevronDoubleLeftIcon className="h-6 w-6" />
               <div>Back</div>
@@ -28,7 +28,7 @@ export default function Documentation() {
 
           <p>Coming soon...</p>
           <Link href={AppPath.config}>
-            <div className="mx-4 px-4 py-1 flex flex gap-2 items-center justify-center hover:bg-primary-darker border-primary bg-primary text-white gap-2 rounded-full">
+            <div className="mx-4 px-4 py-1 flex  gap-2 items-center justify-center hover:bg-primary-darker border-primary bg-primary text-white rounded-full">
               Go to configuration <Cog8ToothIcon className=" h-6 w-6" />
             </div>
           </Link>
