@@ -1,11 +1,4 @@
-import { InflationRecord } from "@/app/lib/data/schema/config"
 import { FormDataType, FormSchema } from ".."
-import { ZodError } from "zod"
-// import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
-// import * as startingYearService from "../../../../../../../../lib/calculations/utils/getStartingYear"
-
-// startingYearService.getStartingYear.mockReturnValue(2024)
-// jest.mock("@/app/lib/calculations/utils/getStartingYear", () => ({
 
 jest.mock("../../../../../../../../lib/calculations/utils/getStartingYear", () => ({
   getStartingYear: () => 2024
