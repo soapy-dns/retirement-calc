@@ -51,15 +51,12 @@ const LivingExpensesPage: React.FC = () => {
   }
 
   const handleAdd = (fromYear: number, amountInTodaysTerms: number) => {
-    console.log("handleAdd - living expenses")
     if (!fromYear || !amountInTodaysTerms) return null // This stops us from adding a new row with nothing in it could also null the button
     const newRecord = { fromYear, amountInTodaysTerms }
 
     let insertIndex = 0
-    console.log("fields", fields)
     // FIXME: this is incorrect
-    const findIndex = fields.findIndex((it) => it?.fromYear || getStartingYear() > fromYear)
-    console.log("findIndex", findIndex)
+    const findIndex = fields.findIndex((it) => it.fromYear > fromYear)
 
     if (findIndex === -1) {
       insertIndex = fields.length

@@ -15,6 +15,7 @@ interface IInput {
   suffix?: string
   ref: RefCallback<HTMLDivElement>
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
+  onBlur?: (event: ChangeEvent<HTMLInputElement>) => void
 }
 export const Input: React.FC<IInput> = ({
   id,
@@ -23,6 +24,7 @@ export const Input: React.FC<IInput> = ({
   disabled,
   value,
   onChange,
+  onBlur,
   className,
   prefix,
   suffix,
@@ -51,6 +53,7 @@ export const Input: React.FC<IInput> = ({
         placeholder={placeholder}
         disabled={disabled}
         onChange={onChange}
+        onBlur={onBlur}
       />
 
       {suffix && <Suffix text={suffix} />}

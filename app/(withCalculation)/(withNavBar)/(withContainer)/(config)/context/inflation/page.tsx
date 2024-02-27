@@ -43,7 +43,12 @@ const InflationEditPage: React.FC = () => {
     // reset,
     formState: { isDirty, errors }
     // clearErrors
-  } = useForm<FormDataType>({ defaultValues: { items: inflationWithPerc }, resolver: zodResolver(FormSchema) })
+  } = useForm<FormDataType>({
+    defaultValues: { items: inflationWithPerc },
+    mode: "onBlur",
+    reValidateMode: "onBlur",
+    resolver: zodResolver(FormSchema)
+  })
 
   const { fields, insert, remove } = useFieldArray({
     control,

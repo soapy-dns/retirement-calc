@@ -16,6 +16,7 @@ export const FormSchema = z
   })
   .refine(
     ({ items }) => {
+      console.log("**Checking inflation dates**")
       sortByFromDate(items)
       const startYear = getStartingYear()
       return items[0].fromYear <= startYear
