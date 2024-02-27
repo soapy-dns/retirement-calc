@@ -178,7 +178,7 @@ const InflationEditPage: React.FC = () => {
         </>
       </form>
 
-      <GenericModal showModal={showModal} heading="Add living expense row" handleCancel={onToggle}>
+      <GenericModal showModal={showModal} heading="Add inflation row" handleCancel={onToggle}>
         <YearValue
           handleCancel={onToggle}
           handleAdd={handleAdd}
