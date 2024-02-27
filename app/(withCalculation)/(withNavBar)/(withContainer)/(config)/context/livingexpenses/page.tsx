@@ -39,7 +39,12 @@ const LivingExpensesPage: React.FC = () => {
     // reset,
     formState: { isDirty, errors }
     // clearErrors
-  } = useForm<FormDataType>({ defaultValues: { items: livingExpenses }, resolver: zodResolver(FormSchema) })
+  } = useForm<FormDataType>({
+    defaultValues: { items: livingExpenses },
+    resolver: zodResolver(FormSchema),
+    mode: "onBlur",
+    reValidateMode: "onBlur"
+  })
 
   const { fields, insert, remove } = useFieldArray({
     control,
@@ -55,7 +60,6 @@ const LivingExpensesPage: React.FC = () => {
     const newRecord = { fromYear, amountInTodaysTerms }
 
     let insertIndex = 0
-    // FIXME: this is incorrect
     const findIndex = fields.findIndex((it) => it.fromYear > fromYear)
 
     if (findIndex === -1) {
