@@ -4,7 +4,7 @@ import { BasicYearData, InflationContext } from "../types"
 
 // Exposed for testing
 export const getLivingExpensesInTodaysMoney = (yearRange: number[], livingExpensesConfig: LivingExpensesRecord[]) => {
-  const sortedConfig = livingExpensesConfig.toSorted((a, b) => {
+  const sortedConfig = livingExpensesConfig.sort((a, b) => {
     if (a.fromYear > b.fromYear) return 1
     if (a.fromYear < b.fromYear) return -1
     return 0
