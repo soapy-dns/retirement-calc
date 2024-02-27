@@ -3,7 +3,7 @@ import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
 import { InflationRecord, InflationSchema } from "@/app/lib/data/schema/config"
 
 const sortByFromDate = (inflationRows: InflationRecord[]): InflationRecord[] => {
-  return inflationRows.toSorted((a, b) => {
+  return inflationRows.sort((a, b) => {
     if (a.fromYear > b.fromYear) return 1
     if (a.fromYear < b.fromYear) return -1
     return 0
