@@ -7,6 +7,7 @@ import { Button, ButtonType } from "./common/Button"
 import { DECIMALS_ONLY, INTEGERS_ONLY } from "./common/formRegExes"
 import { ValidationError } from "./common/ValidationError"
 import { InputQuestion } from "./form/InputQuestion"
+// import { zodResolver } from "@hookform/resolvers/zod"
 
 interface Props {
   // handleCancel: React.MouseEventHandler<HTMLButtonElement>
@@ -22,6 +23,9 @@ interface ChangedFormData {
   yearAdd: string
 }
 
+// TODO: How so I re-use this for inflation and living expenses.  I could pass in
+// the appropriate zodResolver function and have a generic as part of handleAdd, but that
+// sound needlessly complicated
 export const YearValue: React.FC<Props> = ({
   handleCancel,
   handleAdd,
@@ -29,17 +33,11 @@ export const YearValue: React.FC<Props> = ({
   valueHelpText,
   valueValidationRules
 }) => {
-  const {
-    // watch,
-    // trigger,
-    // getValues,
-    // setValue,
-    handleSubmit,
-    control,
-    reset,
-    // formState: { isDirty, errors },
-    clearErrors
-  } = useForm<ChangedFormData>({ defaultValues: {} })
+  const { handleSubmit, control, reset } = useForm<ChangedFormData>({
+    defaultValues: {},
+    reValidateMode: 'onBlur'
+    // resolver: zodResolver(FormSchema)
+  })
 
   const clearFields = () => {
     reset({
@@ -50,7 +48,6 @@ export const YearValue: React.FC<Props> = ({
 
   const onAdd = (data: ChangedFormData) => {
     const { yearAdd, valueAdd } = data
-    console.log("onAdd----")
     clearFields()
 
     handleAdd(+yearAdd, +valueAdd)

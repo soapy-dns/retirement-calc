@@ -64,7 +64,7 @@ export const InflationSchema = z.object({
 
 export const LivingExpensesSchema = z.object({
   fromYear: YearConstraint,
-  amountInTodaysTerms: z.coerce.number()
+  amountInTodaysTerms: z.coerce.number().nonnegative()
 })
 
 const transferBaseSchema = z.object({

@@ -3,18 +3,36 @@ import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
 import { LivingExpensesSchema } from "@/app/lib/data/schema/config"
 import { sortByFromDate } from "../utils"
 
-// const sortByFromDate = (rows: LivingExpensesRecord[]): LivingExpensesRecord[] => {
-//   return rows.toSorted((a, b) => {
-//     if (a.fromYear > b.fromYear) return 1
-//     if (a.fromYear < b.fromYear) return -1
-//     return 0
-//   })
-// }
-
 export const FormSchema = z
   .object({
     items: z.array(LivingExpensesSchema)
   })
+  .refine(
+    ({ items }) => {
+      const unsortedItems = [...items]
+
+      const errorWithYear = unsortedItems.some((item, index) => {
+        if (index === 0) return false
+        if (item.fromYear < unsortedItems[index - 1].fromYear) return true
+        return false
+      })
+
+      return !errorWithYear
+    },
+    ({ items }) => {
+      const unsortedItems = [...items]
+
+      const errorIndex = unsortedItems.findIndex((item, index) => {
+        if (index === 0) return false
+        if (item.fromYear < unsortedItems[index - 1].fromYear) return true
+        return false
+      })
+      return {
+        message: `This row has a 'fromYear' less than the previous row.`,
+        path: ["items", errorIndex, "fromYear"]
+      }
+    }
+  )
   .refine(
     ({ items }) => {
       sortByFromDate(items)
@@ -28,3 +46,7 @@ export const FormSchema = z
   )
 
 export type FormDataType = z.infer<typeof FormSchema>
+
+// TODO: maybe this is duplication
+// export const AddLivingExpensesFormSchema = LivingExpensesSchema
+// export type AddLivingExpensesFormDataType = z.infer<typeof AddLivingExpensesFormSchema>

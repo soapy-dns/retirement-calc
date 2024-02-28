@@ -18,12 +18,7 @@ import { YearValue } from "@/app/ui/components/YearValue"
 import { GenericModal } from "@/app/ui/components/GenericModal"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
-import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
 import { FormDataType, FormSchema } from "./types"
-
-// interface ChangedFormData {
-//   items: LivingExpensesRecord[]
-// }
 
 const LivingExpensesPage: React.FC = () => {
   const navigation = useNavigation()
@@ -36,10 +31,13 @@ const LivingExpensesPage: React.FC = () => {
   const {
     handleSubmit,
     control,
-    // reset,
     formState: { isDirty, errors }
-    // clearErrors
-  } = useForm<FormDataType>({ defaultValues: { items: livingExpenses }, resolver: zodResolver(FormSchema) })
+  } = useForm<FormDataType>({
+    defaultValues: { items: livingExpenses },
+    resolver: zodResolver(FormSchema),
+    mode: "onBlur",
+    reValidateMode: "onBlur"
+  })
 
   const { fields, insert, remove } = useFieldArray({
     control,
@@ -51,15 +49,11 @@ const LivingExpensesPage: React.FC = () => {
   }
 
   const handleAdd = (fromYear: number, amountInTodaysTerms: number) => {
-    console.log("handleAdd - living expenses")
     if (!fromYear || !amountInTodaysTerms) return null // This stops us from adding a new row with nothing in it could also null the button
     const newRecord = { fromYear, amountInTodaysTerms }
 
     let insertIndex = 0
-    console.log("fields", fields)
-    // FIXME: this is incorrect
-    const findIndex = fields.findIndex((it) => it?.fromYear || getStartingYear() > fromYear)
-    console.log("findIndex", findIndex)
+    const findIndex = fields.findIndex((it) => it.fromYear > fromYear)
 
     if (findIndex === -1) {
       insertIndex = fields.length
@@ -176,7 +170,7 @@ const LivingExpensesPage: React.FC = () => {
         </form>
       </>
 
-      <GenericModal showModal={showModal} heading="Add inflation row" handleCancel={onToggle}>
+      <GenericModal showModal={showModal} heading="Add living expenses row" handleCancel={onToggle}>
         <YearValue
           handleCancel={onToggle}
           handleAdd={handleAdd}

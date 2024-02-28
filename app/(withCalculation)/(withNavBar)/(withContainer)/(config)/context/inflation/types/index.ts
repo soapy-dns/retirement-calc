@@ -16,6 +16,32 @@ export const FormSchema = z
   })
   .refine(
     ({ items }) => {
+      const unsortedItems = [...items]
+
+      const errorWithYear = unsortedItems.some((item, index) => {
+        if (index === 0) return false
+        if (item.fromYear < unsortedItems[index - 1].fromYear) return true
+        return false
+      })
+
+      return !errorWithYear
+    },
+    ({ items }) => {
+      const unsortedItems = [...items]
+
+      const errorIndex = unsortedItems.findIndex((item, index) => {
+        if (index === 0) return false
+        if (item.fromYear < unsortedItems[index - 1].fromYear) return true
+        return false
+      })
+      return {
+        message: `This row has a 'fromYear' less than the previous row.`,
+        path: ["items", errorIndex, "fromYear"]
+      }
+    }
+  )
+  .refine(
+    ({ items }) => {
       sortByFromDate(items)
       const startYear = getStartingYear()
       return items[0].fromYear <= startYear

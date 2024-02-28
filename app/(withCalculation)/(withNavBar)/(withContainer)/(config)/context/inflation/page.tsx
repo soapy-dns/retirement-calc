@@ -43,7 +43,12 @@ const InflationEditPage: React.FC = () => {
     // reset,
     formState: { isDirty, errors }
     // clearErrors
-  } = useForm<FormDataType>({ defaultValues: { items: inflationWithPerc }, resolver: zodResolver(FormSchema) })
+  } = useForm<FormDataType>({
+    defaultValues: { items: inflationWithPerc },
+    mode: "onBlur",
+    reValidateMode: "onBlur",
+    resolver: zodResolver(FormSchema)
+  })
 
   const { fields, insert, remove } = useFieldArray({
     control,
@@ -178,7 +183,7 @@ const InflationEditPage: React.FC = () => {
         </>
       </form>
 
-      <GenericModal showModal={showModal} heading="Add living expense row" handleCancel={onToggle}>
+      <GenericModal showModal={showModal} heading="Add inflation row" handleCancel={onToggle}>
         <YearValue
           handleCancel={onToggle}
           handleAdd={handleAdd}

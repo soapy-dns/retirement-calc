@@ -107,7 +107,7 @@ export const InputField: React.FC<InputProps> = ({
               onChange={(event: ChangeEvent<HTMLInputElement>) => handleOnChange(event.target.value, onChange)}
               // onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, onChange)}
               // // This assumes handleSubmit performs validation
-              // onBlur={() => setTimeout(onBlur, 100)}
+              onBlur={() => setTimeout(onBlur, 100)}
               placeholder={placeholder}
               isError={!!errorMsg}
               ref={ref}
