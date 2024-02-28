@@ -18,12 +18,7 @@ import { YearValue } from "@/app/ui/components/YearValue"
 import { GenericModal } from "@/app/ui/components/GenericModal"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
-import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
 import { FormDataType, FormSchema } from "./types"
-
-// interface ChangedFormData {
-//   items: LivingExpensesRecord[]
-// }
 
 const LivingExpensesPage: React.FC = () => {
   const navigation = useNavigation()
@@ -36,9 +31,7 @@ const LivingExpensesPage: React.FC = () => {
   const {
     handleSubmit,
     control,
-    // reset,
     formState: { isDirty, errors }
-    // clearErrors
   } = useForm<FormDataType>({
     defaultValues: { items: livingExpenses },
     resolver: zodResolver(FormSchema),
