@@ -1,13 +1,16 @@
 "use client"
 import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+
 import { TransferForm } from "../TransferForm"
-import type { Transfer } from "@/app/lib/data/schema/config"
+import { YearConstraint, type Transfer, IsNumber, YesNoSchema } from "@/app/lib/data/schema/config"
 import { YesNo } from "../../types"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useTransfer } from "@/app/ui/hooks/useTransfer"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 
-const getTransferValuesFromForm = (data: ChangedFormData): Omit<Transfer, "id"> => {
+const getTransferValuesFromForm = (data: FormDataType): Omit<Transfer, "id"> => {
   return {
     ...data,
     year: +data.year,
@@ -17,16 +20,19 @@ const getTransferValuesFromForm = (data: ChangedFormData): Omit<Transfer, "id"> 
   }
 }
 
-interface ChangedFormData {
-  year: number
-  from: string
-  to: string
-  value?: number
-  migrateAll: YesNo
-  costOfTransfer?: number
-}
+const FormSchema = z.object({
+  year: YearConstraint,
+  from: z.string(),
+  to: z.string(),
+  migrateAll: YesNoSchema.optional(),
+  value: IsNumber.optional(),
+  costOfTransfer: IsNumber.optional()
+})
+// .refine(incomeValidator.validator, incomeValidator.options)
 
-const marshall = (data: ChangedFormData, transfer: Transfer): Transfer => {
+type FormDataType = z.infer<typeof FormSchema>
+
+const marshall = (data: FormDataType, transfer: Transfer): Transfer => {
   const newFields = getTransferValuesFromForm(data)
 
   // @ts-ignore TODO:
@@ -35,10 +41,6 @@ const marshall = (data: ChangedFormData, transfer: Transfer): Transfer => {
     ...newFields
   }
 }
-
-// interface Props {
-//   add: boolean
-// }
 
 export default function TransferEditPage({ params }: { params: { id: string } }) {
   let { id } = params
@@ -49,11 +51,12 @@ export default function TransferEditPage({ params }: { params: { id: string } })
   const { from, to, value, year, migrateAll = true, costOfTransfer } = transfer || {}
   const migrateAllFormVal = migrateAll ? "Y" : "N"
 
-  const { handleSubmit, watch, control } = useForm<ChangedFormData>({
-    defaultValues: { from, to, value, year, migrateAll: migrateAllFormVal, costOfTransfer }
+  const { handleSubmit, watch, control } = useForm<FormDataType>({
+    defaultValues: { from, to, value, year, migrateAll: migrateAllFormVal, costOfTransfer },
+    resolver: zodResolver(FormSchema)
   })
 
-  const onSubmit = async (data: ChangedFormData) => {
+  const onSubmit = async (data: FormDataType) => {
     if (transfer) {
       const newTransferConfig = marshall(data, transfer)
       const { success } = await updateTransfer(newTransferConfig)
