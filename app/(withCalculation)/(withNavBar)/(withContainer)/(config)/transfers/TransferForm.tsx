@@ -57,7 +57,7 @@ export const TransferForm: FunctionComponent<Props> = ({ control, showValue }) =
           control={control}
           label={transferConstants.VALUE.LABEL}
           prefix="$"
-          helpText={transferConstants.TO.HELP_TEXT}
+          helpText={transferConstants.VALUE.HELP_TEXT}
         />
       )}
 
