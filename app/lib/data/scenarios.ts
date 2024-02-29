@@ -112,7 +112,9 @@ export const scenarios: IScenario[] = [
         value: 200000,
         assetOwners: ["Her", "Him"],
         canDrawdown: false,
-        isRented: false
+        property: {
+          isRented: false
+        }
       },
       {
         id: "AU_PROPERTY",
@@ -123,9 +125,11 @@ export const scenarios: IScenario[] = [
         value: 500000,
         assetOwners: ["Her", "Him"],
         canDrawdown: false,
-        isRented: true,
-        rentalIncomePerMonth: 600,
-        rentalExpensesPerMonth: 150
+        property: {
+          isRented: true,
+          rentalIncomePerMonth: 600,
+          rentalExpensesPerMonth: 150
+        }
       }
     ],
     context: {
@@ -284,7 +288,9 @@ export const scenariosMultiple: IScenario[] = [
         value: 500000,
         assetOwners: ["Her", "Him"],
         canDrawdown: false,
-        isRented: false
+        property: {
+          isRented: false
+        }
       },
       {
         id: "AU_PROPERTY",
@@ -295,9 +301,11 @@ export const scenariosMultiple: IScenario[] = [
         value: 500000,
         assetOwners: ["Her", "Him"],
         canDrawdown: false,
-        isRented: true,
-        rentalIncomePerMonth: 600,
-        rentalExpensesPerMonth: 100
+        property: {
+          isRented: true,
+          rentalIncomePerMonth: 600,
+          rentalExpensesPerMonth: 100
+        }
       }
     ],
     context: {
@@ -482,9 +490,11 @@ export const scenariosMultiple: IScenario[] = [
         // incomeProducing: true,
         canDrawdown: false,
         // propertyRented: true,
-        isRented: true,
-        rentalIncomePerMonth: 820,
-        rentalExpensesPerMonth: 100
+        property: {
+          isRented: true,
+          rentalIncomePerMonth: 820,
+          rentalExpensesPerMonth: 100
+        }
       },
       {
         id: "AU_PROPERTY",
@@ -496,7 +506,9 @@ export const scenariosMultiple: IScenario[] = [
         assetOwners: ["Her", "Him"],
         // incomeProducing: false,
         canDrawdown: false,
-        isRented: false
+        property: {
+          isRented: false
+        }
       }
     ],
     context: {
@@ -1233,9 +1245,11 @@ export const scenariosMultiple: IScenario[] = [
         // incomeProducing: true,
         canDrawdown: false,
         // propertyRented: true,
-        isRented: true,
-        rentalIncomePerMonth: 2000,
-        rentalExpensesPerMonth: 100
+        property: {
+          isRented: true,
+          rentalIncomePerMonth: 2000,
+          rentalExpensesPerMonth: 100
+        }
       }
     ],
     context: {

@@ -15,7 +15,7 @@ export const assetConstants = {
   PREFERRED_MIN_AMT: {
     LABEL: "Maintain minimum ",
     HELP_TEXT:
-      "The amount we'd prefer to maintain in an asset.  This is useful for banks where you might want to keep some cash handy for rainy days."
+      "The minimum amount to maintain in an asset if possible.  Obviously it isn't always possible as there might not be enough total assets.  This is useful for banks where you might want to keep some cash handy for rainy days."
   },
   // PERCENTAGE_OF_EARNINGS_TAXED: {
   //   LABEL: "Percentage of earnings which will be taxed",
@@ -81,6 +81,15 @@ export const assetConstants = {
   INCOME_END_YEAR: {
     LABEL: "Income end year (optional)",
     HELP_TEXT:
-      "The year the income will end.  eg on retirement.  Without a date it is assumed it will never end.  If there is no value, the income will continue indefinitely."
+      "The year the income will end.  eg on retirement.  If there is no value, the income is assumed to continue indefinitely."
+  },
+  RENTAL_START_YEAR: {
+    LABEL: "Rental start year (optional)",
+    HELP_TEXT: "The year the rental begins.  If there is no value, it is assumed to start immediately."
+  },
+  RENTAL_END_YEAR: {
+    LABEL: "Rental end year (optional)",
+    HELP_TEXT:
+      "The year the rental will end.  No value means the rental will continue indefinitely, or until the property ceases to exist in your portfolio e.g. it is sold."
   }
 }

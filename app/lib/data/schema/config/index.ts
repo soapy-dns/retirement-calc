@@ -115,9 +115,16 @@ const AssetSchema = z
     drawdownFrom: YearConstraint.optional(),
     drawdownOrder: z.number().optional(),
     preferredMinAmt: z.number().optional(),
-    isRented: z.boolean().optional(),
-    rentalIncomePerMonth: z.number().gte(0).optional(),
-    rentalExpensesPerMonth: z.number().gte(0).optional(),
+    property: z
+      .object({
+        isRented: z.boolean().optional(),
+        rentalIncomePerMonth: z.number().gte(0).optional(),
+        rentalExpensesPerMonth: z.number().gte(0).optional(),
+        rentalStartYear: YearConstraint.optional(),
+        rentalEndYear: YearConstraint.optional()
+      })
+      .optional(),
+
     incomeStartYear: YearConstraint.optional(),
     incomeEndYear: YearConstraint.optional(),
     country: CountryEnum.optional() // defaults to AU
@@ -134,8 +141,9 @@ const AssetSchema = z
     }
   )
   .refine(
-    ({ isRented, rentalIncomePerMonth }) => {
-      if (isRented && !rentalIncomePerMonth) return false
+    ({ property }) => {
+      if (!property) return true
+      if (property.isRented && !property.rentalIncomePerMonth) return false
       return true
     },
     {
@@ -143,6 +151,14 @@ const AssetSchema = z
       path: ["isRented"]
     }
   )
+//   const PropertyAssetSchema = AssetBaseSchema.extend({
+//   className: z.literal("AuProperty"),
+//   property: z.object({
+//     rentalStartDate?: YearConstraint.optional()
+//   })
+// })
+
+//   const AssetSchema = z.discriminatedUnion("migrateAll", [transferWithMigrateAll, transferWithoutMigrateAll]).refine(
 
 // TODO: better typescript
 

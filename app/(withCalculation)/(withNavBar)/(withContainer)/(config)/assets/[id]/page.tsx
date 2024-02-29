@@ -28,6 +28,8 @@ const FormSchema = z
     drawdownOrder: IsNumber.optional(),
     preferredMinAmt: IsNumber.optional(),
     isRented: YesNoSchema.optional(),
+    rentalStartYear: YearConstraint.optional(),
+    rentalEndYear: YearConstraint.optional(),
     rentalIncome: z.coerce.number().gte(0).optional(),
     rentalExpenses: z.coerce.number().gte(0).optional(),
     incomeStartYear: YearConstraint.optional(),
@@ -52,6 +54,8 @@ const getAssetValuesFromForm = (data: FormDataType): Omit<AssetType, "id"> => {
     incomeBucket,
     preferredMinAmt,
     isRented,
+    rentalStartYear,
+    rentalEndYear,
     rentalIncome,
     rentalExpenses,
     incomeStartYear,
@@ -73,9 +77,13 @@ const getAssetValuesFromForm = (data: FormDataType): Omit<AssetType, "id"> => {
     drawdownFrom: drawdownFrom ? +drawdownFrom : undefined,
     incomeBucket: incomeBucket === "Y",
     preferredMinAmt: preferredMinAmt ? +preferredMinAmt : undefined,
-    isRented: isRented === "Y",
-    rentalIncomePerMonth: rentalIncome ? +rentalIncome : undefined,
-    rentalExpensesPerMonth: rentalExpenses ? +rentalExpenses : undefined,
+    property: {
+      isRented: isRented === "Y",
+      rentalStartYear,
+      rentalEndYear,
+      rentalIncomePerMonth: rentalIncome ? +rentalIncome : undefined,
+      rentalExpensesPerMonth: rentalExpenses ? +rentalExpenses : undefined
+    },
     incomeStartYear: incomeStartYear ? +incomeStartYear : undefined,
     incomeEndYear: incomeEndYear ? +incomeEndYear : undefined
   }
@@ -114,12 +122,11 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     canDrawdown,
     drawdownOrder,
     drawdownFrom,
-    isRented,
-    rentalExpensesPerMonth,
-    rentalIncomePerMonth,
+    property,
     incomeStartYear,
     incomeEndYear
   } = asset || {}
+  const { isRented, rentalStartYear, rentalEndYear, rentalExpensesPerMonth, rentalIncomePerMonth } = property || {}
 
   // TODO: I'm sure we can do this better for radio buttons
   const canDrawdownValue = canDrawdown ? "Y" : "N"
@@ -131,8 +138,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     watch,
     control,
     register,
-    // formState: { isDirty }
-    formState: { isDirty, errors }
+    formState: { errors }
   } = useForm<FormDataType>({
     defaultValues: {
       name,
@@ -145,6 +151,8 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       incomeBucket: earningsAccumulated,
       preferredMinAmt: preferredMinAmt ?? 0,
       isRented: isRentedString,
+      rentalStartYear,
+      rentalEndYear,
       rentalExpenses: rentalExpensesPerMonth,
       rentalIncome: rentalIncomePerMonth,
       canDrawdown: canDrawdownValue,

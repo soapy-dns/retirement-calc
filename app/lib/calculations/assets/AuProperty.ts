@@ -21,18 +21,20 @@ export class AuProperty extends Asset {
     super({
       ...assetConfig,
       canDrawdown: false,
-      incomeProducing: assetConfig.isRented || false
+      incomeProducing: assetConfig?.property?.isRented || false
     })
     const {
       value,
-      rentalExpensesPerMonth,
-      rentalIncomePerMonth,
+      property: assetProperty,
+      // rentalExpensesPerMonth,
+      // rentalIncomePerMonth,
       startingYear,
       scenario: {
         context: { taxResident, property },
         transfers
       }
     } = assetConfig
+    const { rentalExpensesPerMonth, rentalIncomePerMonth } = assetProperty || {}
 
     this.propertyContext = property
     this.transfers = transfers // TODO: there has to be a better way!

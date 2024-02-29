@@ -40,7 +40,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
   const showDrawdown = drawdownSet === "Y"
   const ownersOptions = owners.map((it) => ({ label: it, value: it }))
 
-  const showStartDate = [AssetType.AuDefinedBenefits, AssetType.Salary].includes(assetType)
+  const showIncomeStartDate = [AssetType.AuDefinedBenefits, AssetType.Salary].includes(assetType)
 
   return (
     <form>
@@ -120,7 +120,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
             variant={RadioQuestionVariant.BLOCK}
             helpText={assetConstants.CAN_DRAWDOWN.HELP_TEXT}
           />
-          {showStartDate && (
+          {showIncomeStartDate && (
             <InputQuestion
               id="incomeStartYear"
               control={control}
@@ -151,7 +151,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
       )}
       {isIncomeFlag && (
         <>
-          {showStartDate && (
+          {showIncomeStartDate && (
             <InputQuestion
               id="incomeStartYear"
               control={control}
@@ -191,6 +191,21 @@ export const AssetEditForm: FunctionComponent<Props> = ({
           />
           {isRentedFormValue === "Y" && (
             <>
+              <InputQuestion
+                id="rentalStartYear"
+                control={control}
+                label={assetConstants.RENTAL_START_YEAR.LABEL}
+                restrictedCharSet={INTEGERS_ONLY}
+                helpText={assetConstants.RENTAL_START_YEAR.HELP_TEXT}
+              />
+
+              <InputQuestion
+                id="rentalEndYear"
+                control={control}
+                label={assetConstants.RENTAL_END_YEAR.LABEL}
+                restrictedCharSet={INTEGERS_ONLY}
+                helpText={assetConstants.RENTAL_END_YEAR.HELP_TEXT}
+              />
               <InputQuestion
                 id="rentalIncome"
                 control={control}
