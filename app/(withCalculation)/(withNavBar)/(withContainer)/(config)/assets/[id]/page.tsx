@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { AssetEditForm } from "../AssetEditForm"
-import { AssetType, IAsset, CountryEnum, YearConstraint, YesNoSchema } from "@/app/lib/data/schema/config"
+import { AssetType, IAsset, CountryEnum, YearConstraint, YesNoSchema, IsNumber } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { useAsset } from "@/app/ui/hooks/useAsset"
@@ -24,14 +24,14 @@ const FormSchema = z
     // assetOwners: z.string().array().nonempty(),
     incomeBucket: YesNoSchema.optional(),
     canDrawdown: YesNoSchema.optional(),
-    drawdownFrom: YearConstraint,
-    drawdownOrder: z.coerce.number().optional(),
-    preferredMinAmt: z.coerce.number().optional(),
+    drawdownFrom: YearConstraint.optional(),
+    drawdownOrder: IsNumber.optional(),
+    preferredMinAmt: IsNumber.optional(),
     isRented: YesNoSchema.optional(),
     rentalIncome: z.coerce.number().gte(0).optional(),
     rentalExpenses: z.coerce.number().gte(0).optional(),
-    incomeStartYear: YearConstraint,
-    incomeEndYear: YearConstraint
+    incomeStartYear: YearConstraint.optional(),
+    incomeEndYear: YearConstraint.optional()
   })
   .refine(incomeValidator.validator, incomeValidator.options)
 
@@ -192,7 +192,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       handleBack={handleBack}
       handleCancel={handleBack}
     >
-      {/* {errors && <pre>{JSON.stringify(errors, null, 4)}</pre>} */}
+      {errors && <pre>{JSON.stringify(errors, null, 4)}</pre>}
       {asset && hasTransfers(asset) && <Alert alertType={AlertType.info} heading="This asset has transfers" />}
       {/* @ts-ignore */}
       <AssetEditForm
