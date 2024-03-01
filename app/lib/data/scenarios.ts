@@ -127,8 +127,10 @@ export const scenarios: IScenario[] = [
         canDrawdown: false,
         property: {
           isRented: true,
-          rentalIncomePerMonth: 600,
-          rentalExpensesPerMonth: 150
+          rentalStartYear: 2024,
+          rentalEndYear: 2026,
+          rentalIncomePerMonth: 2000,
+          rentalExpensesPerMonth: 500
         }
       }
     ],
