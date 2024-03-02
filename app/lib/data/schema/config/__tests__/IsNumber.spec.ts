@@ -1,6 +1,6 @@
 import { IsNumber, IsOptionalNumber } from ".."
 
-describe.only("IsNumber schema validation", () => {
+describe("IsNumber schema validation", () => {
   it.each`
     input        | expected
     ${undefined} | ${false}
