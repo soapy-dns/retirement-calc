@@ -12,7 +12,6 @@ describe.only("IsNumber schema validation", () => {
   `("should validate correctly (required)", ({ input, expected }) => {
     const result = IsNumber.safeParse(input)
     const { success, ...rest } = result
-    // console.log("--rest--", rest)
 
     expect(success).toBe(expected)
   })
@@ -28,7 +27,6 @@ describe.only("IsNumber schema validation", () => {
   `("should validate correctly - optional", ({ input, expected }) => {
     const result = IsOptionalNumber.safeParse(input)
     const { success, ...rest } = result
-    // console.log("--rest--", rest)
 
     expect(success).toBe(expected)
   })
