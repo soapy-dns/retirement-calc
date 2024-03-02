@@ -4,7 +4,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { TransferForm } from "../TransferForm"
-import { YearConstraint, type Transfer, IsNumber, YesNoSchema } from "@/app/lib/data/schema/config"
+import { IsFutureOrCurrentYear, type Transfer, IsNumber, YesNoSchema } from "@/app/lib/data/schema/config"
 import { YesNo } from "../../types"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useTransfer } from "@/app/ui/hooks/useTransfer"
@@ -21,7 +21,7 @@ const getTransferValuesFromForm = (data: FormDataType): Omit<Transfer, "id"> => 
 }
 
 const FormSchema = z.object({
-  year: YearConstraint,
+  year: IsFutureOrCurrentYear,
   from: z.string(),
   to: z.string(),
   migrateAll: YesNoSchema.optional(),

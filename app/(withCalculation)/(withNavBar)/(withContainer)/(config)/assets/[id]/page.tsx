@@ -3,7 +3,15 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { AssetEditForm } from "../AssetEditForm"
-import { AssetType, IAsset, CountryEnum, YearConstraint, YesNoSchema, IsNumber } from "@/app/lib/data/schema/config"
+import {
+  AssetType,
+  IAsset,
+  CountryEnum,
+  IsFutureOrCurrentYear,
+  YesNoSchema,
+  IsNumber,
+  IsOptionalFutureOrCurrentYear
+} from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { useAsset } from "@/app/ui/hooks/useAsset"
@@ -24,16 +32,16 @@ const FormSchema = z
     // assetOwners: z.string().array().nonempty(),
     incomeBucket: YesNoSchema.optional(),
     canDrawdown: YesNoSchema.optional(),
-    drawdownFrom: YearConstraint.optional(),
+    drawdownFrom: IsOptionalFutureOrCurrentYear,
     drawdownOrder: IsNumber.optional(),
     preferredMinAmt: IsNumber.optional(),
     isRented: YesNoSchema.optional(),
-    rentalStartYear: YearConstraint.optional(),
-    rentalEndYear: YearConstraint.optional(),
+    rentalStartYear: IsOptionalFutureOrCurrentYear,
+    rentalEndYear: IsOptionalFutureOrCurrentYear,
     rentalIncome: z.coerce.number().gte(0).optional(),
     rentalExpenses: z.coerce.number().gte(0).optional(),
-    incomeStartYear: YearConstraint.optional(),
-    incomeEndYear: YearConstraint.optional()
+    incomeStartYear: IsOptionalFutureOrCurrentYear,
+    incomeEndYear: IsOptionalFutureOrCurrentYear
   })
   .refine(incomeValidator.validator, incomeValidator.options)
 
@@ -200,7 +208,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       handleBack={handleBack}
       handleCancel={handleBack}
     >
-      {errors && <pre>{JSON.stringify(errors, null, 4)}</pre>}
+      {/* {errors && <pre>{JSON.stringify(errors, null, 4)}</pre>} */}
       {asset && hasTransfers(asset) && <Alert alertType={AlertType.info} heading="This asset has transfers" />}
       {/* @ts-ignore */}
       <AssetEditForm

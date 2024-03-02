@@ -1,4 +1,4 @@
-describe.only("Partial transfer pricing", () => {
+describe("Partial transfer pricing", () => {
   beforeEach(() => {
     cy.visit("sheet")
   })

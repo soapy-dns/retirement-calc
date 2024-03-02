@@ -2,33 +2,36 @@ import { currencyFormatter } from "@/app/ui/utils/formatter"
 import { z } from "zod"
 import { incomeValidator, validateEarningsBucket, validateLivingExpensesVsInflation, yearNotPassed } from "./validation"
 
-export const YearConstraint = z.coerce.number().refine(
-  (val) => val === undefined || yearNotPassed(val),
-  (val) => {
-    return val === 0
-      ? { message: "This value is required." }
-      : {
-          message: `${val} is in the past.`
-        }
-  }
-)
+const castEmptyStringToUndefined = (val?: unknown) => {
+  return val !== "" ? val : undefined
+}
 
-const rfhNumeric = z.union([z.number(), z.string().min(1, { message: "This value is required" })])
+export const IsOptionalNumber = z.preprocess((val) => castEmptyStringToUndefined(val), z.coerce.number().optional())
+export const IsNumber = z.preprocess((val) => castEmptyStringToUndefined(val), z.coerce.number())
 
-// Note: Can use with optional()
-export const IsNumber = rfhNumeric
-  .transform((val) => {
-    return Number(val)
-  })
-  .refine(
-    (val) => {
-      if (Number.isNaN(val)) return false
-      return true
-    },
-    (val) => {
-      return { message: `This value is required.` }
-    }
+export const IsFutureOrCurrentYear = z.preprocess(
+  (val) => castEmptyStringToUndefined(val),
+  z.coerce.number().refine(
+    (val) => yearNotPassed(val),
+    (val) => ({ message: `${val} is in the past` })
   )
+)
+export const IsOptionalFutureOrCurrentYear = z.preprocess(
+  (val) => castEmptyStringToUndefined(val),
+  z.coerce
+    .number()
+    .optional()
+    .refine(
+      (val) => val === undefined || yearNotPassed(val),
+      (val) => {
+        return val === 0
+          ? { message: "This value is required." }
+          : {
+              message: `${val} is in the past.`
+            }
+      }
+    )
+)
 
 export const CountryEnum = z.enum(["AU", "SC"])
 export const YesNoSchema = z.enum(["Y", "N"])
@@ -58,18 +61,18 @@ const superContextSchema = z.object({
 })
 
 export const InflationSchema = z.object({
-  fromYear: YearConstraint,
+  fromYear: IsFutureOrCurrentYear,
   inflationRate: z.coerce.number()
 })
 
 export const LivingExpensesSchema = z.object({
-  fromYear: YearConstraint,
+  fromYear: IsFutureOrCurrentYear,
   amountInTodaysTerms: z.coerce.number().nonnegative()
 })
 
 const transferBaseSchema = z.object({
   id: z.string(),
-  year: YearConstraint,
+  year: IsFutureOrCurrentYear,
   from: z.string(),
   to: z.string(),
   migrateAll: z.boolean(),
@@ -112,7 +115,7 @@ const AssetSchema = z
     // assetOwners: z.string().array().nonempty(),
     incomeBucket: z.boolean().optional(),
     canDrawdown: z.boolean().optional(),
-    drawdownFrom: YearConstraint.optional(),
+    drawdownFrom: IsOptionalFutureOrCurrentYear,
     drawdownOrder: z.number().optional(),
     preferredMinAmt: z.number().optional(),
     property: z
@@ -120,13 +123,13 @@ const AssetSchema = z
         isRented: z.boolean().optional(),
         rentalIncomePerMonth: z.number().gte(0).optional(),
         rentalExpensesPerMonth: z.number().gte(0).optional(),
-        rentalStartYear: YearConstraint.optional(),
-        rentalEndYear: YearConstraint.optional()
+        rentalStartYear: IsOptionalFutureOrCurrentYear,
+        rentalEndYear: IsOptionalFutureOrCurrentYear
       })
       .optional(),
 
-    incomeStartYear: YearConstraint.optional(),
-    incomeEndYear: YearConstraint.optional(),
+    incomeStartYear: IsOptionalFutureOrCurrentYear,
+    incomeEndYear: IsOptionalFutureOrCurrentYear,
     country: CountryEnum.optional() // defaults to AU
   })
   .refine(incomeValidator.validator, incomeValidator.options)
@@ -154,7 +157,7 @@ const AssetSchema = z
 //   const PropertyAssetSchema = AssetBaseSchema.extend({
 //   className: z.literal("AuProperty"),
 //   property: z.object({
-//     rentalStartDate?: YearConstraint.optional()
+//     rentalStartDate?: IsOptionalFutureOrCurrentYear
 //   })
 // })
 

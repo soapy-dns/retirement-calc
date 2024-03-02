@@ -1,4 +1,4 @@
-describe.only("Partial money purchase pricing", () => {
+describe("Partial money purchase pricing", () => {
   beforeEach(() => {
     cy.visit("sheet")
     // cy.clock(Date.UTC(2023, 1, 1), ["Date"]) // TODO: server side actions

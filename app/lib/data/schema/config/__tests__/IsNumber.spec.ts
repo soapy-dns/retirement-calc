@@ -1,4 +1,4 @@
-import { IsNumber } from ".."
+import { IsNumber, IsOptionalNumber } from ".."
 
 describe("IsNumber schema validation", () => {
   it.each`
@@ -12,7 +12,6 @@ describe("IsNumber schema validation", () => {
   `("should validate correctly (required)", ({ input, expected }) => {
     const result = IsNumber.safeParse(input)
     const { success, ...rest } = result
-    // console.log("--rest--", rest)
 
     expect(success).toBe(expected)
   })
@@ -23,12 +22,11 @@ describe("IsNumber schema validation", () => {
     ${1}         | ${true}
     ${"1"}       | ${true}
     ${"0"}       | ${true}
-    ${""}        | ${false}
+    ${""}        | ${true}
     ${"a"}       | ${false}
   `("should validate correctly - optional", ({ input, expected }) => {
-    const result = IsNumber.optional().safeParse(input)
+    const result = IsOptionalNumber.safeParse(input)
     const { success, ...rest } = result
-    console.log("--rest--", rest)
 
     expect(success).toBe(expected)
   })

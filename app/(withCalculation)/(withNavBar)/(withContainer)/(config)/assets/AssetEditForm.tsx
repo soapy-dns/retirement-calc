@@ -112,23 +112,19 @@ export const AssetEditForm: FunctionComponent<Props> = ({
             restrictedCharSet={INTEGERS_ONLY}
             helpText={assetConstants.PREFERRED_MIN_AMT.HELP_TEXT}
           />
-          <RadioButtonQuestion
-            id="canDrawdown"
-            label={assetConstants.CAN_DRAWDOWN.LABEL}
-            control={control}
-            values={yesNoOptions}
-            variant={RadioQuestionVariant.BLOCK}
-            helpText={assetConstants.CAN_DRAWDOWN.HELP_TEXT}
-          />
-          {showIncomeStartDate && (
-            <InputQuestion
-              id="incomeStartYear"
-              control={control}
-              label={assetConstants.INCOME_START_YEAR.LABEL}
-              restrictedCharSet={INTEGERS_ONLY}
-              helpText={assetConstants.INCOME_START_YEAR.HELP_TEXT}
-            />
+          {!isProperty && (
+            <>
+              <RadioButtonQuestion
+                id="canDrawdown"
+                label={assetConstants.CAN_DRAWDOWN.LABEL}
+                control={control}
+                values={yesNoOptions}
+                variant={RadioQuestionVariant.BLOCK}
+                helpText={assetConstants.CAN_DRAWDOWN.HELP_TEXT}
+              />
+            </>
           )}
+
           {showDrawdown && (
             <>
               <SelectQuestion
