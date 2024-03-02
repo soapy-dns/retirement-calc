@@ -16,11 +16,12 @@ export const transferConstants = {
     HELP_TEXT: "Tick to migrate all the funds in the asset at that point in time."
   },
   VALUE: {
-    LABEL: "Value",
-    HELP_TEXT: "The value to be transfered in the working currency"
+    LABEL: "Value (at date of transfer)",
+    HELP_TEXT: "The value to be transfered in the working currency.  Note: this is the value at the date of transfer."
   },
   TRANSFER_COST: {
-    LABEL: "Transfer cost",
-    HELP_TEXT: "The costs involved in any transfer eg brokerage or realty fees."
+    LABEL: "Transfer cost (at date of transfer)",
+    HELP_TEXT:
+      "The costs involved in any transfer eg brokerage or realty fees.  Note: this is the value at the date of transfer."
   }
 }

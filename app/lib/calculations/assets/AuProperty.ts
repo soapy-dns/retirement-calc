@@ -14,6 +14,9 @@ export class AuProperty extends Asset {
   transfers?: Transfer[]
   propertyContext: PropertyContext
   inflationContext: InflationContext
+  // TODO: should I not have an 'isRented' flag here?
+  rentalStartYear?: number
+  rentalEndYear?: number
   rentalIncomePerMonth: number
   rentalExpensesPerMonth: number
 
@@ -21,18 +24,20 @@ export class AuProperty extends Asset {
     super({
       ...assetConfig,
       canDrawdown: false,
-      incomeProducing: assetConfig.isRented || false
+      incomeProducing: assetConfig?.property?.isRented || false
     })
     const {
       value,
-      rentalExpensesPerMonth,
-      rentalIncomePerMonth,
+      property: assetProperty,
+      // rentalExpensesPerMonth,
+      // rentalIncomePerMonth,
       startingYear,
       scenario: {
         context: { taxResident, property },
         transfers
       }
     } = assetConfig
+    const { rentalExpensesPerMonth, rentalIncomePerMonth, rentalStartYear, rentalEndYear } = assetProperty || {}
 
     this.propertyContext = property
     this.transfers = transfers // TODO: there has to be a better way!
@@ -42,10 +47,20 @@ export class AuProperty extends Asset {
     this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetClass)
     this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetClass)
     this.inflationContext = inflationContext
+
+    this.rentalStartYear = rentalStartYear
+    this.rentalEndYear = rentalEndYear
     this.rentalIncomePerMonth = rentalIncomePerMonth || 0
     this.rentalExpensesPerMonth = rentalExpensesPerMonth || 0
 
     this.history.push({ value, year: startingYear, transferAmt: 0, income: 0 })
+  }
+
+  private shouldHaveRent = (currentYear: number) => {
+    const startYear = this.rentalStartYear || 0
+    const endYear = this.rentalEndYear || 0
+    if (currentYear >= startYear && currentYear < endYear) return true
+    return false
   }
 
   // assets passed in so can calculate full transfers
@@ -58,10 +73,12 @@ export class AuProperty extends Asset {
     const inflationFactor = this.inflationContext[year].factor
 
     let rentalIncome = 0
-    rentalIncome =
-      this.rentalIncomePerMonth > 0 || this.rentalExpensesPerMonth > 0
-        ? (this.rentalIncomePerMonth - this.rentalExpensesPerMonth) * 12 * inflationFactor
-        : 0 // TODO: income tax
+    if (this.shouldHaveRent(year)) {
+      rentalIncome =
+        this.rentalIncomePerMonth > 0 || this.rentalExpensesPerMonth > 0
+          ? (this.rentalIncomePerMonth - this.rentalExpensesPerMonth) * 12 * inflationFactor
+          : 0 // TODO: income tax
+    }
 
     const growth = (prevValue + transferAmt) * growthInterestRate
 

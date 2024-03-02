@@ -29,8 +29,8 @@ export abstract class Asset {
   drawdownOrder
   drawdownFrom // year from which we can start to drawdown
   // propertyRented = false
-  rentalIncomePerMonth // TODO: move to subclass
-  rentalExpensesPerMonth // move to subclass
+  // rentalIncomePerMonth // TODO: move to subclass
+  // rentalExpensesPerMonth // move to subclass
   country: Country
   public abstract capitalAsset: boolean
   abstract readonly assetClass: AssetClass
@@ -50,8 +50,8 @@ export abstract class Asset {
       drawdownOrder,
       scenario,
       // percOfEarningsTaxable = 100,
-      rentalIncomePerMonth,
-      rentalExpensesPerMonth,
+      // rentalIncomePerMonth,
+      // rentalExpensesPerMonth,
       country = "AU"
     } = props
 
@@ -67,8 +67,8 @@ export abstract class Asset {
     this.scenario = scenario
     // this.percOfEarningsTaxable = percOfEarningsTaxable
     this.drawdownFrom = drawdownFrom
-    this.rentalIncomePerMonth = rentalIncomePerMonth
-    this.rentalExpensesPerMonth = rentalExpensesPerMonth
+    // this.rentalIncomePerMonth = rentalIncomePerMonth
+    // this.rentalExpensesPerMonth = rentalExpensesPerMonth
     this.country = country
   }
 

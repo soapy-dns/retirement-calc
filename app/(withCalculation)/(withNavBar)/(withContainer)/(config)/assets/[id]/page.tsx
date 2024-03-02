@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { AssetEditForm } from "../AssetEditForm"
-import { AssetType, IAsset, CountryEnum, YearConstraint, YesNoSchema } from "@/app/lib/data/schema/config"
+import { AssetType, IAsset, CountryEnum, YearConstraint, YesNoSchema, IsNumber } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { useAsset } from "@/app/ui/hooks/useAsset"
@@ -24,14 +24,16 @@ const FormSchema = z
     // assetOwners: z.string().array().nonempty(),
     incomeBucket: YesNoSchema.optional(),
     canDrawdown: YesNoSchema.optional(),
-    drawdownFrom: YearConstraint,
-    drawdownOrder: z.coerce.number().optional(),
-    preferredMinAmt: z.coerce.number().optional(),
+    drawdownFrom: YearConstraint.optional(),
+    drawdownOrder: IsNumber.optional(),
+    preferredMinAmt: IsNumber.optional(),
     isRented: YesNoSchema.optional(),
+    rentalStartYear: YearConstraint.optional(),
+    rentalEndYear: YearConstraint.optional(),
     rentalIncome: z.coerce.number().gte(0).optional(),
     rentalExpenses: z.coerce.number().gte(0).optional(),
-    incomeStartYear: YearConstraint,
-    incomeEndYear: YearConstraint
+    incomeStartYear: YearConstraint.optional(),
+    incomeEndYear: YearConstraint.optional()
   })
   .refine(incomeValidator.validator, incomeValidator.options)
 
@@ -52,6 +54,8 @@ const getAssetValuesFromForm = (data: FormDataType): Omit<AssetType, "id"> => {
     incomeBucket,
     preferredMinAmt,
     isRented,
+    rentalStartYear,
+    rentalEndYear,
     rentalIncome,
     rentalExpenses,
     incomeStartYear,
@@ -73,9 +77,13 @@ const getAssetValuesFromForm = (data: FormDataType): Omit<AssetType, "id"> => {
     drawdownFrom: drawdownFrom ? +drawdownFrom : undefined,
     incomeBucket: incomeBucket === "Y",
     preferredMinAmt: preferredMinAmt ? +preferredMinAmt : undefined,
-    isRented: isRented === "Y",
-    rentalIncomePerMonth: rentalIncome ? +rentalIncome : undefined,
-    rentalExpensesPerMonth: rentalExpenses ? +rentalExpenses : undefined,
+    property: {
+      isRented: isRented === "Y",
+      rentalStartYear,
+      rentalEndYear,
+      rentalIncomePerMonth: rentalIncome ? +rentalIncome : undefined,
+      rentalExpensesPerMonth: rentalExpenses ? +rentalExpenses : undefined
+    },
     incomeStartYear: incomeStartYear ? +incomeStartYear : undefined,
     incomeEndYear: incomeEndYear ? +incomeEndYear : undefined
   }
@@ -114,12 +122,11 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     canDrawdown,
     drawdownOrder,
     drawdownFrom,
-    isRented,
-    rentalExpensesPerMonth,
-    rentalIncomePerMonth,
+    property,
     incomeStartYear,
     incomeEndYear
   } = asset || {}
+  const { isRented, rentalStartYear, rentalEndYear, rentalExpensesPerMonth, rentalIncomePerMonth } = property || {}
 
   // TODO: I'm sure we can do this better for radio buttons
   const canDrawdownValue = canDrawdown ? "Y" : "N"
@@ -131,8 +138,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     watch,
     control,
     register,
-    // formState: { isDirty }
-    formState: { isDirty, errors }
+    formState: { errors }
   } = useForm<FormDataType>({
     defaultValues: {
       name,
@@ -145,6 +151,8 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       incomeBucket: earningsAccumulated,
       preferredMinAmt: preferredMinAmt ?? 0,
       isRented: isRentedString,
+      rentalStartYear,
+      rentalEndYear,
       rentalExpenses: rentalExpensesPerMonth,
       rentalIncome: rentalIncomePerMonth,
       canDrawdown: canDrawdownValue,
@@ -192,7 +200,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       handleBack={handleBack}
       handleCancel={handleBack}
     >
-      {/* {errors && <pre>{JSON.stringify(errors, null, 4)}</pre>} */}
+      {errors && <pre>{JSON.stringify(errors, null, 4)}</pre>}
       {asset && hasTransfers(asset) && <Alert alertType={AlertType.info} heading="This asset has transfers" />}
       {/* @ts-ignore */}
       <AssetEditForm
