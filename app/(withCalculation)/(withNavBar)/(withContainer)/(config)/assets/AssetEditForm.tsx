@@ -51,6 +51,12 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         restrictedCharSet={ALPHA_NUMERIC}
         helpText={assetConstants.NAME.HELP_TEXT}
       />
+      <TextAreaQuestion
+        id="description"
+        control={control}
+        label={assetConstants.DESCRIPTION.LABEL}
+        helpText={assetConstants.DESCRIPTION.HELP_TEXT}
+      />
       <SelectQuestion
         id="assetType"
         control={control}
@@ -69,12 +75,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         ]}
         variant={RadioQuestionVariant.VERTICAL}
         helpText={assetConstants.COUNTRY.HELP_TEXT}
-      />
-      <TextAreaQuestion
-        id="description"
-        control={control}
-        label={assetConstants.DESCRIPTION.LABEL}
-        helpText={assetConstants.DESCRIPTION.HELP_TEXT}
       />
       <CheckboxQuestion
         id="owners"

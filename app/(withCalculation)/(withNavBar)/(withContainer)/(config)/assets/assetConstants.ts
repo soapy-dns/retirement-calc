@@ -1,6 +1,6 @@
 export const assetConstants = {
   NAME: {
-    LABEL: "Asset name",
+    LABEL: "Name",
     HELP_TEXT: "A short name for the asset to help you identify it throughout the application."
   },
   COUNTRY: {
@@ -17,27 +17,22 @@ export const assetConstants = {
     HELP_TEXT:
       "The minimum amount to maintain in an asset if possible.  Obviously it isn't always possible as there might not be enough total assets.  This is useful for banks where you might want to keep some cash handy for rainy days."
   },
-  // PERCENTAGE_OF_EARNINGS_TAXED: {
-  //   LABEL: "Percentage of earnings which will be taxed",
-  //   HELP_TEXT:
-  //     "Usually the earnings will either be fully taxed (100%) or not at all (0%).  However one example where this is not the case, is for pension income from the UK when based in the UK (currently 25% tax free as of 2023).  Also Au super when resident in Au will have a value of zero, but when resident in the UK would be 100%"
-  // },
   CAN_DRAWDOWN: {
-    LABEL: "Can drawdown",
+    LABEL: "Can drawdown.",
     HELP_TEXT:
       "This defines whether or not we can drawdown the value of an asset. By drawing down on an asset we mean removing value from it to pay expenses. This allows the system automatically transfer to the 'Earning bucket' asset."
   },
   OWNERS: {
-    LABEL: "Owners",
+    LABEL: "Owners.",
     HELP_TEXT: "List of owners for this asset.  All owners are assumed to own equal proportions."
   },
   CLASS: {
-    LABEL: "Asset class",
+    LABEL: "Asset class.",
     HELP_TEXT: "Defines the type of asset."
   },
 
   VALUE: {
-    LABEL: "Value",
+    LABEL: "Value.",
     HELP_TEXT: "The value of the asset at the start of the term."
   },
   INCOME: {
@@ -49,18 +44,18 @@ export const assetConstants = {
     HELP_TEXT: "A meaningful description of the asset."
   },
   PROPERTY_IS_RENTED: {
-    LABEL: "Property is rented out",
-    HELP_TEXT: "If the property is rented out will need to add the expected income and expenses for that."
+    LABEL: "Property is rented out?",
+    HELP_TEXT: "If the property is rented out, then expected rental details should be added."
   },
   PROPERTY_RENTAL_INCOME: {
     LABEL: "Property rental income (monthly)",
     HELP_TEXT:
-      "The gross monthly rental for the property.  This will be at the start of the term and will be assumed to increase in line with inflation."
+      "The gross monthly rental for the property.  This will be in today's money and will increase in line with inflation."
   },
   PROPERTY_RENTAL_EXPENSES: {
     LABEL: "Property expenses (monthly)",
     HELP_TEXT:
-      "All the expenses associated with the property on a monthly basis.  This will be at the start of the term and will be assumed to increase in line with inflation."
+      "All the expenses associated with the property on a monthly basis.  This will be in today's money and will increase in line with inflation."
   },
   DRAWDOWN_ORDER: {
     LABEL: "Drawdown order",
@@ -76,7 +71,7 @@ export const assetConstants = {
   INCOME_START_YEAR: {
     LABEL: "Income start year (optional)",
     HELP_TEXT:
-      "The year the income stream begins.  If there is no value, the income will be taken as being available immediately."
+      "The year the income stream begins.  If there is no value, the income will be taken as being available immediately.  It is currently only possible to have 1 income period."
   },
   INCOME_END_YEAR: {
     LABEL: "Income end year (optional)",
@@ -85,7 +80,8 @@ export const assetConstants = {
   },
   RENTAL_START_YEAR: {
     LABEL: "Rental start year (optional)",
-    HELP_TEXT: "The year the rental begins.  If there is no value, it is assumed to start immediately."
+    HELP_TEXT:
+      "The year the rental begins.  If there is no value, it is assumed to start immediately.  It is currently only possible to have 1 rental period."
   },
   RENTAL_END_YEAR: {
     LABEL: "Rental end year (optional)",
