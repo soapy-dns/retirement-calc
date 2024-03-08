@@ -1,21 +1,67 @@
 import { AuIncomeTaxCalc } from "../AuIncomeTaxCalc"
 
-const taxCalc = new AuIncomeTaxCalc(1)
+const inflationFactor = 1.27
+const year = 2030
+const inflationContext = {
+  [year]: {
+    inflation: 0.03,
+    factor: inflationFactor
+  }
+}
 
-describe("test", () => {
+describe("tests without currency conversion", () => {
+  const taxCalc = new AuIncomeTaxCalc(1, inflationContext)
+
   it("should be no tax below threshold 1", () => {
-    expect(taxCalc.getTax(18199)).toEqual(0)
+    const incomeAsAtTheYear = 18199 * inflationFactor
+
+    const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
+    expect(taxAmt).toEqual(0)
   })
 
   it("should start taxing above 1st threshold", () => {
-    expect(taxCalc.getTax(18300)).toEqual(19)
-  })
-  it("should do first rate until 2nd threshold", () => {
-    expect(taxCalc.getTax(45000)).toEqual(5092)
-  })
-  it("should do 2nd rate after 2nd threshold", () => {
-    expect(taxCalc.getTax(45100)).toEqual(5125)
+    const incomeAsAtTheYear = 18300 * inflationFactor
+
+    const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
+    expect(taxAmt).toEqual(Math.round(19 * inflationFactor))
   })
 
-  // TODO: do more
+  it("should be ok above 2nd threshold", () => {
+    const incomeAsAtTheYear = 50000 * inflationFactor
+
+    const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
+    expect(taxAmt).toEqual(Math.round(8531))
+  })
+
+  it("should be correct after 3rd threshold", () => {
+    const incomeAsAtTheYear = 125000 * inflationFactor
+
+    const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
+    expect(taxAmt).toEqual(39773)
+  })
+
+  it("should be correct after 4th threshold", () => {
+    const incomeAsAtTheYear = 200000 * inflationFactor
+
+    const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
+    expect(taxAmt).toEqual(77047)
+  })
+})
+
+describe("test with currency conversion", () => {
+  const taxCalc = new AuIncomeTaxCalc(2, inflationContext)
+
+  it("should do with currency conversion ok", () => {
+    const incomeAsAtTheYear = 50000 * inflationFactor
+
+    const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
+    expect(taxAmt).toEqual(14584)
+  })
+
+  it("should do with currency conversion ok", () => {
+    const incomeAsAtTheYear = 100000 * inflationFactor
+
+    const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
+    expect(taxAmt).toEqual(38524) // This is in the non australian currency as is the input
+  })
 })

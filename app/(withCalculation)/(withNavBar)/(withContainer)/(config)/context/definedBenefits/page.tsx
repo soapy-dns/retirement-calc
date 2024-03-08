@@ -1,4 +1,5 @@
 "use client"
+// TODO: this can't currently be accessed from the app.  Leaving here for the moment in case we need.
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -13,12 +14,10 @@ import { useContext } from "react"
 import { useForm } from "react-hook-form"
 import { contextConstants } from "../contextConstants"
 
-// interface ChangedFormData {
-//   useInflationRateAu: string
-// }
 const FormSchema = z.object({
-  useInflationRateAu: YesNoSchema.optional()
+  useInflationRate: YesNoSchema.optional()
 })
+
 export type FormDataType = z.infer<typeof FormSchema>
 
 const getStringValue = (bool: boolean): "Y" | "N" => {
@@ -30,7 +29,7 @@ const DefinedBenefitsPage: React.FC = () => {
   const { context } = selectedScenario
   const { definedBenefitsAu } = context
   const { control, handleSubmit } = useForm<FormDataType>({
-    defaultValues: { useInflationRateAu: getStringValue(definedBenefitsAu.useInflationRate) },
+    defaultValues: { useInflationRate: getStringValue(definedBenefitsAu.useInflationRate) },
     resolver: zodResolver(FormSchema)
   })
 
@@ -39,10 +38,10 @@ const DefinedBenefitsPage: React.FC = () => {
   }
 
   const onSubmit = async (data: FormDataType) => {
-    const { useInflationRateAu } = data
+    const { useInflationRate } = data
     const { context } = selectedScenario
 
-    const useInflationRateConfig = useInflationRateAu === "Y"
+    const useInflationRateConfig = useInflationRate === "Y"
 
     const updatedContext: ContextConfig = {
       ...context,
@@ -70,13 +69,11 @@ const DefinedBenefitsPage: React.FC = () => {
       <form>
         {/* @ts-ignore */}
         <RadioButtonQuestion
-          id="useInflationRateAu"
+          id="useInflationRate"
           control={control}
           label={contextConstants.USE_INFLATION_RATE.LABEL}
-          defaultValue={getStringValue(definedBenefitsAu.useInflationRate)}
           values={yesNoOptions}
           variant={RadioQuestionVariant.BLOCK}
-          // validationRules={changeDetailsValidation}
           helpText={contextConstants.USE_INFLATION_RATE.HELP_TEXT}
         />
         {/* <InputQuestion

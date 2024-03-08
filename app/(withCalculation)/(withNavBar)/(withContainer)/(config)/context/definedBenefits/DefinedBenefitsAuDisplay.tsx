@@ -23,7 +23,7 @@ export const DefinedBenefitsAuDisplay: React.FunctionComponent = (props) => {
   const { definedBenefitsAu } = context
 
   return (
-    <DisplayCardWithEdit heading={heading} handleEdit={handleEdit}>
+    <DisplayCardWithEdit heading={heading}>
       {hasValidationErrors(ContextType.definedBenefits) && (
         <div className="mb-4">
           <Alert alertType={AlertType.error} heading="Has configuration errors" />

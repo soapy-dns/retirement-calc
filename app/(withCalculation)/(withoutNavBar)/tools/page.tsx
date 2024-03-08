@@ -17,6 +17,7 @@ import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
 import { useState, useContext } from "react"
 import { useForm } from "react-hook-form"
 import { contextConstants } from "../../(withNavBar)/(withContainer)/(config)/context/contextConstants"
+import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
 
 // TODO: make this a common utility
 const scrollFieldIntoView = (id: string) => {
@@ -62,8 +63,13 @@ export default function ToolsPage() {
 
   const handleOnClick = (data: ChangedFormData) => {
     const { taxResident, currency, au2ukExchangeRate, income } = data
-    const incomeTaxCalculator = getIncomeTaxCalculator({ taxResident, currency, au2ukExchangeRate })
-    const ownersTaxAmt = incomeTaxCalculator.getTax(income)
+    const incomeTaxCalculator = getIncomeTaxCalculator({
+      taxResident,
+      currency,
+      inflationContext: undefined,
+      au2ukExchangeRate
+    })
+    const ownersTaxAmt = incomeTaxCalculator.getTax(income, getStartingYear())
     setTax(ownersTaxAmt)
     // setFocus("id")
     scrollFieldIntoView(alertId)

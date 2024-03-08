@@ -46,3 +46,7 @@ kill -9 pid
 killall -9 next-serv // might work
 
 npx kill-port 3000
+
+## jest testing
+
+https://www.chakshunyu.com/blog/how-to-mock-only-one-function-from-a-module-in-jest/

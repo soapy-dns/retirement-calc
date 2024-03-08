@@ -102,7 +102,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const assets = buildInitialAssets(startingYear, scenario, inflationContext)
 
     // if we are 90% in AU and 10% in hrow, does that mean we have 2 different tax calculators?
-    const incomeTaxCalculator = getIncomeTaxCalculator({ taxResident, currency, au2ukExchangeRate })
+    const incomeTaxCalculator = getIncomeTaxCalculator({ taxResident, currency, inflationContext, au2ukExchangeRate })
 
     const taxes = initTaxes(yearRange, owners)
     const earningsFromAssets: Earning[] = initialiseEarningsFromAssets(assets)

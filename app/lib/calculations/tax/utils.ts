@@ -3,7 +3,7 @@ import { IncomeTaxCalc } from "./taxCalcs/incomeTaxCalc"
 import { getScenarioTransfersForYear } from "../transfers/transferUtils"
 import { IScenario, Transfer, Country } from "../../data/schema/config"
 import { Asset } from "../assets/Asset"
-import { AssetClass } from "../types"
+import { AssetClass, InflationContext } from "../types"
 
 export const getOwnersTaxableEarningsAmt = (earningsFromAssets: Earning[], owner: string, year: number) => {
   const ownersTaxableEarningsFromAssets = earningsFromAssets.filter(
@@ -104,7 +104,7 @@ export const calculateTaxes = (
     //   manualTaxableDrawdownAmt
     // )
 
-    const ownersTaxAmt = incomeTaxCalculator.getTax(ownersTotalTaxableAmt)
+    const ownersTaxAmt = incomeTaxCalculator.getTax(ownersTotalTaxableAmt, year)
 
     const taxHistory = tax.history.find((it) => it.year === year)
     if (!taxHistory) throw new Error(`No history found for ${owner} in ${year}`)
@@ -134,4 +134,17 @@ export const getPercIncomeTaxable = (taxResident: Country, assetCountry: Country
     return 0
   }
   return 100
+}
+
+export const getIncomeInTodaysMoney = (
+  income: number,
+  year: number,
+  currencyConversionFactor: number,
+  inflationContext?: InflationContext
+) => {
+  const incomeCorrectedByCurrencyConversion = income * currencyConversionFactor
+
+  const inflationFactor = inflationContext && inflationContext[year] ? inflationContext[year].factor : 1
+
+  return { incomeInTodaysMoney: incomeCorrectedByCurrencyConversion / inflationFactor, inflationFactor }
 }
