@@ -7,9 +7,9 @@ interface IRow {
 
 export const HeadingRow = ({ text, onToggle }: IRow) => {
   return (
-    <tr className="hover:bg-gray-100">
-      <td className="flex items-center gap-2 py-2 px-4 font-bold bg-white text-primary md:first:sticky md:first:left-0">
-        <div>{text}</div>
+    <tr className="hover:bg-gray-100 bg-white">
+      <td className="flex items-center gap-2 py-2 px-4 font-bold  text-primary md:first:sticky md:first:left-0">
+        {text}
         {onToggle && (
           <button onClick={onToggle}>
             <InformationCircleIcon className=" h-5 w-5" />

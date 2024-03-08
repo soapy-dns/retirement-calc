@@ -25,6 +25,10 @@ const ChartPage = () => {
     {
       value: "assetSplit",
       label: "Asset Split at start of term"
+    },
+    {
+      value: "drawdown",
+      label: "Drawdown"
     }
   ]
 
