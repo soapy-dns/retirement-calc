@@ -22,10 +22,6 @@ import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
 import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
 import { IScenario, scenarioSchema } from "../data/schema/config"
 
-// export const calculate = (data: unknown): CalculationResults => {
-//   // console.log("--calculate data--", data)
-//   throw new Error("Test error")
-// }
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const calculate = async (data: unknown): Promise<CalculationResults> => {
@@ -33,12 +29,6 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
   const result = scenarioSchema.safeParse(data)
 
   if (!result.success) {
-    // let errorMessage = ""
-    // console.log("--result.error.issues--", result.error.issues)
-    // result.error.issues.forEach((issue) => {
-    //   errorMessage = errorMessage + `${issue.path[0]}: ${issue.message}`
-    // })
-
     const firstCustomError = result.error.issues.find((it) => it.code === "custom")
 
     return {
@@ -50,22 +40,6 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
   const scenario = result.data as IScenario
 
-  // let scenario: IScenario
-  // try {
-  //   // TODO: safeParsed (doesnt need catch)
-  //   const parsedScenario = scenarioSchema.parse(data)
-  //   scenario = parsedScenario
-
-  //   console.log("--SUCCESSFULLY PARSED SCENARIO CONFIG--")
-  //   console.log("--parsedScenario--", JSON.stringify(parsedScenario, null, 4))
-  // } catch (err) {
-  //   console.log("--err--", err.errors)
-  // }
-
-  // const scenario = data as IScenario
-  // const scenario = data as IScenario // assuming successful validation
-  // console.log("--scenario--", JSON.stringify(scenario, null, 4))
-  // const scenario
   try {
     // setup
     let calculationMessage = ""
