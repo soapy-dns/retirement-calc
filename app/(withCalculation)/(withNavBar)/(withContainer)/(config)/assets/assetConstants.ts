@@ -42,7 +42,7 @@ export const assetConstants = {
   },
   INCOME: {
     LABEL: "Income",
-    HELP_TEXT: "The income amount per year."
+    HELP_TEXT: "The gross (prior to tax) income amount per year.  This is assumed to increase in line with inflation."
   },
   DESCRIPTION: {
     LABEL: "Description",

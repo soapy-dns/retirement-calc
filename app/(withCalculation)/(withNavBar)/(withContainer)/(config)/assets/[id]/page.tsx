@@ -28,7 +28,7 @@ const FormSchema = z
     assetType: z.string(),
     value: z.coerce.number().gte(0).optional(), // can we make this optional?
     income: z.coerce.number().optional(), // value and income should be mutually exclusive
-    owners: z.string().array(),
+    owners: z.string().array().nonempty(),
     // assetOwners: z.string().array().nonempty(),
     incomeBucket: YesNoSchema.optional(),
     canDrawdown: YesNoSchema.optional(), //.transform((val) => val === "Y"),
@@ -45,6 +45,14 @@ const FormSchema = z
   })
   .refine(incomeValidator.validator, incomeValidator.options)
   .refine(drawdownOrderValidator.validator, drawdownOrderValidator.options)
+  .refine(
+    ({ income, owners }) => {
+      console.log("income, owners", income, owners)
+      if (income && owners.length > 1) return false
+      return true
+    },
+    { message: "An income asset should only have 1 owner", path: ["owners"] }
+  )
 
 type FormDataType = z.infer<typeof FormSchema>
 
