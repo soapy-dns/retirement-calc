@@ -17,7 +17,7 @@ import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/E
 import { useAsset } from "@/app/ui/hooks/useAsset"
 import { useOwner } from "@/app/ui/hooks/useOwner"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
-import { incomeValidator } from "@/app/lib/data/schema/config/validation"
+import { drawdownOrderValidator, incomeValidator } from "@/app/lib/data/schema/config/validation"
 
 // There is some duplication with AssetSchema - how can we minimise this?
 const FormSchema = z
@@ -31,7 +31,7 @@ const FormSchema = z
     owners: z.string().array(),
     // assetOwners: z.string().array().nonempty(),
     incomeBucket: YesNoSchema.optional(),
-    canDrawdown: YesNoSchema.optional(),
+    canDrawdown: YesNoSchema.optional(), //.transform((val) => val === "Y"),
     drawdownFrom: IsOptionalFutureOrCurrentYear,
     drawdownOrder: IsNumber.optional(),
     preferredMinAmt: IsNumber.optional(),
@@ -44,6 +44,7 @@ const FormSchema = z
     incomeEndYear: IsOptionalFutureOrCurrentYear
   })
   .refine(incomeValidator.validator, incomeValidator.options)
+  .refine(drawdownOrderValidator.validator, drawdownOrderValidator.options)
 
 type FormDataType = z.infer<typeof FormSchema>
 

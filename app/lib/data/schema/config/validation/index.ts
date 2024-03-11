@@ -29,17 +29,29 @@ export const yearNotPassed = (year: number) => {
   return nowYear <= year
 }
 
-type Props = { incomeStartYear?: number; incomeEndYear?: number }
+type IncomeValidatorProps = { incomeStartYear?: number; incomeEndYear?: number }
 
 export const incomeValidator = {
-  validator: ({ incomeStartYear, incomeEndYear }: Props) => {
+  validator: ({ incomeStartYear, incomeEndYear }: IncomeValidatorProps) => {
     if (!incomeStartYear || !incomeEndYear) return true
     return incomeStartYear < incomeEndYear
   },
-  options: ({ incomeStartYear, incomeEndYear }: Props) => {
+  options: ({ incomeStartYear, incomeEndYear }: IncomeValidatorProps) => {
     return {
       message: `The income start year ${incomeStartYear} should be before the income end year ${incomeEndYear}`,
       path: ["incomeStartYear"]
     }
+  }
+}
+
+type DrawdownOrderValidatorProps = { canDrawdown?: boolean | string; drawdownOrder?: number }
+export const drawdownOrderValidator = {
+  validator: ({ canDrawdown, drawdownOrder }: DrawdownOrderValidatorProps) => {
+    if (canDrawdown && canDrawdown !== "N" && !drawdownOrder) return false
+    return true
+  },
+  options: {
+    message: "A drawdownable asset must have a drawdown order set",
+    path: ["canDrawdown"]
   }
 }
