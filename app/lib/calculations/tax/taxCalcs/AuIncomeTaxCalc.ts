@@ -1,3 +1,4 @@
+import { getIncomeInTodaysMoney } from "../utils"
 import { IncomeTaxCalc } from "./incomeTaxCalc"
 
 export class AuIncomeTaxCalc extends IncomeTaxCalc {
@@ -17,17 +18,37 @@ export class AuIncomeTaxCalc extends IncomeTaxCalc {
   taxTo3 = (this.bandTop3 - this.bandTop2) * this.taxRate3 + this.taxTo2
   taxTo4 = (this.bandTop4 - this.bandTop3) * this.taxRate4 + this.taxTo3
 
-  getTax(income: number): number {
-    const correctedIncome = income * this.currencyConversionFactor
-    if (correctedIncome > this.bandTop4)
-      return Math.round((correctedIncome - this.bandTop4) * this.taxRate5 + this.taxTo4)
-    if (correctedIncome > this.bandTop3)
-      return Math.round((correctedIncome - this.bandTop3) * this.taxRate4 + this.taxTo3)
-    if (correctedIncome > this.bandTop2)
-      return Math.round((correctedIncome - this.bandTop2) * this.taxRate3 + this.taxTo2)
-    if (correctedIncome > this.bandTop1)
-      return Math.round((correctedIncome - this.bandTop1) * this.taxRate2 + this.taxTo1)
+  getTax(income: number, year: number): number {
+    const { incomeInTodaysMoney, inflationFactor } = getIncomeInTodaysMoney(
+      income,
+      year,
+      this.currencyConversionFactor,
+      this.inflationContext
+    )
 
-    return Math.round(correctedIncome * this.taxRate1)
+    let taxAmtInTodaysMoney
+    switch (true) {
+      case incomeInTodaysMoney > this.bandTop4:
+        taxAmtInTodaysMoney = (incomeInTodaysMoney - this.bandTop4) * this.taxRate5 + this.taxTo4
+        break
+
+      case incomeInTodaysMoney > this.bandTop3:
+        taxAmtInTodaysMoney = (incomeInTodaysMoney - this.bandTop3) * this.taxRate4 + this.taxTo3
+        break
+      case incomeInTodaysMoney > this.bandTop2:
+        taxAmtInTodaysMoney = (incomeInTodaysMoney - this.bandTop2) * this.taxRate3 + this.taxTo2
+        break
+      case incomeInTodaysMoney > this.bandTop1:
+        taxAmtInTodaysMoney = (incomeInTodaysMoney - this.bandTop1) * this.taxRate2 + this.taxTo1
+        break
+
+      default:
+        taxAmtInTodaysMoney = incomeInTodaysMoney * this.taxRate1
+    }
+
+    const taxAmtInYearsMoneyAndOriginalCurrency =
+      (taxAmtInTodaysMoney * inflationFactor) / this.currencyConversionFactor
+
+    return Math.round(taxAmtInYearsMoneyAndOriginalCurrency)
   }
 }

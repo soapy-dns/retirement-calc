@@ -1,6 +1,12 @@
 import { currencyFormatter } from "@/app/ui/utils/formatter"
 import { z } from "zod"
-import { incomeValidator, validateEarningsBucket, validateLivingExpensesVsInflation, yearNotPassed } from "./validation"
+import {
+  drawdownOrderValidator,
+  incomeValidator,
+  validateEarningsBucket,
+  validateLivingExpensesVsInflation,
+  yearNotPassed
+} from "./validation"
 
 const castEmptyStringToUndefined = (val?: unknown) => {
   return val !== "" ? val : undefined
@@ -133,16 +139,17 @@ const AssetSchema = z
     country: CountryEnum.optional() // defaults to AU
   })
   .refine(incomeValidator.validator, incomeValidator.options)
-  .refine(
-    ({ canDrawdown, drawdownOrder }) => {
-      if (canDrawdown && !drawdownOrder) return false
-      return true
-    },
-    {
-      message: "A drawdownable asset must have a drawdown order set",
-      path: ["canDrawdown"]
-    }
-  )
+  .refine(drawdownOrderValidator.validator, drawdownOrderValidator.options)
+  // .refine(
+  //   ({ canDrawdown, drawdownOrder }) => {
+  //     if (canDrawdown && !drawdownOrder) return false
+  //     return true
+  //   },
+  //   {
+  //     message: "A drawdownable asset must have a drawdown order set",
+  //     path: ["canDrawdown"]
+  //   }
+  // )
   .refine(
     ({ property }) => {
       if (!property) return true

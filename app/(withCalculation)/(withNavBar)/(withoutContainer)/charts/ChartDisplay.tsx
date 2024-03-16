@@ -35,11 +35,13 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ chartType }) => {
     yearRange,
     calculatedAssetNpvData,
     calculatedAssetData,
-    graphIncomeNpvData
-    // drawdownRowData,
+    graphIncomeNpvData,
+    drawdownRowData
     // totalDrawdownData
   } = calculationResults
-
+  console.log("drawdownRowData", drawdownRowData)
+  console.log("calculatedAssetData", calculatedAssetData)
+  // debugger
   switch (chartType) {
     case ChartType.capitalAssets:
       return <CalculatedAssetLineChart yearRange={yearRange} graphData={calculatedAssetData} />
@@ -49,6 +51,8 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ chartType }) => {
       return <CalculatedAssetLineChart yearRange={yearRange} graphData={graphIncomeNpvData} />
     case ChartType.assetSplit:
       return <AssetSplit />
+    case ChartType.drawdown:
+      return <CalculatedAssetLineChart yearRange={yearRange} graphData={drawdownRowData} />
 
     default:
       return <div>Chart does not exist</div>

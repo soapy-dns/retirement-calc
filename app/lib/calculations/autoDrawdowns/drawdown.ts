@@ -62,7 +62,7 @@ const drawdownIteration = (
     //   taxableAutomatedDrawdownAmt
     // )
 
-    const ownersTaxAmt = incomeTaxCalculator.getTax(newTotalTaxableAmt)
+    const ownersTaxAmt = incomeTaxCalculator.getTax(newTotalTaxableAmt, year)
 
     // UPDATE TAX DETAILS
     taxHistory.totalTaxableAmt = Math.round(newTotalTaxableAmt)
