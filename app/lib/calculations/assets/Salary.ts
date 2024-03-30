@@ -1,46 +1,47 @@
 import { Asset } from "./Asset"
-import { AssetClass, InflationContext } from "@/app/lib/calculations/types"
-import { DefinedBenefitAssetProps, YearData } from "./types"
+import { AssetGroup, InflationContext } from "@/app/lib/calculations/types"
+import { YearData } from "./types"
 
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
-import { DefinedBenefitsContext, Transfer } from "../../data/schema/config"
+import { DefinedBenefitsContext, IAsset, IScenario, Transfer } from "../../data/schema/config"
 
 export class Salary extends Asset {
   capitalAsset: boolean
-  assetClass: AssetClass
+  assetGroup: AssetGroup
   percOfEarningsTaxable: number
   percOfDrawdownTaxable: number
-  income?: number
+  incomeAmount: number
   incomeStartYear?: number
   incomeEndYear?: number
   inflationContext: InflationContext
   salaryContext: DefinedBenefitsContext // FIXME:
   transfers?: Transfer[]
 
-  constructor(assetConfig: DefinedBenefitAssetProps, inflationContext: InflationContext) {
-    // is income producing - it has to be - that is all it does
+  constructor(assetConfig: IAsset, startingYear: number, scenario: IScenario, inflationContext: InflationContext) {
+    if (assetConfig.className !== "Salary") throw new Error("Invalid config for Salary")
+
     super({
       ...assetConfig,
-      incomeProducing: true,
-      canDrawdown: false // can never drawdown from a defined benefit income stream
+      incomeProducing: true
     })
 
     this.capitalAsset = false
-    this.assetClass = AssetClass.income_salary
-    const { value, startingYear, income = 0, scenario, incomeStartYear, incomeEndYear } = assetConfig
+    this.assetGroup = AssetGroup.income_salary
     const {
       context: { taxResident, definedBenefitsAu }
     } = scenario
-    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetClass)
-    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetClass)
-    this.income = income
+    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
+
+    const { income } = assetConfig
+    const { incomeAmt: incomeAmount, incomeStartYear, incomeEndYear } = income
+    this.incomeAmount = incomeAmount
     this.incomeStartYear = incomeStartYear
     this.incomeEndYear = incomeEndYear
     this.inflationContext = inflationContext
     this.salaryContext = definedBenefitsAu // FIXME:
 
-    // I don't believe this should ever occur but typescript makes me.  maybe there is a better way
-    this.history.push({ value, year: startingYear, income, transferAmt: 0 })
+    this.history.push({ value: 0, year: startingYear, income: incomeAmount })
   }
 
   calcNextYear = (yearData: YearData): YearData => {
@@ -48,7 +49,7 @@ export class Salary extends Asset {
 
     let newIncome
     if (
-      !this.income ||
+      !this.incomeAmount ||
       (this.incomeEndYear && this.incomeEndYear < year) ||
       (this.incomeStartYear && this.incomeStartYear > year)
     ) {
@@ -56,7 +57,7 @@ export class Salary extends Asset {
     } else {
       const inflationFactor = this.inflationContext[year - 1] ? this.inflationContext[year - 1].factor : 1
 
-      newIncome = this.income * inflationFactor
+      newIncome = this.incomeAmount * inflationFactor
     }
 
     const nextYearData = {
@@ -69,6 +70,6 @@ export class Salary extends Asset {
     return nextYearData // TODO: do we need to return this?
   }
   getAssetClass = () => {
-    return AssetClass.other
+    return AssetGroup.other
   }
 }

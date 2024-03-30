@@ -2,7 +2,12 @@
 
 import range from "lodash/range.js"
 
-import { addAssetEarnings, canDrawdownAssets, getGroupedAssets, buildInitialAssets } from "./assets/assetUtils"
+import {
+  addAssetEarnings,
+  canDrawdownAssets,
+  getGroupedDrawdownableAssets,
+  buildInitialAssets
+} from "./assets/assetUtils"
 import { calculateTaxes, initTaxes } from "./tax/utils"
 import { DrawdownYearData, Earning, ExpenseYearData, Tax } from "./assets/types"
 import { getLivingExpenses } from "./utils/livingExpensesUtils"
@@ -20,17 +25,18 @@ import { getCalculatedNpvData, getGraphIncomeNpvData } from "./utils/getCalculat
 import { getStartingYear } from "./utils/getStartingYear"
 import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
 import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
-import { IScenario, scenarioSchema } from "../data/schema/config"
+import { IScenario, ScenarioSchema } from "../data/schema/config"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const calculate = async (data: unknown): Promise<CalculationResults> => {
   await sleep(1)
-  const result = scenarioSchema.safeParse(data)
+  const result = ScenarioSchema.safeParse(data)
 
   if (!result.success) {
     const firstCustomError = result.error.issues.find((it) => it.code === "custom")
 
+    console.log("errors ---> ", result.error.issues)
     return {
       success: false,
       calculationMessage: firstCustomError?.message || "Invalid configuration",
@@ -111,8 +117,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       // sutomatic drawdown pull money out of an asset for that year,
       //therefore the earnings wouldn't have been as much and so
       // the taxes wouldn't have been as much
-      const groupedAssets = getGroupedAssets(year, assets)
-      // console.log("--groupedAssets--", groupedAssets)
+      const groupedDrawdownableAssets = getGroupedDrawdownableAssets(year, assets)
 
       // why are we sending (for example) the entire taxes for all years when we are only interested in 1.
       const drawdownContext = {
@@ -127,7 +132,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
         livingExpenses: projectedLivingExpenses,
         totalExpenses,
         totalDrawdowns,
-        groupedAssets
+        groupedAssets: groupedDrawdownableAssets
       }
 
       const remainingAmtToDrawdown = applyAutoDrawdowns(drawdownContext)

@@ -52,14 +52,10 @@ export const InputQuestion: React.FC<InputProps> = ({
   maxLength,
   restrictedCharSet,
   disabled
-  //   labelVariant
 }) => {
   const nameOfEl = name ?? id
 
   const errorMsg = useError(control, nameOfEl)
-  // const { errors } = useFormState({ control })
-
-  // const errorMsg = errors[nameOfEl]?.message
 
   const handleOnChange = (value: string, onChange: Function) => {
     // Assumes empty input is always valid
@@ -70,16 +66,7 @@ export const InputQuestion: React.FC<InputProps> = ({
   }
 
   return (
-    <FormGroup
-      label={label}
-      id={`formGroup-${id}`}
-      //   className={formGroupClassName}
-      //   labelClassName={labelClassName}
-      //   labelVariant={labelVariant}
-      //   {...otherContainerProps}
-      errorMsg={errorMsg}
-      helpText={helpText}
-    >
+    <FormGroup label={label} id={`formGroup-${id}`} errorMsg={errorMsg} helpText={helpText}>
       <Controller
         name={nameOfEl}
         control={control}

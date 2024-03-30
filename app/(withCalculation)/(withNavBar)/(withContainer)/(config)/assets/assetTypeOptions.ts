@@ -1,4 +1,4 @@
-import { AssetClass } from "@/app/lib/calculations/types"
+import { AssetGroup } from "@/app/lib/calculations/types"
 import { ISelectOption } from "@/app/lib/data/types"
 
 export const assetTypeOptions = [
@@ -7,19 +7,19 @@ export const assetTypeOptions = [
     value: "AuDefinedBenefits",
     income: true,
     property: false,
-    assetClass: AssetClass.income_defined_benefit
+    assetClass: AssetGroup.income_defined_benefit
   },
-  { label: "Salary", value: "Salary", income: true, property: false, assetClass: AssetClass.income_salary },
+  { label: "Salary", value: "Salary", income: true, property: false, assetClass: AssetGroup.income_salary },
   {
     label: "Defined contributions pension",
     value: "AuSuper",
     income: false,
     property: false,
-    assetClass: AssetClass.super
+    assetClass: AssetGroup.super
   },
-  { label: "Shares", value: "AuShares", income: false, property: false, assetClass: AssetClass.shares },
-  { label: "Property", value: "AuProperty", income: false, property: true, assetClass: AssetClass.property },
-  { label: "Cash", value: "AuBank", income: false, property: false, assetClass: AssetClass.cash }
+  { label: "Shares", value: "AuShares", income: false, property: false, assetClass: AssetGroup.shares },
+  { label: "Property", value: "AuProperty", income: false, property: true, assetClass: AssetGroup.property },
+  { label: "Cash", value: "AuBank", income: false, property: false, assetClass: AssetGroup.cash }
 ]
 
 // TODO: I don't think this is used now

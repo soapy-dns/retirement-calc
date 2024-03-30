@@ -1,14 +1,14 @@
 import { Asset } from "./Asset"
-import { AssetClass, InflationContext } from "@/app/lib/calculations/types"
+import { AssetGroup, InflationContext } from "@/app/lib/calculations/types"
 
-import { AssetConfig, YearData } from "./types"
+import { YearData } from "./types"
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
-import { PropertyContext, Transfer } from "../../data/schema/config"
+import { IAsset, IScenario, PropertyContext, Transfer } from "../../data/schema/config"
 import { getTransferAmt } from "../transfers/getTransfers"
 
 export class AuProperty extends Asset {
   capitalAsset: boolean // if all assets have this, shouldn't it be in the Asset class
-  assetClass: AssetClass
+  assetGroup: AssetGroup
   percOfEarningsTaxable: number
   percOfDrawdownTaxable: number
   transfers?: Transfer[]
@@ -20,32 +20,26 @@ export class AuProperty extends Asset {
   rentalIncomePerMonth: number
   rentalExpensesPerMonth: number
 
-  constructor(assetConfig: AssetConfig, inflationContext: InflationContext) {
-    super({
-      ...assetConfig,
-      canDrawdown: false,
-      incomeProducing: assetConfig?.property?.isRented || false
-    })
+  constructor(assetConfig: IAsset, startingYear: number, scenario: IScenario, inflationContext: InflationContext) {
+    if (assetConfig.className !== "AuProperty") throw new Error("Invalid config for Property")
+
+    super({ ...assetConfig, incomeProducing: assetConfig?.property?.isRented || false })
+
+    const { value, property: assetProperty } = assetConfig
+
     const {
-      value,
-      property: assetProperty,
-      // rentalExpensesPerMonth,
-      // rentalIncomePerMonth,
-      startingYear,
-      scenario: {
-        context: { taxResident, property },
-        transfers
-      }
-    } = assetConfig
+      context: { taxResident, property },
+      transfers
+    } = scenario
     const { rentalExpensesPerMonth, rentalIncomePerMonth, rentalStartYear, rentalEndYear } = assetProperty || {}
 
     this.propertyContext = property
     this.transfers = transfers // TODO: there has to be a better way!
 
     this.capitalAsset = true
-    this.assetClass = AssetClass.property
-    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetClass)
-    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetClass)
+    this.assetGroup = AssetGroup.property
+    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
     this.inflationContext = inflationContext
 
     this.rentalStartYear = rentalStartYear
@@ -97,6 +91,6 @@ export class AuProperty extends Asset {
   }
 
   getAssetClass = () => {
-    return AssetClass.property
+    return AssetGroup.property
   }
 }

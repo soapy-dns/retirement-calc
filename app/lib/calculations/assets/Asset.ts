@@ -1,9 +1,10 @@
-import { AssetConfig, YearData } from "./types"
-import { AssetClass } from "@/app/lib/calculations/types"
+import { YearData } from "./types"
+import { AssetGroup } from "@/app/lib/calculations/types"
 import { Country } from "../tax/taxCalcs/types"
-import { getPercIncomeTaxable } from "../tax/utils"
+import { AssetClass, IAsset, LiquidAsset } from "../../data/schema/config"
+import { isLiquidAsset } from "@/app/ui/utils"
 
-interface Props extends AssetConfig {
+type Props = IAsset & {
   incomeProducing: boolean
 }
 
@@ -14,69 +15,55 @@ interface Props extends AssetConfig {
  */
 // TODO: need to have sub classes with the relevant properties
 export abstract class Asset {
+  className: AssetClass
   history: YearData[] = [] // Maybe better not an array
   id: string
   name = "UnNamed Asset"
   description
   incomeProducing = false
   assetOwners
-  scenario // TODO: Why do I need scenarop here?
+  // scenario // TODO: Why do I need scenarop here?
   abstract readonly percOfEarningsTaxable: number
   abstract readonly percOfDrawdownTaxable: number // eg defined contributions which will have 25% tax free in UK
   incomeBucket = false
-  canDrawdown = true
-  preferredMinAmt
+  canDrawdown = false
+  preferredMinAmt = 0
   drawdownOrder
   drawdownFrom // year from which we can start to drawdown
-  // propertyRented = false
-  // rentalIncomePerMonth // TODO: move to subclass
-  // rentalExpensesPerMonth // move to subclass
+
   country: Country
   public abstract capitalAsset: boolean
-  abstract readonly assetClass: AssetClass
+  abstract readonly assetGroup: AssetGroup
 
   // TODO: can this be improved -> https://www.digitalocean.com/community/tutorials/how-to-use-classes-in-typescript
-  constructor(props: Props) {
-    const {
-      id,
-      name,
-      description,
-      incomeProducing,
-      assetOwners,
-      incomeBucket,
-      canDrawdown,
-      drawdownFrom,
-      preferredMinAmt,
-      drawdownOrder,
-      scenario,
-      // percOfEarningsTaxable = 100,
-      // rentalIncomePerMonth,
-      // rentalExpensesPerMonth,
-      country = "AU"
-    } = props
+  constructor(assetConfig: Props) {
+    const { id, className, name, description, incomeProducing, assetOwners, incomeBucket, country = "AU" } = assetConfig
 
     this.id = id
+    this.className = className
     this.name = name
     this.description = description
     this.incomeProducing = incomeProducing
     this.assetOwners = assetOwners
     this.incomeBucket = incomeBucket || false
-    this.canDrawdown = canDrawdown || false
-    this.preferredMinAmt = preferredMinAmt || 0
-    this.drawdownOrder = drawdownOrder || 99
-    this.scenario = scenario
-    // this.percOfEarningsTaxable = percOfEarningsTaxable
-    this.drawdownFrom = drawdownFrom
-    // this.rentalIncomePerMonth = rentalIncomePerMonth
-    // this.rentalExpensesPerMonth = rentalExpensesPerMonth
     this.country = country
+    if (isLiquidAsset(className)) {
+      const { canDrawdown, drawdown } = assetConfig as LiquidAsset
+      this.canDrawdown = canDrawdown || false
+      if (drawdown) {
+        const { drawdownOrder, drawdownFrom = 99, preferredMinAmt = 0 } = drawdown
+        this.drawdownFrom = drawdownFrom
+        this.drawdownOrder = drawdownOrder
+        this.preferredMinAmt = preferredMinAmt
+      }
+    }
   }
 
   getName = () => {
     return this.name
   }
 
-  abstract getAssetClass(): AssetClass
+  abstract getAssetClass(): AssetGroup
 
   // TODO: we can maybe change the structure of 'history'.  An array might not be optimal
   getYearData = (year: number): YearData => {

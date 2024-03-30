@@ -48,7 +48,7 @@ export const assetConstants = {
     HELP_TEXT: "If the property is rented out, then expected rental details should be added."
   },
   PROPERTY_RENTAL_INCOME: {
-    LABEL: "Property rental income (monthly)",
+    LABEL: "Rental income (monthly)",
     HELP_TEXT:
       "The gross monthly rental for the property.  This will be in today's money and will increase in line with inflation."
   },

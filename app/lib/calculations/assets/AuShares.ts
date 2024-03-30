@@ -1,37 +1,37 @@
-import { AssetClass } from "@/app/lib/calculations/types"
+import { AssetGroup } from "@/app/lib/calculations/types"
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
 import { Asset } from "./Asset"
-import { AssetConfig, YearData } from "./types"
-import { SharesContext, Transfer } from "../../data/schema/config"
+import { YearData } from "./types"
+import { IAsset, IScenario, SharesContext, Transfer } from "../../data/schema/config"
 import { getTransferAmt } from "../transfers/getTransfers"
 
 export class AuShares extends Asset {
   capitalAsset: boolean
-  assetClass: AssetClass
+  assetGroup: AssetGroup
   percOfEarningsTaxable: number
   percOfDrawdownTaxable: number
   transfers?: Transfer[]
   shareContext: SharesContext
 
-  constructor(assetConfig: AssetConfig) {
+  constructor(assetConfig: IAsset, startingYear: number, scenario: IScenario) {
+    if (assetConfig.className !== "AuShares") throw new Error("Invalid config for Property")
+
     super({ ...assetConfig, incomeProducing: true })
 
     this.capitalAsset = true
-    this.assetClass = AssetClass.shares
+    this.assetGroup = AssetGroup.shares
 
     const {
-      value,
-      startingYear,
-      scenario: {
-        transfers,
-        context: { taxResident, sharesAu }
-      }
-    } = assetConfig
+      transfers,
+      context: { taxResident, sharesAu }
+    } = scenario
+
+    const { value } = assetConfig
     this.shareContext = sharesAu
     this.transfers = transfers
 
-    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetClass)
-    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetClass)
+    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
 
     this.history.push({ value, year: startingYear, transferAmt: 0, income: 0 })
   }
@@ -62,6 +62,6 @@ export class AuShares extends Asset {
   }
 
   getAssetClass = () => {
-    return AssetClass.shares
+    return AssetGroup.shares
   }
 }

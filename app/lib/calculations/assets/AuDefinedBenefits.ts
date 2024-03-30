@@ -1,60 +1,54 @@
 import { Asset } from "./Asset"
-import { AssetClass, InflationContext } from "@/app/lib/calculations/types"
-import { DefinedBenefitAssetProps, YearData } from "./types"
+import { AssetGroup, InflationContext } from "@/app/lib/calculations/types"
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
-import { DefinedBenefitsContext, Transfer } from "../../data/schema/config"
+import { DefinedBenefitsContext, IAsset, IScenario, Transfer } from "../../data/schema/config"
+import { YearData } from "./types"
 
 export class AuDefinedBenefits extends Asset {
   capitalAsset: boolean
-  assetClass: AssetClass
+  assetGroup: AssetGroup
   percOfEarningsTaxable: number
   percOfDrawdownTaxable: number
   definedBenefitsContext: DefinedBenefitsContext
   transfers?: Transfer[]
   incomeStartYear?: number
   incomeEndYear?: number
-  income?: number // TODO: this should be mandatory and IAsset needs to be fixed
+  incomeAmount: number
   inflationContext: InflationContext
 
-  constructor(assetConfig: DefinedBenefitAssetProps, inflationContext: InflationContext) {
+  constructor(assetConfig: IAsset, startingYear: number, scenario: IScenario, inflationContext: InflationContext) {
     // is income producing - it has to be - that is all it does
-    super({
-      ...assetConfig,
-      incomeProducing: true,
-      canDrawdown: false // can never drawdown from a defined benefit income stream
-    })
+    super({ ...assetConfig, incomeProducing: true })
+
+    if (assetConfig.className !== "AuDefinedBenefits") throw new Error("Invalid config for Defined Benefits")
+
     const {
-      value,
-      incomeStartYear,
-      incomeEndYear,
-      startingYear,
-      income = 0,
-      scenario: {
-        context: { taxResident, definedBenefitsAu }
-      }
-    } = assetConfig
+      transfers,
+      context: { taxResident, definedBenefitsAu }
+    } = scenario
+
     this.capitalAsset = false
-    this.assetClass = AssetClass.income_defined_benefit
-    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetClass)
-    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetClass)
+    this.assetGroup = AssetGroup.income_defined_benefit
+    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
     this.definedBenefitsContext = definedBenefitsAu
-    this.income = income
+
+    const { income } = assetConfig
+    const { incomeStartYear, incomeEndYear, incomeAmt: incomeAmount } = income
     this.incomeStartYear = incomeStartYear
     this.incomeEndYear = incomeEndYear
+    this.incomeAmount = incomeAmount
     this.inflationContext = inflationContext
 
-    // this is a hack to can recalc income
     const inflationRate = inflationContext[startingYear].inflation
 
     const indexationRate = definedBenefitsAu.useInflationRate
       ? definedBenefitsAu.indexationRate || inflationRate
       : inflationRate
 
-    const previousYearsIncome = income / (1 + indexationRate)
+    const previousYearsIncome = incomeAmount / (1 + indexationRate)
 
-    // I don't believe this should ever occur but typescript makes me.  maybe there is a better way
-    // TODO: I think we can use factor?
-    this.history.push({ value, year: startingYear, income: previousYearsIncome, transferAmt: 0 })
+    this.history.push({ value: 0, year: startingYear, income: previousYearsIncome, transferAmt: 0 })
   }
 
   calcNextYear = (yearData: YearData): YearData => {
@@ -63,7 +57,7 @@ export class AuDefinedBenefits extends Asset {
     let newIncome
 
     if (
-      !this.income ||
+      !this.incomeAmount ||
       (this.incomeEndYear && this.incomeEndYear < year) ||
       (this.incomeStartYear && this.incomeStartYear > year)
     ) {
@@ -71,7 +65,7 @@ export class AuDefinedBenefits extends Asset {
     } else {
       const inflationFactor = this.inflationContext[year - 1] ? this.inflationContext[year - 1].factor : 1
 
-      newIncome = this.income * inflationFactor
+      newIncome = this.incomeAmount * inflationFactor
     }
 
     const nextYearData = { year: year + 1, value: 0, income: Math.round(newIncome) }
@@ -81,6 +75,6 @@ export class AuDefinedBenefits extends Asset {
   }
 
   getAssetClass = () => {
-    return AssetClass.other
+    return AssetGroup.other
   }
 }

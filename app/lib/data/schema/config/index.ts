@@ -1,12 +1,7 @@
 import { currencyFormatter } from "@/app/ui/utils/formatter"
 import { z } from "zod"
-import {
-  drawdownOrderValidator,
-  incomeValidator,
-  validateEarningsBucket,
-  validateLivingExpensesVsInflation,
-  yearNotPassed
-} from "./validation"
+import { validateEarningsBucket, validateLivingExpensesVsInflation, yearNotPassed } from "./validation"
+import { AssetSchema } from "./asset"
 
 const castEmptyStringToUndefined = (val?: unknown) => {
   return val !== "" ? val : undefined
@@ -22,6 +17,7 @@ export const IsFutureOrCurrentYear = z.preprocess(
     (val) => ({ message: `${val} is in the past` })
   )
 )
+
 export const IsOptionalFutureOrCurrentYear = z.preprocess(
   (val) => castEmptyStringToUndefined(val),
   z.coerce
@@ -41,7 +37,6 @@ export const IsOptionalFutureOrCurrentYear = z.preprocess(
 
 export const CountryEnum = z.enum(["AU", "SC"])
 export const YesNoSchema = z.enum(["Y", "N"])
-export const AssetTypeEnum = z.enum(["AuBank", "AuSuper", "AuProperty", "Salary", "AuDefinedBenefits", "AuShares"])
 
 const cashContextSchema = z.object({
   interestRate: z.number()
@@ -108,122 +103,42 @@ const transferSchema = z.discriminatedUnion("migrateAll", [transferWithMigrateAl
 )
 
 // TODO: only 1 income bucket
-const AssetSchema = z
-  .object({
-    id: z.string(),
-    // className: AssetTypeEnum,
-    className: z.string(),
-    name: z.string(),
-    description: z.string().optional(),
-    value: z.number(), // TODO: make this optional
-    income: z.number().optional(), // value and income should be mutually exclusive
-    assetOwners: z.string().array(),
-    // assetOwners: z.string().array().nonempty(),
-    incomeBucket: z.boolean().optional(),
-    canDrawdown: z.boolean().optional(),
-    drawdownFrom: IsOptionalFutureOrCurrentYear,
-    drawdownOrder: z.number().optional(),
-    preferredMinAmt: z.number().optional(),
-    property: z
-      .object({
-        isRented: z.boolean().optional(),
-        rentalIncomePerMonth: z.number().gte(0).optional(),
-        rentalExpensesPerMonth: z.number().gte(0).optional(),
-        rentalStartYear: IsOptionalFutureOrCurrentYear,
-        rentalEndYear: IsOptionalFutureOrCurrentYear
-      })
-      .optional(),
+// const AssetSchema = z
+//   .object({
+//     id: z.string(),
+//     // className: AssetTypeEnum,
+//     className: z.string(),
+//     name: z.string(),
+//     description: z.string().optional(),
+//     value: z.number(), // TODO: make this optional
+//     income: z.number().optional(), // value and income should be mutually exclusive
+//     assetOwners: z.string().array(),
+//     // assetOwners: z.string().array().nonempty(),
+//     incomeBucket: z.boolean().optional(),
+//     canDrawdown: z.boolean().optional(),
+//     drawdownFrom: IsOptionalFutureOrCurrentYear,
+//     drawdownOrder: z.number().optional(),
+//     preferredMinAmt: z.number().optional(),
+//     property: z
+//       .object({
+//         isRented: z.boolean().optional(),
+//         rentalIncomePerMonth: z.number().gte(0).optional(),
+//         rentalExpensesPerMonth: z.number().gte(0).optional(),
+//         rentalStartYear: IsOptionalFutureOrCurrentYear,
+//         rentalEndYear: IsOptionalFutureOrCurrentYear
+//       })
+//       .optional(),
 
-    incomeStartYear: IsOptionalFutureOrCurrentYear,
-    incomeEndYear: IsOptionalFutureOrCurrentYear,
-    country: CountryEnum.optional() // defaults to AU
-  })
-  .refine(incomeValidator.validator, incomeValidator.options)
-  .refine(drawdownOrderValidator.validator, drawdownOrderValidator.options)
-  // .refine(
-  //   ({ canDrawdown, drawdownOrder }) => {
-  //     if (canDrawdown && !drawdownOrder) return false
-  //     return true
-  //   },
-  //   {
-  //     message: "A drawdownable asset must have a drawdown order set",
-  //     path: ["canDrawdown"]
-  //   }
-  // )
-  .refine(
-    ({ property }) => {
-      if (!property) return true
-      if (property.isRented && !property.rentalIncomePerMonth) return false
-      return true
-    },
-    {
-      message: "Rented out properties must have a rental income.",
-      path: ["isRented"]
-    }
-  )
-//   const PropertyAssetSchema = AssetBaseSchema.extend({
-//   className: z.literal("AuProperty"),
-//   property: z.object({
-//     rentalStartDate?: IsOptionalFutureOrCurrentYear
+//     incomeStartYear: IsOptionalFutureOrCurrentYear,
+//     incomeEndYear: IsOptionalFutureOrCurrentYear,
+//     country: CountryEnum.optional() // defaults to AU
 //   })
-// })
-
-//   const AssetSchema = z.discriminatedUnion("migrateAll", [transferWithMigrateAll, transferWithoutMigrateAll]).refine(
-
-// TODO: better typescript
-
-// const CashAssetSchema = AssetBaseSchema.extend({
-//   className: z.literal("AuBank"),
-//   value: z.number().gte(0)
-// })
-
-// const SuperAssetSchema = AssetBaseSchema.extend({
-//   className: z.literal("AuSuper"),
-//   value: z.number().gte(0)
-// })
-
-// const PropertyAssetSchema = AssetBaseSchema.extend({
-//   className: z.literal("AuProperty"),
-//   value: z.number().gte(0)
-// })
-
-// const ShareAssetSchema = AssetBaseSchema.extend({
-//   className: z.literal("AuShares"),
-//   value: z.number().gte(0)
-// })
-
-// const SalaryAssetSchema = AssetBaseSchema.extend({
-//   className: z.literal("Salary"),
-//   income: z.number().gte(0)
-// })
-// const DefinedBenefitsAssetSchema = AssetBaseSchema.extend({
-//   className: z.literal("AuDefinedBenefits"),
-//   income: z.number().gte(0)
-// })
-
-// export const AssetSchema = z
-//   .discriminatedUnion("className", [
-//     CashAssetSchema,
-//     SuperAssetSchema,
-//     PropertyAssetSchema,
-//     ShareAssetSchema,
-//     SalaryAssetSchema,
-//     DefinedBenefitsAssetSchema
-//   ])
 //   .refine(incomeValidator.validator, incomeValidator.options)
+//   .refine(drawdownOrderValidator.validator, drawdownOrderValidator.options)
 //   .refine(
-//     ({ canDrawdown, drawdownOrder }) => {
-//       if (canDrawdown && !drawdownOrder) return false
-//       return true
-//     },
-//     {
-//       message: "A drawdownable asset must have a drawdown order set",
-//       path: ["canDrawdown"]
-//     }
-//   )
-//   .refine(
-//     ({ isRented, rentalIncomePerMonth }) => {
-//       if (isRented && !rentalIncomePerMonth) return false
+//     ({ property }) => {
+//       if (!property) return true
+//       if (property.isRented && !property.rentalIncomePerMonth) return false
 //       return true
 //     },
 //     {
@@ -256,7 +171,7 @@ const contextSchema = z
     }
   )
 
-export const scenarioSchema = z
+export const ScenarioSchema = z
   .object({
     id: z.string(),
     test: z.string().optional(),
@@ -270,7 +185,11 @@ export const scenarioSchema = z
     message: "1 and only 1 asset should be marked as an 'earnings bucket'"
   })
 
-export type IScenario = z.infer<typeof scenarioSchema>
+// .refine(({ assets }) => validateEarningsBucket(assets), {
+//   message: "1 and only 1 asset should be marked as an 'earnings bucket'"
+// })
+
+export type IScenario = z.infer<typeof ScenarioSchema>
 export type ContextConfig = z.infer<typeof contextSchema>
 export type LivingExpensesRecord = z.infer<typeof LivingExpensesSchema>
 export type InflationRecord = z.infer<typeof InflationSchema>
@@ -280,8 +199,10 @@ export type PropertyContext = z.infer<typeof propertyContextSchema>
 export type SharesContext = z.infer<typeof sharesContextSchema>
 export type SuperContext = z.infer<typeof superContextSchema>
 
-export type IAsset = z.infer<typeof AssetSchema> // move IAsset to AssetType TODO:
-export type AssetType = z.infer<typeof AssetSchema>
+export * from "./asset"
+
+// export type IAsset = z.infer<typeof AssetSchema> // move IAsset to AssetType TODO:
+export type AssetType = z.infer<typeof AssetSchema> // duplicate
 
 export type Transfer = z.infer<typeof transferSchema>
 export type Country = z.infer<typeof CountryEnum>

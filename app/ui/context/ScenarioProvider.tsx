@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import { usePathname } from "next/navigation"
 
 import { ScenarioContext } from "./ScenarioContext"
 import { ISelectOption } from "@/app/lib/data/types"
@@ -13,6 +12,7 @@ import { getRandomKey } from "@/app/lib/utils/getRandomKey"
 import { Spinner } from "../components/common/Spinner"
 
 import { FormattedErrors } from "../components/formattedErrors/FormattedErrors"
+import { isIncomeAsset } from "../utils"
 
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
   const scenarioOptions = scenarios.map((scenario) => ({
@@ -23,8 +23,6 @@ const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
 }
 
 export const ScenarioProvider = ({ children }: { children: React.ReactNode }) => {
-  const pathname = usePathname()
-
   const [calculating, setCalculating] = useState<boolean>(false)
 
   const [scenarioOptions, setScenarioOptions] = useState<ISelectOption[]>()
@@ -35,7 +33,9 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
   const { displayErrorAlert, displayWarningAlert } = useAppAlert()
 
   const getSelectedScenarioAssetsOptions = ({ excludeIncome }: { excludeIncome: boolean }): ISelectOption[] => {
-    const assets = excludeIncome ? selectedScenario.assets.filter((it) => !it.income) : selectedScenario.assets
+    const assets = excludeIncome
+      ? selectedScenario.assets.filter((it) => !isIncomeAsset(it.className))
+      : selectedScenario.assets
     const assetOptions: ISelectOption[] = assets.map((it) => ({ label: it.name, value: it.id }))
 
     return assetOptions

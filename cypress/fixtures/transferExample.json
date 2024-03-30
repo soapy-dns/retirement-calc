@@ -14,7 +14,7 @@
         "assetOwners": ["Him"],
         "incomeBucket": true,
         "canDrawdown": true,
-        "drawdownOrder": 20
+        "drawdown": { "drawdownOrder": 20 }
       },
       {
         "id": "2",
@@ -26,7 +26,7 @@
         "assetOwners": ["Him"],
         "incomeBucket": false,
         "canDrawdown": true,
-        "drawdownOrder": 20
+        "drawdown": { "drawdownOrder": 20 }
       }
     ],
     "context": {

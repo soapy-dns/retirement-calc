@@ -146,7 +146,7 @@ interface CalculationResultsSuccess {
 
 export type CalculationResults = CalculationResultsSuccess | CalculationResultsFail
 
-export enum AssetClass {
+export enum AssetGroup {
   property = "property",
   shares = "shares",
   cash = "cash",

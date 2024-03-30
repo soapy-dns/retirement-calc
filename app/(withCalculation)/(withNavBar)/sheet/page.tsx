@@ -1,6 +1,7 @@
 "use client"
 import { useSearchParams } from "next/navigation"
 import React, { useContext, useState } from "react"
+
 import { Cell as HeadingCell } from "./heading/Cell"
 import { Row } from "./row/Row"
 import { HeadingRow } from "./row/HeadingRow"
