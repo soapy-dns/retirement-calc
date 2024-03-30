@@ -1,5 +1,17 @@
 import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
-import { IAsset, InflationRecord, LivingExpensesRecord } from ".."
+import {
+  AssetClass,
+  AssetType,
+  CapitalAsset,
+  IAsset,
+  IncomeAsset,
+  IncomeDetails,
+  InflationRecord,
+  LiquidAsset,
+  LivingExpensesRecord,
+  PropertyAsset
+} from ".."
+import { isLiquidAsset } from "@/app/ui/utils"
 
 // VALIDATE CONTEXT
 export const validateLivingExpensesVsInflation = (
@@ -29,29 +41,62 @@ export const yearNotPassed = (year: number) => {
   return nowYear <= year
 }
 
-type IncomeValidatorProps = { incomeStartYear?: number; incomeEndYear?: number }
-
+// The next validations related to assets. Perhaps this could be separated out.
 export const incomeValidator = {
-  validator: ({ incomeStartYear, incomeEndYear }: IncomeValidatorProps) => {
-    if (!incomeStartYear || !incomeEndYear) return true
-    return incomeStartYear < incomeEndYear
-  },
-  options: ({ incomeStartYear, incomeEndYear }: IncomeValidatorProps) => {
-    return {
-      message: `The income start year ${incomeStartYear} should be before the income end year ${incomeEndYear}`,
-      path: ["incomeStartYear"]
+  validator: (data: { className: string }): boolean => {
+    const { className } = data
+    if (className === "Salary" || className === "AuDefinedBenefits") {
+      const { income } = data as IncomeAsset
+      const { incomeStartYear, incomeEndYear } = income
+      if (!incomeStartYear || !incomeEndYear) return true
+      return incomeStartYear < incomeEndYear
     }
+    return true
+  },
+  options: (data: { className: string }) => {
+    const { className } = data
+    if (className === "Salary" || className === "AuDefinedBenefits") {
+      const { income } = data as IncomeAsset
+      const { incomeStartYear, incomeEndYear } = income
+      return {
+        message: `The income start year ${incomeStartYear} should be before the income end year ${incomeEndYear}`,
+        path: ["income.incomeStartYear"]
+      }
+    }
+    return { message: "Validation Error" }
   }
 }
 
-type DrawdownOrderValidatorProps = { canDrawdown?: boolean | string; drawdownOrder?: number }
 export const drawdownOrderValidator = {
-  validator: ({ canDrawdown, drawdownOrder }: DrawdownOrderValidatorProps) => {
-    if (canDrawdown && canDrawdown !== "N" && !drawdownOrder) return false
+  validator: (data: { className: AssetClass }): boolean => {
+    const { className } = data
+    if (isLiquidAsset(className)) {
+      const { drawdown, canDrawdown } = data as LiquidAsset
+      const { drawdownOrder } = drawdown || {}
+      if (canDrawdown && !drawdownOrder) return false
+      return true
+    }
     return true
   },
   options: {
     message: "A drawdownable asset must have a drawdown order set",
     path: ["canDrawdown"]
+  }
+}
+
+export const propertyValidator = {
+  validator: (data: { className: string }): boolean => {
+    const { className } = data
+    if (["AuProperty"].includes(className)) {
+      const { property } = data as PropertyAsset
+      const { isRented, rentalIncomePerMonth } = property
+      if (isRented && !rentalIncomePerMonth) return false
+      return true
+    }
+    return true
+  },
+  options: {
+    message: "Rented out properties must have a rental income.",
+    path: ["property.isRented"]
   }
 }

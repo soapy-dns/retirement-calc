@@ -8,10 +8,10 @@ import { getDrawdownableAssets } from "../autoDrawdowns/getDrawdownableAssets"
 import { sortByPreference } from "../utils/sortAssetsByPreference"
 import { groupAssetsByPreference } from "./groupAssetsByPreference"
 import { Earning } from "./types"
-import { IScenario } from "../../data/schema/config"
 import { InflationContext } from "@/app/lib/calculations/types"
 import { Salary } from "./Salary"
 import { getAssetData } from "../../data/scenarios"
+import { IAsset, IScenario } from "../../data/schema/config"
 
 export const buildInitialAssets = (
   startingYear: number,
@@ -21,21 +21,21 @@ export const buildInitialAssets = (
   const { assets: assetsData } = scenario
 
   // TODO: don't need to pass startingYear down.  Probably shouldn't have to pass scenario
-  return assetsData.map((asset) => {
-    const { className, ...options } = asset
+  return assetsData.map((assetConfig: IAsset) => {
+    const { className, ...options } = assetConfig
     switch (className) {
       case "AuBank":
-        return new AuBank({ ...options, startingYear, scenario })
+        return new AuBank(assetConfig, startingYear, scenario)
       case "AuSuper":
-        return new AuSuper({ ...options, startingYear, scenario })
+        return new AuSuper(assetConfig, startingYear, scenario)
       case "AuDefinedBenefits":
-        return new AuDefinedBenefits({ ...options, startingYear, scenario }, inflationContext)
+        return new AuDefinedBenefits(assetConfig, startingYear, scenario, inflationContext)
       case "Salary":
-        return new Salary({ ...options, startingYear, scenario }, inflationContext)
+        return new Salary(assetConfig, startingYear, scenario, inflationContext)
       case "AuShares":
-        return new AuShares({ ...options, startingYear, scenario })
+        return new AuShares(assetConfig, startingYear, scenario)
       case "AuProperty":
-        return new AuProperty({ ...options, startingYear, scenario }, inflationContext)
+        return new AuProperty(assetConfig, startingYear, scenario, inflationContext)
       default:
         // maybe should have a default which is the same next year
         throw new Error(`Unknown asset ${className}`)
@@ -48,16 +48,16 @@ export const getAssetWithMatchingName = (scenario: IScenario, assetName: string)
   return getAssetData(scenario, assetName)
 }
 
-export const getGroupedAssets = (year: number, assets: Asset[]) => {
-  // some assets cannot be drawndown eg property
+export const getGroupedDrawdownableAssets = (year: number, assets: Asset[]) => {
   const drawdownableAssets = getDrawdownableAssets(assets, year)
+
+  drawdownableAssets.forEach((it) => it.name)
 
   const sortedByPreference = sortByPreference(drawdownableAssets)
 
   return groupAssetsByPreference(sortedByPreference)
 }
 
-// TODO: unit test
 export const canDrawdownAssets = (assets: Asset[], year: number) => {
   const drawdownableAmount = assets.reduce((accum, asset: Asset) => {
     if (asset.canDrawdown) {

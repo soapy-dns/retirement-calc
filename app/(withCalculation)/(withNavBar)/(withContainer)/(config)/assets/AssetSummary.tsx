@@ -37,7 +37,7 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
 
   const { AssetClassIcon, type } = getAssetDisplayDetails(asset)
 
-  const { name, description, value, income, incomeBucket } = asset
+  const { name, description, incomeBucket } = asset
 
   const transfersExist = hasTransfers(asset)
 
@@ -70,18 +70,18 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
               <b>Description:</b>
               {description}
             </p>
-            {value > 0 && (
-              <p className="flex gap-2">
-                <b>Initial value:</b>
-                <span>{currencyFormatter.format(value)}</span>
-              </p>
-            )}
-            {income && (
+            {asset.className === "Salary" || asset.className === "AuDefinedBenefits" ? (
               <p className="flex gap-2">
                 <b>Initial income:</b>
-                <span>{currencyFormatter.format(income)}</span>
+                <span>{currencyFormatter.format(asset.income.incomeAmt)}</span>
+              </p>
+            ) : (
+              <p className="flex gap-2">
+                <b>Initial value:</b>
+                <span>{currencyFormatter.format(asset.value)}</span>
               </p>
             )}
+
             <ButtonGroup>
               <Button buttonType={ButtonType.primary} onClick={handleEdit}>
                 <div className="flex items-center">

@@ -6,7 +6,7 @@ import { ScenarioContext } from "../context/ScenarioContext"
 export const useAsset = () => {
   const { selectedScenario, updateScenario, calculationResults } = useContext(ScenarioContext)
 
-  const getAssetDetails = (id: string) => {
+  const getAssetDetails = (id: string): IAsset | undefined => {
     const foundAsset = selectedScenario?.assets.find((asset) => asset.id === id)
     return foundAsset
   }
@@ -59,8 +59,11 @@ export const useAsset = () => {
     return { success }
   }
 
-  const addAsset = async (asset: Omit<IAsset, "id">): Promise<{ success: boolean }> => {
-    const newAssets = [...selectedScenario.assets].concat({ ...asset, id: getRandomKey() })
+  const addAsset = async (assetConfig: Omit<IAsset, "id">): Promise<{ success: boolean }> => {
+    const oldAssets: IAsset[] = [...selectedScenario.assets]
+    const additionalAsset = { ...assetConfig, id: getRandomKey() } as IAsset
+
+    const newAssets = oldAssets.concat([additionalAsset])
 
     newAssets.sort((a, b) => {
       if (a.className > b.className) return 1

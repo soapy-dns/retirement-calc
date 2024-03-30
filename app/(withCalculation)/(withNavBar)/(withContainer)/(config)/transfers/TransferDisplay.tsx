@@ -34,7 +34,7 @@ export const TransferDisplay: FunctionComponent<Props> = ({ transfers }) => {
 
   const getDisplayValue = (value: string) => {
     const matchingOption = transferOptions.find((it) => it.value === value)
-    if (!matchingOption) throw new Error("No matching option found")
+    if (!matchingOption) throw new Error(`No matching option found for ${value}`)
     return matchingOption?.label
   }
 

@@ -13,7 +13,9 @@
         "value": 100000,
         "assetOwners": ["Him"],
         "canDrawdown": true,
-        "drawdownOrder": 50
+        "drawdown": {
+          "drawdownOrder": 50
+        }
       },
       {
         "id": "2",
@@ -25,7 +27,9 @@
         "assetOwners": ["Him"],
         "incomeBucket": true,
         "canDrawdown": true,
-        "drawdownOrder": 10
+        "drawdown": {
+          "drawdownOrder": 10
+        }
       }
     ],
     "context": {
@@ -52,17 +56,17 @@
       },
       "inflation": [
         {
-          "fromYear": 2023,
+          "fromYear": 2024,
           "inflationRate": 0.03
         }
       ],
       "livingExpenses": [
         {
-          "fromYear": 2023,
+          "fromYear": 2024,
           "amountInTodaysTerms": 80000
         },
         {
-          "fromYear": 2038,
+          "fromYear": 2039,
           "amountInTodaysTerms": 50000
         }
       ]

@@ -2,6 +2,7 @@ import { ISelectOption } from "@/app/lib/data/types"
 import { Control, Controller } from "react-hook-form"
 import { FormGroup } from "../common/FormGroup"
 import { Select } from "../common/Select"
+import { useError } from "../../hooks/useError"
 
 type SelectProps = {
   label: string
@@ -31,10 +32,12 @@ export const SelectQuestion = ({
   control,
   validationRules,
   defaultValue,
-  helpText,
-  errorMsg
-}: SelectProps) => {
+  helpText
+} // errorMsg
+: SelectProps) => {
   const nameOfEl = name ?? id
+
+  const errorMsg = useError(control, nameOfEl)
 
   // TODO: fix isError
   return (

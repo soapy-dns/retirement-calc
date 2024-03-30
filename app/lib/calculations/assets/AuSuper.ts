@@ -1,41 +1,39 @@
 import { Asset } from "./Asset"
-import { AssetClass } from "@/app/lib/calculations/types"
-import { AssetConfig, YearData } from "./types"
+import { AssetGroup } from "@/app/lib/calculations/types"
+import { YearData } from "./types"
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
-import { SuperContext, Transfer } from "../../data/schema/config"
+import { IAsset, IScenario, SuperContext, Transfer } from "../../data/schema/config"
 import { getTransferAmt } from "../transfers/getTransfers"
-
-// const getFullTransfers = (transfers: Transfer[]) => {
-//   return 0
-// }
 
 export class AuSuper extends Asset {
   capitalAsset: boolean
-  assetClass: AssetClass
+  assetGroup: AssetGroup
   percOfEarningsTaxable: number
   percOfDrawdownTaxable: number
   transfers?: Transfer[]
   superContext: SuperContext
 
-  constructor(assetConfig: AssetConfig) {
+  // TODO: instead of passing in the entire scenario, we should maybe just pass
+  // in the relevant context config
+  constructor(assetConfig: IAsset, startingYear: number, scenario: IScenario) {
+    if (assetConfig.className !== "AuSuper") throw new Error("Invalid config for Super")
+
     super({ ...assetConfig, incomeProducing: false })
+
     this.capitalAsset = true
-    this.assetClass = AssetClass.super
+    this.assetGroup = AssetGroup.super
 
     const {
-      value,
-      startingYear,
-      scenario: {
-        transfers,
-        context: { taxResident, superAu }
-      }
-    } = assetConfig
-    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetClass)
-    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetClass)
+      transfers,
+      context: { taxResident, superAu }
+    } = scenario
+    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
+
     this.transfers = transfers
     this.superContext = superAu
 
-    this.history.push({ value, year: startingYear, transferAmt: 0, income: 0 })
+    this.history.push({ value: assetConfig.value, year: startingYear, transferAmt: 0, income: 0 })
   }
 
   calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
@@ -61,6 +59,6 @@ export class AuSuper extends Asset {
   }
 
   getAssetClass = () => {
-    return AssetClass.super
+    return AssetGroup.super
   }
 }

@@ -3,14 +3,13 @@ import { IncomeTaxCalc } from "./taxCalcs/incomeTaxCalc"
 import { getScenarioTransfersForYear } from "../transfers/transferUtils"
 import { IScenario, Transfer, Country } from "../../data/schema/config"
 import { Asset } from "../assets/Asset"
-import { AssetClass, InflationContext } from "../types"
+import { AssetGroup, InflationContext } from "../types"
 
 export const getOwnersTaxableEarningsAmt = (earningsFromAssets: Earning[], owner: string, year: number) => {
   const ownersTaxableEarningsFromAssets = earningsFromAssets.filter(
     (earning) => earning.owner === owner && earning.percOfEarningsTaxable > 0
   )
 
-  // console.log("--ownersTaxableEarningsFromAssets--", ownersTaxableEarningsFromAssets)
   const ownersTaxableEarningsFromAssetsAmt = ownersTaxableEarningsFromAssets.reduce((accum, earning) => {
     const yearData = earning.history.find((it) => it.year === year)
 
@@ -97,12 +96,6 @@ export const calculateTaxes = (
     const ownersTaxableEarningsAmt = getOwnersTaxableEarningsAmt(earningsFromAssets, owner, year)
 
     const ownersTotalTaxableAmt = ownersTaxableEarningsAmt + manualTaxableDrawdownAmt
-    // console.log(
-    //   "--ownersTotalTaxableAmt, ownersTaxableEarningsAmt, manualTaxableDrawdownAmt--",
-    //   ownersTotalTaxableAmt,
-    //   ownersTaxableEarningsAmt,
-    //   manualTaxableDrawdownAmt
-    // )
 
     const ownersTaxAmt = incomeTaxCalculator.getTax(ownersTotalTaxableAmt, year)
 
@@ -118,19 +111,19 @@ export const calculateTaxes = (
 }
 
 // TODO: this function to Asset?
-export const getPercDrawdownTaxable = (taxResident: Country, assetCountry: Country = "AU", assetClass: AssetClass) => {
-  if (taxResident === "SC" && assetCountry === "SC" && assetClass === AssetClass.super) {
+export const getPercDrawdownTaxable = (taxResident: Country, assetCountry: Country = "AU", assetClass: AssetGroup) => {
+  if (taxResident === "SC" && assetCountry === "SC" && assetClass === AssetGroup.super) {
     return 75
-  } else if (taxResident === assetCountry || assetClass !== AssetClass.super) {
+  } else if (taxResident === assetCountry || assetClass !== AssetGroup.super) {
     return 0
   }
   return 100
 }
 
 // TODO: this function to Asset?
-export const getPercIncomeTaxable = (taxResident: Country, assetCountry: Country = "AU", assetClass: AssetClass) => {
+export const getPercIncomeTaxable = (taxResident: Country, assetCountry: Country = "AU", assetClass: AssetGroup) => {
   // maybe for things like ISAs?
-  if (taxResident === assetCountry && assetClass === AssetClass.income_defined_benefit) {
+  if (taxResident === assetCountry && assetClass === AssetGroup.income_defined_benefit) {
     return 0
   }
   return 100

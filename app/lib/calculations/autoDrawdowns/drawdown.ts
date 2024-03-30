@@ -72,6 +72,7 @@ const drawdownIteration = (
 }
 
 /**
+ * TODO: the inputs are huge, making this practically impossible to test
  * A drawdown is value taken from an asset.
  * Calculate and apply the drawdowns required to math the desired spend / expenses
  * As drawdowns an be taxed, we need to iterate

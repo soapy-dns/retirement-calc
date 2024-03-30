@@ -1,5 +1,5 @@
 import { Asset } from "./Asset"
-import { AssetClass } from "@/app/lib/calculations/types"
+import { AssetGroup } from "@/app/lib/calculations/types"
 
 export interface AssetSplitItem {
   assetClass: string
@@ -7,7 +7,7 @@ export interface AssetSplitItem {
 }
 
 export const getAssetSplit = (assets: Asset[]): AssetSplitItem[] => {
-  const groupedAssets = Object.keys(AssetClass).map((assetClassKey) => {
+  const groupedAssets = Object.keys(AssetGroup).map((assetClassKey) => {
     const assetClassAmt = assets.reduce((accum, asset) => {
       return asset.getAssetClass() === assetClassKey ? accum + asset.history[0].value : accum
     }, 0)

@@ -4,51 +4,99 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { AssetEditForm } from "../AssetEditForm"
 import {
-  AssetType,
   IAsset,
   CountryEnum,
-  IsFutureOrCurrentYear,
   YesNoSchema,
   IsNumber,
-  IsOptionalFutureOrCurrentYear
+  IsOptionalFutureOrCurrentYear,
+  AssetClassEnum,
+  IncomeAsset,
+  CapitalAsset,
+  PropertyAsset,
+  BaseAsset,
+  LiquidAsset,
+  IsOptionalNumber
 } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { useAsset } from "@/app/ui/hooks/useAsset"
 import { useOwner } from "@/app/ui/hooks/useOwner"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
-import { drawdownOrderValidator, incomeValidator } from "@/app/lib/data/schema/config/validation"
+import { isCapitalAsset, isIncomeAsset, isLiquidAsset, isPropertyAsset } from "@/app/ui/utils"
 
 // There is some duplication with AssetSchema - how can we minimise this?
 const FormSchema = z
   .object({
-    name: z.string(),
-    description: z.string(),
+    name: z.string().min(5),
+    description: z.string().min(20),
     country: CountryEnum,
-    assetType: z.string(),
-    value: z.coerce.number().gte(0).optional(), // can we make this optional?
-    income: z.coerce.number().optional(), // value and income should be mutually exclusive
+    assetType: AssetClassEnum,
+    value: z.coerce.number().gte(0).optional(),
     owners: z.string().array().nonempty(),
     // assetOwners: z.string().array().nonempty(),
     incomeBucket: YesNoSchema.optional(),
     canDrawdown: YesNoSchema.optional(), //.transform((val) => val === "Y"),
     drawdownFrom: IsOptionalFutureOrCurrentYear,
-    drawdownOrder: IsNumber.optional(),
-    preferredMinAmt: IsNumber.optional(),
+    drawdownOrder: IsOptionalNumber,
+    preferredMinAmt: IsOptionalNumber,
     isRented: YesNoSchema.optional(),
     rentalStartYear: IsOptionalFutureOrCurrentYear,
     rentalEndYear: IsOptionalFutureOrCurrentYear,
     rentalIncome: z.coerce.number().gte(0).optional(),
     rentalExpenses: z.coerce.number().gte(0).optional(),
+    incomeAmt: z.coerce.number().optional(), // value and income should be mutually exclusive
     incomeStartYear: IsOptionalFutureOrCurrentYear,
     incomeEndYear: IsOptionalFutureOrCurrentYear
   })
-  .refine(incomeValidator.validator, incomeValidator.options)
-  .refine(drawdownOrderValidator.validator, drawdownOrderValidator.options)
   .refine(
-    ({ income, owners }) => {
-      console.log("income, owners", income, owners)
-      if (income && owners.length > 1) return false
+    ({ assetType, value }) => {
+      if (isCapitalAsset(assetType) && !value) return false
+      return true
+    },
+    { message: "The asset value is required", path: ["value"] }
+  )
+  .refine(
+    ({ assetType, incomeAmt }) => {
+      if (isIncomeAsset(assetType) && !incomeAmt) return false
+      return true
+    },
+    { message: "The income amount must be entered for this type of asset", path: ["incomeAmt"] }
+  )
+  .refine(
+    ({ canDrawdown, drawdownOrder }) => {
+      return !canDrawdown || (canDrawdown && drawdownOrder)
+    },
+    {
+      message: "As this is an asset which can be drawndown, the drawdown order should be set.",
+      path: ["drawdownOrder"]
+    }
+  )
+  .refine(
+    ({ incomeStartYear, incomeEndYear }) => {
+      if (!incomeStartYear || !incomeEndYear) return true
+      return incomeStartYear < incomeEndYear
+    },
+    ({ incomeStartYear, incomeEndYear }) => {
+      return {
+        message: `The income start year ${incomeStartYear} should be before the income end year ${incomeEndYear}.`,
+        path: ["incomeStartYear"]
+      }
+    }
+  )
+  .refine(
+    ({ canDrawdown, drawdownOrder }) => {
+      if (canDrawdown && canDrawdown !== "N" && !drawdownOrder) return false
+      return true
+    },
+    {
+      message: "A drawdownable asset must have a drawdown order set",
+      path: ["canDrawdown"]
+    }
+  )
+  .refine(
+    ({ incomeAmt, owners }) => {
+      console.log("income, owners", incomeAmt, owners)
+      if (incomeAmt && owners.length > 1) return false
       return true
     },
     { message: "An income asset should only have 1 owner", path: ["owners"] }
@@ -56,14 +104,13 @@ const FormSchema = z
 
 type FormDataType = z.infer<typeof FormSchema>
 
-const getAssetValuesFromForm = (data: FormDataType): Omit<AssetType, "id"> => {
+const getAssetConfigFromForm = (data: FormDataType): Omit<IAsset, "id"> => {
   const {
     name,
     description,
     country,
     assetType,
     value,
-    income,
     owners,
     canDrawdown,
     drawdownOrder,
@@ -75,46 +122,72 @@ const getAssetValuesFromForm = (data: FormDataType): Omit<AssetType, "id"> => {
     rentalEndYear,
     rentalIncome,
     rentalExpenses,
+    incomeAmt,
     incomeStartYear,
     incomeEndYear
   } = data
 
   // strings should already be coerced into strings by zod
-  return {
+  const assetConfig: Omit<BaseAsset, "id"> = {
     name,
     description,
     country,
     className: assetType,
-    value: value || 0, // TODO: make value optional
-    // value: value ? +value : 0, // TODO: this should really be undefined but it breaks stuff
-    income: income ? +income : undefined,
-    assetOwners: owners,
-    canDrawdown: canDrawdown === "Y",
-    drawdownOrder: drawdownOrder ? +drawdownOrder : undefined,
-    drawdownFrom: drawdownFrom ? +drawdownFrom : undefined,
-    incomeBucket: incomeBucket === "Y",
-    preferredMinAmt: preferredMinAmt ? +preferredMinAmt : undefined,
-    property: {
+    assetOwners: owners
+  }
+  if (isCapitalAsset(assetType)) {
+    const capitalAsset = assetConfig as CapitalAsset
+    if (value) {
+      capitalAsset.value = value
+    }
+  }
+
+  if (isIncomeAsset(assetType) && incomeAmt) {
+    const incomeAssetConfig = assetConfig as IncomeAsset
+    incomeAssetConfig.income = {
+      incomeAmt: incomeAmt,
+      incomeStartYear,
+      incomeEndYear
+    }
+  }
+
+  if (isPropertyAsset(assetType)) {
+    const propertyAssetConfig = assetConfig as PropertyAsset
+    propertyAssetConfig.property = {
       isRented: isRented === "Y",
       rentalStartYear,
       rentalEndYear,
       rentalIncomePerMonth: rentalIncome ? +rentalIncome : undefined,
       rentalExpensesPerMonth: rentalExpenses ? +rentalExpenses : undefined
-    },
-    incomeStartYear: incomeStartYear ? +incomeStartYear : undefined,
-    incomeEndYear: incomeEndYear ? +incomeEndYear : undefined
+    }
   }
+
+  if (isLiquidAsset(assetType)) {
+    const liquidAssetConfig = assetConfig as LiquidAsset
+    liquidAssetConfig.canDrawdown = canDrawdown === "Y"
+
+    if (liquidAssetConfig.canDrawdown) {
+      const drawdown = {
+        drawdownOrder: drawdownOrder ? +drawdownOrder : undefined,
+        drawdownFrom: drawdownFrom ? +drawdownFrom : undefined,
+        preferredMinAmt: preferredMinAmt ? +preferredMinAmt : undefined
+      }
+      liquidAssetConfig.drawdown = drawdown
+    }
+
+    liquidAssetConfig.incomeBucket = incomeBucket === "Y"
+  }
+
+  return assetConfig
 }
 
-const marshall = (data: FormDataType, asset: IAsset) => {
-  const newFields = getAssetValuesFromForm(data)
+const marshall = (data: FormDataType, assetConfig: IAsset): IAsset => {
+  const newFields = getAssetConfigFromForm(data)
 
-  const newAssets = {
-    ...asset,
+  return {
+    ...assetConfig,
     ...newFields
-  }
-
-  return newAssets
+  } as IAsset
 }
 
 export default function AssetEditPage({ params }: { params: { id: string } }) {
@@ -123,33 +196,40 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
 
   const { getAssetDetails, updateAsset, addAsset, hasTransfers } = useAsset()
   const { getOwners } = useOwner()
-  const asset = getAssetDetails(id)
+  const assetConfig = getAssetDetails(id)
   const owners = getOwners()
 
-  const {
-    name,
-    description,
-    country = "AU",
-    className, // assetType
-    value,
-    income,
-    assetOwners = [],
-    incomeBucket,
-    preferredMinAmt,
-    canDrawdown,
-    drawdownOrder,
-    drawdownFrom,
-    property,
-    incomeStartYear,
-    incomeEndYear
-  } = asset || {}
-  const { isRented, rentalStartYear, rentalEndYear, rentalExpensesPerMonth, rentalIncomePerMonth } = property || {}
+  const { name, description, country = "AU", className, assetOwners = [], incomeBucket } = assetConfig || {}
 
-  // TODO: I'm sure we can do this better for radio buttons
+  let canDrawdown, drawdownFrom, drawdownOrder, preferredMinAmt, drawdown
+  if (className && isLiquidAsset(className)) {
+    // console.log('canDrawdown, drawdown', canDrawdown, drawdown)
+    ;({ canDrawdown, drawdown } = assetConfig as LiquidAsset)
+    if (drawdown) {
+      ;({ drawdownFrom, drawdownOrder, preferredMinAmt } = drawdown)
+    }
+  }
+
+  let incomeAmt, incomeStartYear, incomeEndYear
+
+  if (className && isIncomeAsset(className)) {
+    const { income } = assetConfig as IncomeAsset
+    ;({ incomeAmt, incomeStartYear, incomeEndYear } = income)
+  }
+
+  let value
+  if (className && isCapitalAsset(className)) {
+    ;({ value } = assetConfig as CapitalAsset)
+  }
+  let isRented, rentalStartYear, rentalEndYear, rentalExpensesPerMonth, rentalIncomePerMonth
+  if (className && isPropertyAsset(className)) {
+    const { property } = assetConfig as PropertyAsset
+    ;({ isRented, rentalStartYear, rentalEndYear, rentalExpensesPerMonth, rentalIncomePerMonth } = property)
+  }
+
   const canDrawdownValue = canDrawdown ? "Y" : "N"
   const earningsAccumulated = incomeBucket ? "Y" : "N"
   const isRentedString = isRented ? "Y" : "N"
-
   const {
     handleSubmit,
     watch,
@@ -163,7 +243,6 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       country,
       assetType: className,
       value,
-      income,
       owners: assetOwners,
       incomeBucket: earningsAccumulated,
       preferredMinAmt: preferredMinAmt ?? 0,
@@ -175,6 +254,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       canDrawdown: canDrawdownValue,
       drawdownOrder,
       drawdownFrom: drawdownFrom,
+      incomeAmt,
       incomeStartYear,
       incomeEndYear
     },
@@ -185,12 +265,12 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
 
   const onSubmit = async (data: FormDataType) => {
     let success = false
-    if (asset) {
-      const newAssetConfig = marshall(data, asset)
+    if (assetConfig) {
+      const newAssetConfig = marshall(data, assetConfig)
       const { success: updateSuccess } = await updateAsset(newAssetConfig)
       success = updateSuccess
     } else {
-      const { success: addSuccess } = await addAsset(getAssetValuesFromForm(data))
+      const { success: addSuccess } = await addAsset(getAssetConfigFromForm(data))
       success = addSuccess
     }
 
@@ -218,7 +298,9 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       handleCancel={handleBack}
     >
       {/* {errors && <pre>{JSON.stringify(errors, null, 4)}</pre>} */}
-      {asset && hasTransfers(asset) && <Alert alertType={AlertType.info} heading="This asset has transfers" />}
+      {assetConfig && hasTransfers(assetConfig) && (
+        <Alert alertType={AlertType.info} heading="This asset has transfers" />
+      )}
       {/* @ts-ignore */}
       <AssetEditForm
         control={control}

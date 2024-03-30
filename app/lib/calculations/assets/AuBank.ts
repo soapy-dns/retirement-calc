@@ -1,39 +1,36 @@
 import { Asset } from "./Asset"
-import { AssetConfig, YearData } from "../assets/types"
-import { AssetClass } from "@/app/lib/calculations/types"
+import { YearData } from "../assets/types"
+import { AssetGroup } from "@/app/lib/calculations/types"
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
-import { CashContext, Transfer } from "../../data/schema/config"
-import { getStartingYear } from "../utils/getStartingYear"
+import { CashContext, IAsset, IScenario, Transfer } from "../../data/schema/config"
 import { getTransferAmt } from "../transfers/getTransfers"
 
 export class AuBank extends Asset {
   capitalAsset: boolean
-  assetClass: AssetClass
+  assetGroup: AssetGroup
   percOfEarningsTaxable: number
   percOfDrawdownTaxable: number
   cashContext: CashContext
   transfers?: Transfer[]
 
-  // TODO: transfers and scenario shouldn't really be passed down into this.
-  // scenario is passed in just for context and transfers
-  constructor(assetConfig: AssetConfig) {
+  constructor(assetConfig: IAsset, startingYear: number, scenario: IScenario) {
+    if (assetConfig.className !== "AuBank") throw new Error("Invalid config for Cash")
+
     super({ ...assetConfig, incomeProducing: true })
-    const { scenario, value } = assetConfig
     const {
       transfers,
       context: { auBank, taxResident }
     } = scenario
+
     this.cashContext = auBank
-    this.transfers = transfers // TODO: there has to be a better way!
+    this.transfers = transfers
 
     this.capitalAsset = true
-    this.assetClass = AssetClass.cash
-    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetClass)
-    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetClass)
+    this.assetGroup = AssetGroup.cash
+    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
 
-    const startingYear = getStartingYear()
-
-    this.history.push({ value, year: startingYear, income: 0, transferAmt: 0 })
+    this.history.push({ value: assetConfig.value, year: startingYear, income: 0, transferAmt: 0 })
   }
 
   calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
@@ -59,6 +56,6 @@ export class AuBank extends Asset {
   }
 
   getAssetClass = () => {
-    return AssetClass.cash
+    return AssetGroup.cash
   }
 }
