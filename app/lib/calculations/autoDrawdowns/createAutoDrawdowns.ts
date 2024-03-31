@@ -66,8 +66,9 @@ export const createAutoDrawdowns = (
 
           const nextHistory = asset.history.find((it) => it.year === year + 1) // next history - for manipulating it
           if (!nextHistory) throw new Error(`history cannot be found ${asset.name}, ${year}`)
-          // FIXME:
-          const amtCanRemove = nextHistory.value - asset.preferredMinAmt || 0
+
+          const amtCanRemove = nextHistory.value > asset.preferredMinAmt ? nextHistory.value - asset.preferredMinAmt : 0
+
           const amountToRemove =
             amtCanRemove > averageToRemoveFromEachAsset
               ? Math.round(averageToRemoveFromEachAsset)

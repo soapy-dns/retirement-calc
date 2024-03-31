@@ -85,12 +85,22 @@ const FormSchema = z
   )
   .refine(
     ({ canDrawdown, drawdownOrder }) => {
-      if (canDrawdown && canDrawdown !== "N" && !drawdownOrder) return false
+      if (canDrawdown === "Y" && !drawdownOrder) return false
       return true
     },
     {
       message: "A drawdownable asset must have a drawdown order set",
       path: ["canDrawdown"]
+    }
+  )
+  .refine(
+    ({ canDrawdown, preferredMinAmt, value }) => {
+      if (canDrawdown === "Y" && (preferredMinAmt || 0) > (value || 0)) return false
+      return true
+    },
+    {
+      message: "The preferred minimum amount should be less than the initial value.",
+      path: ["preferredMinAmt"]
     }
   )
   .refine(

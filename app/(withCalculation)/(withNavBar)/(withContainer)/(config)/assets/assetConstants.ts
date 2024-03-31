@@ -32,7 +32,7 @@ export const assetConstants = {
   },
 
   VALUE: {
-    LABEL: "Value.",
+    LABEL: "Initial value.",
     HELP_TEXT: "The value of the asset at the start of the term."
   },
   INCOME: {
