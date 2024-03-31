@@ -1,8 +1,8 @@
 import { YearData } from "./types"
 import { AssetGroup } from "@/app/lib/calculations/types"
 import { Country } from "../tax/taxCalcs/types"
-import { AssetClass, IAsset, LiquidAsset } from "../../data/schema/config"
-import { isLiquidAsset } from "@/app/ui/utils"
+import { AssetClass, CashAsset, IAsset, LiquidAsset } from "../../data/schema/config"
+import { isCashAsset, isLiquidAsset } from "@/app/ui/utils"
 
 type Props = IAsset & {
   incomeProducing: boolean
@@ -37,7 +37,7 @@ export abstract class Asset {
 
   // TODO: can this be improved -> https://www.digitalocean.com/community/tutorials/how-to-use-classes-in-typescript
   constructor(assetConfig: Props) {
-    const { id, className, name, description, incomeProducing, assetOwners, incomeBucket, country = "AU" } = assetConfig
+    const { id, className, name, description, incomeProducing, assetOwners, country = "AU" } = assetConfig
 
     this.id = id
     this.className = className
@@ -45,10 +45,14 @@ export abstract class Asset {
     this.description = description
     this.incomeProducing = incomeProducing
     this.assetOwners = assetOwners
-    this.incomeBucket = incomeBucket || false
     this.country = country
     if (isLiquidAsset(className)) {
       const { canDrawdown, drawdown } = assetConfig as LiquidAsset
+      if (isCashAsset(className)) {
+        const { incomeBucket } = assetConfig as CashAsset
+        this.incomeBucket = incomeBucket
+      }
+
       this.canDrawdown = canDrawdown || false
       if (drawdown) {
         const { drawdownOrder, drawdownFrom = 99, preferredMinAmt = 0 } = drawdown

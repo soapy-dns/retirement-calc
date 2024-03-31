@@ -185,10 +185,6 @@ export const ScenarioSchema = z
     message: "1 and only 1 asset should be marked as an 'earnings bucket'"
   })
 
-// .refine(({ assets }) => validateEarningsBucket(assets), {
-//   message: "1 and only 1 asset should be marked as an 'earnings bucket'"
-// })
-
 export type IScenario = z.infer<typeof ScenarioSchema>
 export type ContextConfig = z.infer<typeof contextSchema>
 export type LivingExpensesRecord = z.infer<typeof LivingExpensesSchema>

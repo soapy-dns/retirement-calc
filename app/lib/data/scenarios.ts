@@ -224,8 +224,7 @@ export const scenarios: IScenario[] = [
         canDrawdown: true,
         drawdown: {
           drawdownOrder: 50
-        },
-        incomeBucket: false
+        }
       },
       {
         id: "HIS_UK_SUPER",
@@ -262,7 +261,7 @@ export const scenarios: IScenario[] = [
         assetOwners: ["Her", "Him"],
         canDrawdown: true,
         drawdown: {
-          drawdownOrder: 60
+          drawdownOrder: 50
         }
       },
       {
@@ -274,7 +273,6 @@ export const scenarios: IScenario[] = [
         value: 10000,
         assetOwners: ["Her", "Him"],
         incomeBucket: true,
-        preferredMinAmt: 10000,
         canDrawdown: true,
         drawdown: {
           drawdownOrder: 20,
@@ -289,6 +287,7 @@ export const scenarios: IScenario[] = [
         className: "AuBank",
         value: 1000,
         assetOwners: ["Her", "Him"],
+        incomeBucket: false,
         canDrawdown: true,
         drawdown: {
           drawdownOrder: 10

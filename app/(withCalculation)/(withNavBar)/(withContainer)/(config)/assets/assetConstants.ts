@@ -8,7 +8,7 @@ export const assetConstants = {
     HELP_TEXT: "The country the asset is in (defaults to Australia)."
   },
   EARNINGS_BUCKET: {
-    LABEL: "Earnings bucket",
+    LABEL: "Earnings to be accumulated in this asset?",
     HELP_TEXT:
       "Earnings from other assets are accumulated here - perhaps this should be outside individual assets as only 1 can be active."
   },

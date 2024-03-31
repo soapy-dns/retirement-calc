@@ -13,11 +13,13 @@ import { assetTypeOptions, drawdownOrderOptions } from "./assetTypeOptions"
 import { validateOwners } from "@/app/ui/validation/ownersValidation"
 import { YesNo } from "../types"
 import { AssetType } from "@/app/lib/data/types"
+import { isCashAsset } from "@/app/ui/utils"
+import { AssetClass } from "@/app/lib/data/schema/config"
 
 interface Props {
   control: Control<any, object>
   register: Function
-  assetType: string
+  assetType: AssetClass
   drawdownSet: string
   isRentedFormValue: YesNo
   owners: string[]
@@ -97,14 +99,16 @@ export const AssetEditForm: FunctionComponent<Props> = ({
             helpText={assetConstants.VALUE.HELP_TEXT}
           />
 
-          <RadioButtonQuestion
-            id="incomeBucket"
-            control={control}
-            label={assetConstants.EARNINGS_BUCKET.LABEL}
-            values={yesNoOptions}
-            variant={RadioQuestionVariant.BLOCK}
-            helpText={assetConstants.EARNINGS_BUCKET.HELP_TEXT}
-          />
+          {isCashAsset(assetType) && (
+            <RadioButtonQuestion
+              id="incomeBucket"
+              control={control}
+              label={assetConstants.EARNINGS_BUCKET.LABEL}
+              values={yesNoOptions}
+              variant={RadioQuestionVariant.BLOCK}
+              helpText={assetConstants.EARNINGS_BUCKET.HELP_TEXT}
+            />
+          )}
 
           {!isProperty && (
             <>

@@ -37,11 +37,11 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
 
   const { AssetClassIcon, type } = getAssetDisplayDetails(asset)
 
-  const { name, description, incomeBucket } = asset
+  const { name, description } = asset
 
   const transfersExist = hasTransfers(asset)
 
-  const disabled = removeAllowed || incomeBucket || transfersExist === true
+  const disabled = removeAllowed || transfersExist === true
 
   return (
     <Card>
