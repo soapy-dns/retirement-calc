@@ -1,17 +1,15 @@
 import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
 import {
   AssetClass,
-  AssetType,
-  CapitalAsset,
+  CashAsset,
   IAsset,
   IncomeAsset,
-  IncomeDetails,
   InflationRecord,
   LiquidAsset,
   LivingExpensesRecord,
   PropertyAsset
 } from ".."
-import { isLiquidAsset } from "@/app/ui/utils"
+import { isCashAsset, isLiquidAsset } from "@/app/ui/utils"
 
 // VALIDATE CONTEXT
 export const validateLivingExpensesVsInflation = (
@@ -28,8 +26,13 @@ export const validateLivingExpensesVsInflation = (
 
 // VALIDATE ASSETS
 export const validateEarningsBucket = (assets: IAsset[]) => {
-  // return false
-  const earningsBucketAssets = assets.filter((it) => it.incomeBucket === true)
+  const earningsBucketAssets = assets.filter((it) => {
+    if (isCashAsset(it.className)) {
+      const cashAsset = it as CashAsset
+      return cashAsset.incomeBucket === true
+    }
+    return false
+  })
 
   return earningsBucketAssets.length === 1
 }

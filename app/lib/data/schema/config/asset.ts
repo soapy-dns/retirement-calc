@@ -40,7 +40,6 @@ const AssetBaseSchema = z.object({
   description: z.string().optional(),
   assetOwners: z.string().array(), // assetOwners different for different classNames certainly diff validation
   // assetOwners: z.string().array().nonempty(),
-  incomeBucket: z.boolean().optional(),
   country: CountryEnum.optional() // defaults to AU
 })
 export type BaseAsset = z.infer<typeof AssetBaseSchema>
@@ -79,8 +78,9 @@ export type DefinedBenefits = z.infer<typeof DefinedBenefitsSchema>
 // export for mocking
 export const CashSchema = LiquidAssetSchema.extend({
   className: z.literal("AuBank"),
-  preferredMinAmt: z.number().optional()
+  incomeBucket: z.boolean()
 })
+export type CashAsset = z.infer<typeof CashSchema>
 
 export const SuperSchema = LiquidAssetSchema.extend({
   className: z.literal("AuSuper")

@@ -1,5 +1,5 @@
-import { IAsset, LiquidAsset } from "@/app/lib/data/schema/config"
-import { isLiquidAsset } from "@/app/ui/utils"
+import { CashAsset, IAsset, LiquidAsset } from "@/app/lib/data/schema/config"
+import { isCashAsset, isLiquidAsset } from "@/app/ui/utils"
 
 type YesNo = "Y" | "N"
 
@@ -21,10 +21,16 @@ export interface ChangedFormData {
 export const marshall = (data: ChangedFormData, asset: IAsset) => {
   const newAsset: IAsset = { ...asset }
 
-  if (isLiquidAsset(asset.className)) {
+  const { className } = asset
+
+  if (isLiquidAsset(className)) {
     const liquidAsset = newAsset as LiquidAsset
     liquidAsset.canDrawdown = data.canDrawdown === "Y"
-    liquidAsset.incomeBucket = data.earningsBucket === "Y"
+  }
+
+  if (isCashAsset(className)) {
+    const cashAsset = newAsset as CashAsset
+    cashAsset.incomeBucket = data.earningsBucket === "Y"
   }
 
   return newAsset

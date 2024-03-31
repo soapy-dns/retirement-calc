@@ -7,7 +7,6 @@ import {
   IAsset,
   CountryEnum,
   YesNoSchema,
-  IsNumber,
   IsOptionalFutureOrCurrentYear,
   AssetClassEnum,
   IncomeAsset,
@@ -15,20 +14,22 @@ import {
   PropertyAsset,
   BaseAsset,
   LiquidAsset,
-  IsOptionalNumber
+  IsOptionalNumber,
+  CashAsset
 } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { useAsset } from "@/app/ui/hooks/useAsset"
 import { useOwner } from "@/app/ui/hooks/useOwner"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
-import { isCapitalAsset, isIncomeAsset, isLiquidAsset, isPropertyAsset } from "@/app/ui/utils"
+import { isCapitalAsset, isCashAsset, isIncomeAsset, isLiquidAsset, isPropertyAsset } from "@/app/ui/utils"
+import { YesNo } from "../../types"
 
 // There is some duplication with AssetSchema - how can we minimise this?
 const FormSchema = z
   .object({
     name: z.string().min(5),
-    description: z.string().min(20),
+    description: z.string().min(10),
     country: CountryEnum,
     assetType: AssetClassEnum,
     value: z.coerce.number().gte(0).optional(),
@@ -63,15 +64,6 @@ const FormSchema = z
     { message: "The income amount must be entered for this type of asset", path: ["incomeAmt"] }
   )
   .refine(
-    ({ canDrawdown, drawdownOrder }) => {
-      return !canDrawdown || (canDrawdown && drawdownOrder)
-    },
-    {
-      message: "As this is an asset which can be drawndown, the drawdown order should be set.",
-      path: ["drawdownOrder"]
-    }
-  )
-  .refine(
     ({ incomeStartYear, incomeEndYear }) => {
       if (!incomeStartYear || !incomeEndYear) return true
       return incomeStartYear < incomeEndYear
@@ -83,6 +75,15 @@ const FormSchema = z
       }
     }
   )
+  // .refine(
+  //   ({ canDrawdown, drawdownOrder }) => {
+  //     return !canDrawdown || (canDrawdown && drawdownOrder)
+  //   },
+  //   {
+  //     message: "As this is an asset which can be drawndown, the drawdown order should be set.",
+  //     path: ["drawdownOrder"]
+  //   }
+  // )
   .refine(
     ({ canDrawdown, drawdownOrder }) => {
       if (canDrawdown === "Y" && !drawdownOrder) return false
@@ -184,8 +185,11 @@ const getAssetConfigFromForm = (data: FormDataType): Omit<IAsset, "id"> => {
       }
       liquidAssetConfig.drawdown = drawdown
     }
+  }
 
-    liquidAssetConfig.incomeBucket = incomeBucket === "Y"
+  if (isCashAsset(assetType)) {
+    const cashAssetConfig = assetConfig as CashAsset
+    cashAssetConfig.incomeBucket = incomeBucket === "Y"
   }
 
   return assetConfig
@@ -209,11 +213,10 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   const assetConfig = getAssetDetails(id)
   const owners = getOwners()
 
-  const { name, description, country = "AU", className, assetOwners = [], incomeBucket } = assetConfig || {}
+  const { name, description, country = "AU", className, assetOwners = [] } = assetConfig || {}
 
   let canDrawdown, drawdownFrom, drawdownOrder, preferredMinAmt, drawdown
   if (className && isLiquidAsset(className)) {
-    // console.log('canDrawdown, drawdown', canDrawdown, drawdown)
     ;({ canDrawdown, drawdown } = assetConfig as LiquidAsset)
     if (drawdown) {
       ;({ drawdownFrom, drawdownOrder, preferredMinAmt } = drawdown)
@@ -237,8 +240,13 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     ;({ isRented, rentalStartYear, rentalEndYear, rentalExpensesPerMonth, rentalIncomePerMonth } = property)
   }
 
+  let earningsAccumulated: YesNo | undefined
+  if (className && isCashAsset(className)) {
+    const cashAssetConfig = assetConfig as CashAsset
+    earningsAccumulated = cashAssetConfig.incomeBucket ? "Y" : "N"
+  }
+
   const canDrawdownValue = canDrawdown ? "Y" : "N"
-  const earningsAccumulated = incomeBucket ? "Y" : "N"
   const isRentedString = isRented ? "Y" : "N"
   const {
     handleSubmit,
