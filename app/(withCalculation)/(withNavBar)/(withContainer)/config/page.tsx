@@ -73,7 +73,7 @@ const ConfigPage: React.FC = () => {
         </Button>
       </div>
 
-      <div className="mb-4">
+      <div className="mb-8">
         <ScenarioDisplay />
       </div>
 
