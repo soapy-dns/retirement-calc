@@ -182,7 +182,7 @@ export const ScenarioSchema = z
     transfers: z.array(transferSchema).optional()
   })
   .refine(({ assets }) => validateEarningsBucket(assets), {
-    message: "1 and only 1 asset should be marked as an 'earnings bucket'"
+    message: "Please mark 1 and only 1 asset for accumulating any earnings."
   })
 
 export type IScenario = z.infer<typeof ScenarioSchema>
