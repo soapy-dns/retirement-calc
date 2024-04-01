@@ -64,19 +64,19 @@ export const assetConstants = {
   },
 
   DRAWDOWN_FROM: {
-    LABEL: "Drawdown start year (optional)",
+    LABEL: "Drawdown start year if not immediately (optional)",
     HELP_TEXT:
       "This value is optional and will default to the current year.  The year we can start drawing down on this asset.  For example we might not want to start drawing down on super until age 60 when the tax benefits kick in.  If this is not entered, it will be assumed that drawing down on the asset is fine from the start."
   },
   INCOME_START_YEAR: {
-    LABEL: "Income start year (optional)",
+    LABEL: "Year the income starts if not immediately (optional)",
     HELP_TEXT:
       "The year the income stream begins.  If there is no value, the income will be taken as being available immediately.  It is currently only possible to have 1 income period."
   },
   INCOME_END_YEAR: {
-    LABEL: "Income end year (optional)",
+    LABEL: "Year income ends if it doesn't continue indefinitely (optional)",
     HELP_TEXT:
-      "The year the income will end.  eg on retirement.  If there is no value, the income is assumed to continue indefinitely."
+      "The year the income will end.  eg on retirement.  If there is no value, the income is assumed to continue indefinitely - eg a defined benefits pension."
   },
   RENTAL_START_YEAR: {
     LABEL: "Rental start year (optional)",

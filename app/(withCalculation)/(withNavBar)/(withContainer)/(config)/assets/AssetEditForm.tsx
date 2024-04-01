@@ -13,7 +13,7 @@ import { assetTypeOptions, drawdownOrderOptions } from "./assetTypeOptions"
 import { validateOwners } from "@/app/ui/validation/ownersValidation"
 import { YesNo } from "../types"
 import { AssetType } from "@/app/lib/data/types"
-import { isCashAsset } from "@/app/ui/utils"
+import { isCapitalAsset, isCashAsset, isIncomeAsset, isLiquidAsset, isPropertyAsset } from "@/app/ui/utils"
 import { AssetClass } from "@/app/lib/data/schema/config"
 
 interface Props {
@@ -37,8 +37,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
   owners,
   register
 }) => {
-  const isIncomeFlag = isIncome(assetType)
-  const isProperty = assetTypeOptions.find((it) => it.value === assetType)?.assetClass === AssetGroup.property || false
   const showDrawdown = drawdownSet === "Y"
   const ownersOptions = owners.map((it) => ({ label: it, value: it }))
 
@@ -88,7 +86,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         })}
         helpText={assetConstants.OWNERS.HELP_TEXT}
       />
-      {!isIncomeFlag && (
+      {!isCapitalAsset(assetType) && (
         <>
           <InputQuestion
             id="value"
@@ -110,7 +108,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
             />
           )}
 
-          {!isProperty && (
+          {!isLiquidAsset(assetType) && (
             <>
               <RadioButtonQuestion
                 id="canDrawdown"
@@ -120,37 +118,38 @@ export const AssetEditForm: FunctionComponent<Props> = ({
                 variant={RadioQuestionVariant.BLOCK}
                 helpText={assetConstants.CAN_DRAWDOWN.HELP_TEXT}
               />
-            </>
-          )}
 
-          {showDrawdown && (
-            <>
-              <SelectQuestion
-                id="drawdownOrder"
-                control={control}
-                label={assetConstants.DRAWDOWN_ORDER.LABEL}
-                options={drawdownOrderOptions}
-                helpText={assetConstants.DRAWDOWN_ORDER.HELP_TEXT}
-              />
-              <InputQuestion
-                id="drawdownFrom"
-                control={control}
-                label={assetConstants.DRAWDOWN_FROM.LABEL}
-                restrictedCharSet={INTEGERS_ONLY}
-                helpText={assetConstants.DRAWDOWN_FROM.HELP_TEXT}
-              />
-              <InputQuestion
-                id="preferredMinAmt"
-                control={control}
-                label={assetConstants.PREFERRED_MIN_AMT.LABEL}
-                restrictedCharSet={INTEGERS_ONLY}
-                helpText={assetConstants.PREFERRED_MIN_AMT.HELP_TEXT}
-              />
+              {showDrawdown && (
+                <>
+                  <SelectQuestion
+                    id="drawdownOrder"
+                    control={control}
+                    label={assetConstants.DRAWDOWN_ORDER.LABEL}
+                    options={drawdownOrderOptions}
+                    helpText={assetConstants.DRAWDOWN_ORDER.HELP_TEXT}
+                  />
+                  <InputQuestion
+                    id="drawdownFrom"
+                    control={control}
+                    label={assetConstants.DRAWDOWN_FROM.LABEL}
+                    restrictedCharSet={INTEGERS_ONLY}
+                    helpText={assetConstants.DRAWDOWN_FROM.HELP_TEXT}
+                  />
+                  <InputQuestion
+                    id="preferredMinAmt"
+                    control={control}
+                    label={assetConstants.PREFERRED_MIN_AMT.LABEL}
+                    restrictedCharSet={INTEGERS_ONLY}
+                    helpText={assetConstants.PREFERRED_MIN_AMT.HELP_TEXT}
+                  />
+                </>
+              )}
             </>
           )}
         </>
       )}
-      {isIncomeFlag && (
+
+      {isIncomeAsset(assetType) && (
         <>
           <InputQuestion
             id="incomeAmt"
@@ -180,7 +179,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         </>
       )}
 
-      {isProperty && (
+      {isPropertyAsset(assetType) && (
         <>
           <RadioButtonQuestion
             id="isRented"

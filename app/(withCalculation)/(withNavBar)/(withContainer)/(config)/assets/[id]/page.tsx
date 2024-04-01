@@ -75,15 +75,6 @@ const FormSchema = z
       }
     }
   )
-  // .refine(
-  //   ({ canDrawdown, drawdownOrder }) => {
-  //     return !canDrawdown || (canDrawdown && drawdownOrder)
-  //   },
-  //   {
-  //     message: "As this is an asset which can be drawndown, the drawdown order should be set.",
-  //     path: ["drawdownOrder"]
-  //   }
-  // )
   .refine(
     ({ canDrawdown, drawdownOrder }) => {
       if (canDrawdown === "Y" && !drawdownOrder) return false
@@ -281,14 +272,14 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   if (!owners) return <div>No owners found</div>
 
   const onSubmit = async (data: FormDataType) => {
-    let success = false
+    // let success = false
     if (assetConfig) {
       const newAssetConfig = marshall(data, assetConfig)
       const { success: updateSuccess } = await updateAsset(newAssetConfig)
-      success = updateSuccess
+      // success = updateSuccess
     } else {
       const { success: addSuccess } = await addAsset(getAssetConfigFromForm(data))
-      success = addSuccess
+      // success = addSuccess
     }
 
     // backend could still say it an error, but I don't think we should stop nav at this point
