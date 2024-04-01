@@ -106,7 +106,6 @@ const FormSchema = z
   )
   .refine(
     ({ incomeAmt, owners }) => {
-      console.log("income, owners", incomeAmt, owners)
       if (incomeAmt && owners.length > 1) return false
       return true
     },
