@@ -86,7 +86,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         })}
         helpText={assetConstants.OWNERS.HELP_TEXT}
       />
-      {!isCapitalAsset(assetType) && (
+      {isCapitalAsset(assetType) && (
         <>
           <InputQuestion
             id="value"
@@ -108,7 +108,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
             />
           )}
 
-          {!isLiquidAsset(assetType) && (
+          {isLiquidAsset(assetType) && (
             <>
               <RadioButtonQuestion
                 id="canDrawdown"
