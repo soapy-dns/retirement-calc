@@ -1,4 +1,4 @@
-import { IsNumber, IsOptionalNumber } from ".."
+import { IsNumber, IsOptionalNumber } from "../schemaUtils"
 
 describe("IsNumber schema validation", () => {
   it.each`

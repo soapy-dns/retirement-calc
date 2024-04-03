@@ -30,14 +30,23 @@ export abstract class Asset {
   preferredMinAmt = 0
   drawdownOrder
   drawdownFrom // year from which we can start to drawdown
-
+  rateVariation
   country: Country
   public abstract capitalAsset: boolean
   abstract readonly assetGroup: AssetGroup
 
   // TODO: can this be improved -> https://www.digitalocean.com/community/tutorials/how-to-use-classes-in-typescript
   constructor(assetConfig: Props) {
-    const { id, className, name, description, incomeProducing, assetOwners, country = "AU" } = assetConfig
+    const {
+      id,
+      className,
+      name,
+      description,
+      incomeProducing,
+      assetOwners,
+      country = "AU",
+      rateVariation
+    } = assetConfig
 
     this.id = id
     this.className = className
@@ -46,6 +55,8 @@ export abstract class Asset {
     this.incomeProducing = incomeProducing
     this.assetOwners = assetOwners
     this.country = country
+    this.rateVariation = rateVariation ? rateVariation / 100 : 0
+
     if (isLiquidAsset(className)) {
       const { canDrawdown, drawdown } = assetConfig as LiquidAsset
       if (isCashAsset(className)) {

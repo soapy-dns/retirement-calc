@@ -55,9 +55,13 @@ export class Salary extends Asset {
     ) {
       newIncome = 0
     } else {
-      const inflationFactor = this.inflationContext[year - 1] ? this.inflationContext[year - 1].factor : 1
+      const rateVarianceFactor = this.rateVariation ? this.rateVariation + 1 : 1
 
-      newIncome = this.incomeAmount * inflationFactor
+      const adjustmentFactor = this.inflationContext[year - 1]
+        ? this.inflationContext[year - 1].factor * rateVarianceFactor
+        : 1
+
+      newIncome = this.incomeAmount * adjustmentFactor
     }
 
     const nextYearData = {

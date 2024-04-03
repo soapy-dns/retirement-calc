@@ -1,5 +1,5 @@
 import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
-import { IsFutureOrCurrentYear, IsOptionalFutureOrCurrentYear } from ".."
+import { IsFutureOrCurrentYear, IsOptionalFutureOrCurrentYear } from "../schemaUtils"
 
 describe("IsFutureYear", () => {
   it.each`

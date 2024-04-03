@@ -1,42 +1,9 @@
-import { currencyFormatter } from "@/app/ui/utils/formatter"
 import { z } from "zod"
-import { validateEarningsBucket, validateLivingExpensesVsInflation, yearNotPassed } from "./validation"
+
+import { validateEarningsBucket, validateLivingExpensesVsInflation } from "./validation"
 import { AssetSchema } from "./asset"
-
-const castEmptyStringToUndefined = (val?: unknown) => {
-  return val !== "" ? val : undefined
-}
-
-export const IsOptionalNumber = z.preprocess((val) => castEmptyStringToUndefined(val), z.coerce.number().optional())
-export const IsNumber = z.preprocess((val) => castEmptyStringToUndefined(val), z.coerce.number())
-
-export const IsFutureOrCurrentYear = z.preprocess(
-  (val) => castEmptyStringToUndefined(val),
-  z.coerce.number().refine(
-    (val) => yearNotPassed(val),
-    (val) => ({ message: `${val} is in the past` })
-  )
-)
-
-export const IsOptionalFutureOrCurrentYear = z.preprocess(
-  (val) => castEmptyStringToUndefined(val),
-  z.coerce
-    .number()
-    .optional()
-    .refine(
-      (val) => val === undefined || yearNotPassed(val),
-      (val) => {
-        return val === 0
-          ? { message: "This value is required." }
-          : {
-              message: `${val} is in the past.`
-            }
-      }
-    )
-)
-
-export const CountryEnum = z.enum(["AU", "SC"])
-export const YesNoSchema = z.enum(["Y", "N"])
+import { CountryEnum, IsFutureOrCurrentYear, YesNoSchema } from "./schemaUtils"
+import { currencyFormatter } from "@/app/ui/utils/formatter"
 
 const cashContextSchema = z.object({
   interestRate: z.number()
@@ -101,51 +68,6 @@ const transferSchema = z.discriminatedUnion("migrateAll", [transferWithMigrateAl
     )}) cannot be more than the value to transfer (${currencyFormatter.format(value || 0)})`
   })
 )
-
-// TODO: only 1 income bucket
-// const AssetSchema = z
-//   .object({
-//     id: z.string(),
-//     // className: AssetTypeEnum,
-//     className: z.string(),
-//     name: z.string(),
-//     description: z.string().optional(),
-//     value: z.number(), // TODO: make this optional
-//     income: z.number().optional(), // value and income should be mutually exclusive
-//     assetOwners: z.string().array(),
-//     // assetOwners: z.string().array().nonempty(),
-//     incomeBucket: z.boolean().optional(),
-//     canDrawdown: z.boolean().optional(),
-//     drawdownFrom: IsOptionalFutureOrCurrentYear,
-//     drawdownOrder: z.number().optional(),
-//     preferredMinAmt: z.number().optional(),
-//     property: z
-//       .object({
-//         isRented: z.boolean().optional(),
-//         rentalIncomePerMonth: z.number().gte(0).optional(),
-//         rentalExpensesPerMonth: z.number().gte(0).optional(),
-//         rentalStartYear: IsOptionalFutureOrCurrentYear,
-//         rentalEndYear: IsOptionalFutureOrCurrentYear
-//       })
-//       .optional(),
-
-//     incomeStartYear: IsOptionalFutureOrCurrentYear,
-//     incomeEndYear: IsOptionalFutureOrCurrentYear,
-//     country: CountryEnum.optional() // defaults to AU
-//   })
-//   .refine(incomeValidator.validator, incomeValidator.options)
-//   .refine(drawdownOrderValidator.validator, drawdownOrderValidator.options)
-//   .refine(
-//     ({ property }) => {
-//       if (!property) return true
-//       if (property.isRented && !property.rentalIncomePerMonth) return false
-//       return true
-//     },
-//     {
-//       message: "Rented out properties must have a rental income.",
-//       path: ["isRented"]
-//     }
-//   )
 
 const contextSchema = z
   .object({

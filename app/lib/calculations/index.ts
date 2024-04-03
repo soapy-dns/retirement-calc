@@ -213,7 +213,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     // NOW CREATE DATA IN FORMAT WHICH CAN BE USED BY THE FRONT END
     // TODO: THIS COULD BE MADE BETTER BY JUST PASSING INDIVIDUAL ROWS AND LETTING THE FRONT END DECIDE WHAT IT WANTS TO DO.
 
-    const calculationData: CalculationData = {}
+    // const calculationData: CalculationData = {}
 
     const assetRowData = assets.reduce((accum: AssetData, asset) => {
       if (asset.capitalAsset) {

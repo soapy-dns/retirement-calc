@@ -63,9 +63,14 @@ export class AuDefinedBenefits extends Asset {
     ) {
       newIncome = 0
     } else {
-      const inflationFactor = this.inflationContext[year - 1] ? this.inflationContext[year - 1].factor : 1
+      const rateVarianceFactor = this.rateVariation ? this.rateVariation + 1 : 1
 
-      newIncome = this.incomeAmount * inflationFactor
+      const adjustmentFactor = this.inflationContext[year - 1]
+        ? this.inflationContext[year - 1].factor * rateVarianceFactor
+        : 1
+      const roundedFactor = Math.round(adjustmentFactor * 100) / 100
+
+      newIncome = this.incomeAmount * roundedFactor
     }
 
     const nextYearData = { year: year + 1, value: 0, income: Math.round(newIncome) }

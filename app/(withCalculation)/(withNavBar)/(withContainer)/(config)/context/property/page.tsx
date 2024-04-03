@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
-import { ContextConfig, IsNumber } from "@/app/lib/data/schema/config"
+import { ContextConfig } from "@/app/lib/data/schema/config"
 import { DECIMALS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
@@ -13,6 +13,7 @@ import { useContext } from "react"
 import { useForm } from "react-hook-form"
 
 import { contextConstants } from "../contextConstants"
+import { IsNumber } from "@/app/lib/data/schema/config/schemaUtils"
 
 const FormSchema = z.object({
   growthRate: IsNumber

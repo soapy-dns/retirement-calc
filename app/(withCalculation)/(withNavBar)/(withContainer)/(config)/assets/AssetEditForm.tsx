@@ -1,4 +1,3 @@
-import { AssetGroup } from "@/app/lib/calculations/types"
 import { ALPHA_NUMERIC, INTEGERS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { CheckboxQuestion } from "@/app/ui/components/form/CheckboxQuestion"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
@@ -23,10 +22,6 @@ interface Props {
   drawdownSet: string
   isRentedFormValue: YesNo
   owners: string[]
-}
-const isIncome = (assetType: string) => {
-  const assetTypeOption = assetTypeOptions.find((it) => it.value === assetType)
-  return assetTypeOption?.income
 }
 
 export const AssetEditForm: FunctionComponent<Props> = ({
@@ -224,6 +219,16 @@ export const AssetEditForm: FunctionComponent<Props> = ({
             </>
           )}
         </>
+      )}
+
+      {assetType !== "AuShares" && (
+        <InputQuestion
+          id="rateVariation"
+          control={control}
+          label={assetConstants.RATE_VARIATION.LABEL}
+          restrictedCharSet={INTEGERS_ONLY}
+          helpText={assetConstants.RATE_VARIATION.HELP_TEXT}
+        />
       )}
     </form>
   )
