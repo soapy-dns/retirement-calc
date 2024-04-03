@@ -60,7 +60,9 @@ export class AuProperty extends Asset {
   // assets passed in so can calculate full transfers
   calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
     const { value: prevValue, year } = yearData
-    const { growthInterestRate } = this.propertyContext
+    const investmentReturn = this.rateVariation
+      ? this.propertyContext.growthInterestRate + this.rateVariation
+      : this.propertyContext.growthInterestRate
 
     const transferAmt = getTransferAmt(this.id, yearData, this.transfers, assets)
 
@@ -74,7 +76,7 @@ export class AuProperty extends Asset {
           : 0 // TODO: income tax
     }
 
-    const growth = (prevValue + transferAmt) * growthInterestRate
+    const growth = (prevValue + transferAmt) * investmentReturn
 
     const value = prevValue + growth + transferAmt
 

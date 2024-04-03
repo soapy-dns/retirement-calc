@@ -3,18 +3,18 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
-import { Country } from "@/app/lib/calculations/tax/taxCalcs/types"
-import { ContextConfig, CountryEnum, IsNumber } from "@/app/lib/data/schema/config"
+import { ContextConfig } from "@/app/lib/data/schema/config"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext } from "react"
 import { useForm } from "react-hook-form"
 import GeneralContextForm from "./GeneralContextForm"
+import { CountryEnum, IsOptionalNumber } from "@/app/lib/data/schema/config/schemaUtils"
 
 const FormSchema = z.object({
   taxResident: CountryEnum,
   currency: CountryEnum,
-  au2ukExchangeRate: IsNumber.optional() // TODO: only optional if taxResident !== currency
+  au2ukExchangeRate: IsOptionalNumber // TODO: only optional if taxResident !== currency
 })
 export type FormDataType = z.infer<typeof FormSchema>
 

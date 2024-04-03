@@ -5,21 +5,21 @@ export const assetTypeOptions = [
   {
     label: "Defined benefits pension",
     value: "AuDefinedBenefits",
-    income: true,
-    property: false,
+    // income: true,
+    // property: false,
     assetClass: AssetGroup.income_defined_benefit
   },
   { label: "Salary", value: "Salary", income: true, property: false, assetClass: AssetGroup.income_salary },
   {
     label: "Defined contributions pension",
     value: "AuSuper",
-    income: false,
-    property: false,
+    // income: false,
+    // property: false,
     assetClass: AssetGroup.super
   },
-  { label: "Shares", value: "AuShares", income: false, property: false, assetClass: AssetGroup.shares },
-  { label: "Property", value: "AuProperty", income: false, property: true, assetClass: AssetGroup.property },
-  { label: "Cash", value: "AuBank", income: false, property: false, assetClass: AssetGroup.cash }
+  { label: "Shares", value: "AuShares", assetClass: AssetGroup.shares },
+  { label: "Property", value: "AuProperty", assetClass: AssetGroup.property },
+  { label: "Cash", value: "AuBank", assetClass: AssetGroup.cash }
 ]
 
 // TODO: I don't think this is used now

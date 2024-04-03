@@ -36,12 +36,16 @@ export class AuBank extends Asset {
   calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
     const { value: prevValue, year } = yearData
 
+    const investmentReturn = this.rateVariation
+      ? this.cashContext.interestRate + this.rateVariation
+      : this.cashContext.interestRate
+
     const transferAmt = getTransferAmt(this.id, yearData, this.transfers, assets)
 
-    const income = (prevValue + transferAmt / 2) * this.cashContext.interestRate
+    const income = (prevValue + transferAmt / 2) * investmentReturn
 
     const value = prevValue + transferAmt // note does not add income just yet
-    const incomeCalc = `(${prevValue} + ${transferAmt}/2) * ${this.cashContext.interestRate}`
+    const incomeCalc = `(${prevValue} + ${transferAmt}/2) * ${investmentReturn}`
 
     const nextYearData = {
       year: year + 1,

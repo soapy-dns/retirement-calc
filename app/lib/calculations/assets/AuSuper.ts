@@ -39,9 +39,13 @@ export class AuSuper extends Asset {
   calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
     const { value: prevValue, year } = yearData
 
+    const investmentReturn = this.rateVariation
+      ? this.superContext.investmentReturn + this.rateVariation
+      : this.superContext.investmentReturn
+
     const transferAmt = getTransferAmt(this.id, yearData, this.transfers, assets)
 
-    const income = (prevValue + transferAmt / 2) * this.superContext.investmentReturn
+    const income = (prevValue + transferAmt / 2) * investmentReturn
 
     const taxOnIncome = income * this.superContext.taxationRate
 

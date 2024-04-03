@@ -81,7 +81,7 @@ export const InputQuestion: React.FC<InputProps> = ({
               name={renderName}
               // type={type}
               value={value}
-              // onChange={handleOnChange}
+              // onChange={() => console.log("handle change")}
               onChange={(event: ChangeEvent<HTMLInputElement>) => handleOnChange(event.target.value, onChange)}
               // onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, onChange)}
               // // This assumes handleSubmit performs validation

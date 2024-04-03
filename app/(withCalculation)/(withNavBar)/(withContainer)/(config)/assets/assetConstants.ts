@@ -57,26 +57,31 @@ export const assetConstants = {
     HELP_TEXT:
       "All the expenses associated with the property on a monthly basis.  This will be in today's money and will increase in line with inflation."
   },
+  RATE_VARIATION: {
+    LABEL: "Rate variation % (optional)",
+    HELP_TEXT:
+      "Rate variation from that defined in the config section.  Eg if the rate of return for super is 5%, and the variation here is 2%, then this asset will have a rate of return of 7%.  For income assets, the income will increase by the inflation rate plus this value. Defaults to 0%"
+  },
   DRAWDOWN_ORDER: {
     LABEL: "Drawdown order",
     HELP_TEXT:
-      "Specifies the order to automatically drawdown on if required.  For example if some assets need to be sold (drawn down) to cover expenses.  If there are multiple assets with the same order the drawdown will be split equally amoungst them.  Note: drawdownOrder does not have any effect unless the 'canDrawdown' flag is set."
+      "Specifies the order to automatically drawdown on if required.  For example if some assets need to be sold (drawndown) to cover expenses.  If there are multiple assets with the same order the drawdown will be split equally amoungst them.  Note: 'drawdown order' does not have any effect unless the 'can drawdown' flag is set."
   },
 
   DRAWDOWN_FROM: {
-    LABEL: "Drawdown start year (optional)",
+    LABEL: "Drawdown start year if not immediately (optional)",
     HELP_TEXT:
       "This value is optional and will default to the current year.  The year we can start drawing down on this asset.  For example we might not want to start drawing down on super until age 60 when the tax benefits kick in.  If this is not entered, it will be assumed that drawing down on the asset is fine from the start."
   },
   INCOME_START_YEAR: {
-    LABEL: "Income start year (optional)",
+    LABEL: "Year the income starts if not immediately (optional)",
     HELP_TEXT:
       "The year the income stream begins.  If there is no value, the income will be taken as being available immediately.  It is currently only possible to have 1 income period."
   },
   INCOME_END_YEAR: {
-    LABEL: "Income end year (optional)",
+    LABEL: "Year income ends if it doesn't continue indefinitely (optional)",
     HELP_TEXT:
-      "The year the income will end.  eg on retirement.  If there is no value, the income is assumed to continue indefinitely."
+      "The year the income will end.  eg on retirement.  If there is no value, the income is assumed to continue indefinitely - eg a defined benefits pension."
   },
   RENTAL_START_YEAR: {
     LABEL: "Rental start year (optional)",

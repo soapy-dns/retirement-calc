@@ -26,7 +26,7 @@ export const EditPageLayout: React.FC<EditPageLayoutProps> = ({
 }) => {
   return (
     <Container>
-      <div className="flex flex-col items-center text-primary">
+      <div className="flex flex-col items-center text-primary ">
         <Button onClick={handleBack} buttonType={ButtonType.tertiary}>
           <div className="flex items-center gap-2">
             <ChevronDoubleLeftIcon className="h-6 w-6" />
@@ -36,7 +36,7 @@ export const EditPageLayout: React.FC<EditPageLayoutProps> = ({
         <h1 className="mt-4">{heading}</h1>
       </div>
 
-      {children}
+      <div className="mb-8">{children}</div>
 
       <ButtonGroup>
         <Button onClick={handleCancel} buttonType={ButtonType.secondary}>

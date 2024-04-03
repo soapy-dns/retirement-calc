@@ -1,20 +1,18 @@
 "use client"
+
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+
 import { AssetEditForm } from "../AssetEditForm"
 import {
   IAsset,
-  CountryEnum,
-  YesNoSchema,
-  IsOptionalFutureOrCurrentYear,
   AssetClassEnum,
   IncomeAsset,
   CapitalAsset,
   PropertyAsset,
   BaseAsset,
   LiquidAsset,
-  IsOptionalNumber,
   CashAsset
 } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
@@ -24,12 +22,18 @@ import { useOwner } from "@/app/ui/hooks/useOwner"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { isCapitalAsset, isCashAsset, isIncomeAsset, isLiquidAsset, isPropertyAsset } from "@/app/ui/utils"
 import { YesNo } from "../../types"
+import {
+  CountryEnum,
+  IsOptionalFutureOrCurrentYear,
+  IsOptionalNumber,
+  YesNoSchema
+} from "@/app/lib/data/schema/config/schemaUtils"
 
 // There is some duplication with AssetSchema - how can we minimise this?
 const FormSchema = z
   .object({
-    name: z.string().min(5),
-    description: z.string().min(10),
+    name: z.string().min(4),
+    description: z.string().min(4),
     country: CountryEnum,
     assetType: AssetClassEnum,
     value: z.coerce.number().gte(0).optional(),
@@ -47,7 +51,8 @@ const FormSchema = z
     rentalExpenses: z.coerce.number().gte(0).optional(),
     incomeAmt: z.coerce.number().optional(), // value and income should be mutually exclusive
     incomeStartYear: IsOptionalFutureOrCurrentYear,
-    incomeEndYear: IsOptionalFutureOrCurrentYear
+    incomeEndYear: IsOptionalFutureOrCurrentYear,
+    rateVariation: IsOptionalNumber
   })
   .refine(
     ({ assetType, value }) => {
@@ -75,15 +80,6 @@ const FormSchema = z
       }
     }
   )
-  // .refine(
-  //   ({ canDrawdown, drawdownOrder }) => {
-  //     return !canDrawdown || (canDrawdown && drawdownOrder)
-  //   },
-  //   {
-  //     message: "As this is an asset which can be drawndown, the drawdown order should be set.",
-  //     path: ["drawdownOrder"]
-  //   }
-  // )
   .refine(
     ({ canDrawdown, drawdownOrder }) => {
       if (canDrawdown === "Y" && !drawdownOrder) return false
@@ -134,7 +130,8 @@ const getAssetConfigFromForm = (data: FormDataType): Omit<IAsset, "id"> => {
     rentalExpenses,
     incomeAmt,
     incomeStartYear,
-    incomeEndYear
+    incomeEndYear,
+    rateVariation
   } = data
 
   // strings should already be coerced into strings by zod
@@ -143,7 +140,8 @@ const getAssetConfigFromForm = (data: FormDataType): Omit<IAsset, "id"> => {
     description,
     country,
     className: assetType,
-    assetOwners: owners
+    assetOwners: owners,
+    rateVariation
   }
   if (isCapitalAsset(assetType)) {
     const capitalAsset = assetConfig as CapitalAsset
@@ -212,7 +210,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   const assetConfig = getAssetDetails(id)
   const owners = getOwners()
 
-  const { name, description, country = "AU", className, assetOwners = [] } = assetConfig || {}
+  const { name, description, country = "AU", className, assetOwners = [], rateVariation } = assetConfig || {}
 
   let canDrawdown, drawdownFrom, drawdownOrder, preferredMinAmt, drawdown
   if (className && isLiquidAsset(className)) {
@@ -273,7 +271,8 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       drawdownFrom: drawdownFrom,
       incomeAmt,
       incomeStartYear,
-      incomeEndYear
+      incomeEndYear,
+      rateVariation
     },
     resolver: zodResolver(FormSchema)
   })
@@ -281,14 +280,14 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   if (!owners) return <div>No owners found</div>
 
   const onSubmit = async (data: FormDataType) => {
-    let success = false
+    // let success = false
     if (assetConfig) {
       const newAssetConfig = marshall(data, assetConfig)
       const { success: updateSuccess } = await updateAsset(newAssetConfig)
-      success = updateSuccess
+      // success = updateSuccess
     } else {
       const { success: addSuccess } = await addAsset(getAssetConfigFromForm(data))
-      success = addSuccess
+      // success = addSuccess
     }
 
     // backend could still say it an error, but I don't think we should stop nav at this point

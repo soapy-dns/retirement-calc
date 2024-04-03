@@ -1,0 +1,195 @@
+[
+  {
+    "id": "A",
+    "name": "rate variation examples",
+    "description": "rate variation examples",
+    "assets": [
+      {
+        "id": "JOINT_AU_BANK",
+        "name": "Joint Au bank accts",
+        "description": "Australian bank accounts",
+        "country": "AU",
+        "className": "AuBank",
+        "value": 100000,
+        "assetOwners": ["Her", "Him"],
+        "incomeBucket": true,
+        "canDrawdown": true,
+        "drawdown": {
+          "drawdownOrder": 10,
+          "preferredMinAmt": 10000
+        }
+      },
+      {
+        "name": "Bank",
+        "description": "Banks non variant",
+        "country": "AU",
+        "className": "AuBank",
+        "assetOwners": ["Him"],
+        "value": 10000,
+        "canDrawdown": false,
+        "incomeBucket": false,
+        "id": "19abcfff-cf9a-4e4e-88ca-28803336318c"
+      },
+      {
+        "name": "Bank variant",
+        "description": "Bank variant",
+        "country": "AU",
+        "className": "AuBank",
+        "assetOwners": ["Him"],
+        "rateVariation": 1,
+        "value": 10000,
+        "canDrawdown": false,
+        "incomeBucket": false,
+        "id": "3617a621-4cef-4fd8-8093-791669b93360"
+      },
+      {
+        "id": "HER_AU_DEFINED_BENEFIT",
+        "name": "Defined benefits",
+        "description": "Defined benefits",
+        "country": "AU",
+        "className": "AuDefinedBenefits",
+        "income": {
+          "incomeAmt": 10000
+        },
+        "assetOwners": ["Him"]
+      },
+      {
+        "name": "Defined Benefits variant",
+        "description": "Defined Benefits variant",
+        "country": "AU",
+        "className": "AuDefinedBenefits",
+        "assetOwners": ["Him"],
+        "rateVariation": 1,
+        "income": {
+          "incomeAmt": 10000
+        },
+        "id": "98bf8d32-9e24-43c1-b7a2-ce168258133e"
+      },
+      {
+        "id": "AU_PROPERTY",
+        "name": "Property",
+        "description": "Property without rate variance",
+        "className": "AuProperty",
+        "country": "AU",
+        "value": 1000000,
+        "assetOwners": ["Him"],
+        "property": {
+          "isRented": false,
+          "rentalStartYear": 2024,
+          "rentalEndYear": 2026,
+          "rentalIncomePerMonth": 2000,
+          "rentalExpensesPerMonth": 500
+        }
+      },
+      {
+        "name": "Property variant",
+        "description": "Property with rate variance",
+        "country": "AU",
+        "className": "AuProperty",
+        "assetOwners": ["Him"],
+        "rateVariation": 1,
+        "value": 1000000,
+        "property": {
+          "isRented": false
+        },
+        "id": "5af9452d-3bc9-4e37-abb3-4568986a6378"
+      },
+      {
+        "id": "JOINT_SHARES",
+        "name": "Shares",
+        "description": "Australian shares",
+        "country": "AU",
+        "className": "AuShares",
+        "value": 10000,
+        "assetOwners": ["Him"],
+        "canDrawdown": false,
+        "drawdown": {
+          "drawdownOrder": 50
+        }
+      },
+      {
+        "id": "HIS_AU_SUPER",
+        "name": "Defined contribution",
+        "description": "Defined contribution",
+        "country": "AU",
+        "className": "AuSuper",
+        "value": 100000,
+        "assetOwners": ["Him"],
+        "canDrawdown": false,
+        "drawdown": {
+          "drawdownFrom": 2026,
+          "drawdownOrder": 50
+        }
+      },
+      {
+        "name": "Def contribution variant",
+        "description": "Defined contribution variable -5",
+        "country": "AU",
+        "className": "AuSuper",
+        "assetOwners": ["Him"],
+        "value": 100000,
+        "canDrawdown": false,
+        "id": "5a55a22e-52db-4c4f-8269-b67757f92fd4",
+        "rateVariation": -1
+      },
+      {
+        "name": "Salary",
+        "description": "Salary",
+        "country": "AU",
+        "className": "Salary",
+        "assetOwners": ["Him"],
+        "income": {
+          "incomeAmt": 100000
+        },
+        "id": "53ef13be-ef71-4650-b9d3-26f0c774a649"
+      },
+      {
+        "name": "Salary variant",
+        "description": "Salary variant",
+        "country": "AU",
+        "className": "Salary",
+        "assetOwners": ["Him"],
+        "rateVariation": 1,
+        "income": {
+          "incomeAmt": 100000
+        },
+        "id": "48f13bb2-a07a-489b-acf4-5d410278cb4c"
+      }
+    ],
+    "context": {
+      "taxResident": "AU",
+      "currency": "AU",
+      "owners": ["Him", "Her"],
+      "auBank": {
+        "interestRate": 0.005
+      },
+      "superAu": {
+        "investmentReturn": 0.05,
+        "taxationRate": 0.15
+      },
+      "definedBenefitsAu": {
+        "useInflationRate": true
+      },
+      "sharesAu": {
+        "growthInterestRate": 0.03,
+        "dividendInterestRate": 0.03
+      },
+      "property": {
+        "growthInterestRate": 0.03
+      },
+      "inflation": [
+        {
+          "fromYear": 2024,
+          "inflationRate": 0.03
+        }
+      ],
+      "livingExpenses": [
+        {
+          "fromYear": 2024,
+          "amountInTodaysTerms": 0
+        }
+      ]
+    },
+    "transfers": []
+  }
+]

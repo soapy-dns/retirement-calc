@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
-import { ContextConfig, YesNoSchema } from "@/app/lib/data/schema/config"
+import { ContextConfig } from "@/app/lib/data/schema/config"
 import { RadioButtonQuestion, RadioQuestionVariant } from "@/app/ui/components/form/RadioButtonQuestion"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
@@ -13,6 +13,7 @@ import { yesNoOptions } from "@/app/ui/utils/yesNoOptions"
 import { useContext } from "react"
 import { useForm } from "react-hook-form"
 import { contextConstants } from "../contextConstants"
+import { YesNoSchema } from "@/app/lib/data/schema/config/schemaUtils"
 
 const FormSchema = z.object({
   useInflationRate: YesNoSchema.optional()
