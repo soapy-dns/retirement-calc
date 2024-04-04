@@ -39,8 +39,8 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ chartType }) => {
     drawdownRowData
     // totalDrawdownData
   } = calculationResults
-  console.log("drawdownRowData", drawdownRowData)
-  console.log("calculatedAssetData", calculatedAssetData)
+  // console.log("drawdownRowData", drawdownRowData)
+  // console.log("calculatedAssetData", calculatedAssetData)
   // debugger
   switch (chartType) {
     case ChartType.capitalAssets:

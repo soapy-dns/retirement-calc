@@ -13,14 +13,20 @@ import {
 import { Line } from "react-chartjs-2"
 import { graphColors } from "./colorConstants"
 import { AssetData } from "@/app/lib/calculations/types"
+import { htmlLegendPlugin } from "./htmlLegendPlugin"
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend)
 
 export const options = {
   responsive: true,
+  // maintainAspectRatio: false,
   plugins: {
+    htmlLegend: {
+      // ID of the container to put the legend in
+      containerID: "legend-container"
+    },
     legend: {
-      position: "top" as const
+      display: false
     },
 
     title: {
@@ -69,10 +75,13 @@ export const CalculatedAssetLineChart: React.FC<Props> = ({ yearRange, graphData
   }
 
   return (
-    <div className="relative bg-white">
-      <div className="w-full h-full">
-        <Line options={options} data={data} />
+    <>
+      <div className="relative bg-white">
+        <div className="w-full h-full">
+          <Line options={options} data={data} plugins={[htmlLegendPlugin]} />
+        </div>
       </div>
-    </div>
+      <div className="border" id="legend-container"></div>
+    </>
   )
 }
