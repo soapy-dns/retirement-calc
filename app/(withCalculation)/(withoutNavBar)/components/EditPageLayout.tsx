@@ -39,11 +39,11 @@ export const EditPageLayout: React.FC<EditPageLayoutProps> = ({
       <div className="mb-8">{children}</div>
 
       <ButtonGroup>
-        <Button onClick={handleCancel} buttonType={ButtonType.secondary}>
-          {cancelText}
-        </Button>
         <Button onClick={handleSubmit} buttonType={ButtonType.primary}>
           {saveText}
+        </Button>
+        <Button onClick={handleCancel} buttonType={ButtonType.secondary}>
+          {cancelText}
         </Button>
       </ButtonGroup>
     </Container>
