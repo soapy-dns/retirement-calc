@@ -17,6 +17,7 @@ const config: Config = {
           darkest: "#0036b2"
         },
         secondary: {
+          lightest: "#ecfeff",
           DEFAULT: "#8ef0ff"
         },
         tertiary: {
