@@ -1,0 +1,190 @@
+[
+  {
+    "id": "A",
+    "name": "Multi-country example",
+    "description": "Complex example.",
+    "assets": [
+      {
+        "id": "HIS_AU_SUPER",
+        "name": "Australian super",
+        "description": "Australian super - defined contributions",
+        "country": "AU",
+        "className": "AuSuper",
+        "value": 500000,
+        "assetOwners": ["Him"],
+        "canDrawdown": true,
+        "drawdown": {
+          "drawdownFrom": 2026,
+          "drawdownOrder": 50
+        }
+      },
+      {
+        "id": "HER_AU_DEFINED_BENEFIT",
+        "name": "Final salary",
+        "description": "Australian super - defined benefits",
+        "country": "AU",
+        "className": "AuDefinedBenefits",
+        "income": {
+          "incomeAmt": 3000
+        },
+        "assetOwners": ["Her"]
+      },
+      {
+        "id": "HER_AU_SUPER",
+        "name": "Her AU super",
+        "description": "Australian super - defined contributions",
+        "country": "AU",
+        "className": "AuSuper",
+        "value": 300000,
+        "assetOwners": ["Her"],
+        "canDrawdown": true,
+        "drawdown": {
+          "drawdownOrder": 50
+        }
+      },
+      {
+        "id": "HIS_UK_SUPER",
+        "name": "His Uk pension",
+        "description": "UK super - defined contributions",
+        "country": "AU",
+        "className": "AuSuper",
+        "value": 100000,
+        "assetOwners": ["Him"],
+        "canDrawdown": true,
+        "drawdown": {
+          "drawdownFrom": 2026,
+          "drawdownOrder": 50
+        }
+      },
+      {
+        "id": "HER_UK_SUPER",
+        "name": "Her Uk pension",
+        "description": "UK super - defined benefits",
+        "country": "SC",
+        "className": "AuDefinedBenefits",
+        "assetOwners": ["Her"],
+        "income": {
+          "incomeAmt": 1000
+        }
+      },
+      {
+        "id": "JOINT_SHARES",
+        "name": "Joint shares",
+        "description": "Australian shares",
+        "country": "AU",
+        "className": "AuShares",
+        "value": 20000,
+        "assetOwners": ["Her", "Him"],
+        "canDrawdown": true,
+        "drawdown": {
+          "drawdownOrder": 50
+        }
+      },
+      {
+        "id": "JOINT_AU_BANK",
+        "name": "Joint Au bank accts",
+        "description": "Australian bank accounts",
+        "country": "AU",
+        "className": "AuBank",
+        "value": 10000,
+        "assetOwners": ["Her", "Him"],
+        "incomeBucket": true,
+        "canDrawdown": true,
+        "drawdown": {
+          "drawdownOrder": 20,
+          "preferredMinAmt": 10000
+        }
+      },
+      {
+        "id": "JOINT_UK_BANK",
+        "name": "Joint UK bank accts",
+        "description": "UK bank accounts",
+        "country": "SC",
+        "className": "AuBank",
+        "value": 1000,
+        "assetOwners": ["Her", "Him"],
+        "incomeBucket": false,
+        "canDrawdown": true,
+        "drawdown": {
+          "drawdownOrder": 10
+        }
+      },
+      {
+        "id": "UK_PROPERTY",
+        "name": "UK Property",
+        "description": "UK property",
+        "country": "SC",
+        "className": "AuProperty",
+        "value": 200000,
+        "assetOwners": ["Her", "Him"],
+        "property": {
+          "isRented": false
+        }
+      },
+      {
+        "id": "AU_PROPERTY",
+        "name": "Au Property",
+        "description": "Australian property",
+        "className": "AuProperty",
+        "country": "AU",
+        "value": 500000,
+        "assetOwners": ["Her", "Him"],
+        "property": {
+          "isRented": true,
+          "rentalStartYear": 2024,
+          "rentalEndYear": 2026,
+          "rentalIncomePerMonth": 2000,
+          "rentalExpensesPerMonth": 500
+        }
+      }
+    ],
+    "context": {
+      "taxResident": "AU",
+      "currency": "AU",
+      "owners": ["Him", "Her"],
+      "auBank": {
+        "interestRate": 0.005
+      },
+      "superAu": {
+        "investmentReturn": 0.05,
+        "taxationRate": 0.15
+      },
+      "definedBenefitsAu": {
+        "useInflationRate": true
+      },
+      "sharesAu": {
+        "growthInterestRate": 0.03,
+        "dividendInterestRate": 0.03
+      },
+      "property": {
+        "growthInterestRate": 0.03
+      },
+      "inflation": [
+        {
+          "fromYear": 2024,
+          "inflationRate": 0.03
+        }
+      ],
+      "livingExpenses": [
+        {
+          "fromYear": 2024,
+          "amountInTodaysTerms": 80000
+        },
+        {
+          "fromYear": 2038,
+          "amountInTodaysTerms": 50000
+        }
+      ]
+    },
+    "transfers": [
+      {
+        "id": "1",
+        "year": 2024,
+        "from": "UK_PROPERTY",
+        "to": "JOINT_SHARES",
+        "migrateAll": true,
+        "costOfTransfer": 20000
+      }
+    ]
+  }
+]

@@ -1,4 +1,8 @@
 describe("Pricing", () => {
+  beforeEach(() => {
+    cy.visit("sheet")
+    cy.importFile("cypress/fixtures/complexMultiCountry.json")
+  })
   it("should check the last present value is as expected", () => {
     cy.visit("sheet")
 
@@ -6,7 +10,7 @@ describe("Pricing", () => {
 
     cy.get("@cells").should("have.length", 20)
     cy.get("@cells").first().contains("1,631,000")
-    cy.get("@cells").last().contains("502,772")
+    cy.get("@cells").last().contains("502,723")
   })
 
   it("should check the last total income is as expected", () => {
@@ -21,7 +25,7 @@ describe("Pricing", () => {
 
     cy.get("@cells").should("have.length", 19)
     cy.get("@cells").first().contains("25,896")
-    cy.get("@cells").last().contains("6,859")
+    cy.get("@cells").last().contains("6,850")
   })
 
   it("should check the last total expenses is as expected", () => {
