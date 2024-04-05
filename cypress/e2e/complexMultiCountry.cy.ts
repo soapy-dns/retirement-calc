@@ -1,4 +1,8 @@
 describe("Pricing", () => {
+  beforeEach(() => {
+    cy.visit("sheet")
+    cy.importFile("cypress/fixtures/complexMultiCountry.json")
+  })
   it("should check the last present value is as expected", () => {
     cy.visit("sheet")
 

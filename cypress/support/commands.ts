@@ -12,6 +12,17 @@
 //
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
+Cypress.Commands.add("importFile", (fileName: string) => {
+  cy.visit("file/import")
+  cy.get("input[type=file]").as("InputFile")
+
+  cy.get("@InputFile").click()
+
+  cy.get("@InputFile").selectFile(fileName)
+
+  cy.contains("Upload").click()
+})
+
 //
 //
 // -- This is a child command --
