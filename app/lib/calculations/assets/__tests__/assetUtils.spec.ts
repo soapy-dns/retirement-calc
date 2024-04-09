@@ -30,6 +30,5 @@ describe("getGroupedDrawdownableAssets", () => {
     // should be 2 arrays - first holding 2 assets, the 2nd only 1
     expect(results[0].length).toBe(2)
     expect(results[1].length).toBe(1)
-    console.log("--results--", results)
   })
 })

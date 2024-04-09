@@ -4,7 +4,7 @@ describe("Pricing", () => {
     cy.importFile("cypress/fixtures/complexMultiCountry.json")
   })
   it("should check the last present value is as expected", () => {
-    cy.visit("sheet")
+    // cy.visit("sheet")
 
     cy.contains("th", "Present value").nextAll().as("cells")
 
@@ -14,7 +14,7 @@ describe("Pricing", () => {
   })
 
   it("should check the last total income is as expected", () => {
-    cy.visit("sheet")
+    // cy.visit("sheet")
     // cy.get('[data-testid="scrollableTable"]').scrollTo(0, 1400)
     // cy.get("table").scrollTo("bottom")
     // cy.get("Total Income").scrollIntoView()
@@ -29,7 +29,7 @@ describe("Pricing", () => {
   })
 
   it("should check the last total expenses is as expected", () => {
-    cy.visit("sheet")
+    // cy.visit("sheet")
 
     cy.contains("th", "Total Expenses").nextAll().as("cells")
 
