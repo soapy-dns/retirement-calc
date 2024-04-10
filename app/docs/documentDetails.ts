@@ -5,5 +5,6 @@ export const documentDetails = {
   context: { url: "/docs/context", menuText: "Context" },
   transfers: { url: "/docs/transfers", menuText: "Transfers" },
   charts: { url: "/docs/charts", menuText: "Charts" },
-  spreadsheet: { url: "/docs/spreadsheet", menuText: "Spreadsheet" }
+  spreadsheet: { url: "/docs/spreadsheet", menuText: "Spreadsheet" },
+  calculations: { url: "/docs/calculations", menuText: "Calculations" }
 }
