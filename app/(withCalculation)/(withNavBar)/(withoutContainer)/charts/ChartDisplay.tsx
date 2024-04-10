@@ -31,17 +31,9 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ chartType }) => {
     )
   }
 
-  const {
-    yearRange,
-    calculatedAssetNpvData,
-    calculatedAssetData,
-    graphIncomeNpvData,
-    drawdownRowData
-    // totalDrawdownData
-  } = calculationResults
-  // console.log("drawdownRowData", drawdownRowData)
-  // console.log("calculatedAssetData", calculatedAssetData)
-  // debugger
+  const { yearRange, calculatedAssetNpvData, calculatedAssetData, graphIncomeNpvData, drawdownRowData } =
+    calculationResults
+
   switch (chartType) {
     case ChartType.capitalAssets:
       return <CalculatedAssetLineChart yearRange={yearRange} graphData={calculatedAssetData} />

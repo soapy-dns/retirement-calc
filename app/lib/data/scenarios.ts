@@ -148,8 +148,8 @@ export const scenarios: IScenario[] = [
         interestRate: 0.005
       },
       superAu: {
-        investmentReturn: 0.05,
-        taxationRate: 0.15
+        investmentReturn: 0.05
+        // taxationRate: 0.15
       },
       definedBenefitsAu: {
         useInflationRate: true

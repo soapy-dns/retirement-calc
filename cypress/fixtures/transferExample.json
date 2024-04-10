@@ -39,8 +39,7 @@
         "interestRate": 0
       },
       "superAu": {
-        "investmentReturn": 0.1,
-        "taxationRate": 0.15
+        "investmentReturn": 0.1
       },
       "definedBenefitsAu": {
         "useInflationRate": true

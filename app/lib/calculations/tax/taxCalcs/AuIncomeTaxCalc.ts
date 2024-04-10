@@ -18,6 +18,7 @@ export class AuIncomeTaxCalc extends IncomeTaxCalc {
   taxTo3 = (this.bandTop3 - this.bandTop2) * this.taxRate3 + this.taxTo2
   taxTo4 = (this.bandTop4 - this.bandTop3) * this.taxRate4 + this.taxTo3
 
+  // Get Income tax
   getTax(income: number, year: number): number {
     const { incomeInTodaysMoney, inflationFactor } = getIncomeInTodaysMoney(
       income,

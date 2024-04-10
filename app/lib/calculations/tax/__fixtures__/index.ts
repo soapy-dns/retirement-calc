@@ -14,15 +14,12 @@ export const simpleAuContext: ContextConfig = {
     interestRate: 0.005
   },
   superAu: {
-    investmentReturn: 0.05, // net of fees but not taxation
-    taxationRate: 0.15
+    investmentReturn: 0.05 // net of fees but not taxation
   },
   definedBenefitsAu: {
     useInflationRate: true
   },
-  // definedBenefitsUk: {
-  //   useInflationRate: true
-  // },
+
   sharesAu: {
     growthInterestRate: 0.03,
     dividendInterestRate: 0.03
@@ -45,7 +42,6 @@ const definedContributionsAssetConfig: IAsset = {
   className: "AuSuper",
   value: 500000,
   assetOwners: ["Her"],
-  // incomeProducing: false,
   canDrawdown: true,
   drawdown: {
     drawdownOrder: 50

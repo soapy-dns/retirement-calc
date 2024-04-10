@@ -28,8 +28,7 @@ const SuperPage: React.FC = () => {
   const { superAu } = context
   const { control, handleSubmit } = useForm<FormDataType>({
     defaultValues: {
-      investmentReturn: Math.round(superAu?.investmentReturn * 10000) / 100,
-      taxationRate: Math.round(superAu?.taxationRate * 10000) / 100
+      investmentReturn: Math.round(superAu?.investmentReturn * 10000) / 100
     },
     resolver: zodResolver(FormSchema)
   })
@@ -45,8 +44,7 @@ const SuperPage: React.FC = () => {
     const updatedContext: ContextConfig = {
       ...context,
       superAu: {
-        investmentReturn: investmentReturn / 100,
-        taxationRate: taxationRate / 100
+        investmentReturn: investmentReturn / 100
       }
     }
 
@@ -74,19 +72,8 @@ const SuperPage: React.FC = () => {
           label={contextConstants.SUPER_INVESTMENT_RETURN.LABEL}
           defaultValue={superAu?.investmentReturn}
           editable={true}
-          // validationRules={changeDetailsValidation}
           restrictedCharSet={DECIMALS_ONLY}
           helpText={contextConstants.SUPER_INVESTMENT_RETURN.HELP_TEXT}
-        />
-        <InputQuestion
-          id="taxationRate"
-          control={control}
-          label={contextConstants.SUPER_TAXATION_RATE.LABEL}
-          defaultValue={superAu?.investmentReturn}
-          editable={true}
-          // validationRules={changeDetailsValidation}
-          restrictedCharSet={DECIMALS_ONLY}
-          helpText={contextConstants.SUPER_TAXATION_RATE.HELP_TEXT}
         />
       </form>
     </EditPageLayout>

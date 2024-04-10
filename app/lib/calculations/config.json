@@ -1,0 +1,8 @@
+{
+  "AU": {
+    "superIncomeTaxRate": 0.15
+  },
+  "SC": {
+    "superIncomeTaxRate": 0
+  }
+}

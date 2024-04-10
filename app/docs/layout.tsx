@@ -10,7 +10,7 @@ export default function MdxLayout({ children }: { children: React.ReactNode }) {
       <Container>
         <div className="mb-4 flex items-center justify-center">
           <Link href={AppPath.config}>
-            <div className="px-4 py-1  border  border-primary bg-white text-primary gap-2 rounded-full">
+            <div className="px-4 py-1  border-2  border-primary bg-white text-primary gap-2 rounded-full">
               <div>Go to App</div>
             </div>
           </Link>
