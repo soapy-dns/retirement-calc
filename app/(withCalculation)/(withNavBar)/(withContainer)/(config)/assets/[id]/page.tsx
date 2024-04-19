@@ -55,13 +55,6 @@ const FormSchema = z
     incomeAmt: IsFormNumberOpt, // value and income should be mutually exclusive
     incomeStartYear: IsOptionalFutureOrCurrentYear,
     incomeEndYear: IsOptionalFutureOrCurrentYear,
-    // rateVariation: z.number()
-    // rateVariation: z.coerce
-    //   .number({
-    //     required_error: "Rate variation is required",
-    //     invalid_type_error: "Rate variation must be a number"
-    //   })
-    //   .optional()
     rateVariation: IsFormNumberOpt
   })
   .refine(
@@ -274,7 +267,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       value,
       owners: assetOwners,
       incomeBucket: earningsAccumulated,
-      preferredMinAmt: preferredMinAmt ?? 0,
+      preferredMinAmt: preferredMinAmt,
       isRented: isRentedString,
       rentalStartYear,
       rentalEndYear,
