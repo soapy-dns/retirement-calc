@@ -4,7 +4,7 @@ import { AssetGroup, InflationContext } from "@/app/lib/calculations/types"
 import { YearData } from "./types"
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
 import { IAsset, IScenario, PropertyContext, Transfer } from "../../data/schema/config"
-import { getTransferAmt } from "../transfers/getTransfers"
+import { getTransferAmt } from "../transfers/getTransferAmt"
 
 export class AuProperty extends Asset {
   capitalAsset: boolean // if all assets have this, shouldn't it be in the Asset class

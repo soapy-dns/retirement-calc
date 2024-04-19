@@ -3,7 +3,7 @@ import { YearData } from "../assets/types"
 import { AssetGroup } from "@/app/lib/calculations/types"
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
 import { CashContext, IAsset, IScenario, Transfer } from "../../data/schema/config"
-import { getTransferAmt } from "../transfers/getTransfers"
+import { getTransferAmt } from "../transfers/getTransferAmt"
 
 export class AuBank extends Asset {
   capitalAsset: boolean
