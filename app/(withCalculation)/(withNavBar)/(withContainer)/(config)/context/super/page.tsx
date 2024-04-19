@@ -1,7 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
+import { z } from "@/app/lib/data/schema/config/validation/customZod"
 
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { ContextConfig } from "@/app/lib/data/schema/config"
@@ -12,11 +12,11 @@ import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext } from "react"
 import { useForm } from "react-hook-form"
 import { contextConstants } from "../contextConstants"
-import { IsNumber } from "@/app/lib/data/schema/config/schemaUtils"
+import { IsFormNumber } from "@/app/lib/data/schema/config/schemaUtils"
 
 const FormSchema = z.object({
-  investmentReturn: IsNumber,
-  taxationRate: IsNumber
+  investmentReturn: IsFormNumber,
+  taxationRate: IsFormNumber
 })
 export type FormDataType = z.infer<typeof FormSchema>
 

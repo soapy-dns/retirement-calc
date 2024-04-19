@@ -8,7 +8,7 @@ import { type Transfer } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useTransfer } from "@/app/ui/hooks/useTransfer"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
-import { IsFutureOrCurrentYear, IsOptionalNumber, YesNoSchema } from "@/app/lib/data/schema/config/schemaUtils"
+import { IsFormNumberOpt, IsFutureOrCurrentYear, YesNoSchema } from "@/app/lib/data/schema/config/schemaUtils"
 
 const getTransferValuesFromForm = (data: FormDataType): Omit<Transfer, "id"> => {
   return {
@@ -25,10 +25,9 @@ const FormSchema = z.object({
   from: z.string(),
   to: z.string(),
   migrateAll: YesNoSchema.optional(),
-  value: IsOptionalNumber,
-  costOfTransfer: IsOptionalNumber
+  value: IsFormNumberOpt,
+  costOfTransfer: IsFormNumberOpt
 })
-// .refine(incomeValidator.validator, incomeValidator.options)
 
 type FormDataType = z.infer<typeof FormSchema>
 

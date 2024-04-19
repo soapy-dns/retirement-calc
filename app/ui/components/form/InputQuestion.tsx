@@ -59,10 +59,11 @@ export const InputQuestion: React.FC<InputProps> = ({
 
   const handleOnChange = (value: string, onChange: Function) => {
     // Assumes empty input is always valid
-    const validInput = !value || (restrictedCharSet && value.match(restrictedCharSet)) || !restrictedCharSet
-    if (validInput) {
-      onChange(value)
-    }
+    // const validInput = !value || (restrictedCharSet && value.match(restrictedCharSet)) || !restrictedCharSet
+    // console.log("validInput", validInput)
+    // if (validInput) {
+    onChange(value)
+    // }
   }
 
   return (

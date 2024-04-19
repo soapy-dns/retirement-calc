@@ -1,7 +1,6 @@
 import { z } from "zod"
 
 import { drawdownOrderValidator, incomeValidator, propertyValidator } from "./validation"
-import { IsOptionalNumber } from "./schemaUtils"
 
 export const AssetClassEnum = z.enum(["AuBank", "AuSuper", "AuProperty", "Salary", "AuDefinedBenefits", "AuShares"])
 export type AssetClass = z.infer<typeof AssetClassEnum>
@@ -27,8 +26,8 @@ const PropertyDetailsSchema = z.object({
 const DrawdownDetailsSchema = z
   .object({
     drawdownFrom: IsOptionalFutureOrCurrentYear,
-    drawdownOrder: IsOptionalNumber, // should really be an enum
-    preferredMinAmt: IsOptionalNumber
+    drawdownOrder: z.number().optional(), // should really be an enum
+    preferredMinAmt: z.number().optional()
   })
   .optional()
 export type IncomeDetails = z.infer<typeof IncomeDetailsSchema>
@@ -41,7 +40,7 @@ const AssetBaseSchema = z.object({
   assetOwners: z.string().array(), // assetOwners different for different classNames certainly diff validation
   // assetOwners: z.string().array().nonempty(),
   country: CountryEnum.optional(), // defaults to AU
-  rateVariation: IsOptionalNumber
+  rateVariation: z.number().optional()
 })
 export type BaseAsset = z.infer<typeof AssetBaseSchema>
 

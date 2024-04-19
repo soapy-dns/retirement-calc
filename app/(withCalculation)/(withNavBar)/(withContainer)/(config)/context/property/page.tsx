@@ -13,10 +13,10 @@ import { useContext } from "react"
 import { useForm } from "react-hook-form"
 
 import { contextConstants } from "../contextConstants"
-import { IsNumber } from "@/app/lib/data/schema/config/schemaUtils"
+import { IsFormNumber } from "@/app/lib/data/schema/config/schemaUtils"
 
 const FormSchema = z.object({
-  growthRate: IsNumber
+  growthRate: IsFormNumber
 })
 export type FormDataType = z.infer<typeof FormSchema>
 
