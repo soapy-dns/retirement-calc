@@ -6,4 +6,6 @@ export const sortByFromDate = (rows: LivingExpensesRecord[]) => {
     if (a.fromYear < b.fromYear) return -1
     return 0
   })
+
+  return rows // rows are actually sorted in place but this helps testing
 }
