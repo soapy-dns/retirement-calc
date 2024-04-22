@@ -9,7 +9,6 @@ import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { ContextConfig } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { InputField } from "@/app/ui/components/form/InputField"
-import { inflationRateValidationRules, inflationYearValidationRules } from "@/app/ui/validation/inflationYear"
 import { DECIMALS_ONLY, INTEGERS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ValidationError } from "@/app/ui/components/common/ValidationError"
@@ -27,6 +26,9 @@ const LivingExpensesPage: React.FC = () => {
   const { showModal, onToggle } = useContext(HelpModalContext)
   const { context } = selectedScenario
   const { livingExpenses } = context
+
+  // console.log("livingExpenses", livingExpenses)
+  // console.log("showModal", showModal)
 
   const {
     handleSubmit,
@@ -127,15 +129,14 @@ const LivingExpensesPage: React.FC = () => {
                 <InputField
                   id={`items.${index}.fromYear`}
                   control={control}
-                  // defaultValue={it.fromYear}
-                  // validationRules={inflationYearValidationRules} // TODO: should also think of doing via zod
+                  placeholder="Add a year"
                   restrictedCharSet={INTEGERS_ONLY}
                   type="number"
                 />
                 <InputField
                   id={`items.${index}.amountInTodaysTerms`}
                   control={control}
-                  // validationRules={inflationRateValidationRules}
+                  placeholder="Add an amount"
                   restrictedCharSet={DECIMALS_ONLY}
                   type="number"
                 />

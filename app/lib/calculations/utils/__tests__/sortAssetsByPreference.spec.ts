@@ -1,5 +1,4 @@
 import { generateMock } from "@anatine/zod-mock"
-import { Asset } from "../../assets/Asset"
 import { sortByPreference } from "../sortAssetsByPreference"
 import { CashSchema, ScenarioSchema } from "@/app/lib/data/schema/config"
 import { AuBank } from "../../assets/AuBank"

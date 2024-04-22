@@ -85,4 +85,8 @@ export const contextConstants: Record<string, ItemProps> = {
     LABEL: "Percentage",
     HELP_TEXT: "The percentage, eg 3 rather than 0.03"
   }
+  // PLACEHOLDER: {
+  //   ADD_YEAR: "Add a year",
+  //   ADD_AMOUNT: "Add an amount"
+  // }
 }

@@ -14,6 +14,7 @@ import { Spinner } from "../components/common/Spinner"
 import { FormattedErrors } from "../components/formattedErrors/FormattedErrors"
 import { isIncomeAsset } from "../utils"
 
+
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
   const scenarioOptions = scenarios.map((scenario) => ({
     value: scenario.id,
