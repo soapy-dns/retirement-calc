@@ -147,7 +147,7 @@ export const AppNavBarMobile = () => {
                   </Link>
                 )}
               </Menu.Item>
-              <Menu.Item>
+              {/* <Menu.Item>
                 {({ active }) => (
                   <Link
                     href={AppPath.tools}
@@ -162,7 +162,7 @@ export const AppNavBarMobile = () => {
                     </div>
                   </Link>
                 )}
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item>
                 {({ active }) => (
                   <Link
@@ -179,7 +179,7 @@ export const AppNavBarMobile = () => {
                   </Link>
                 )}
               </Menu.Item>
-              <Menu.Item>
+              {/* <Menu.Item>
                 {({ active }) => (
                   <Link
                     href={AppPath.about}
@@ -194,7 +194,7 @@ export const AppNavBarMobile = () => {
                     </div>
                   </Link>
                 )}
-              </Menu.Item>
+              </Menu.Item> */}
             </div>
           </Menu.Items>
         </Transition>

@@ -2,6 +2,7 @@ import { IAsset } from "@/app/lib/data/schema/config"
 import { getRandomKey } from "@/app/lib/utils/getRandomKey"
 import { useContext } from "react"
 import { ScenarioContext } from "../context/ScenarioContext"
+import { sortAssetConfig } from "../utils/sortAssetConfig"
 
 export const useAsset = () => {
   const { selectedScenario, updateScenario, calculationResults } = useContext(ScenarioContext)
@@ -63,13 +64,13 @@ export const useAsset = () => {
     const oldAssets: IAsset[] = [...selectedScenario.assets]
     const additionalAsset = { ...assetConfig, id: getRandomKey() } as IAsset
 
-    const newAssets = oldAssets.concat([additionalAsset])
+    const newAssets = sortAssetConfig(oldAssets.concat([additionalAsset]))
 
-    newAssets.sort((a, b) => {
-      if (a.className > b.className) return 1
-      if (a.className < b.className) return -1
-      return 0
-    })
+    // newAssets.sort((a, b) => {
+    //   if (a.className > b.className) return 1
+    //   if (a.className < b.className) return -1
+    //   return 0
+    // })
 
     selectedScenario.assets = newAssets
 
