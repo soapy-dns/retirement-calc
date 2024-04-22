@@ -28,15 +28,17 @@ const useAppAlert = () => {
 
     const id = toast.custom(
       (t) => (
-        <AlertBanner
-          variant={AlertType.warning}
-          message={message}
-          onClose={() => {
-            if (onClose) onClose()
-            toast.remove(t.id)
-          }}
-          dismissible={dismissible}
-        />
+        <div className="fixed top-20">
+          <AlertBanner
+            variant={AlertType.warning}
+            message={message}
+            onClose={() => {
+              if (onClose) onClose()
+              toast.remove(t.id)
+            }}
+            dismissible={dismissible}
+          />
+        </div>
       ),
       {
         ...defaultConfig.toastOptions,
