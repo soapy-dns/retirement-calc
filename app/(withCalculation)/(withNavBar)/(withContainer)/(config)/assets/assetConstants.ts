@@ -13,9 +13,9 @@ export const assetConstants = {
       "Earnings from other assets are accumulated here - perhaps this should be outside individual assets as only 1 can be active."
   },
   PREFERRED_MIN_AMT: {
-    LABEL: "Maintain minimum ",
+    LABEL: "Maintain minimum (optional)",
     HELP_TEXT:
-      "The minimum amount to maintain in an asset if possible.  Obviously it isn't always possible as there might not be enough total assets.  This is useful for banks where you might want to keep some cash handy for rainy days."
+      "The minimum amount to maintain in an asset if possible.  Defaults to 0. If there aren't enough total assets this value will be ignored.  This is useful for banks where you might want to keep some cash handy for rainy days."
   },
   CAN_DRAWDOWN: {
     LABEL: "Can drawdown.",

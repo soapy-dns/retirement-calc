@@ -78,6 +78,7 @@ export default function ImportPage() {
         <div className="flex flex-col justify-center">
           <input
             id="file"
+            accept="application/json"
             className="border-2 file:bg-primary-lighter file:border-0 file:text-white"
             name="scenarioFile"
             type="file"

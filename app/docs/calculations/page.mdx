@@ -1,0 +1,14 @@
+import Anchor from "@/app/ui/components/docs/Anchor"
+import { documentDetails } from "@/app/docs/documentDetails"
+
+# Calculations
+
+Taking the initial values and <Anchor href={documentDetails.context.url}>context</Anchor> into account, the year's income, expenditure, and any taxes are calculated to determine the state of play for the next year.
+
+This is then repeated for subsequent years.
+
+Often it is necessary to drawdown on assets eg take money from your pension pot, or sell some shares.
+Configuration of <Anchor href={documentDetails.assets.url}>assets</Anchor> is done in such a way to determine what to cash in / drawdown and when.
+
+Ultimately the calculation won't be able to work out what to drawdown. In this case the calculation will stop.
+If you want to continue you can configure <Anchor href={documentDetails.transfers.url}>transfers</Anchor>

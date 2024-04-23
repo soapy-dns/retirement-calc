@@ -9,12 +9,12 @@ import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext } from "react"
 import { useForm } from "react-hook-form"
 import GeneralContextForm from "./GeneralContextForm"
-import { CountryEnum, IsOptionalNumber } from "@/app/lib/data/schema/config/schemaUtils"
+import { CountryEnum, IsFormNumberOpt } from "@/app/lib/data/schema/config/schemaUtils"
 
 const FormSchema = z.object({
   taxResident: CountryEnum,
   currency: CountryEnum,
-  au2ukExchangeRate: IsOptionalNumber // TODO: only optional if taxResident !== currency
+  au2ukExchangeRate: IsFormNumberOpt // TODO: only optional if taxResident !== currency
 })
 export type FormDataType = z.infer<typeof FormSchema>
 
@@ -38,7 +38,7 @@ const GeneralContextEditPage: React.FC = () => {
       ...context,
       taxResident: data.taxResident,
       currency: data.currency,
-      au2ukExchangeRate: data.au2ukExchangeRate && +data?.au2ukExchangeRate
+      au2ukExchangeRate: data.au2ukExchangeRate ? +data.au2ukExchangeRate : undefined
 
       // au2ukExchangeRate: data.au2ukExchangeRate ? +data.au2ukExchangeRate : undefined
     }

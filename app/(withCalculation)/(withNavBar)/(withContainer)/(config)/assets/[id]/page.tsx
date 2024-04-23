@@ -2,6 +2,7 @@
 
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+// import { z } from "@/app/lib/data/schema/config/validation/customZod"
 import { z } from "zod"
 
 import { AssetEditForm } from "../AssetEditForm"
@@ -24,38 +25,41 @@ import { isCapitalAsset, isCashAsset, isIncomeAsset, isLiquidAsset, isPropertyAs
 import { YesNo } from "../../types"
 import {
   CountryEnum,
+  IsFormNumber,
   IsOptionalFutureOrCurrentYear,
-  IsOptionalNumber,
+  IsFormNumberOpt,
   YesNoSchema
+  // ZodInputStringPipe
 } from "@/app/lib/data/schema/config/schemaUtils"
 
 // There is some duplication with AssetSchema - how can we minimise this?
 const FormSchema = z
   .object({
     name: z.string().min(4),
-    description: z.string().min(4),
+    description: z.string().optional(),
     country: CountryEnum,
     assetType: AssetClassEnum,
-    value: z.coerce.number().gte(0).optional(),
-    owners: z.string().array().nonempty(),
+    value: IsFormNumberOpt,
+    owners: z.string().array().nonempty({ message: "An asset must have at least 1 owner." }),
     // assetOwners: z.string().array().nonempty(),
     incomeBucket: YesNoSchema.optional(),
     canDrawdown: YesNoSchema.optional(), //.transform((val) => val === "Y"),
     drawdownFrom: IsOptionalFutureOrCurrentYear,
-    drawdownOrder: IsOptionalNumber,
-    preferredMinAmt: IsOptionalNumber,
+    drawdownOrder: IsFormNumberOpt,
+    preferredMinAmt: IsFormNumberOpt,
     isRented: YesNoSchema.optional(),
     rentalStartYear: IsOptionalFutureOrCurrentYear,
     rentalEndYear: IsOptionalFutureOrCurrentYear,
-    rentalIncome: z.coerce.number().gte(0).optional(),
-    rentalExpenses: z.coerce.number().gte(0).optional(),
-    incomeAmt: z.coerce.number().optional(), // value and income should be mutually exclusive
+    rentalIncome: IsFormNumberOpt,
+    rentalExpenses: IsFormNumberOpt,
+    incomeAmt: IsFormNumberOpt, // value and income should be mutually exclusive
     incomeStartYear: IsOptionalFutureOrCurrentYear,
     incomeEndYear: IsOptionalFutureOrCurrentYear,
-    rateVariation: IsOptionalNumber
+    rateVariation: IsFormNumberOpt
   })
   .refine(
     ({ assetType, value }) => {
+      // TODO: this is cast to undefined if itis a string
       if (isCapitalAsset(assetType) && !value) return false
       return true
     },
@@ -108,9 +112,10 @@ const FormSchema = z
     { message: "An income asset should only have 1 owner", path: ["owners"] }
   )
 
-type FormDataType = z.infer<typeof FormSchema>
+type FormDataType = z.output<typeof FormSchema>
 
 const getAssetConfigFromForm = (data: FormDataType): Omit<IAsset, "id"> => {
+  console.log("getAssetConfigFromForm", getAssetConfigFromForm)
   const {
     name,
     description,
@@ -134,6 +139,8 @@ const getAssetConfigFromForm = (data: FormDataType): Omit<IAsset, "id"> => {
     rateVariation
   } = data
 
+  console.log("rateVariation", rateVariation)
+
   // strings should already be coerced into strings by zod
   const assetConfig: Omit<BaseAsset, "id"> = {
     name,
@@ -141,19 +148,19 @@ const getAssetConfigFromForm = (data: FormDataType): Omit<IAsset, "id"> => {
     country,
     className: assetType,
     assetOwners: owners,
-    rateVariation
+    rateVariation: rateVariation ? +rateVariation : undefined
   }
   if (isCapitalAsset(assetType)) {
     const capitalAsset = assetConfig as CapitalAsset
     if (value) {
-      capitalAsset.value = value
+      capitalAsset.value = +value
     }
   }
 
   if (isIncomeAsset(assetType) && incomeAmt) {
     const incomeAssetConfig = assetConfig as IncomeAsset
     incomeAssetConfig.income = {
-      incomeAmt: incomeAmt,
+      incomeAmt: +incomeAmt,
       incomeStartYear,
       incomeEndYear
     }
@@ -260,7 +267,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       value,
       owners: assetOwners,
       incomeBucket: earningsAccumulated,
-      preferredMinAmt: preferredMinAmt ?? 0,
+      preferredMinAmt: preferredMinAmt,
       isRented: isRentedString,
       rentalStartYear,
       rentalEndYear,
@@ -280,6 +287,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   if (!owners) return <div>No owners found</div>
 
   const onSubmit = async (data: FormDataType) => {
+    console.log("onSubmit data", data)
     // let success = false
     if (assetConfig) {
       const newAssetConfig = marshall(data, assetConfig)

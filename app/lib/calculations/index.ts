@@ -31,6 +31,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const calculate = async (data: unknown): Promise<CalculationResults> => {
   await sleep(1)
+
   const result = ScenarioSchema.safeParse(data)
 
   if (!result.success) {

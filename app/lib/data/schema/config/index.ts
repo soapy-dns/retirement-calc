@@ -24,8 +24,8 @@ const sharesContextSchema = z.object({
 })
 
 const superContextSchema = z.object({
-  investmentReturn: z.number(), // net of fees but not taxation
-  taxationRate: z.number()
+  investmentReturn: z.number() // net of fees but not taxation
+  // taxationRate: z.number()
 })
 
 export const InflationSchema = z.object({

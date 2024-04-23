@@ -6,7 +6,8 @@ import Anchor from "@/app/ui/components/docs/Anchor"
 To help compare different options, it is possible to create different scenarios.  
 For example you might want 2 scenarios, where you work longer in one than the other.
 
-**Note: details are not automatically stored. You will need to export any configuration changes to your, then re-import them if required. For security, you should only do this on a device you control.**
+**Note: details are not automatically stored. If you want to save for later use, you will have to export the config to your local device, then re-import later.
+For security, you should only do this on a device you own.**
 
 A scenario comprises of
 
@@ -14,14 +15,7 @@ A scenario comprises of
 - <Anchor href={documentDetails.context.url}>Context</Anchor>. Configuration representing the environment.
 - <Anchor href={documentDetails.transfers.url}>Transfers</Anchor>. Declarations to transfer from one asset to another.
 
-## Calculations
+Scenarios can be edited and removed. To add a new scenario, an existing scenario must be duplicated.
+This is easier than adding from scratch, and explains why it is not possible to remove the last remaining scenario.
 
-Taking the initial values and <Anchor href={documentDetails.context.url}>context</Anchor> into account, the year's income, and expenditure is calculated to determine the state of play for the next year.
-
-This is then repeated for subsequent years.
-
-Often it is necessary to drawdown on assets eg take money from your pension pot, or sell some shares.
-Configuration of <Anchor href={documentDetails.assets.url}>assets</Anchor> is done in such a way to determine what to cash in / drawdown and when.
-
-Ultimately the calculation won't be able to work out what to drawdown. In this case the calculation will stop.
-If you want to continue you can configure <Anchor href={documentDetails.transfers.url}>transfers</Anchor>
+The scenario as a whole is taken to calculate expected future results. (See <Anchor href={documentDetails.calculations.url}>Calculations</Anchor> for more details.)

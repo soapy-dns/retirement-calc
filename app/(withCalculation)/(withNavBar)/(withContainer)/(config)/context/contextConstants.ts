@@ -48,10 +48,6 @@ export const contextConstants: Record<string, ItemProps> = {
     LABEL: "Investment return (%)",
     HELP_TEXT: "The average forecast return on investment"
   },
-  SUPER_TAXATION_RATE: {
-    LABEL: "Taxation (%)",
-    HELP_TEXT: "This is the percentage at which income to super (including investment income *Check*) is taxed."
-  },
   PROPERTY_GROWTH_RATE: {
     LABEL: "Property growth (%)",
     HELP_TEXT: "The average percentage that property is expected to increase by per year"
@@ -89,4 +85,8 @@ export const contextConstants: Record<string, ItemProps> = {
     LABEL: "Percentage",
     HELP_TEXT: "The percentage, eg 3 rather than 0.03"
   }
+  // PLACEHOLDER: {
+  //   ADD_YEAR: "Add a year",
+  //   ADD_AMOUNT: "Add an amount"
+  // }
 }

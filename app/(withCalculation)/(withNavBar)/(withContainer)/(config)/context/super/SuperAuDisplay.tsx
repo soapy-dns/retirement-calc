@@ -34,12 +34,7 @@ export const SuperAuDisplay: React.FunctionComponent = (props) => {
         value={superAu ? (superAu?.investmentReturn * 100).toFixed(2) : "-"}
         suffix="%"
       />
-      <TextDisplayField
-        label={contextConstants.SUPER_TAXATION_RATE.LABEL}
-        helpText={contextConstants.SUPER_TAXATION_RATE.HELP_TEXT}
-        value={superAu ? (superAu?.taxationRate * 100).toFixed(2) : "-"}
-        suffix="%"
-      />
+
     </DisplayCardWithEdit>
   )
 }

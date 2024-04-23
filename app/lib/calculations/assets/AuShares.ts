@@ -3,7 +3,7 @@ import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
 import { Asset } from "./Asset"
 import { YearData } from "./types"
 import { IAsset, IScenario, SharesContext, Transfer } from "../../data/schema/config"
-import { getTransferAmt } from "../transfers/getTransfers"
+import { getTransferAmt } from "../transfers/getTransferAmt"
 
 export class AuShares extends Asset {
   capitalAsset: boolean

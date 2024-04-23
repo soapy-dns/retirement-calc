@@ -35,7 +35,7 @@ export const YearValue: React.FC<Props> = ({
 }) => {
   const { handleSubmit, control, reset } = useForm<ChangedFormData>({
     defaultValues: {},
-    reValidateMode: 'onBlur'
+    reValidateMode: "onBlur"
     // resolver: zodResolver(FormSchema)
   })
 
@@ -67,6 +67,7 @@ export const YearValue: React.FC<Props> = ({
         <InputQuestion
           id="yearAdd"
           control={control}
+          placeholder="Add a year"
           label={contextConstants.FROM_YEAR.LABEL}
           restrictedCharSet={INTEGERS_ONLY}
           validationRules={inflationYearValidationRules}
@@ -76,6 +77,7 @@ export const YearValue: React.FC<Props> = ({
         <InputQuestion
           id="valueAdd"
           control={control}
+          placeholder="Add an amount"
           label={valueLabel}
           restrictedCharSet={INTEGERS_ONLY}
           validationRules={valueValidationRules || {}}

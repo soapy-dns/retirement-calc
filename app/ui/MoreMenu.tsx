@@ -88,7 +88,7 @@ export const MoreMenu = () => {
               )}
             </Menu.Item>
 
-            <Menu.Item>
+            {/* <Menu.Item>
               {({ active }) => (
                 <Link
                   href={AppPath.tools}
@@ -103,7 +103,7 @@ export const MoreMenu = () => {
                   </div>
                 </Link>
               )}
-            </Menu.Item>
+            </Menu.Item> */}
 
             <Menu.Item>
               {({ active }) => (
@@ -122,7 +122,7 @@ export const MoreMenu = () => {
               )}
             </Menu.Item>
 
-            <Menu.Item>
+            {/* <Menu.Item>
               {({ active }) => (
                 <Link
                   href={AppPath.about}
@@ -137,7 +137,7 @@ export const MoreMenu = () => {
                   </div>
                 </Link>
               )}
-            </Menu.Item>
+            </Menu.Item> */}
           </div>
         </Menu.Items>
       </Transition>
