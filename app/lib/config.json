@@ -16,5 +16,13 @@
       { "rate": 0.45, "bandTop": 125140 },
       { "rate": 0.48, "bandTop": 9999999999 }
     ]
+  },
+  "superTax": {
+    "AU": {
+      "superIncomeTaxRate": 0.15
+    },
+    "SC": {
+      "superIncomeTaxRate": 0
+    }
   }
 }
