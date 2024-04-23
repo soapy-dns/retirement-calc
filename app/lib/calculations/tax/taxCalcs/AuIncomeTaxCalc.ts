@@ -1,24 +1,41 @@
 import { getIncomeInTodaysMoney } from "../utils"
 import { IncomeTaxCalc } from "./incomeTaxCalc"
+import config from "@/app/lib/config.json"
+
+interface TaxRecord {
+  rate: number
+  bandTop: number
+}
+const taxConfig: TaxRecord[] = config.incomeTax.AU
+
+interface AdditionalTaxRecord extends TaxRecord {
+  additionalAmt: number
+}
+const additionalTaxes: AdditionalTaxRecord[] = taxConfig.map((it, index) => {
+  const prevBandTop = taxConfig[index - 1] ? taxConfig[index - 1].bandTop : 0
+  return { ...it, additionalAmt: (it.bandTop - prevBandTop) * it.rate }
+})
+
+interface TaxToRecord extends AdditionalTaxRecord {
+  taxToTop: number
+}
+
+const sumTaxesTo = (additionalTaxes: AdditionalTaxRecord[], index: number) => {
+  const additionalTaxesToSum = [...additionalTaxes].splice(0, index)
+
+  const taxAmt = additionalTaxesToSum.reduce((accum, it) => {
+    return accum + it.additionalAmt
+  }, 0)
+
+  return taxAmt
+}
+
+const taxTo: TaxToRecord[] = additionalTaxes.map((it, index) => {
+  const prevTaxAmt = sumTaxesTo(additionalTaxes, index)
+  return { ...it, taxToTop: prevTaxAmt + it.additionalAmt }
+})
 
 export class AuIncomeTaxCalc extends IncomeTaxCalc {
-  taxRate1 = 0
-  taxRate2 = 0.19
-  taxRate3 = 0.325
-  taxRate4 = 0.37
-  taxRate5 = 0.45
-
-  bandTop1 = 18200
-  bandTop2 = 45000
-  bandTop3 = 120000
-  bandTop4 = 180000
-
-  taxTo1 = 0
-  taxTo2 = (this.bandTop2 - this.bandTop1) * this.taxRate2
-  taxTo3 = (this.bandTop3 - this.bandTop2) * this.taxRate3 + this.taxTo2
-  taxTo4 = (this.bandTop4 - this.bandTop3) * this.taxRate4 + this.taxTo3
-
-  // Get Income tax
   getTax(income: number, year: number): number {
     const { incomeInTodaysMoney, inflationFactor } = getIncomeInTodaysMoney(
       income,
@@ -27,24 +44,14 @@ export class AuIncomeTaxCalc extends IncomeTaxCalc {
       this.inflationContext
     )
 
+    const lastIndex = taxTo.findIndex((it) => incomeInTodaysMoney < it.bandTop)
+
     let taxAmtInTodaysMoney
-    switch (true) {
-      case incomeInTodaysMoney > this.bandTop4:
-        taxAmtInTodaysMoney = (incomeInTodaysMoney - this.bandTop4) * this.taxRate5 + this.taxTo4
-        break
-
-      case incomeInTodaysMoney > this.bandTop3:
-        taxAmtInTodaysMoney = (incomeInTodaysMoney - this.bandTop3) * this.taxRate4 + this.taxTo3
-        break
-      case incomeInTodaysMoney > this.bandTop2:
-        taxAmtInTodaysMoney = (incomeInTodaysMoney - this.bandTop2) * this.taxRate3 + this.taxTo2
-        break
-      case incomeInTodaysMoney > this.bandTop1:
-        taxAmtInTodaysMoney = (incomeInTodaysMoney - this.bandTop1) * this.taxRate2 + this.taxTo1
-        break
-
-      default:
-        taxAmtInTodaysMoney = incomeInTodaysMoney * this.taxRate1
+    if (lastIndex === 0) {
+      taxAmtInTodaysMoney = incomeInTodaysMoney * taxTo[0].rate
+    } else {
+      taxAmtInTodaysMoney =
+        taxTo[lastIndex - 1].taxToTop + (incomeInTodaysMoney - taxTo[lastIndex - 1].bandTop) * taxTo[lastIndex].rate
     }
 
     const taxAmtInYearsMoneyAndOriginalCurrency =
