@@ -1,8 +1,7 @@
 import { InflationContext } from "../../types"
-import { AuIncomeTaxCalc } from "./AuIncomeTaxCalc"
-import { IncomeTaxCalc } from "./incomeTaxCalc"
+import { IncomeTaxCalc } from "./IncomeTaxCalc"
 import { Country } from "./types"
-import { UkIncomeTaxCalc } from "./UkIncomeTaxCalc"
+import config from "@/app/lib/config.json"
 
 export interface IGetIncomeTaxCalculator {
   taxResident: Country
@@ -22,7 +21,7 @@ export const getIncomeTaxCalculator = ({
 IGetIncomeTaxCalculator): IncomeTaxCalc => {
   const currencyConversionFactor = taxResident !== currency ? au2ukExchangeRate ?? 1 : 1
 
-  if (taxResident === "AU") return new AuIncomeTaxCalc(currencyConversionFactor, inflationContext)
+  if (taxResident === "AU") return new IncomeTaxCalc(currencyConversionFactor, config.incomeTax.AU, inflationContext)
 
-  return new UkIncomeTaxCalc(currencyConversionFactor, inflationContext)
+  return new IncomeTaxCalc(currencyConversionFactor, config.incomeTax.SC, inflationContext)
 }

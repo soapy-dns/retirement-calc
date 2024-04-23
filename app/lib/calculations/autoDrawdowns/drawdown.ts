@@ -3,7 +3,7 @@ import { DrawdownYearData, Earning, ExpenseYearData, Tax } from "../assets/types
 import { IScenario } from "../../data/schema/config"
 import { getDrawdownAmt } from "../income/getDrawdowns"
 import { getTaxAmtForYear } from "../tax/getTaxAmt"
-import { IncomeTaxCalc } from "../tax/taxCalcs/incomeTaxCalc"
+import { IncomeTaxCalc } from "../tax/taxCalcs/IncomeTaxCalc"
 import { getTaxableDrawdownAmt } from "../tax/utils"
 import { getLivingExpensesAmtForYear } from "../utils/livingExpensesUtils"
 import { createAutoDrawdowns } from "./createAutoDrawdowns"

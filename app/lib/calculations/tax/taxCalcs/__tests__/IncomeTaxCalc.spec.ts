@@ -1,4 +1,5 @@
-import { AuIncomeTaxCalc } from "../AuIncomeTaxCalc"
+import { IncomeTaxCalc } from "../IncomeTaxCalc"
+import config from "@/app/lib/config.json"
 
 const inflationFactor = 1.27
 const year = 2030
@@ -10,7 +11,7 @@ const inflationContext = {
 }
 
 describe("tests without currency conversion", () => {
-  const taxCalc = new AuIncomeTaxCalc(1, inflationContext)
+  const taxCalc = new IncomeTaxCalc(1, config.incomeTax.AU, inflationContext)
 
   it("should be no tax below threshold 1", () => {
     const incomeAsAtTheYear = 18199 * inflationFactor
@@ -49,7 +50,7 @@ describe("tests without currency conversion", () => {
 })
 
 describe("test with currency conversion", () => {
-  const taxCalc = new AuIncomeTaxCalc(2, inflationContext)
+  const taxCalc = new IncomeTaxCalc(2, config.incomeTax.AU, inflationContext)
 
   it("should do with currency conversion ok", () => {
     const incomeAsAtTheYear = 50000 * inflationFactor
