@@ -12,7 +12,7 @@ interface AdditionalTaxRecord extends TaxRecord {
 interface TaxToRecord extends AdditionalTaxRecord {
   taxToTop: number
 }
-export class IncomeTaxCalc {
+export class BandedTaxCalc {
   protected currencyConversionFactor = 1
   protected inflationContext
   protected taxToConfig: TaxToRecord[]

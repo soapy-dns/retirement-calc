@@ -26,6 +26,7 @@ import { getStartingYear } from "./utils/getStartingYear"
 import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
 import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
 import { IScenario, ScenarioSchema } from "../data/schema/config"
+import { getEarningTaxes } from "./tax/getEarningsTaxes"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -147,6 +148,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       year++
     }
     // }) // end of year
+
+    const earningsTaxes = getEarningTaxes(assets)
 
     if (calculatedEndYear !== to)
       calculationMessage = `Cannot automate further capital asset drawdowns after ${calculatedEndYear}.  

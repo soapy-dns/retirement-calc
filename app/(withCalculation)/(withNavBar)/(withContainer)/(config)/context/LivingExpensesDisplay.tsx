@@ -7,12 +7,15 @@ import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { ContextType, useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
-import { currencyFormatter } from "@/app/ui/utils/formatter"
+import { getCurrencyFormatter } from "@/app/ui/utils/formatter"
 import { PencilSquareIcon } from "@heroicons/react/24/outline"
 import { useContext } from "react"
 
 export const LivingExpensesDisplay: React.FC = () => {
   const navigation = useNavigation()
+  const { getCurrency } = useContextConfig()
+  const currencyCountry = getCurrency()
+  const currencyFormatter = getCurrencyFormatter(currencyCountry)
 
   const { selectedScenario } = useContext(ScenarioContext)
   const { hasValidationErrors } = useContextConfig()

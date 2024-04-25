@@ -6,10 +6,11 @@ import { ButtonGroup } from "@/app/ui/components/common/ButtonGroup"
 import { useAsset } from "@/app/ui/hooks/useAsset"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
-import { currencyFormatter } from "@/app/ui/utils/formatter"
+import { getCurrencyFormatter } from "@/app/ui/utils/formatter"
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
 
 import { getAssetDisplayDetails } from "./utils"
+import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
 
 interface IAssetItemDisplay {
   removeAllowed: boolean
@@ -20,6 +21,9 @@ interface IAssetItemDisplay {
 export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay) => {
   const navigation = useNavigation()
   const { removeAsset, hasTransfers, hasValidationErrors } = useAsset()
+  const { getCurrency } = useContextConfig()
+  const currencyCountry = getCurrency()
+  const currencyFormatter = getCurrencyFormatter(currencyCountry)
 
   const handleEdit = () => {
     const { id } = asset

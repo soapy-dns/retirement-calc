@@ -3,7 +3,7 @@ import { DrawdownYearData, AssetIncome, ExpenseYearData, Tax } from "../assets/t
 import { IScenario } from "../../data/schema/config"
 import { getDrawdownAmt } from "../income/getDrawdowns"
 import { getTaxAmtForYear } from "../tax/getTaxAmt"
-import { IncomeTaxCalc } from "../tax/taxCalcs/IncomeTaxCalc"
+import { BandedTaxCalc } from "../tax/taxCalcs/BandedTaxCalc"
 import { getTaxableDrawdownAmt } from "../tax/utils"
 import { getLivingExpensesAmtForYear } from "../utils/livingExpensesUtils"
 import { createAutoDrawdowns } from "./createAutoDrawdowns"
@@ -17,7 +17,7 @@ interface IDrawdownContext {
   assets: Asset[]
   automatedDrawdownMap: Record<number, AutomatedDrawdown[]>
   taxes: Tax[]
-  incomeTaxCalculator: IncomeTaxCalc
+  incomeTaxCalculator: BandedTaxCalc
   owners: string[]
   incomeFromAssets: AssetIncome[]
   livingExpenses: BasicYearData[]

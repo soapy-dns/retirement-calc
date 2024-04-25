@@ -3,7 +3,7 @@ import { z } from "zod"
 import { validateIncomeBucket, validateLivingExpensesVsInflation } from "./validation"
 import { AssetSchema } from "./asset"
 import { CountryEnum, IsFutureOrCurrentYear, YesNoSchema } from "./schemaUtils"
-import { currencyFormatter } from "@/app/ui/utils/formatter"
+import { numberFormatter } from "@/app/ui/utils/formatter"
 
 const cashContextSchema = z.object({
   interestRate: z.number()
@@ -63,9 +63,9 @@ const transferSchema = z.discriminatedUnion("migrateAll", [transferWithMigrateAl
     return value && costOfTransfer <= value
   },
   ({ costOfTransfer = 0, value }) => ({
-    message: `Cost of transfer (${currencyFormatter.format(
+    message: `Cost of transfer (${numberFormatter.format(
       costOfTransfer
-    )}) cannot be more than the value to transfer (${currencyFormatter.format(value || 0)})`
+    )}) cannot be more than the value to transfer (${numberFormatter.format(value || 0)})`
   })
 )
 

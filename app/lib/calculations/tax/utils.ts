@@ -1,5 +1,5 @@
 import { AssetIncome, Tax } from "../assets/types"
-import { IncomeTaxCalc } from "./taxCalcs/IncomeTaxCalc"
+import { BandedTaxCalc } from "./taxCalcs/BandedTaxCalc"
 import { getScenarioTransfersForYear } from "../transfers/transferUtils"
 import { IScenario, Transfer, Country } from "../../data/schema/config"
 import { Asset } from "../assets/Asset"
@@ -81,7 +81,7 @@ export const calculateTaxes = (
   scenario: IScenario,
   year: number,
   owners: string[],
-  incomeTaxCalculator: IncomeTaxCalc,
+  incomeTaxCalculator: BandedTaxCalc,
   incomeFromAssets: AssetIncome[],
   taxes: Tax[], // TODO: maybe we create and return?
   assets: Asset[]

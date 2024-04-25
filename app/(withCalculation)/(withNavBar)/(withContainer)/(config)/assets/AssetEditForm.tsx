@@ -14,6 +14,7 @@ import { YesNo } from "../types"
 import { AssetType } from "@/app/lib/data/types"
 import { isCapitalAsset, isCashAsset, isIncomeAsset, isLiquidAsset, isPropertyAsset } from "@/app/ui/utils"
 import { AssetClass } from "@/app/lib/data/schema/config"
+import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
 
 interface Props {
   control: Control<any, object>
@@ -32,6 +33,8 @@ export const AssetEditForm: FunctionComponent<Props> = ({
   owners,
   register
 }) => {
+  const { getCurrencySymbol } = useContextConfig()
+  const currency = getCurrencySymbol()
   const showDrawdown = drawdownSet === "Y"
   const ownersOptions = owners.map((it) => ({ label: it, value: it }))
 
@@ -87,7 +90,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
             id="value"
             control={control}
             label={assetConstants.VALUE.LABEL}
-            prefix="$"
+            prefix={currency}
             restrictedCharSet={INTEGERS_ONLY}
             helpText={assetConstants.VALUE.HELP_TEXT}
           />
@@ -150,7 +153,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
             id="incomeAmt"
             control={control}
             label={assetConstants.INCOME.LABEL}
-            prefix="$"
+            prefix={currency}
             restrictedCharSet={INTEGERS_ONLY}
             helpText={assetConstants.INCOME.HELP_TEXT}
           />

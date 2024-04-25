@@ -1,16 +1,25 @@
 import { useContext } from "react"
 import { ScenarioContext } from "../context/ScenarioContext"
+import { Country } from "@/app/lib/data/schema/config"
 
 export enum ContextType {
   inflation = "inflation",
   cash = "auBank",
   shares = "sharesAu",
   super = "superAu",
-  property="property",
+  property = "property",
   definedBenefits = "definedBenefitsAu"
 }
 export const useContextConfig = () => {
-  const { calculationResults } = useContext(ScenarioContext)
+  const { calculationResults, selectedScenario } = useContext(ScenarioContext)
+
+  const getCurrency = (): Country => {
+    return selectedScenario.context.currency
+  }
+
+  const getCurrencySymbol = (): string => {
+    return selectedScenario.context.currency === "AU" ? "$" : "£"
+  }
 
   const hasValidationErrors = (contextType: ContextType): boolean => {
     if (!calculationResults || calculationResults.success) return false
@@ -34,6 +43,8 @@ export const useContextConfig = () => {
   }
 
   return {
+    getCurrency,
+    getCurrencySymbol,
     hasValidationErrors
   }
 }
