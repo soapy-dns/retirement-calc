@@ -7,6 +7,8 @@ import { yesNoOptions } from "@/app/ui/utils/yesNoOptions"
 import { FunctionComponent, useContext } from "react"
 import { Control } from "react-hook-form"
 import { transferConstants } from "./transferConstants"
+import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
+import { getCurrencyFormatter } from "@/app/ui/utils/formatter"
 
 interface Props {
   control: Control<any, object>
@@ -15,6 +17,8 @@ interface Props {
 
 export const TransferForm: FunctionComponent<Props> = ({ control, showValue }) => {
   const { getSelectedScenarioAssetsOptions } = useContext(ScenarioContext)
+  const { getCurrencySymbol } = useContextConfig()
+  const currency = getCurrencySymbol()
 
   const transferableAssets = getSelectedScenarioAssetsOptions({ excludeIncome: true })
   return (
@@ -32,7 +36,6 @@ export const TransferForm: FunctionComponent<Props> = ({ control, showValue }) =
         label={transferConstants.FROM.LABEL}
         helpText={transferConstants.FROM.HELP_TEXT}
         options={transferableAssets}
-        // validationRules={changeDetailsValidation}
       />
       <SelectQuestion
         id="to"
@@ -40,7 +43,6 @@ export const TransferForm: FunctionComponent<Props> = ({ control, showValue }) =
         label={transferConstants.TO.LABEL}
         helpText={transferConstants.TO.HELP_TEXT}
         options={transferableAssets}
-        // validationRules={changeDetailsValidation}
       />
 
       <RadioButtonQuestion
@@ -56,7 +58,7 @@ export const TransferForm: FunctionComponent<Props> = ({ control, showValue }) =
           id="value"
           control={control}
           label={transferConstants.VALUE.LABEL}
-          prefix="$"
+          prefix={currency}
           helpText={transferConstants.VALUE.HELP_TEXT}
         />
       )}
@@ -65,7 +67,7 @@ export const TransferForm: FunctionComponent<Props> = ({ control, showValue }) =
         id="costOfTransfer"
         control={control}
         label={transferConstants.TRANSFER_COST.LABEL}
-        prefix="$"
+        prefix={currency}
         helpText={transferConstants.TRANSFER_COST.HELP_TEXT}
       />
     </form>

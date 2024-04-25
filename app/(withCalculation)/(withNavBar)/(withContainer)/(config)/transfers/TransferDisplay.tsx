@@ -7,10 +7,11 @@ import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useTransfer } from "@/app/ui/hooks/useTransfer"
 import { AppPath } from "@/app/ui/types"
-import { currencyFormatter } from "@/app/ui/utils/formatter"
+import { getCurrencyFormatter } from "@/app/ui/utils/formatter"
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { FunctionComponent, useContext } from "react"
 import { transferConstants } from "./transferConstants"
+import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
 
 interface Props {
   transfers: Transfer[]
@@ -19,6 +20,9 @@ export const TransferDisplay: FunctionComponent<Props> = ({ transfers }) => {
   const navigation = useNavigation()
   const { removeTransfer } = useTransfer()
   const { getSelectedScenarioAssetsOptions } = useContext(ScenarioContext)
+  const { getCurrency } = useContextConfig()
+  const currencyCountry = getCurrency()
+  const currencyFormatter = getCurrencyFormatter(currencyCountry)
 
   const handleEdit = (id: string) => {
     navigation.goTo(AppPath.transferEdit, { id })
