@@ -1,5 +1,5 @@
 import { InflationContext } from "../../types"
-import { IncomeTaxCalc } from "./IncomeTaxCalc"
+import { BandedTaxCalc } from "./BandedTaxCalc"
 import { Country } from "./types"
 import config from "@/app/lib/config.json"
 
@@ -18,10 +18,10 @@ export const getIncomeTaxCalculator = ({
   inflationContext,
   au2ukExchangeRate = 1
 }: // income
-IGetIncomeTaxCalculator): IncomeTaxCalc => {
+IGetIncomeTaxCalculator): BandedTaxCalc => {
   const currencyConversionFactor = taxResident !== currency ? au2ukExchangeRate ?? 1 : 1
 
-  if (taxResident === "AU") return new IncomeTaxCalc(currencyConversionFactor, config.incomeTax.AU, inflationContext)
+  if (taxResident === "AU") return new BandedTaxCalc(currencyConversionFactor, config.incomeTax.AU, inflationContext)
 
-  return new IncomeTaxCalc(currencyConversionFactor, config.incomeTax.SC, inflationContext)
+  return new BandedTaxCalc(currencyConversionFactor, config.incomeTax.SC, inflationContext)
 }

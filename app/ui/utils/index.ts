@@ -2,11 +2,14 @@ import { AssetClass } from "@/app/lib/data/schema/config"
 
 export const getErrorMsgId = (id: string) => `${id}-validation-error`
 
+const earnedIncomeAssetClassNames = ["Salary"]
 const incomeAssetClassNames = ["AuDefinedBenefits", "Salary"]
 const capitalAssetClassNames = ["AuProperty", "AuShares", "AuBank", "AuSuper"]
 const propertyAssetClassNames = ["AuProperty"]
 const liquidAssetClassNames = ["AuShares", "AuBank", "AuSuper"]
 const cashAssetClassNames = ["AuBank"]
+
+export const isEarnedIncomeAsset = (className: AssetClass) => earnedIncomeAssetClassNames.includes(className)
 
 export const isIncomeAsset = (className: AssetClass) => incomeAssetClassNames.includes(className)
 
