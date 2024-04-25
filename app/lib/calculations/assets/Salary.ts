@@ -8,7 +8,7 @@ import { DefinedBenefitsContext, IAsset, IScenario, Transfer } from "../../data/
 export class Salary extends Asset {
   capitalAsset: boolean
   assetGroup: AssetGroup
-  percOfEarningsTaxable: number
+  percOfIncomeTaxable: number
   percOfDrawdownTaxable: number
   incomeAmount: number
   incomeStartYear?: number
@@ -30,7 +30,7 @@ export class Salary extends Asset {
     const {
       context: { taxResident, definedBenefitsAu }
     } = scenario
-    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfIncomeTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
     this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
 
     const { income } = assetConfig

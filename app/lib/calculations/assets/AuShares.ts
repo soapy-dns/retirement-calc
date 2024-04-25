@@ -8,7 +8,7 @@ import { getTransferAmt } from "../transfers/getTransferAmt"
 export class AuShares extends Asset {
   capitalAsset: boolean
   assetGroup: AssetGroup
-  percOfEarningsTaxable: number
+  percOfIncomeTaxable: number
   percOfDrawdownTaxable: number
   transfers?: Transfer[]
   shareContext: SharesContext
@@ -30,7 +30,7 @@ export class AuShares extends Asset {
     this.shareContext = sharesAu
     this.transfers = transfers
 
-    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfIncomeTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
     this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
 
     this.history.push({ value, year: startingYear, transferAmt: 0, income: 0 })

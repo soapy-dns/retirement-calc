@@ -1,5 +1,5 @@
 import { Asset } from "../assets/Asset"
-import { DrawdownYearData, Earning, ExpenseYearData, Tax } from "../assets/types"
+import { DrawdownYearData, AssetIncome, ExpenseYearData, Tax } from "../assets/types"
 import { IScenario } from "../../data/schema/config"
 import { getDrawdownAmt } from "../income/getDrawdowns"
 import { getTaxAmtForYear } from "../tax/getTaxAmt"
@@ -19,7 +19,7 @@ interface IDrawdownContext {
   taxes: Tax[]
   incomeTaxCalculator: IncomeTaxCalc
   owners: string[]
-  earningsFromAssets: Earning[]
+  incomeFromAssets: AssetIncome[]
   livingExpenses: BasicYearData[]
   totalExpenses: ExpenseYearData[]
   totalDrawdowns: DrawdownYearData[]
@@ -53,14 +53,7 @@ const drawdownIteration = (
 
     // This isn't right.  We are doubling. TODO:
     const newTotalTaxableAmt =
-      taxHistory.taxableEarningsAmt + taxHistory.taxableDrawdownsAmt + taxableAutomatedDrawdownAmt
-    // console.log(
-    //   "--newTotalTaxableAmt, taxHistory.taxableEarningsAmt , taxHistory.taxableDrawdownsAmt , taxableAutomatedDrawdownAmt--",
-    //   newTotalTaxableAmt,
-    //   taxHistory.taxableEarningsAmt,
-    //   taxHistory.taxableDrawdownsAmt,
-    //   taxableAutomatedDrawdownAmt
-    // )
+      taxHistory.taxableIncomeAmt + taxHistory.taxableDrawdownsAmt + taxableAutomatedDrawdownAmt
 
     const ownersTaxAmt = incomeTaxCalculator.getTax(newTotalTaxableAmt, year)
 

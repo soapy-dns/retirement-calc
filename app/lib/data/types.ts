@@ -39,7 +39,7 @@ export interface ISelectOption {
 //   drawdownFrom?: number
 //   drawdownOrder?: number
 //   // drawdownTaxed?: boolean
-//   // percOfEarningsTaxable?: number
+//   // percOfIncomeTaxable?: number
 //   preferredMinAmt?: number
 //   isRented?: boolean
 //   rentalIncomePerMonth?: number

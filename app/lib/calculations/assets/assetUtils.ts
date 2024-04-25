@@ -7,7 +7,7 @@ import { Asset } from "./Asset"
 import { getDrawdownableAssets } from "../autoDrawdowns/getDrawdownableAssets"
 import { sortByPreference } from "../utils/sortAssetsByPreference"
 import { groupAssetsByPreference } from "./groupAssetsByPreference"
-import { Earning } from "./types"
+import { AssetIncome } from "./types"
 import { InflationContext } from "@/app/lib/calculations/types"
 import { Salary } from "./Salary"
 import { getAssetData } from "../../data/scenarios"
@@ -72,21 +72,21 @@ export const canDrawdownAssets = (assets: Asset[], year: number) => {
 }
 
 // for each asset calculate the next year minus any tax
-export const addAssetEarnings = (year: number, assets: Asset[], earningsFromAssets: Earning[]) => {
+export const addAssetIncome = (year: number, assets: Asset[], incomeFromAssets: AssetIncome[]) => {
   assets.forEach((asset) => {
     const yearData = asset.getYearData(year) // TODO: should maybe have this within the calcNextYear method
 
     const nextYearData = asset.calcNextYear(yearData, assets)
 
-    // GET EARNINGs FOR THIS ASSET - NOTE THERE COULD BE MULTIPLE AS THERE COULD BE MULTIPLE OWNERS OF THE ASSET
-    // CALCULATE 'EARNINGS' / INCOME FROM ASSETS FOR THE YEAR AND MATCHING ASSET
+    // GET INCOME FOR THIS ASSET - NOTE THERE COULD BE MULTIPLE AS THERE COULD BE MULTIPLE OWNERS OF THE ASSET
+    // CALCULATE INCOME FROM ASSETS FOR THE YEAR AND MATCHING ASSET
     // THIS IS USED FOR TAX CALCULATIONS
-    const matchingEarningsForOwners = earningsFromAssets.filter((earningStream) => asset.id === earningStream.id)
+    const matchingIncomeForOwners = incomeFromAssets.filter((incomeStream) => asset.id === incomeStream.id)
 
     // add a history
-    matchingEarningsForOwners.forEach((ownersEarnings) => {
-      const allocatedIncome = nextYearData.income * ownersEarnings.proportion
-      ownersEarnings.history.push({ year, value: Math.round(allocatedIncome) })
+    matchingIncomeForOwners.forEach((ownersIncome) => {
+      const allocatedIncome = nextYearData.income * ownersIncome.proportion
+      ownersIncome.history.push({ year, value: Math.round(allocatedIncome) })
     })
   })
 }

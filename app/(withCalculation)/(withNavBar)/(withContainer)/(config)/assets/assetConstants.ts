@@ -7,10 +7,10 @@ export const assetConstants = {
     LABEL: "Country of asset",
     HELP_TEXT: "The country the asset is in (defaults to Australia)."
   },
-  EARNINGS_BUCKET: {
-    LABEL: "Earnings to be accumulated in this asset?",
+  INCOME_BUCKET: {
+    LABEL: "Income to be accumulated in this asset?",
     HELP_TEXT:
-      "Earnings from other assets are accumulated here - perhaps this should be outside individual assets as only 1 can be active."
+      "Income from other assets are accumulated here - perhaps this should be outside individual assets as only 1 can be active."
   },
   PREFERRED_MIN_AMT: {
     LABEL: "Maintain minimum (optional)",

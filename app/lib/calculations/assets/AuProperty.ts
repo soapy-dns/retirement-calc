@@ -9,7 +9,7 @@ import { getTransferAmt } from "../transfers/getTransferAmt"
 export class AuProperty extends Asset {
   capitalAsset: boolean // if all assets have this, shouldn't it be in the Asset class
   assetGroup: AssetGroup
-  percOfEarningsTaxable: number
+  percOfIncomeTaxable: number
   percOfDrawdownTaxable: number
   transfers?: Transfer[]
   propertyContext: PropertyContext
@@ -38,7 +38,7 @@ export class AuProperty extends Asset {
 
     this.capitalAsset = true
     this.assetGroup = AssetGroup.property
-    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfIncomeTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
     this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
     this.inflationContext = inflationContext
 

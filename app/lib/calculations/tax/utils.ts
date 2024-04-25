@@ -1,22 +1,22 @@
-import { Earning, Tax } from "../assets/types"
+import { AssetIncome, Tax } from "../assets/types"
 import { IncomeTaxCalc } from "./taxCalcs/IncomeTaxCalc"
 import { getScenarioTransfersForYear } from "../transfers/transferUtils"
 import { IScenario, Transfer, Country } from "../../data/schema/config"
 import { Asset } from "../assets/Asset"
 import { AssetGroup, InflationContext } from "../types"
 
-export const getOwnersTaxableEarningsAmt = (earningsFromAssets: Earning[], owner: string, year: number) => {
-  const ownersTaxableEarningsFromAssets = earningsFromAssets.filter(
-    (earning) => earning.owner === owner && earning.percOfEarningsTaxable > 0
+export const getOwnersTaxableIncomeAmt = (incomeFromAssets: AssetIncome[], owner: string, year: number) => {
+  const ownersTaxableIncomeFromAssets = incomeFromAssets.filter(
+    (assetIncome) => assetIncome.owner === owner && assetIncome.percOfIncomeTaxable > 0
   )
 
-  const ownersTaxableEarningsFromAssetsAmt = ownersTaxableEarningsFromAssets.reduce((accum, earning) => {
-    const yearData = earning.history.find((it) => it.year === year)
+  const ownersTaxableIncomeFromAssetsAmt = ownersTaxableIncomeFromAssets.reduce((accum, assetIncome) => {
+    const yearData = assetIncome.history.find((it) => it.year === year)
 
-    return yearData ? accum + (yearData.value * earning.percOfEarningsTaxable) / 100 : 0
+    return yearData ? accum + (yearData.value * assetIncome.percOfIncomeTaxable) / 100 : 0
   }, 0)
 
-  return ownersTaxableEarningsFromAssetsAmt
+  return ownersTaxableIncomeFromAssetsAmt
 }
 
 /**
@@ -67,7 +67,7 @@ export const initTaxes = (yearRange: number[], owners: string[]): Tax[] => {
         year,
         value: 0,
         totalTaxableAmt: 0,
-        taxableEarningsAmt: 0,
+        taxableIncomeAmt: 0,
         taxableDrawdownsAmt: 0,
         taxableAutomatedDrawdownAmt: 0
       })
@@ -82,7 +82,7 @@ export const calculateTaxes = (
   year: number,
   owners: string[],
   incomeTaxCalculator: IncomeTaxCalc,
-  earningsFromAssets: Earning[],
+  incomeFromAssets: AssetIncome[],
   taxes: Tax[], // TODO: maybe we create and return?
   assets: Asset[]
 ) => {
@@ -93,9 +93,9 @@ export const calculateTaxes = (
     if (!tax) throw new Error(`tax object not foound for ${owner}`)
     const manualTaxableDrawdownAmt = getTaxableDrawdownAmt(scenario, manualTransfersForYear, owner, assets)
 
-    const ownersTaxableEarningsAmt = getOwnersTaxableEarningsAmt(earningsFromAssets, owner, year)
+    const ownersTaxableIncomeAmt = getOwnersTaxableIncomeAmt(incomeFromAssets, owner, year)
 
-    const ownersTotalTaxableAmt = ownersTaxableEarningsAmt + manualTaxableDrawdownAmt
+    const ownersTotalTaxableAmt = ownersTaxableIncomeAmt + manualTaxableDrawdownAmt
 
     const ownersTaxAmt = incomeTaxCalculator.getTax(ownersTotalTaxableAmt, year)
 
@@ -103,7 +103,7 @@ export const calculateTaxes = (
     if (!taxHistory) throw new Error(`No history found for ${owner} in ${year}`)
 
     taxHistory.totalTaxableAmt = Math.round(ownersTotalTaxableAmt)
-    taxHistory.taxableEarningsAmt = Math.round(ownersTaxableEarningsAmt)
+    taxHistory.taxableIncomeAmt = Math.round(ownersTaxableIncomeAmt)
     taxHistory.taxableDrawdownsAmt = Math.round(manualTaxableDrawdownAmt)
 
     taxHistory.value = ownersTaxAmt

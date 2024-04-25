@@ -10,7 +10,7 @@ type Props = IAsset & {
 
 /**
  * percOfDrawdownsTaxable for defined benefits in UK - built into the specific asset
- * percOfEarningsTaxable - when would we need this?
+ * percOfIncomeTaxable - when would we need this?
  * incomeProducing
  */
 // TODO: need to have sub classes with the relevant properties
@@ -23,7 +23,7 @@ export abstract class Asset {
   incomeProducing = false
   assetOwners
   // scenario // TODO: Why do I need scenarop here?
-  abstract readonly percOfEarningsTaxable: number
+  abstract readonly percOfIncomeTaxable: number
   abstract readonly percOfDrawdownTaxable: number // eg defined contributions which will have 25% tax free in UK
   incomeBucket = false
   canDrawdown = false
