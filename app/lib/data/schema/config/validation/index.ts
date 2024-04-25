@@ -25,8 +25,8 @@ export const validateLivingExpensesVsInflation = (
 }
 
 // VALIDATE ASSETS
-export const validateEarningsBucket = (assets: IAsset[]) => {
-  const earningsBucketAssets = assets.filter((it) => {
+export const validateIncomeBucket = (assets: IAsset[]) => {
+  const incomeBucketAssets = assets.filter((it) => {
     if (isCashAsset(it.className)) {
       const cashAsset = it as CashAsset
       return cashAsset.incomeBucket === true
@@ -34,7 +34,7 @@ export const validateEarningsBucket = (assets: IAsset[]) => {
     return false
   })
 
-  return earningsBucketAssets.length === 1
+  return incomeBucketAssets.length === 1
 }
 
 // VALIDATE TRANSFERS

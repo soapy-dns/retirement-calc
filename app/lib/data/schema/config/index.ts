@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { validateEarningsBucket, validateLivingExpensesVsInflation } from "./validation"
+import { validateIncomeBucket, validateLivingExpensesVsInflation } from "./validation"
 import { AssetSchema } from "./asset"
 import { CountryEnum, IsFutureOrCurrentYear, YesNoSchema } from "./schemaUtils"
 import { currencyFormatter } from "@/app/ui/utils/formatter"
@@ -103,8 +103,8 @@ export const ScenarioSchema = z
     context: contextSchema,
     transfers: z.array(transferSchema).optional()
   })
-  .refine(({ assets }) => validateEarningsBucket(assets), {
-    message: "Please mark 1 and only 1 asset for accumulating any earnings."
+  .refine(({ assets }) => validateIncomeBucket(assets), {
+    message: "Please mark 1 and only 1 asset for accumulating any income."
   })
 
 export type IScenario = z.infer<typeof ScenarioSchema>

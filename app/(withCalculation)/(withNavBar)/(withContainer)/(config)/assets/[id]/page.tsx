@@ -244,10 +244,10 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     ;({ isRented, rentalStartYear, rentalEndYear, rentalExpensesPerMonth, rentalIncomePerMonth } = property)
   }
 
-  let earningsAccumulated: YesNo | undefined
+  let incomeAccumulated: YesNo | undefined
   if (className && isCashAsset(className)) {
     const cashAssetConfig = assetConfig as CashAsset
-    earningsAccumulated = cashAssetConfig.incomeBucket ? "Y" : "N"
+    incomeAccumulated = cashAssetConfig.incomeBucket ? "Y" : "N"
   }
 
   const canDrawdownValue = canDrawdown ? "Y" : "N"
@@ -266,7 +266,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       assetType: className,
       value,
       owners: assetOwners,
-      incomeBucket: earningsAccumulated,
+      incomeBucket: incomeAccumulated,
       preferredMinAmt: preferredMinAmt,
       isRented: isRentedString,
       rentalStartYear,

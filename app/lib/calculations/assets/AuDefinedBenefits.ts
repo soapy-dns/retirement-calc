@@ -7,7 +7,7 @@ import { YearData } from "./types"
 export class AuDefinedBenefits extends Asset {
   capitalAsset: boolean
   assetGroup: AssetGroup
-  percOfEarningsTaxable: number
+  percOfIncomeTaxable: number
   percOfDrawdownTaxable: number
   definedBenefitsContext: DefinedBenefitsContext
   transfers?: Transfer[]
@@ -29,7 +29,7 @@ export class AuDefinedBenefits extends Asset {
 
     this.capitalAsset = false
     this.assetGroup = AssetGroup.income_defined_benefit
-    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfIncomeTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
     this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
     this.definedBenefitsContext = definedBenefitsAu
 

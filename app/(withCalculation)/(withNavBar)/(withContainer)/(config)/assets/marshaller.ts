@@ -10,8 +10,8 @@ export interface ChangedFormData {
   assetType: string // TODO: should be enum?
   owners: string[]
   earnsIncome: YesNo
-  earningsBucket: YesNo
-  earningsTaxPerc: number
+  incomeBucket: YesNo
+  incomeTaxPerc: number
   rentalIncome?: number
   rentalExpenses?: number
   canDrawdown: YesNo
@@ -30,7 +30,7 @@ export const marshall = (data: ChangedFormData, asset: IAsset) => {
 
   if (isCashAsset(className)) {
     const cashAsset = newAsset as CashAsset
-    cashAsset.incomeBucket = data.earningsBucket === "Y"
+    cashAsset.incomeBucket = data.incomeBucket === "Y"
   }
 
   return newAsset

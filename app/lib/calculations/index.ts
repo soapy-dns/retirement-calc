@@ -3,19 +3,19 @@
 import range from "lodash/range.js"
 
 import {
-  addAssetEarnings,
+  addAssetIncome,
   canDrawdownAssets,
   getGroupedDrawdownableAssets,
   buildInitialAssets
 } from "./assets/assetUtils"
 import { calculateTaxes, initTaxes } from "./tax/utils"
-import { DrawdownYearData, Earning, ExpenseYearData, Tax } from "./assets/types"
+import { DrawdownYearData, AssetIncome, ExpenseYearData, Tax } from "./assets/types"
 import { getLivingExpenses } from "./utils/livingExpensesUtils"
-import { initialiseEarningsFromAssets } from "./utils/initialiseEarningsFromAssets"
+import { initialiseIncomeFromAssets } from "./utils/initialiseIncomeFromAssets"
 import { AutomatedDrawdown } from "./autoDrawdowns/types"
 import { applyAutoDrawdowns } from "./autoDrawdowns/drawdown"
 import { getInflationContext } from "./utils/getInflationContext"
-import { calculateTotalEarnings } from "./earnings/utils"
+import { calculateTotalAssetIncome } from "./assetIncome/utils"
 import { removeUnusedHistoryFromTaxes } from "./tax/removeUnusedHistoryFromTaxes"
 import { getYearRange } from "./utils/yearRange"
 import { getIncomeTaxCalculator } from "./tax/taxCalcs/getIncomeTaxCalculator"
@@ -51,7 +51,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     // setup
     let calculationMessage = ""
     const totalDrawdowns: DrawdownYearData[] = []
-    const totalEarnings: BasicYearData[] = []
+    const totalAssetIncome: BasicYearData[] = []
     const totalExpenses: ExpenseYearData[] = []
     const automatedDrawdownMap: Record<number, AutomatedDrawdown[]> = {}
 
@@ -86,7 +86,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const incomeTaxCalculator = getIncomeTaxCalculator({ taxResident, currency, inflationContext, au2ukExchangeRate })
 
     const taxes = initTaxes(yearRange, owners)
-    const earningsFromAssets: Earning[] = initialiseEarningsFromAssets(assets)
+    const incomeFromAssets: AssetIncome[] = initialiseIncomeFromAssets(assets)
     if (!scenario) throw new Error("No scenario found")
     // end of setup
 
@@ -95,14 +95,14 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     let calculatedEndYear = startingYear
     while (year < to && canDrawdownAssets(assets, year)) {
       calculatedEndYear = year + 1
-      addAssetEarnings(year, assets, earningsFromAssets)
+      addAssetIncome(year, assets, incomeFromAssets)
 
-      calculateTaxes(scenario, year, owners, incomeTaxCalculator, earningsFromAssets, taxes, assets)
+      calculateTaxes(scenario, year, owners, incomeTaxCalculator, incomeFromAssets, taxes, assets)
 
       // TOTAL INCOME FOR THIS YEAR -will be moved to the 'incomeBucket' asset
-      const totalEarningsFromAssetsAmt = calculateTotalEarnings(year, earningsFromAssets, totalEarnings)
+      const totalIncomeFromAssetsAmt = calculateTotalAssetIncome(year, incomeFromAssets, totalAssetIncome)
 
-      // MOVE 'EARNINGS' FROM ASSETS *AND* PSS INCOME TO THE 'INCOME BUCKET' ASSET
+      // MOVE INCOME FROM ASSETS *AND* PSS INCOME TO THE 'INCOME BUCKET' ASSET
       const assetToReceiveIncome = assets.find((it) => it.incomeBucket === true)
       if (!assetToReceiveIncome)
         throw new Error(
@@ -111,12 +111,12 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
       const historyItem = assetToReceiveIncome.history.find((it) => it.year === year + 1) // get next year's asset calculation
       if (!historyItem) throw new Error(`No data found for income asset ${assetToReceiveIncome.name}`)
-      historyItem.value = historyItem.value + totalEarningsFromAssetsAmt
-      historyItem.incomeFromAssets = totalEarningsFromAssetsAmt
+      historyItem.value = historyItem.value + totalIncomeFromAssetsAmt
+      historyItem.incomeFromAssets = totalIncomeFromAssetsAmt
 
       // RE-CALCULATE TAXES.  This is a bit of a hack because of Automatic drawdowns.
       // sutomatic drawdown pull money out of an asset for that year,
-      //therefore the earnings wouldn't have been as much and so
+      //therefore the income wouldn't have been as much and so
       // the taxes wouldn't have been as much
       const groupedDrawdownableAssets = getGroupedDrawdownableAssets(year, assets)
 
@@ -129,7 +129,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
         taxes,
         incomeTaxCalculator,
         owners,
-        earningsFromAssets,
+        incomeFromAssets: incomeFromAssets,
         livingExpenses: projectedLivingExpenses,
         totalExpenses,
         totalDrawdowns,
@@ -155,16 +155,16 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const finalYear = year + 1
     const numOfCalculatedYears = calculatedEndYear - startingYear
 
-    // for assets want to show the 'next' year.  for earnings we don't
+    // for assets want to show the 'next' year.  for income we don't
     const calcYearRangeAssets = range(startingYear, calculatedEndYear + 1)
-    const calcYearRangeEarnings = range(startingYear, calculatedEndYear)
+    const calcYearRangeIncome = range(startingYear, calculatedEndYear)
 
     const assetForIncome = assets.find((it) => it.incomeBucket === true)
     if (!assetForIncome) throw new Error("No asset for income found") // this should be in validation section
 
     // SURPLUS ROW CALCULATION
     const surplusYearData: SurplusYearData[] = []
-    calcYearRangeEarnings.forEach((year, index) => {
+    calcYearRangeIncome.forEach((year, index) => {
       const totalAutomatedAssetDrawdownAmtForYear = automatedDrawdownMap[year]
         ? automatedDrawdownMap[year].reduce((accum, it) => {
             return accum + it.value
@@ -225,14 +225,14 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const graphCalculatedAssetData = { ...assetRowData } as AssetData
     const graphCalculatedAssetNpvData = getCalculatedNpvData(assets, inflationContext) // for graph purposes
 
-    const earningsRowData = earningsFromAssets.reduce((accum: RowData, earning: Earning) => {
-      accum[`${earning.name} (${earning.owner})`] = earning.history
+    const assetIncomeRowData = incomeFromAssets.reduce((accum: RowData, assetIncome: AssetIncome) => {
+      accum[`${assetIncome.name} (${assetIncome.owner})`] = assetIncome.history
       return accum
     }, {})
 
-    const graphIncomeNpvData = getGraphIncomeNpvData(earningsFromAssets, inflationContext)
+    const graphIncomeNpvData = getGraphIncomeNpvData(incomeFromAssets, inflationContext)
 
-    const drawdownData = getAutoDrawdownCellData(totalDrawdowns, calcYearRangeEarnings)
+    const drawdownData = getAutoDrawdownCellData(totalDrawdowns, calcYearRangeIncome)
 
     const projectedLivingExpensesToDisplay = projectedLivingExpenses.splice(0, numOfCalculatedYears)
     const livingExpensesTodaysMoneyToDisplay = livingExpensesTodaysMoney.splice(0, numOfCalculatedYears)
@@ -255,7 +255,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     return {
       success: true,
       assetRowData,
-      earningsRowData,
+      assetIncomeRowData,
       drawdownRowData: drawdownData,
       totalDrawdownData: totalDrawdowns,
       expensesRowData,
@@ -270,7 +270,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       inflationContext,
       totalAssetsData,
       netPresentValue,
-      totalEarningsData: totalEarnings,
+      totalAssetIncome,
       totalExpensesData: totalExpenses
     }
   } catch (e) {

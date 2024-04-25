@@ -56,8 +56,8 @@ const SheetPage: React.FC = () => {
     assetRowData,
     totalAssetsData,
     netPresentValue,
-    earningsRowData,
-    totalEarningsData,
+    assetIncomeRowData,
+    totalAssetIncome,
     totalExpensesData,
     // inflationContext,
     drawdownRowData,
@@ -101,13 +101,13 @@ const SheetPage: React.FC = () => {
 
             <EmptyLine />
 
-            {/* earnings */}
+            {/* income from assets */}
             <HeadingRow text="Income" onToggle={toggleEarningInfo} />
-            {earningsRowData &&
-              Object.entries(earningsRowData).map(([rowIdentifier, earningsData], index) => {
-                return <Row key={index} rowIdentifier={rowIdentifier} row={earningsData} onToggle={onHelpModalToggle} />
+            {assetIncomeRowData &&
+              Object.entries(assetIncomeRowData).map(([rowIdentifier, incomeData], index) => {
+                return <Row key={index} rowIdentifier={rowIdentifier} row={incomeData} onToggle={onHelpModalToggle} />
               })}
-            <Row rowIdentifier="Total Income" bold={true} row={totalEarningsData} onToggle={onHelpModalToggle} />
+            <Row rowIdentifier="Total Income" bold={true} row={totalAssetIncome} onToggle={onHelpModalToggle} />
 
             <EmptyLine />
 
@@ -163,7 +163,7 @@ const SheetPage: React.FC = () => {
         <NoActionModal showModal={showEarningInfo} heading="Income" onToggle={toggleEarningInfo}>
           <div>
             Income from a capital asset or an income stream. This all ends up in the capital asset which is marked as
-            the &apos;Earnings Bucket&apos; in the asset configuration.
+            the &apos;Income Bucket&apos; in the asset configuration.
           </div>
         </NoActionModal>
       )}

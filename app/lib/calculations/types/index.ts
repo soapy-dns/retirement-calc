@@ -27,7 +27,7 @@ export interface DrawdownYearData extends BasicYearData {
 
 export interface YearsTaxData extends BasicYearData {
   totalTaxableAmt: number
-  taxableEarningsAmt: number
+  totalIncomeAmt: number
   taxableDrawdownsAmt: number
   taxableAutomatedDrawdownAmt: number
 }
@@ -43,7 +43,7 @@ export interface Earning {
   description?: string
   owner: string
   income?: number
-  percOfEarningsTaxable: number
+  percOfIncomeTaxable: number
   proportion: number
   history: BasicYearData[]
 }
@@ -129,9 +129,9 @@ interface CalculationResultsSuccess {
   assetRowData: AssetData
   totalAssetsData: BasicYearData[]
   netPresentValue: BasicYearData[]
-  totalEarningsData: BasicYearData[]
+  totalAssetIncome: BasicYearData[]
   totalExpensesData: ExpenseYearData[]
-  earningsRowData: RowData
+  assetIncomeRowData: RowData
   totalDrawdownData: DrawdownYearData[]
   drawdownRowData: RowData
   surplusRowData: SurplusRowData

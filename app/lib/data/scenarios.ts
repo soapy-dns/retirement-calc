@@ -391,7 +391,7 @@ export const scenarios: IScenario[] = [
 //         drawdownFrom: 2026,
 //         drawdownOrder: 50
 //         // drawdownTaxed: false,
-//         // percOfEarningsTaxable: 100
+//         // percOfIncomeTaxable: 100
 //       },
 //       {
 //         id: "HER_AU_DEFINED_BENEFIT",
@@ -402,7 +402,7 @@ export const scenarios: IScenario[] = [
 //         value: 0,
 //         income: 5000, // this isn't the pot, but the guaranteed return value in the first year
 //         assetOwners: ["Her"]
-//         // percOfEarningsTaxable: 100
+//         // percOfIncomeTaxable: 100
 //       },
 //       {
 //         id: "HER_AU_SUPER",
@@ -417,7 +417,7 @@ export const scenarios: IScenario[] = [
 //         canDrawdown: true,
 //         drawdownOrder: 50
 //         // drawdownTaxed: false,
-//         // percOfEarningsTaxable: 100
+//         // percOfIncomeTaxable: 100
 //       },
 //       {
 //         id: "HIS_UK_SUPER",
@@ -432,7 +432,7 @@ export const scenarios: IScenario[] = [
 //         drawdownFrom: 2026,
 //         drawdownOrder: 50
 //         // drawdownTaxed: true,
-//         // percOfEarningsTaxable: 75
+//         // percOfIncomeTaxable: 75
 //       },
 //       {
 //         id: "HER_UK_SUPER",
@@ -446,7 +446,7 @@ export const scenarios: IScenario[] = [
 //         // interestRate?: 3,
 //         drawdownOrder: 50
 //         // drawdownTaxed: true,
-//         // percOfEarningsTaxable: 75
+//         // percOfIncomeTaxable: 75
 //       },
 //       {
 //         id: "JOINT_SHARES",
@@ -609,7 +609,7 @@ export const scenarios: IScenario[] = [
 //         // drawdownFrom: 2026,
 //         drawdownOrder: 50
 //         // drawdownTaxed: true,
-//         // percOfEarningsTaxable: 75
+//         // percOfIncomeTaxable: 75
 //       },
 
 //       {
@@ -848,7 +848,7 @@ export const scenarios: IScenario[] = [
 //         value: 0,
 //         income: 100000, // this isn't the pot, but the guaranteed return value in the first year
 //         assetOwners: ["Him"]
-//         // percOfEarningsTaxable: 75
+//         // percOfIncomeTaxable: 75
 //       }
 //     ],
 //     context: {
@@ -1004,7 +1004,7 @@ export const scenarios: IScenario[] = [
 //         drawdownOrder: 20
 //         // drawdownTaxed: true,
 
-//         // percOfEarningsTaxable: 100
+//         // percOfIncomeTaxable: 100
 //       }
 //     ],
 //     context: {
@@ -1081,7 +1081,7 @@ export const scenarios: IScenario[] = [
 //         assetOwners: ["Him"],
 //         canDrawdown: true,
 //         drawdownOrder: 10
-//         // percOfEarningsTaxable: 100
+//         // percOfIncomeTaxable: 100
 //       },
 //       {
 //         id: "3",
@@ -1094,7 +1094,7 @@ export const scenarios: IScenario[] = [
 //         assetOwners: ["Him"],
 //         canDrawdown: true,
 //         drawdownOrder: 10
-//         // percOfEarningsTaxable: 75
+//         // percOfIncomeTaxable: 75
 //       }
 //     ],
 //     context: {
@@ -1167,7 +1167,7 @@ export const scenarios: IScenario[] = [
 //         canDrawdown: true,
 //         drawdownOrder: 10,
 //         assetOwners: ["Him"]
-//         // percOfEarningsTaxable: 0
+//         // percOfIncomeTaxable: 0
 //       },
 //       {
 //         id: "4",
@@ -1177,7 +1177,7 @@ export const scenarios: IScenario[] = [
 //         className: "AuSuper",
 //         value: 1000000,
 //         assetOwners: ["Him"],
-//         // percOfEarningsTaxable: 100,
+//         // percOfIncomeTaxable: 100,
 //         drawdownOrder: 10,
 //         canDrawdown: true
 //       }

@@ -85,7 +85,7 @@ export const createAutoDrawdowns = (
               to: Constants.DRAWDOWN,
               value: amountToRemove,
               migrateAll: false
-              // taxableDrawdownAmt: (amountToDrawdown * asset.percOfEarningsTaxable) / 100
+              // taxableDrawdownAmt: (amountToDrawdown * asset.percOfIncomeTaxable) / 100
             })
 
             const thisYearsHistory = asset.history.find((it) => it.year === year)

@@ -9,7 +9,7 @@ import { getSuperIncomeTax } from "../tax/taxCalcs/SuperTaxCalc"
 export class AuSuper extends Asset {
   capitalAsset: boolean
   assetGroup: AssetGroup
-  percOfEarningsTaxable: number
+  percOfIncomeTaxable: number
   percOfDrawdownTaxable: number
   transfers?: Transfer[]
   superContext: SuperContext
@@ -28,7 +28,7 @@ export class AuSuper extends Asset {
       transfers,
       context: { taxResident, superAu }
     } = scenario
-    this.percOfEarningsTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfIncomeTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
     this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
 
     this.transfers = transfers
