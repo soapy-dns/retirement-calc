@@ -3,89 +3,13 @@ import { IAsset, IScenario } from "./schema/config"
 export const scenarios: IScenario[] = [
   {
     id: "A",
-    name: "Multi-country example",
-    description: "Complex example.",
+    name: "Australian example",
+    description: "Example with all Australian asset types",
     assets: [
       {
-        id: "HIS_AU_SUPER",
-        name: "Australian super",
-        description: "Australian super - defined contributions",
-        country: "AU",
-        className: "AuSuper",
-        value: 500000,
-        assetOwners: ["Him"],
-        canDrawdown: true,
-        drawdown: {
-          drawdownFrom: 2026,
-          drawdownOrder: 50
-        }
-      },
-      {
-        id: "HER_AU_DEFINED_BENEFIT",
-        name: "Final salary",
-        description: "Australian super - defined benefits",
-        country: "AU",
-        className: "AuDefinedBenefits",
-        income: {
-          incomeAmt: 3000
-        },
-        assetOwners: ["Her"]
-      },
-      {
-        id: "HER_AU_SUPER",
-        name: "Her AU super",
-        description: "Australian super - defined contributions",
-        country: "AU",
-        className: "AuSuper",
-        value: 300000,
-        assetOwners: ["Her"],
-        canDrawdown: true,
-        drawdown: {
-          drawdownOrder: 50
-        }
-      },
-      {
-        id: "HIS_UK_SUPER",
-        name: "His Uk pension",
-        description: "UK super - defined contributions",
-        country: "AU",
-        className: "AuSuper",
-        value: 100000,
-        assetOwners: ["Him"],
-        canDrawdown: true,
-        drawdown: {
-          drawdownFrom: 2026,
-          drawdownOrder: 50
-        }
-      },
-      {
-        id: "HER_UK_SUPER",
-        name: "Her Uk pension",
-        description: "UK super - defined benefits",
-        country: "SC",
-        className: "AuDefinedBenefits",
-        assetOwners: ["Her"],
-        income: {
-          incomeAmt: 1000
-        }
-      },
-      {
-        id: "JOINT_SHARES",
-        name: "Joint shares",
-        description: "Australian shares",
-        country: "AU",
-        className: "AuShares",
-        value: 20000,
-        assetOwners: ["Her", "Him"],
-        canDrawdown: true,
-        drawdown: {
-          drawdownOrder: 50
-        }
-      },
-      {
         id: "JOINT_AU_BANK",
-        name: "Joint Au bank accts",
-        description: "Australian bank accounts",
+        name: "Bank account",
+        description: "blah blah",
         country: "AU",
         className: "AuBank",
         value: 10000,
@@ -98,46 +22,66 @@ export const scenarios: IScenario[] = [
         }
       },
       {
-        id: "JOINT_UK_BANK",
-        name: "Joint UK bank accts",
-        description: "UK bank accounts",
-        country: "SC",
-        className: "AuBank",
-        value: 1000,
-        assetOwners: ["Her", "Him"],
-        incomeBucket: false,
-        canDrawdown: true,
-        drawdown: {
-          drawdownOrder: 10
-        }
+        id: "HER_AU_DEFINED_BENEFIT",
+        name: "Defined benefits",
+        description: "Defined benefits",
+        country: "AU",
+        className: "AuDefinedBenefits",
+        income: {
+          incomeAmt: 10000
+        },
+        assetOwners: ["Her"]
       },
       {
-        id: "UK_PROPERTY",
-        name: "UK Property",
-        description: "UK property",
-        country: "SC",
+        id: "AU_PROPERTY",
+        name: "Property",
+        description: "Property",
         className: "AuProperty",
-        value: 200000,
+        country: "AU",
+        value: 500000,
         assetOwners: ["Her", "Him"],
         property: {
           isRented: false
         }
       },
       {
-        id: "AU_PROPERTY",
-        name: "Au Property",
-        description: "Australian property",
-        className: "AuProperty",
+        id: "JOINT_SHARES",
+        name: "Shares",
+        description: "Some shares",
         country: "AU",
-        value: 500000,
+        className: "AuShares",
+        value: 20000,
         assetOwners: ["Her", "Him"],
-        property: {
-          isRented: true,
-          rentalStartYear: 2024,
-          rentalEndYear: 2026,
-          rentalIncomePerMonth: 2000,
-          rentalExpensesPerMonth: 500
+        canDrawdown: true,
+        drawdown: {
+          drawdownOrder: 50
         }
+      },
+      {
+        id: "HIS_AU_SUPER",
+        name: "Defined contributions",
+        description: "defined contributions",
+        country: "AU",
+        className: "AuSuper",
+        value: 500000,
+        assetOwners: ["Him"],
+        canDrawdown: true,
+        drawdown: {
+          drawdownOrder: 50,
+          drawdownFrom: 2026
+        }
+      },
+      {
+        name: "Salary1",
+        description: "Salary",
+        country: "AU",
+        className: "Salary",
+        assetOwners: ["Him"],
+        income: {
+          incomeAmt: 100000,
+          incomeEndYear: 2030
+        },
+        id: "7bf4c27d-9a73-49cd-9f5d-368269174f6a"
       }
     ],
     context: {
@@ -149,7 +93,6 @@ export const scenarios: IScenario[] = [
       },
       superAu: {
         investmentReturn: 0.05
-        // taxationRate: 0.15
       },
       definedBenefitsAu: {
         useInflationRate: true
@@ -164,6 +107,10 @@ export const scenarios: IScenario[] = [
       inflation: [
         {
           fromYear: 2024,
+          inflationRate: 0.04
+        },
+        {
+          fromYear: 2025,
           inflationRate: 0.03
         }
       ],
@@ -178,16 +125,133 @@ export const scenarios: IScenario[] = [
         }
       ]
     },
-    transfers: [
+    transfers: []
+  },
+  {
+    id: "e0fc55d7-c55a-45fe-90fb-b9dd63a70d50",
+    name: "Scottish example",
+    description: "Scottish example",
+    assets: [
       {
-        id: "1",
-        year: 2024,
-        from: "UK_PROPERTY",
-        to: "JOINT_SHARES",
-        migrateAll: true,
-        costOfTransfer: 20000
+        id: "JOINT_AU_BANK",
+        name: "Bank account",
+        description: "blah blah",
+        country: "SC",
+        className: "AuBank",
+        value: 10000,
+        assetOwners: ["Her", "Him"],
+        incomeBucket: true,
+        canDrawdown: true,
+        drawdown: {
+          drawdownOrder: 20,
+          preferredMinAmt: 10000
+        }
+      },
+      {
+        id: "HER_AU_DEFINED_BENEFIT",
+        name: "Defined benefits",
+        description: "Defined benefits",
+        country: "SC",
+        className: "AuDefinedBenefits",
+        income: {
+          incomeAmt: 10000
+        },
+        assetOwners: ["Her"]
+      },
+      {
+        id: "AU_PROPERTY",
+        name: "Property",
+        description: "Property",
+        className: "AuProperty",
+        country: "SC",
+        value: 500000,
+        assetOwners: ["Her", "Him"],
+        property: {
+          isRented: false
+        }
+      },
+      {
+        id: "JOINT_SHARES",
+        name: "Shares",
+        description: "Some shares",
+        country: "SC",
+        className: "AuShares",
+        value: 20000,
+        assetOwners: ["Her", "Him"],
+        canDrawdown: true,
+        drawdown: {
+          drawdownOrder: 50
+        }
+      },
+      {
+        id: "HIS_AU_SUPER",
+        name: "Defined contributions",
+        description: "defined contributions",
+        country: "SC",
+        className: "AuSuper",
+        value: 500000,
+        assetOwners: ["Him"],
+        canDrawdown: true,
+        drawdown: {
+          drawdownOrder: 50,
+          drawdownFrom: 2026
+        }
+      },
+      {
+        name: "Salary1",
+        description: "Salary",
+        country: "SC",
+        className: "Salary",
+        assetOwners: ["Him"],
+        income: {
+          incomeAmt: 100000,
+          incomeEndYear: 2030
+        },
+        id: "7bf4c27d-9a73-49cd-9f5d-368269174f6a"
       }
-    ]
+    ],
+    context: {
+      taxResident: "SC",
+      currency: "SC",
+      owners: ["Him", "Her"],
+      auBank: {
+        interestRate: 0.005
+      },
+      superAu: {
+        investmentReturn: 0.05
+      },
+      definedBenefitsAu: {
+        useInflationRate: true
+      },
+      sharesAu: {
+        growthInterestRate: 0.03,
+        dividendInterestRate: 0.03
+      },
+      property: {
+        growthInterestRate: 0.03
+      },
+      inflation: [
+        {
+          fromYear: 2024,
+          inflationRate: 0.04
+        },
+        {
+          fromYear: 2025,
+          inflationRate: 0.03
+        }
+      ],
+      livingExpenses: [
+        {
+          fromYear: 2024,
+          amountInTodaysTerms: 80000
+        },
+        {
+          fromYear: 2038,
+          amountInTodaysTerms: 50000
+        }
+      ]
+    },
+    transfers: []
   }
 ]
 // See Readme for details
