@@ -1,29 +1,37 @@
 {
   "incomeTax": {
-    "AU": [
-      { "rate": 0, "bandTop": 18200 },
-      { "rate": 0.19, "bandTop": 45000 },
-      { "rate": 0.325, "bandTop": 120000 },
-      { "rate": 0.37, "bandTop": 180000 },
-      { "rate": 0.45, "bandTop": 99999999 }
-    ],
-    "SC": [
-      { "rate": 0, "bandTop": 12570 },
-      { "rate": 0.19, "bandTop": 14876 },
-      { "rate": 0.2, "bandTop": 26561 },
-      { "rate": 0.21, "bandTop": 43662 },
-      { "rate": 0.42, "bandTop": 75000 },
-      { "rate": 0.45, "bandTop": 125140 },
-      { "rate": 0.48, "bandTop": 9999999999 }
-    ]
+    "AU": {
+      "name": "Income tax",
+      "rates": [
+        { "rate": 0, "bandTop": 18200 },
+        { "rate": 0.19, "bandTop": 45000 },
+        { "rate": 0.325, "bandTop": 120000 },
+        { "rate": 0.37, "bandTop": 180000 },
+        { "rate": 0.45, "bandTop": 99999999 }
+      ]
+    },
+    "SC": {
+      "name": "Income tax",
+      "rates": [
+        { "rate": 0, "bandTop": 12570 },
+        { "rate": 0.19, "bandTop": 14876 },
+        { "rate": 0.2, "bandTop": 26561 },
+        { "rate": 0.21, "bandTop": 43662 },
+        { "rate": 0.42, "bandTop": 75000 },
+        { "rate": 0.45, "bandTop": 125140 },
+        { "rate": 0.48, "bandTop": 9999999999 }
+      ]
+    }
   },
   "earningsTax": {
-    "AU": [{ "rate": 0, "bandTop": 99999999 }],
-    "SC": [
-      { "rate": 0, "bandTop": 12584 },
-      { "rate": 0.8, "bandTop": 50284 },
-      { "rate": 2, "bandTop": 99999999 }
-    ]
+    "SC": {
+      "name": "National insurance",
+      "rates": [
+        { "rate": 0, "bandTop": 12584 },
+        { "rate": 0.08, "bandTop": 50284 },
+        { "rate": 0.02, "bandTop": 99999999 }
+      ]
+    }
   },
   "superTax": {
     "AU": {

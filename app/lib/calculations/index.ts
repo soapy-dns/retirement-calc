@@ -18,7 +18,7 @@ import { getInflationContext } from "./utils/getInflationContext"
 import { calculateTotalAssetIncome } from "./assetIncome/utils"
 import { removeUnusedHistoryFromTaxes } from "./tax/removeUnusedHistoryFromTaxes"
 import { getYearRange } from "./utils/yearRange"
-import { getIncomeTaxCalculator } from "./tax/taxCalcs/getIncomeTaxCalculator"
+import { getIncomeTaxCalculator } from "./tax/taxCalcs/getTaxCalculator"
 import { AssetData, BasicYearData, CalculationData, CalculationResults, RowData, SurplusYearData } from "./types"
 import { getAssetSplit } from "./assets/getAssetClasses"
 import { getCalculatedNpvData, getGraphIncomeNpvData } from "./utils/getCalculatedNpvData"
@@ -26,7 +26,7 @@ import { getStartingYear } from "./utils/getStartingYear"
 import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
 import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
 import { IScenario, ScenarioSchema } from "../data/schema/config"
-import { getEarningTaxes } from "./tax/getEarningsTaxes"
+import { getEarningsTaxes } from "./tax/getEarningsTaxes"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -149,7 +149,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     }
     // }) // end of year
 
-    const earningsTaxes = getEarningTaxes(assets)
+    const earningsTaxes = getEarningsTaxes(assets, context, inflationContext)
 
     if (calculatedEndYear !== to)
       calculationMessage = `Cannot automate further capital asset drawdowns after ${calculatedEndYear}.  

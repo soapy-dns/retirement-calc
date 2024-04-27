@@ -32,7 +32,7 @@ export const useContextConfig = () => {
 
     if (!contextErrors) return false
     const matching = contextErrors.find((it) => {
-      console.log(it.path[1], contextType)
+      // console.log(it.path[1], contextType)
       if (it.path[1] === contextType) return true
 
       if (ContextType[it.path[1] as keyof typeof ContextType] === contextType) return true

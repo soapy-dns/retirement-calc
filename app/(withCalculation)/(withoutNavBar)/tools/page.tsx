@@ -1,7 +1,7 @@
 "use client"
 import { useSearchParams } from "next/navigation"
 
-import { getIncomeTaxCalculator } from "@/app/lib/calculations/tax/taxCalcs/getIncomeTaxCalculator"
+import { getIncomeTaxCalculator } from "@/app/lib/calculations/tax/taxCalcs/getTaxCalculator"
 import { Country } from "@/app/lib/calculations/tax/taxCalcs/types"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { Card } from "@/app/ui/components/Card"

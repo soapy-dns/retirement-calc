@@ -62,6 +62,11 @@ export class BandedTaxCalc {
     if (lastIndex === 0) {
       taxAmtInTodaysMoney = incomeInTodaysMoney * this.taxToConfig[0].rate
     } else {
+      // console.log(
+      //   `${this.taxToConfig[lastIndex - 1].taxToTop} + (${incomeInTodaysMoney} - ${
+      //     this.taxToConfig[lastIndex - 1].bandTop
+      //   }) * ${this.taxToConfig[lastIndex].rate})`
+      // )
       taxAmtInTodaysMoney =
         this.taxToConfig[lastIndex - 1].taxToTop +
         (incomeInTodaysMoney - this.taxToConfig[lastIndex - 1].bandTop) * this.taxToConfig[lastIndex].rate

@@ -115,7 +115,6 @@ const FormSchema = z
 type FormDataType = z.output<typeof FormSchema>
 
 const getAssetConfigFromForm = (data: FormDataType): Omit<IAsset, "id"> => {
-  console.log("getAssetConfigFromForm", getAssetConfigFromForm)
   const {
     name,
     description,
@@ -138,8 +137,6 @@ const getAssetConfigFromForm = (data: FormDataType): Omit<IAsset, "id"> => {
     incomeEndYear,
     rateVariation
   } = data
-
-  console.log("rateVariation", rateVariation)
 
   // strings should already be coerced into strings by zod
   const assetConfig: Omit<BaseAsset, "id"> = {
@@ -287,7 +284,6 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   if (!owners) return <div>No owners found</div>
 
   const onSubmit = async (data: FormDataType) => {
-    console.log("onSubmit data", data)
     // let success = false
     if (assetConfig) {
       const newAssetConfig = marshall(data, assetConfig)
