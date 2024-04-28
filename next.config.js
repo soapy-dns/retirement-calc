@@ -1,4 +1,5 @@
 const withMDX = require("@next/mdx")()
+const withBundleAnalyzer = require("@next/bundle-analyzer")()
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -15,4 +16,6 @@ const nextConfig = {
   }
 }
 
-module.exports = withMDX(nextConfig)
+module.exports = process.env.ANALYZE === "true" ? withBundleAnalyzer(withMDX(nextConfig)) : withMDX(nextConfig)
+
+// module.exports = withMDX(nextConfig)
