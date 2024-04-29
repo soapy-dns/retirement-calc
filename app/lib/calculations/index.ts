@@ -144,6 +144,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
         owners,
         incomeFromAssets: incomeFromAssets,
         livingExpenses: projectedLivingExpenses,
+        earningsTaxes,
         totalExpenses,
         totalDrawdowns,
         groupedAssets: groupedDrawdownableAssets
@@ -227,8 +228,6 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     // NOW CREATE DATA IN FORMAT WHICH CAN BE USED BY THE FRONT END
     // TODO: THIS COULD BE MADE BETTER BY JUST PASSING INDIVIDUAL ROWS AND LETTING THE FRONT END DECIDE WHAT IT WANTS TO DO.
 
-    // const calculationData: CalculationData = {}
-
     const assetRowData = assets.reduce((accum: AssetData, asset) => {
       if (asset.capitalAsset) {
         accum[asset.name] = asset.history as CellData[]
@@ -250,19 +249,24 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const projectedLivingExpensesToDisplay = projectedLivingExpenses.splice(0, numOfCalculatedYears)
     const livingExpensesTodaysMoneyToDisplay = livingExpensesTodaysMoney.splice(0, numOfCalculatedYears)
 
+    const earningsTaxName = getEarningsTaxName(taxResident)
+
     const cleanedTaxes = removeUnusedHistoryFromTaxes(taxes, finalYear)
     const expensesRowData = cleanedTaxes.reduce(
       (accum: RowData, tax: Tax) => {
         accum[`Tax (${tax.owner})`] = tax.history
         return accum
       },
-
       {
         "Living expenses (today's money)": livingExpensesTodaysMoneyToDisplay,
         "Living expenses": projectedLivingExpensesToDisplay
       }
     )
-    const earningsTaxName = getEarningsTaxName(taxResident) || "Earnings Tax"
+    // TODO: re-instate.  TODO: earnings per person.
+    // if (earningsTaxName) {
+    //   // console.log("--earningTaxes--", JSON.stringify(earningsTaxes, null, 2))
+    //   expensesRowData[earningsTaxName] = earningsTaxes
+    // }
 
     const surplusRowData = { "Surplus (if -ve is tax liability for next yr)": surplusYearData }
 
@@ -272,11 +276,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       assetIncomeRowData,
       drawdownRowData: drawdownData,
       totalDrawdownData: totalDrawdowns,
-      earningsTaxName,
-      earningsTaxData: earningsTaxes,
       expensesRowData,
       surplusRowData,
-      // calculationData,
       yearRange: calcYearRangeAssets,
       calculatedAssetData: graphCalculatedAssetData,
       calculatedAssetNpvData: graphCalculatedAssetNpvData,

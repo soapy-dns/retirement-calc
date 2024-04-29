@@ -29,7 +29,6 @@ export const Select: React.FC<ISelect> = ({
   allowsNull = true,
   ...rest
 }) => {
-  //   const colorClasses = isError ? "border-error text-error border-2" : "border"
   if (!name) name = id
 
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -53,10 +52,12 @@ export const Select: React.FC<ISelect> = ({
             </option>
           ))}
       </select>
-      <p className="italic text-gray-500  mb-2 flex gap-2 items-center">
-        <div>-</div>
-        {summaryText}
-      </p>
+      {summaryText && (
+        <p className="italic text-gray-500  mb-2 flex gap-2 items-center">
+          <div>-</div>
+          {summaryText}
+        </p>
+      )}
     </>
   )
 }

@@ -48,12 +48,13 @@ export const getEarningsTaxes = (assets: Asset[], year: number, taxCalculator?: 
   if (!taxCalculator) return initialYearData
 
   const assetsWithEarnings = assets.filter((it) => isEarnedIncomeAsset(it.className))
+
   if (assetsWithEarnings.length === 0) initialYearData
 
   const earningsTaxes = assetsWithEarnings.reduce(
     (accum, asset: Asset) => {
       const accumYearData = asset.history.find((it) => it.year === year)
-      return accumYearData ? { year, value: taxCalculator.getTax(accum.value, year) } : accum
+      return accumYearData ? { year, value: taxCalculator.getTax(accumYearData.income, year) } : accum
     },
     { year: 0, value: 0 }
   )
