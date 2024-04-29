@@ -5,16 +5,12 @@ export const assetTypeOptions = [
   {
     label: "Defined benefits pension",
     value: "AuDefinedBenefits",
-    // income: true,
-    // property: false,
     assetClass: AssetGroup.income_defined_benefit
   },
   { label: "Salary", value: "Salary", income: true, property: false, assetClass: AssetGroup.income_salary },
   {
     label: "Defined contributions pension",
     value: "AuSuper",
-    // income: false,
-    // property: false,
     assetClass: AssetGroup.super
   },
   { label: "Shares", value: "AuShares", assetClass: AssetGroup.shares },

@@ -18,7 +18,7 @@ import { getInflationContext } from "./utils/getInflationContext"
 import { calculateTotalAssetIncome } from "./assetIncome/utils"
 import { removeUnusedHistoryFromTaxes } from "./tax/removeUnusedHistoryFromTaxes"
 import { getYearRange } from "./utils/yearRange"
-import { getIncomeTaxCalculator } from "./tax/taxCalcs/getTaxCalculator"
+import { getEarningsTaxCalculator, getEarningsTaxName, getIncomeTaxCalculator } from "./tax/taxCalcs/getTaxCalculator"
 import { AssetData, BasicYearData, CalculationData, CalculationResults, RowData, SurplusYearData } from "./types"
 import { getAssetSplit } from "./assets/getAssetClasses"
 import { getCalculatedNpvData, getGraphIncomeNpvData } from "./utils/getCalculatedNpvData"
@@ -54,6 +54,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const totalDrawdowns: DrawdownYearData[] = []
     const totalAssetIncome: BasicYearData[] = []
     const totalExpenses: ExpenseYearData[] = []
+    const earningsTaxes: BasicYearData[] = []
     const automatedDrawdownMap: Record<number, AutomatedDrawdown[]> = {}
 
     const startingYear = getStartingYear()
@@ -85,6 +86,14 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     // if we are 90% in AU and 10% in hrow, does that mean we have 2 different tax calculators?
     const incomeTaxCalculator = getIncomeTaxCalculator({ taxResident, currency, inflationContext, au2ukExchangeRate })
+    const earningsTaxCalculator = getEarningsTaxCalculator({
+      taxResident,
+      currency,
+      inflationContext,
+      au2ukExchangeRate
+    })
+
+    // { taxName: earningsTaxCalculatorName, calculator: earningsTaxCalculator }
 
     const taxes = initTaxes(yearRange, owners)
     const incomeFromAssets: AssetIncome[] = initialiseIncomeFromAssets(assets)
@@ -99,6 +108,9 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       addAssetIncome(year, assets, incomeFromAssets)
 
       calculateTaxes(scenario, year, owners, incomeTaxCalculator, incomeFromAssets, taxes, assets)
+
+      const earningsTaxesForYear = getEarningsTaxes(assets, year, earningsTaxCalculator)
+      earningsTaxes.push(earningsTaxesForYear)
 
       // TOTAL INCOME FOR THIS YEAR -will be moved to the 'incomeBucket' asset
       const totalIncomeFromAssetsAmt = calculateTotalAssetIncome(year, incomeFromAssets, totalAssetIncome)
@@ -148,8 +160,6 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       year++
     }
     // }) // end of year
-
-    const earningsTaxes = getEarningsTaxes(assets, context, inflationContext)
 
     if (calculatedEndYear !== to)
       calculationMessage = `Cannot automate further capital asset drawdowns after ${calculatedEndYear}.  
@@ -252,6 +262,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
         "Living expenses": projectedLivingExpensesToDisplay
       }
     )
+    const earningsTaxName = getEarningsTaxName(taxResident) || "Earnings Tax"
 
     const surplusRowData = { "Surplus (if -ve is tax liability for next yr)": surplusYearData }
 
@@ -261,6 +272,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       assetIncomeRowData,
       drawdownRowData: drawdownData,
       totalDrawdownData: totalDrawdowns,
+      earningsTaxName,
+      earningsTaxData: earningsTaxes,
       expensesRowData,
       surplusRowData,
       // calculationData,

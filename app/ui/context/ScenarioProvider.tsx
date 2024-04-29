@@ -14,7 +14,6 @@ import { Spinner } from "../components/common/Spinner"
 import { FormattedErrors } from "../components/formattedErrors/FormattedErrors"
 import { isIncomeAsset } from "../utils"
 
-
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
   const scenarioOptions = scenarios.map((scenario) => ({
     value: scenario.id,
@@ -48,6 +47,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     try {
       setCalculating(true)
       const calculationResults = await calculate(selectedScenario)
+      console.log("calculationResults", calculationResults)
       setCalculationResults(calculationResults)
       setCalculating(false)
 

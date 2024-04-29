@@ -38,6 +38,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
   const showDrawdown = drawdownSet === "Y"
   const ownersOptions = owners.map((it) => ({ label: it, value: it }))
 
+  // TODO: change to use common
   const showIncomeStartDate = [AssetType.AuDefinedBenefits, AssetType.Salary].includes(assetType)
 
   return (
@@ -62,6 +63,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         options={assetTypeOptions}
         editable={true}
         helpText={assetConstants.CLASS.HELP_TEXT}
+        summaryText={assetConstants.SUMMARY[assetType]}
       />
       <RadioButtonQuestion
         id="country"

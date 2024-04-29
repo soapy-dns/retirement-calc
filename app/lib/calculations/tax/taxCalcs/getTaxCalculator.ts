@@ -32,10 +32,18 @@ export const getEarningsTaxCalculator = ({
   currency,
   inflationContext,
   au2ukExchangeRate = 1
-}: IGetTaxCalculator): BandedTaxCalc | void => {
+}: IGetTaxCalculator): BandedTaxCalc | undefined => {
   const currencyConversionFactor = taxResident !== currency ? au2ukExchangeRate ?? 1 : 1
   if (taxResident === "AU") return
   // if (taxResident === "AU") return new BandedTaxCalc(currencyConversionFactor, config.earningsTax.AU, inflationContext)
 
   return new BandedTaxCalc(currencyConversionFactor, config.earningsTax.SC.rates, inflationContext)
+  // return {
+  //   taxName: config.earningsTax.SC.name,
+  //   calculator: new BandedTaxCalc(currencyConversionFactor, config.earningsTax.SC.rates, inflationContext)
+  // }
+}
+
+export const getEarningsTaxName = (taxResidentCountry: Country) => {
+  return taxResidentCountry === "SC" ? config.earningsTax.SC.name : undefined
 }
