@@ -8,7 +8,7 @@ import {
   getGroupedDrawdownableAssets,
   buildInitialAssets
 } from "./assets/assetUtils"
-import { calculateTaxes, initTaxes } from "./tax/utils"
+import { calculateTaxes, initEarningsTaxes, initTaxes } from "./tax/utils"
 import { DrawdownYearData, AssetIncome, ExpenseYearData, Tax } from "./assets/types"
 import { getLivingExpenses } from "./utils/livingExpensesUtils"
 import { initialiseIncomeFromAssets } from "./utils/initialiseIncomeFromAssets"
@@ -27,6 +27,7 @@ import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
 import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
 import { IScenario, ScenarioSchema } from "../data/schema/config"
 import { getEarningsTaxes } from "./tax/getEarningsTaxes"
+import { getScenarioTransfersForYear } from "./transfers/transferUtils"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -93,9 +94,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       au2ukExchangeRate
     })
 
-    // { taxName: earningsTaxCalculatorName, calculator: earningsTaxCalculator }
-
     const taxes = initTaxes(yearRange, owners)
+    const earningsTax = initEarningsTaxes(yearRange, owners)
     const incomeFromAssets: AssetIncome[] = initialiseIncomeFromAssets(assets)
     if (!scenario) throw new Error("No scenario found")
     // end of setup
@@ -107,7 +107,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       calculatedEndYear = year + 1
       addAssetIncome(year, assets, incomeFromAssets)
 
-      calculateTaxes(scenario, year, owners, incomeTaxCalculator, incomeFromAssets, taxes, assets)
+      const manualTransfersForYear = getScenarioTransfersForYear(scenario, year)
+      calculateTaxes(taxes, year, assets, owners, incomeTaxCalculator, incomeFromAssets, manualTransfersForYear)
 
       const earningsTaxesForYear = getEarningsTaxes(assets, year, earningsTaxCalculator)
       earningsTaxes.push(earningsTaxesForYear)

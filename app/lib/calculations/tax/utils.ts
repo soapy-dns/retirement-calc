@@ -1,4 +1,4 @@
-import { AssetIncome, Tax } from "../assets/types"
+import { AssetIncome, EarningsTax, Tax } from "../assets/types"
 import { BandedTaxCalc } from "./taxCalcs/BandedTaxCalc"
 import { getScenarioTransfersForYear } from "../transfers/transferUtils"
 import { IScenario, Transfer, Country } from "../../data/schema/config"
@@ -26,7 +26,7 @@ export const getOwnersTaxableIncomeAmt = (incomeFromAssets: AssetIncome[], owner
  * TODO, rather than passing the scenario for the asset config, maybe add relevant info to the asset object?
  */
 export const getTaxableDrawdownAmt = (
-  scenario: IScenario,
+  // scenario: IScenario,
   transfersForYear: Transfer[],
   owner: string,
   assets: Asset[]
@@ -77,21 +77,39 @@ export const initTaxes = (yearRange: number[], owners: string[]): Tax[] => {
   return taxes
 }
 
+export const initEarningsTaxes = (yearRange: number[], owners: string[]): EarningsTax[] => {
+  const taxes = owners.map((owner) => ({
+    owner,
+    history: []
+  }))
+
+  taxes.forEach((tax: EarningsTax) => {
+    yearRange.forEach((year: number) => {
+      tax.history.push({
+        year,
+        value: 0
+      })
+    })
+  })
+
+  return taxes
+}
+
 export const calculateTaxes = (
-  scenario: IScenario,
+  taxes: Tax[], // TODO: maybe we create and return?
   year: number,
+  assets: Asset[],
   owners: string[],
   incomeTaxCalculator: BandedTaxCalc,
   incomeFromAssets: AssetIncome[],
-  taxes: Tax[], // TODO: maybe we create and return?
-  assets: Asset[]
+  manualTransfersForYear: Transfer[]
 ) => {
-  const manualTransfersForYear = getScenarioTransfersForYear(scenario, year)
+  // const manualTransfersForYear = getScenarioTransfersForYear(scenario, year)
 
   owners.forEach((owner: string) => {
     const tax = taxes.find((it) => it.owner === owner)
     if (!tax) throw new Error(`tax object not foound for ${owner}`)
-    const manualTaxableDrawdownAmt = getTaxableDrawdownAmt(scenario, manualTransfersForYear, owner, assets)
+    const manualTaxableDrawdownAmt = getTaxableDrawdownAmt(manualTransfersForYear, owner, assets)
 
     const ownersTaxableIncomeAmt = getOwnersTaxableIncomeAmt(incomeFromAssets, owner, year)
 

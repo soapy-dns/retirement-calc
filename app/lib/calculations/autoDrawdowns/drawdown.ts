@@ -46,7 +46,7 @@ const drawdownIteration = (
     if (!taxHistory) throw new Error("No tax history")
 
     const taxableAutomatedDrawdownAmt = getTaxableDrawdownAmt(
-      scenario,
+      // scenario,
       automatedDrawdownsForYear,
       owner,
       groupedAssets.flat()
@@ -72,7 +72,8 @@ const drawdownIteration = (
  * As drawdowns an be taxed, we need to iterate
  */
 export const applyAutoDrawdowns = (drawdownContext: IDrawdownContext): number => {
-  const { year, automatedDrawdownMap, taxes, livingExpenses, totalExpenses, earningsTaxes, totalDrawdowns } = drawdownContext
+  const { year, automatedDrawdownMap, taxes, livingExpenses, totalExpenses, earningsTaxes, totalDrawdowns } =
+    drawdownContext
 
   const livingExpenseForYearAmt = getLivingExpensesAmtForYear(year, livingExpenses)
 
@@ -82,7 +83,7 @@ export const applyAutoDrawdowns = (drawdownContext: IDrawdownContext): number =>
 
   // TOTAL EXPENSES FOR THIS YEAR - taxes plus living expenses
   totalTaxesAmt = getTaxAmtForYear(taxes, year) //all owners
-  totalExpensesAmt = totalTaxesAmt + livingExpenseForYearAmt 
+  totalExpensesAmt = totalTaxesAmt + livingExpenseForYearAmt
 
   let remainingAmtToDrawdown = totalExpensesAmt
 
