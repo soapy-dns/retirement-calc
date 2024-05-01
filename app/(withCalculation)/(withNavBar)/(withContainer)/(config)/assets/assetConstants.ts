@@ -1,3 +1,5 @@
+import { AuShares } from "@/app/lib/calculations/assets/AuShares"
+
 export const assetConstants = {
   NAME: {
     LABEL: "Name",
@@ -92,5 +94,14 @@ export const assetConstants = {
     LABEL: "Rental end year (optional)",
     HELP_TEXT:
       "The year the rental will end.  No value means the rental will continue indefinitely, or until the property ceases to exist in your portfolio e.g. it is sold."
+  },
+  SUMMARY: {
+    AuBank: "Cash eg bank accounts, term investments etc",
+    AuSuper:
+      "A superannuation scheme where the contributions make up a pension pot which will produce subsequent investment income, and the value of which can be drawn down.",
+    AuDefinedBenefits: "A superannuation scheme which produces an income stream.",
+    AuProperty: "A house or flat which can be lived in, rented out.",
+    AuShares: "Shares assets owned directly outside of any investment vehicle like a superannuation scheme or ISA etc.",
+    Salary: "A salary gives an income stream which will likely to taxed."
   }
 }

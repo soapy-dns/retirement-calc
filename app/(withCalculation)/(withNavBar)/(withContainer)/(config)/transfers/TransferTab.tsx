@@ -14,7 +14,6 @@ export const TransfersTab: React.FC = () => {
   const { transfers } = selectedScenario
 
   const handleAdd = () => {
-    console.log("handleAdd")
     navigation.goTo(AppPath.transferAdd)
   }
 

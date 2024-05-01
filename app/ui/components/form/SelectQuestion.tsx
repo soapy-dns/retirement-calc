@@ -20,6 +20,7 @@ type SelectProps = {
   helpText?: string
   options?: ISelectOption[]
   selectedValue?: string | number // this is the code
+  summaryText?: string
   errorMsg?: string
 }
 
@@ -32,9 +33,9 @@ export const SelectQuestion = ({
   control,
   validationRules,
   defaultValue,
-  helpText
-} // errorMsg
-: SelectProps) => {
+  helpText, // errorMsg
+  summaryText
+}: SelectProps) => {
   const nameOfEl = name ?? id
 
   const errorMsg = useError(control, nameOfEl)
@@ -48,7 +49,15 @@ export const SelectQuestion = ({
         defaultValue={defaultValue} // need this for page back
         rules={validationRules}
         render={({ field: { value, onChange, onBlur, name: renderName, ref }, formState: { isSubmitted } }) => (
-          <Select id={id} name={nameOfEl} onChange={onChange} isError={false} value={value} options={options} />
+          <Select
+            id={id}
+            name={nameOfEl}
+            onChange={onChange}
+            isError={false}
+            value={value}
+            options={options}
+            summaryText={summaryText}
+          />
         )}
       />
     </FormGroup>

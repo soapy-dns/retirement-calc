@@ -33,7 +33,6 @@ const BankPage: React.FC = () => {
   }
 
   const onSubmit = async (data: FormDataType) => {
-    console.log("--onSubmit bank--")
     const { interestRate } = data
     const { context } = selectedScenario
 

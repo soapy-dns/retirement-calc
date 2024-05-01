@@ -1,5 +1,5 @@
 import { Asset } from "../assets/Asset"
-import { DrawdownYearData, AssetIncome, ExpenseYearData, Tax } from "../assets/types"
+import { DrawdownYearData, AssetIncome, ExpenseYearData, Tax, EarningsTax } from "../assets/types"
 import { IScenario } from "../../data/schema/config"
 import { getDrawdownAmt } from "../income/getDrawdowns"
 import { getTaxAmtForYear } from "../tax/getTaxAmt"
@@ -21,6 +21,7 @@ interface IDrawdownContext {
   owners: string[]
   incomeFromAssets: AssetIncome[]
   livingExpenses: BasicYearData[]
+  earningsTaxes: EarningsTax[]
   totalExpenses: ExpenseYearData[]
   totalDrawdowns: DrawdownYearData[]
   groupedAssets: Asset[][]
@@ -45,7 +46,7 @@ const drawdownIteration = (
     if (!taxHistory) throw new Error("No tax history")
 
     const taxableAutomatedDrawdownAmt = getTaxableDrawdownAmt(
-      scenario,
+      // scenario,
       automatedDrawdownsForYear,
       owner,
       groupedAssets.flat()
@@ -71,7 +72,8 @@ const drawdownIteration = (
  * As drawdowns an be taxed, we need to iterate
  */
 export const applyAutoDrawdowns = (drawdownContext: IDrawdownContext): number => {
-  const { year, automatedDrawdownMap, taxes, livingExpenses, totalExpenses, totalDrawdowns } = drawdownContext
+  const { year, automatedDrawdownMap, taxes, livingExpenses, totalExpenses, earningsTaxes, totalDrawdowns } =
+    drawdownContext
 
   const livingExpenseForYearAmt = getLivingExpensesAmtForYear(year, livingExpenses)
 
@@ -81,7 +83,8 @@ export const applyAutoDrawdowns = (drawdownContext: IDrawdownContext): number =>
 
   // TOTAL EXPENSES FOR THIS YEAR - taxes plus living expenses
   totalTaxesAmt = getTaxAmtForYear(taxes, year) //all owners
-  totalExpensesAmt = totalTaxesAmt + livingExpenseForYearAmt
+  const totalEarningsTaxesAmt = getTaxAmtForYear(earningsTaxes, year)
+  totalExpensesAmt = totalTaxesAmt + livingExpenseForYearAmt + totalEarningsTaxesAmt
 
   let remainingAmtToDrawdown = totalExpensesAmt
 

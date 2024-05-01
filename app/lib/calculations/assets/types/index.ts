@@ -58,6 +58,11 @@ export interface Tax {
   history: YearsTaxData[]
 }
 
+export interface EarningsTax {
+  owner: string
+  history: BasicYearData[]
+}
+
 export interface LivingExpensesYearData {
   numYears: number
   amountInTodaysTerms: number

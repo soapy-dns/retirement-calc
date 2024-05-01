@@ -131,6 +131,8 @@ interface CalculationResultsSuccess {
   netPresentValue: BasicYearData[]
   totalAssetIncome: BasicYearData[]
   totalExpensesData: ExpenseYearData[]
+  // earningsTaxName: string
+  // earningsTaxData: BasicYearData[]
   assetIncomeRowData: RowData
   totalDrawdownData: DrawdownYearData[]
   drawdownRowData: RowData

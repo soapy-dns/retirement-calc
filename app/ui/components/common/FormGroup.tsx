@@ -34,7 +34,7 @@ export const FormGroup: React.FC<IFormGroup> = ({ id, label, helpText, errorMsg,
       </div>
       <div className="ml-8">{children}</div>
 
-      {showHelpText && <div className="ml-4 italic text-gray-500">{helpText}</div>}
+      {showHelpText && <div className="ml-4 italic text-primary">{helpText}</div>}
 
       {errorMsg && <ValidationError id={getErrorMsgId(id)} errorMsg={errorMsg} />}
     </div>

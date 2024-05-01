@@ -1,5 +1,5 @@
 import { ISelectOption } from "@/app/lib/data/types"
-import { ChangeEvent, ChangeEventHandler } from "react"
+import { ChangeEvent } from "react"
 
 interface ISelect {
   id: string
@@ -10,6 +10,7 @@ interface ISelect {
   selectedOption?: ISelectOption
   value?: string | number
   options?: ISelectOption[]
+  summaryText?: string
   //   ref: RefCallback<HTMLDivElement>
   //   onChange: (event: ChangeEvent<HTMLSelectElement>) => void
   onChange: (value?: string) => void
@@ -21,13 +22,13 @@ export const Select: React.FC<ISelect> = ({
   isError,
   options,
   // placeholder,
+  summaryText,
   disabled,
   value,
   onChange,
   allowsNull = true,
   ...rest
 }) => {
-  //   const colorClasses = isError ? "border-error text-error border-2" : "border"
   if (!name) name = id
 
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -36,19 +37,27 @@ export const Select: React.FC<ISelect> = ({
   }
 
   return (
-    <select
-      onChange={handleSelect}
-      value={value}
-      className="my-2 mb-4 h-8 rounded border border-solid border-gray-500 focus:border-primary"
-    >
-      {allowsNull && <option value="">--Select--</option>}
+    <>
+      <select
+        onChange={handleSelect}
+        value={value}
+        className="my-2 mb-4 h-8 rounded border border-solid border-gray-500 focus:border-primary"
+      >
+        {allowsNull && <option value="">--Select--</option>}
 
-      {options &&
-        options.map((it) => (
-          <option key={it.value} value={it.value}>
-            {it.label}
-          </option>
-        ))}
-    </select>
+        {options &&
+          options.map((it) => (
+            <option key={it.value} value={it.value}>
+              {it.label}
+            </option>
+          ))}
+      </select>
+      {summaryText && (
+        <p className="italic text-gray-500  mb-2 flex gap-2 items-center">
+          <div>-</div>
+          {summaryText}
+        </p>
+      )}
+    </>
   )
 }

@@ -11,7 +11,7 @@ const inflationContext = {
 }
 
 describe("tests without currency conversion", () => {
-  const taxCalc = new BandedTaxCalc(1, config.incomeTax.AU, inflationContext)
+  const taxCalc = new BandedTaxCalc(1, config.incomeTax.AU.rates, inflationContext)
 
   it("should be no tax below threshold 1", () => {
     const incomeAsAtTheYear = 18199 * inflationFactor
@@ -50,7 +50,7 @@ describe("tests without currency conversion", () => {
 })
 
 describe("test with currency conversion", () => {
-  const taxCalc = new BandedTaxCalc(2, config.incomeTax.AU, inflationContext)
+  const taxCalc = new BandedTaxCalc(2, config.incomeTax.AU.rates, inflationContext)
 
   it("should do with currency conversion ok", () => {
     const incomeAsAtTheYear = 50000 * inflationFactor

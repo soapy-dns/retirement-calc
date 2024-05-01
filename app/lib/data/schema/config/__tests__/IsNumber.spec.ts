@@ -13,9 +13,9 @@ describe("IsNumber schema validation", () => {
     const result = IsFormNumber.safeParse(input)
     const { success, ...rest } = result
 
-    if (success !== expected) {
-      console.log("-- ERROR-> input, success, expected--", input, success, expected, result)
-    }
+    // if (success !== expected) {
+    //   console.log("-- ERROR-> input, success, expected--", input, success, expected, result)
+    // }
     expect(success).toBe(expected)
   })
 
@@ -30,9 +30,9 @@ describe("IsNumber schema validation", () => {
   `(`should validate optional number correctly`, ({ input, expected }) => {
     const result = IsFormNumberOpt.safeParse(input)
     const { success, ...rest } = result
-    if (success !== expected) {
-      console.log("--input, success, expected--", "*", input, "*", success, expected, JSON.stringify(result, null, 2))
-    }
+    // if (success !== expected) {
+    //   console.log("--input, success, expected--", "*", input, "*", success, expected, JSON.stringify(result, null, 2))
+    // }
 
     expect(success).toBe(expected)
   })
