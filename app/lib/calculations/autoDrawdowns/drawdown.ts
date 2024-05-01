@@ -1,5 +1,5 @@
 import { Asset } from "../assets/Asset"
-import { DrawdownYearData, AssetIncome, ExpenseYearData, Tax } from "../assets/types"
+import { DrawdownYearData, AssetIncome, ExpenseYearData, Tax, EarningsTax } from "../assets/types"
 import { IScenario } from "../../data/schema/config"
 import { getDrawdownAmt } from "../income/getDrawdowns"
 import { getTaxAmtForYear } from "../tax/getTaxAmt"
@@ -21,7 +21,7 @@ interface IDrawdownContext {
   owners: string[]
   incomeFromAssets: AssetIncome[]
   livingExpenses: BasicYearData[]
-  earningsTaxes: BasicYearData[]
+  earningsTaxes: EarningsTax[]
   totalExpenses: ExpenseYearData[]
   totalDrawdowns: DrawdownYearData[]
   groupedAssets: Asset[][]
@@ -83,7 +83,8 @@ export const applyAutoDrawdowns = (drawdownContext: IDrawdownContext): number =>
 
   // TOTAL EXPENSES FOR THIS YEAR - taxes plus living expenses
   totalTaxesAmt = getTaxAmtForYear(taxes, year) //all owners
-  totalExpensesAmt = totalTaxesAmt + livingExpenseForYearAmt
+  const totalEarningsTaxesAmt = getTaxAmtForYear(earningsTaxes, year)
+  totalExpensesAmt = totalTaxesAmt + livingExpenseForYearAmt + totalEarningsTaxesAmt
 
   let remainingAmtToDrawdown = totalExpensesAmt
 

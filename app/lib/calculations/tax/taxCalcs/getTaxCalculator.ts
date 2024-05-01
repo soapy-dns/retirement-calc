@@ -45,5 +45,5 @@ export const getEarningsTaxCalculator = ({
 }
 
 export const getEarningsTaxName = (taxResidentCountry: Country) => {
-  return taxResidentCountry === "SC" ? config.earningsTax.SC.name : undefined
+  return taxResidentCountry === "SC" ? config.earningsTax.SC.name : "Earnings Tax"
 }

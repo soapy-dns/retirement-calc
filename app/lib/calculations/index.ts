@@ -8,7 +8,7 @@ import {
   getGroupedDrawdownableAssets,
   buildInitialAssets
 } from "./assets/assetUtils"
-import { calculateTaxes, initEarningsTaxes, initTaxes } from "./tax/utils"
+import { calculateTaxes, getTaxesRows, initEarningsTaxes, initTaxes } from "./tax/utils"
 import { DrawdownYearData, AssetIncome, ExpenseYearData, Tax } from "./assets/types"
 import { getLivingExpenses } from "./utils/livingExpensesUtils"
 import { initialiseIncomeFromAssets } from "./utils/initialiseIncomeFromAssets"
@@ -26,7 +26,7 @@ import { getStartingYear } from "./utils/getStartingYear"
 import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
 import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
 import { IScenario, ScenarioSchema } from "../data/schema/config"
-import { getEarningsTaxes } from "./tax/getEarningsTaxes"
+import { calculateEarningsTaxes } from "./tax/getEarningsTaxes"
 import { getScenarioTransfersForYear } from "./transfers/transferUtils"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
@@ -55,7 +55,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const totalDrawdowns: DrawdownYearData[] = []
     const totalAssetIncome: BasicYearData[] = []
     const totalExpenses: ExpenseYearData[] = []
-    const earningsTaxes: BasicYearData[] = []
+    // const earningsTaxes: BasicYearData[] = []
     const automatedDrawdownMap: Record<number, AutomatedDrawdown[]> = {}
 
     const startingYear = getStartingYear()
@@ -95,7 +95,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     })
 
     const taxes = initTaxes(yearRange, owners)
-    const earningsTax = initEarningsTaxes(yearRange, owners)
+    const earningsTaxes = initEarningsTaxes(yearRange, owners)
+
     const incomeFromAssets: AssetIncome[] = initialiseIncomeFromAssets(assets)
     if (!scenario) throw new Error("No scenario found")
     // end of setup
@@ -109,9 +110,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
       const manualTransfersForYear = getScenarioTransfersForYear(scenario, year)
       calculateTaxes(taxes, year, assets, owners, incomeTaxCalculator, incomeFromAssets, manualTransfersForYear)
-
-      const earningsTaxesForYear = getEarningsTaxes(assets, year, earningsTaxCalculator)
-      earningsTaxes.push(earningsTaxesForYear)
+      calculateEarningsTaxes(earningsTaxes, assets, year, earningsTaxCalculator)
 
       // TOTAL INCOME FOR THIS YEAR -will be moved to the 'incomeBucket' asset
       const totalIncomeFromAssetsAmt = calculateTotalAssetIncome(year, incomeFromAssets, totalAssetIncome)
@@ -252,17 +251,23 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     const earningsTaxName = getEarningsTaxName(taxResident)
 
-    const cleanedTaxes = removeUnusedHistoryFromTaxes(taxes, finalYear)
-    const expensesRowData = cleanedTaxes.reduce(
-      (accum: RowData, tax: Tax) => {
-        accum[`Tax (${tax.owner})`] = tax.history
-        return accum
-      },
-      {
-        "Living expenses (today's money)": livingExpensesTodaysMoneyToDisplay,
-        "Living expenses": projectedLivingExpensesToDisplay
-      }
-    )
+    const incomeTaxRows = getTaxesRows(taxes, finalYear, "Income Tax")
+    const earningTaxRows = getTaxesRows(earningsTaxes, finalYear, earningsTaxName)
+    const livingExpensesRows = {
+      "Living expenses (today's money)": livingExpensesTodaysMoneyToDisplay,
+      "Living expenses": projectedLivingExpensesToDisplay
+    }
+
+    const expensesRowData = { ...incomeTaxRows, ...earningTaxRows, ...livingExpensesRows }
+
+    // const cleanedTaxes = removeUnusedHistoryFromTaxes(taxes, finalYear)
+    // const expensesRowData = cleanedTaxes.reduce(
+    //   (accum: RowData, tax: Tax) => {
+    //     accum[`Income Tax (${tax.owner})`] = tax.history
+    //     return accum
+    //   },
+
+    // )
     // TODO: re-instate.  TODO: earnings per person.
     // if (earningsTaxName) {
     //   // console.log("--earningTaxes--", JSON.stringify(earningsTaxes, null, 2))

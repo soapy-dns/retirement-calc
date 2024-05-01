@@ -3,7 +3,8 @@ import { BandedTaxCalc } from "./taxCalcs/BandedTaxCalc"
 import { getScenarioTransfersForYear } from "../transfers/transferUtils"
 import { IScenario, Transfer, Country } from "../../data/schema/config"
 import { Asset } from "../assets/Asset"
-import { AssetGroup, InflationContext } from "../types"
+import { AssetGroup, BasicYearData, InflationContext, RowData, YearsTaxData } from "../types"
+import { removeUnusedHistoryFromTaxes } from "./removeUnusedHistoryFromTaxes"
 
 export const getOwnersTaxableIncomeAmt = (incomeFromAssets: AssetIncome[], owner: string, year: number) => {
   const ownersTaxableIncomeFromAssets = incomeFromAssets.filter(
@@ -77,13 +78,29 @@ export const initTaxes = (yearRange: number[], owners: string[]): Tax[] => {
   return taxes
 }
 
+export const getTaxesRows = (
+  taxes: Tax[] | EarningsTax[],
+  finalYear: number,
+  taxName: string
+): Record<string, BasicYearData[] | YearsTaxData[]> => {
+  const cleanedTaxes = removeUnusedHistoryFromTaxes(taxes, finalYear)
+  return cleanedTaxes.reduce(
+    (accum, tax: Tax | EarningsTax) => {
+      const key: string = `${taxName} (${tax.owner})`
+      accum[key] = tax.history
+      return accum
+    },
+    {} as Record<string, BasicYearData[] | YearsTaxData[]>
+  )
+}
+
 export const initEarningsTaxes = (yearRange: number[], owners: string[]): EarningsTax[] => {
-  const taxes = owners.map((owner) => ({
+  const earningsTaxes = owners.map((owner) => ({
     owner,
     history: []
   }))
 
-  taxes.forEach((tax: EarningsTax) => {
+  earningsTaxes.forEach((tax: EarningsTax) => {
     yearRange.forEach((year: number) => {
       tax.history.push({
         year,
@@ -92,7 +109,7 @@ export const initEarningsTaxes = (yearRange: number[], owners: string[]): Earnin
     })
   })
 
-  return taxes
+  return earningsTaxes
 }
 
 export const calculateTaxes = (
@@ -104,8 +121,6 @@ export const calculateTaxes = (
   incomeFromAssets: AssetIncome[],
   manualTransfersForYear: Transfer[]
 ) => {
-  // const manualTransfersForYear = getScenarioTransfersForYear(scenario, year)
-
   owners.forEach((owner: string) => {
     const tax = taxes.find((it) => it.owner === owner)
     if (!tax) throw new Error(`tax object not foound for ${owner}`)

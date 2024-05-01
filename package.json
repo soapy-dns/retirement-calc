@@ -13,7 +13,7 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "cy:open": "cypress open",
-    "cy:headless": "cypress run"
+    "cy": "cypress run"
   },
   "dependencies": {
     "@anatine/zod-mock": "^3.13.4",
