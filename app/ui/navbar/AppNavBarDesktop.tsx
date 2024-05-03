@@ -21,7 +21,7 @@ export const AppNavBarDesktop = () => {
         }`}
       >
         <div className="mx-4 flex">
-          Config <Cog8ToothIcon className="ml-2 h-6 w-6" />
+          Configuration <Cog8ToothIcon className="ml-2 h-6 w-6" />
         </div>
       </Link>
 

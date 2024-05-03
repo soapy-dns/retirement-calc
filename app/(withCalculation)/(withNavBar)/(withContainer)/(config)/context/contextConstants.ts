@@ -42,40 +42,40 @@ export const contextConstants: Record<string, ItemProps> = {
   CASH_INTEREST_RATE: {
     LABEL: "Interest (%)",
     HELP_TEXT:
-      "The interest percentage applied to all 'CASH' type assets.  At the moment it is not possible to override this on a per asset basis"
+      "The interest percentage applied to all 'CASH' type assets.  When defining an asset it is possible to allow for a variation in this amount."
   },
   SUPER_INVESTMENT_RETURN: {
     LABEL: "Investment return (%)",
-    HELP_TEXT: "The average forecast return on investment"
+    HELP_TEXT: "The average forecast return on investment."
   },
   PROPERTY_GROWTH_RATE: {
     LABEL: "Property growth (%)",
-    HELP_TEXT: "The average percentage that property is expected to increase by per year"
+    HELP_TEXT: "The average percentage that property is expected to increase by per year."
   },
   RENTAL_INCOME_PER_MONTH: {
     LABEL: "Rental income per month",
-    HELP_TEXT: "The expected gross income per month. (eg no taxes, management fees etc)"
+    HELP_TEXT: "The expected gross income per month. (eg no taxes, management fees etc)."
   },
   RENTAL_EXPENSES_PER_MONTH: {
     LABEL: "Rental expenses per month",
-    HELP_TEXT: "The expected expenses per month. (management fees, maintenance, but not taxes)"
+    HELP_TEXT: "The expected expenses per month. (management fees, maintenance, but not taxes)."
   },
   DEFINED_BENEFITS_INDEXATION: {
     LABEL: "Indexation",
-    HELP_TEXT: "The indexation percentage that the income increases by per year"
+    HELP_TEXT: "The indexation percentage that the income increases by per year."
   },
   SHARES_GROWTH: {
     LABEL: "Growth",
-    HELP_TEXT: "The percentage that shares grow by per year"
+    HELP_TEXT: "The percentage that shares grow by per year."
   },
   SHARES_INCOME: {
     LABEL: "Income",
-    HELP_TEXT: "The income per year as a percentage of the share value"
+    HELP_TEXT: "The income per year as a percentage of the share value."
   },
   USE_INFLATION_RATE: {
     LABEL: "Indexed in line with inflation",
     HELP_TEXT:
-      "If 'Yes', then the inflation rate (for the year) will be used, otherwise an indexation rate will need to be defined and that value will be applied to all years"
+      "If 'Yes', then the inflation rate (for the year) will be used, otherwise an indexation rate will need to be defined and that value will be applied to all years."
   },
   FROM_YEAR: {
     LABEL: "From year",
@@ -83,10 +83,6 @@ export const contextConstants: Record<string, ItemProps> = {
   },
   RATE: {
     LABEL: "Percentage",
-    HELP_TEXT: "The percentage, eg 3 rather than 0.03"
+    HELP_TEXT: "The percentage, eg 3 rather than 0.03."
   }
-  // PLACEHOLDER: {
-  //   ADD_YEAR: "Add a year",
-  //   ADD_AMOUNT: "Add an amount"
-  // }
 }

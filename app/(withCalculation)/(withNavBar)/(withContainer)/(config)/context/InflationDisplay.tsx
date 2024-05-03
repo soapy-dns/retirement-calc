@@ -6,10 +6,14 @@ import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { ContextType, useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
-import { PencilSquareIcon } from "@heroicons/react/24/outline"
+import { InformationCircleIcon, PencilSquareIcon } from "@heroicons/react/24/outline"
 import { useContext } from "react"
 
-export const InflationDisplay: React.FC = () => {
+interface Props {
+  showInfo: () => void
+}
+
+export const InflationDisplay: React.FC<Props> = ({ showInfo }) => {
   const navigation = useNavigation()
 
   const { selectedScenario } = useContext(ScenarioContext)
@@ -28,7 +32,12 @@ export const InflationDisplay: React.FC = () => {
   return (
     <Card>
       <h2 className="flex items-center justify-between text-primary">
-        Inflation
+        <div className="flex gap-2 items-center">
+          Inflation
+          <button onClick={showInfo}>
+            <InformationCircleIcon className="w-6 h-6" />
+          </button>
+        </div>{" "}
         <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
           <div className="flex items-center gap-2">
             <PencilSquareIcon className="mx-2 h-6 w-6" /> <div className="text-base">Edit</div>

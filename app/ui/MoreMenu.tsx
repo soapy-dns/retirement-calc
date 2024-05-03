@@ -66,7 +66,7 @@ export const MoreMenu = () => {
                 >
                   <div className="flex gap-2">
                     <ArrowLeftOnRectangleIcon className="h-5 w-5" />
-                    Import
+                    Import configuration
                   </div>
                 </Link>
               )}
@@ -82,7 +82,7 @@ export const MoreMenu = () => {
                 >
                   <div className="flex gap-2">
                     <ArrowRightOnRectangleIcon className="h-5 w-5" />
-                    Export
+                    Export configuration
                   </div>
                 </Link>
               )}
