@@ -30,8 +30,8 @@ export const ConfigNavBar = () => {
           activeTab === ConfigTab.context ? selectedTabClassNames : null
         }`}
       >
-        <div className="hidden sm:inline">Context</div>
-        <GlobeAltIcon className="h-6 w-6" />
+        <div className="">Context</div>
+        <GlobeAltIcon className="h-6 w-6 hidden sm:inline" />
       </button>
 
       <button
@@ -40,8 +40,8 @@ export const ConfigNavBar = () => {
           activeTab === ConfigTab.assets ? selectedTabClassNames : null
         }`}
       >
-        <div className="hidden sm:inline">Assets</div>
-        <CurrencyDollarIcon className="h-6 w-6" />
+        <div className="">Assets</div>
+        <CurrencyDollarIcon className="h-6 w-6 hidden sm:inline" />
       </button>
 
       <button
@@ -51,8 +51,8 @@ export const ConfigNavBar = () => {
         }`}
       >
         {/* <div className="mx-4 flex gap-2"> */}
-        <div className="hidden sm:inline">Transfers</div>
-        <ArrowPathRoundedSquareIcon className="h-6 w-6" />
+        <div className="">Transfers</div>
+        <ArrowPathRoundedSquareIcon className="h-6 w-6 hidden sm:inline" />
         {/* </div> */}
       </button>
     </div>

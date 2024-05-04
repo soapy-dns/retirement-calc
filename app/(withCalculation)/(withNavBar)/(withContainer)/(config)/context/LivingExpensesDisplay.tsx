@@ -8,10 +8,14 @@ import { ContextType, useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
 import { getCurrencyFormatter } from "@/app/ui/utils/formatter"
-import { PencilSquareIcon } from "@heroicons/react/24/outline"
-import { useContext } from "react"
+import { InformationCircleIcon, PencilSquareIcon } from "@heroicons/react/24/outline"
+import { MouseEvent, useContext } from "react"
 
-export const LivingExpensesDisplay: React.FC = () => {
+interface Props {
+  showInfo: () => void
+}
+
+export const LivingExpensesDisplay: React.FC<Props> = ({ showInfo }) => {
   const navigation = useNavigation()
   const { getCurrency } = useContextConfig()
   const currencyCountry = getCurrency()
@@ -35,9 +39,14 @@ export const LivingExpensesDisplay: React.FC = () => {
   return (
     <Card>
       <h2 className="flex items-center justify-between text-primary">
-        Living expenses
+        <div className="flex gap-2 items-center">
+          Living expenses
+          <button onClick={showInfo}>
+            <InformationCircleIcon className="w-6 h-6" />
+          </button>
+        </div>
         <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center  gap-2">
             <PencilSquareIcon className="mx-2 h-6 w-6" /> <div className="text-base">Edit</div>
           </div>
         </Button>

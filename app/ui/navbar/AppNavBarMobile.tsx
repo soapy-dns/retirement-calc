@@ -62,7 +62,7 @@ export const AppNavBarMobile = () => {
                   >
                     <div className="flex gap-2">
                       <Cog8ToothIcon className="h-5 w-5" />
-                      Config
+                      Configuration
                     </div>
                   </Link>
                 )}
@@ -99,7 +99,7 @@ export const AppNavBarMobile = () => {
                   </Link>
                 )}
               </Menu.Item>
-              <Menu.Item>
+              {/* <Menu.Item>
                 {({ active }) => (
                   <Link
                     href={AppPath.drawdowns}
@@ -114,7 +114,7 @@ export const AppNavBarMobile = () => {
                     </div>
                   </Link>
                 )}
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item>
                 {({ active }) => (
                   <Link
@@ -126,7 +126,7 @@ export const AppNavBarMobile = () => {
                   >
                     <div className="flex gap-2">
                       <ArrowLeftOnRectangleIcon className="h-5 w-5" />
-                      Import
+                      Import configuration
                     </div>
                   </Link>
                 )}
@@ -142,7 +142,7 @@ export const AppNavBarMobile = () => {
                   >
                     <div className="flex gap-2">
                       <ArrowRightOnRectangleIcon className="h-5 w-5" />
-                      Export
+                      Export configuration
                     </div>
                   </Link>
                 )}
