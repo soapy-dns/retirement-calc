@@ -11,6 +11,7 @@ import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { ErrorDetails } from "@/app/ui/components/ErrorDetails"
 import { Container } from "@/app/ui/components/Container"
 import { Spinner } from "@/app/ui/components/common/Spinner"
+import Income from "@/docs/modalContent/Income.mdx"
 
 const EmptyLine = () => {
   return (
@@ -161,10 +162,7 @@ const SheetPage: React.FC = () => {
       )}
       {showEarningInfo && (
         <NoActionModal showModal={showEarningInfo} heading="Income" onToggle={toggleEarningInfo}>
-          <div>
-            Income from a capital asset or an income stream. This all ends up in the capital asset which is marked as
-            the &apos;Income Bucket&apos; in the asset configuration.
-          </div>
+          <Income />
         </NoActionModal>
       )}
     </div>
