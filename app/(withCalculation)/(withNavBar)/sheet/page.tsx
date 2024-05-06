@@ -11,6 +11,10 @@ import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { ErrorDetails } from "@/app/ui/components/ErrorDetails"
 import { Container } from "@/app/ui/components/Container"
 import { Spinner } from "@/app/ui/components/common/Spinner"
+import { GenericModal } from "@/app/ui/components/GenericModal"
+import IncomeInfo from "@/docs/modalContent/IncomeInfo.mdx"
+import DrawdownInfo from "@/docs/modalContent/DrawdownInfo.mdx"
+import ExpensesInfo from "@/docs/modalContent/ExpensesInfo.mdx"
 
 const EmptyLine = () => {
   return (
@@ -20,6 +24,13 @@ const EmptyLine = () => {
   )
 }
 
+enum InfoType {
+  "NONE",
+  "INCOME",
+  "DRAWDOWN",
+  "EXPENSES"
+}
+
 const HelpContent = ({ modalData }: { modalData: unknown }) => (
   <pre>{modalData ? JSON.stringify(modalData, null, 4) : "N/A"}</pre>
 )
@@ -27,14 +38,12 @@ const HelpContent = ({ modalData }: { modalData: unknown }) => (
 const SheetPage: React.FC = () => {
   const helpModalContext = useContext(HelpModalContext)
   const scenarioContext = useContext(ScenarioContext)
-  const [showEarningInfo, setShowEarningInfo] = useState<boolean>(false)
+  const [infoModal, setInfoModal] = useState<InfoType>(InfoType.NONE)
+
   const searchParams = useSearchParams()
 
   const debug = searchParams.get("debug")
 
-  const toggleEarningInfo = () => {
-    setShowEarningInfo(!showEarningInfo)
-  }
   const { selectedScenario, calculationResults } = scenarioContext
 
   if (!calculationResults) {
@@ -102,7 +111,7 @@ const SheetPage: React.FC = () => {
             <EmptyLine />
 
             {/* income from assets */}
-            <HeadingRow text="Income" onToggle={toggleEarningInfo} />
+            <HeadingRow text="Income" onToggle={() => setInfoModal(InfoType.INCOME)} />
             {assetIncomeRowData &&
               Object.entries(assetIncomeRowData).map(([rowIdentifier, incomeData], index) => {
                 return <Row key={index} rowIdentifier={rowIdentifier} row={incomeData} onToggle={onHelpModalToggle} />
@@ -112,7 +121,7 @@ const SheetPage: React.FC = () => {
             <EmptyLine />
 
             {/* expenses */}
-            <HeadingRow text="Expenses" />
+            <HeadingRow text="Expenses" onToggle={() => setInfoModal(InfoType.EXPENSES)} />
             {expensesRowData &&
               Object.entries(expensesRowData).map(([rowIdentifier, expensesData], index) => {
                 return <Row key={index} rowIdentifier={rowIdentifier} row={expensesData} onToggle={onHelpModalToggle} />
@@ -121,7 +130,7 @@ const SheetPage: React.FC = () => {
 
             <EmptyLine />
 
-            <HeadingRow text="Drawdowns" />
+            <HeadingRow text="Drawdowns" onToggle={() => setInfoModal(InfoType.DRAWDOWN)} />
             {drawdownRowData &&
               Object.entries(drawdownRowData).map(([rowIdentifier, rowData], index) => {
                 return <Row key={index} rowIdentifier={rowIdentifier} row={rowData} onToggle={onHelpModalToggle} />
@@ -159,14 +168,32 @@ const SheetPage: React.FC = () => {
           <HelpContent modalData={helpModalData} />
         </NoActionModal>
       )}
-      {showEarningInfo && (
-        <NoActionModal showModal={showEarningInfo} heading="Income" onToggle={toggleEarningInfo}>
-          <div>
-            Income from a capital asset or an income stream. This all ends up in the capital asset which is marked as
-            the &apos;Income Bucket&apos; in the asset configuration.
-          </div>
-        </NoActionModal>
+
+      {infoModal === InfoType.INCOME && (
+        <GenericModal
+          heading="Income"
+          showModal={infoModal === InfoType.INCOME}
+          handleCancel={() => setInfoModal(InfoType.NONE)}
+        >
+          <IncomeInfo />
+        </GenericModal>
       )}
+
+      <GenericModal
+        heading="Drawdown"
+        showModal={infoModal === InfoType.DRAWDOWN}
+        handleCancel={() => setInfoModal(InfoType.NONE)}
+      >
+        <DrawdownInfo />
+      </GenericModal>
+
+      <GenericModal
+        heading="Expenses"
+        showModal={infoModal === InfoType.EXPENSES}
+        handleCancel={() => setInfoModal(InfoType.NONE)}
+      >
+        <ExpensesInfo />
+      </GenericModal>
     </div>
   )
 }

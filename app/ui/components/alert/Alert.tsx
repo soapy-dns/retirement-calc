@@ -19,7 +19,7 @@ export const Alert: React.FC<IAlert> = ({ id = "alert", alertType, heading, chil
   const bgColor = getBackgroundColor(alertType)
 
   return (
-    <div id={id} className={`${bgColor} p-2`} role="alert" tabIndex={-1}>
+    <div id={id} className={`${bgColor} p-2 border`} role="alert" tabIndex={-1}>
       <>
         {heading && (
           <div className="flex gap-2">

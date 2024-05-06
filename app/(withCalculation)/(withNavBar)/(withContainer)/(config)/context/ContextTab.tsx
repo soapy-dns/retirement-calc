@@ -8,8 +8,9 @@ import { PropertyDisplay } from "./property/PropertyDisplay"
 import { DefinedBenefitsAuDisplay } from "./definedBenefits/DefinedBenefitsAuDisplay"
 import { GeneralContextDisplay } from "./GeneralContextDisplay"
 import { GenericModal } from "@/app/ui/components/GenericModal"
-import { NodeNextRequest } from "next/dist/server/base-http/node"
 import { useState } from "react"
+import InflationRate from "@/docs/modalContent/InflationRate.mdx"
+import LivingExpenses from "@/docs/modalContent/LivingExpenses.mdx"
 
 enum InfoType {
   "NONE",
@@ -59,15 +60,7 @@ export const ContextTab: React.FC = () => {
           setInfoToggle(InfoType.NONE)
         }}
       >
-        <p>This is an estimate of the on going inflation rate.</p>
-        <p>A reasonable long term estimate could be about 2.5%. However, there are often fluctuations.</p>
-
-        <p>
-          In order to &apos;future proof&apos; yourself, you may want to have a higher inflation at the beginning of
-          your retirement, slowly moving towards the mean. This is because a higher inflation rate at the beginning of
-          the term could have a long term negative impact. It&apos;s up to you! You can play about with different rates
-          to see the affect of each.
-        </p>
+        <InflationRate />
       </GenericModal>
 
       <GenericModal
@@ -77,18 +70,7 @@ export const ContextTab: React.FC = () => {
           setInfoToggle(InfoType.NONE)
         }}
       >
-        <p>This is an estimate of your future living expenses in today&apos;s money.</p>
-        <p>
-          To estimate this, a good place to start is to use your expenses over the previous year, and assume that
-          you&apos;ll spend the same going forward. Living expenses are always assumed to increase with inflation -
-          because they will.
-        </p>
-
-        <p>
-          Many retirees spend more money at the beginning of retirement, and less in later years when they may be less
-          active. The &apos;standard&apos; seems to be to lower your expenses at age 75, but you can configure your
-          future expenses as and how you wish.
-        </p>
+        <LivingExpenses />
       </GenericModal>
     </>
   )
