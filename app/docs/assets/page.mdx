@@ -1,3 +1,6 @@
+import Anchor from "@/app/ui/components/docs/Anchor"
+import { documentDetails } from "@/app/docs/documentDetails"
+
 # Assets
 
 There are 2 types of Asset
@@ -22,3 +25,12 @@ These are things which provide an income stream.
 - Pensions - Defined benefit / final salary
 
 Assets cannot be removed if there is a transfer to or from the asset. The transfer must be removed first.
+
+## Drawdowns
+
+Some capital assets can be automatically drawndown.
+The order this is done will be controlled by the drawdown order of the asset.
+
+Properties cannot be automatically drawn down.
+
+If you want to make that capital available, then set up a <Anchor href={documentDetails.transfers.url}>Transfer</Anchor>.
