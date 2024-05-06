@@ -1,5 +1,6 @@
 import { ISelectOption } from "@/app/lib/data/types"
-import { ChangeEvent } from "react"
+import { ChangeEvent, ReactNode } from "react"
+import { Alert, AlertType } from "../alert/Alert"
 
 interface ISelect {
   id: string
@@ -38,6 +39,12 @@ export const Select: React.FC<ISelect> = ({
 
   return (
     <>
+      {summaryText && (
+        <Alert heading="Summary" alertType={AlertType.info}>
+          {summaryText}
+        </Alert>
+      )}
+
       <select
         onChange={handleSelect}
         value={value}
@@ -52,12 +59,6 @@ export const Select: React.FC<ISelect> = ({
             </option>
           ))}
       </select>
-      {summaryText && (
-        <p className="italic text-gray-500  mb-2 flex gap-2 items-center">
-          <div>-</div>
-          {summaryText}
-        </p>
-      )}
     </>
   )
 }

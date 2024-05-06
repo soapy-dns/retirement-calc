@@ -2,6 +2,7 @@ import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
 import { Card } from "@/app/ui/components/Card"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
+import { EditButton } from "@/app/ui/components/common/EditButton"
 import { Table } from "@/app/ui/components/common/Table"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { ContextType, useContextConfig } from "@/app/ui/hooks/useContextConfig"
@@ -45,11 +46,7 @@ export const LivingExpensesDisplay: React.FC<Props> = ({ showInfo }) => {
             <InformationCircleIcon className="w-6 h-6" />
           </button>
         </div>
-        <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
-          <div className="flex items-center  gap-2">
-            <PencilSquareIcon className="mx-2 h-6 w-6" /> <div className="text-base">Edit</div>
-          </div>
-        </Button>
+        <EditButton onClick={handleEdit} />
       </h2>
       <div>
         {hasValidationErrors(ContextType.inflation) && (

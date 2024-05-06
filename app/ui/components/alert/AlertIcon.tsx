@@ -8,7 +8,6 @@ import { AlertType } from "./Alert"
 
 interface AlertIconProps {
   alertType?: AlertType
-  // className?: string
 }
 
 export const AlertIcon: React.FC<AlertIconProps> = ({ alertType }) => {

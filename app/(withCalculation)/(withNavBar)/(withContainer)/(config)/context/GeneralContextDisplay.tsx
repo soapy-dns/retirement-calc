@@ -8,6 +8,7 @@ import { AppPath } from "@/app/ui/types"
 import { Card } from "@/app/ui/components/Card"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
+import { EditButton } from "@/app/ui/components/common/EditButton"
 
 export const GeneralContextDisplay: React.FC = () => {
   const { selectedScenario } = useContext(ScenarioContext)
@@ -28,11 +29,7 @@ export const GeneralContextDisplay: React.FC = () => {
     <Card>
       <h2 className="flex items-center justify-between text-primary">
         Tax and currency
-        <Button buttonType={ButtonType.tertiary} onClick={handleGeneralContextEdit}>
-          <div className="flex items-center gap-2">
-            <PencilSquareIcon className="mx-2 h-6 w-6" /> <div className="text-base">Edit</div>
-          </div>
-        </Button>
+        <EditButton onClick={handleGeneralContextEdit} />
       </h2>
       <TextDisplayField
         label={contextConstants.TAX_RESIDENCY.LABEL}

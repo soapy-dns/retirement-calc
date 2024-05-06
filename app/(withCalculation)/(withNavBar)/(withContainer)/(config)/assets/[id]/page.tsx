@@ -319,7 +319,10 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     >
       {/* {errors && <pre>{JSON.stringify(errors, null, 4)}</pre>} */}
       {assetConfig && hasTransfers(assetConfig) && (
-        <Alert alertType={AlertType.info} heading="This asset has transfers" />
+        <Alert alertType={AlertType.warning} heading="Warning">
+          This asset has transfers. It is not possible to remove this asset, and altering its initial value may have
+          unintended consequences.
+        </Alert>
       )}
       {/* @ts-ignore */}
       <AssetEditForm
