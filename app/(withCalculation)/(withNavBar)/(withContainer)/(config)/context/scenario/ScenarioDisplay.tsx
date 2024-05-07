@@ -9,6 +9,8 @@ import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { scenarioConstants } from "./scenarioConstants"
+import { EditButton } from "@/app/ui/components/common/EditButton"
+import { RemoveButton } from "@/app/ui/components/common/RemoveButton"
 
 // TODO: common card component - buttons top right or at the bottom
 
@@ -35,18 +37,8 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
       <h2 className="flex items-center justify-between text-primary">
         Scenario
         <div className="flex justify-end">
-          <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
-            <div className="flex gap-2">
-              <PencilSquareIcon className="h-6 w-6" />
-              <div className="text-base">Edit</div>
-            </div>
-          </Button>
-          <Button buttonType={ButtonType.tertiary} onClick={handleRemove} disabled={removeButtonDisabled}>
-            <div className="flex gap-2">
-              <TrashIcon className="h-6 w-6" />
-              <div className="text-base">Remove</div>
-            </div>
-          </Button>
+          <EditButton onClick={handleEdit} />
+          <RemoveButton onClick={handleRemove} disabled={removeButtonDisabled} />
         </div>
       </h2>
 
