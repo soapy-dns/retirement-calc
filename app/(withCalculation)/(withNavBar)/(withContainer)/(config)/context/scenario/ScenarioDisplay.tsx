@@ -34,7 +34,7 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
     <Card type={AlertType.info}>
       <h2 className="flex items-center justify-between text-primary">
         Scenario
-        <div className="flexjustify-end">
+        <div className="flex justify-end">
           <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
             <div className="flex gap-2">
               <PencilSquareIcon className="h-6 w-6" />
