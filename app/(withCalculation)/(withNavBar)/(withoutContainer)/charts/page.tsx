@@ -20,7 +20,7 @@ const ChartPage = () => {
     },
     {
       value: "income",
-      label: "Income"
+      label: "Income (today's money)"
     },
     {
       value: "assetSplit",

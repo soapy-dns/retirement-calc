@@ -74,7 +74,7 @@ export const canDrawdownAssets = (assets: Asset[], year: number) => {
 // for each asset calculate the next year minus any tax
 export const addAssetIncome = (year: number, assets: Asset[], incomeFromAssets: AssetIncome[]) => {
   assets.forEach((asset) => {
-    const yearData = asset.getYearData(year) // TODO: should maybe have this within the calcNextYear method
+    const yearData = asset.getYearData(year)
 
     const nextYearData = asset.calcNextYear(yearData, assets)
 

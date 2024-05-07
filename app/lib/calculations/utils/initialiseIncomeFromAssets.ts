@@ -1,3 +1,4 @@
+import { isIncomeAsset } from "@/app/ui/utils"
 import { Asset } from "../assets/Asset"
 import { AssetIncome } from "../assets/types"
 import { Country } from "../tax/taxCalcs/types"
@@ -10,7 +11,8 @@ import { getPercIncomeTaxable } from "../tax/utils"
 export const initialiseIncomeFromAssets = (assets: Asset[]): AssetIncome[] => {
   const incomeFromAssets: AssetIncome[] = []
 
-  const incomeProducingAssets = assets.filter((it) => it.incomeProducing === true)
+  const incomeProducingAssets = assets.filter((it) => isIncomeAsset(it.className))
+
   incomeProducingAssets.forEach((asset) => {
     const { assetOwners, id, name, description, percOfIncomeTaxable } = asset
     const proportion = 1 / assetOwners.length

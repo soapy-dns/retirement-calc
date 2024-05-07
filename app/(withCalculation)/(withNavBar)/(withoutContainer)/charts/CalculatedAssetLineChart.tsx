@@ -89,7 +89,7 @@ export const CalculatedAssetLineChart: React.FC<Props> = ({ yearRange, graphData
           <Line options={options} data={data} plugins={[htmlLegendPlugin]} />
         </div>
       </div>
-      <div className="border" id="legend-container"></div>
+      <div className="border-0" id="legend-container"></div>
     </>
   )
 }

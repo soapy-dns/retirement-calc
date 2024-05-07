@@ -260,19 +260,6 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     const expensesRowData = { ...incomeTaxRows, ...earningTaxRows, ...livingExpensesRows }
 
-    // const cleanedTaxes = removeUnusedHistoryFromTaxes(taxes, finalYear)
-    // const expensesRowData = cleanedTaxes.reduce(
-    //   (accum: RowData, tax: Tax) => {
-    //     accum[`Income Tax (${tax.owner})`] = tax.history
-    //     return accum
-    //   },
-
-    // )
-    // TODO: re-instate.  TODO: earnings per person.
-    // if (earningsTaxName) {
-    //   // console.log("--earningTaxes--", JSON.stringify(earningsTaxes, null, 2))
-    //   expensesRowData[earningsTaxName] = earningsTaxes
-    // }
 
     const surplusRowData = { "Surplus (if -ve is tax liability for next yr)": surplusYearData }
 
