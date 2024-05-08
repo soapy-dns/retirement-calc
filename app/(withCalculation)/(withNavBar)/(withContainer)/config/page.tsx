@@ -13,7 +13,7 @@ import { ConfigTabContext } from "@/app/ui/context/ConfigTabProvider"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { ConfigNavBar } from "../(config)/ConfigNavBar"
-import Scenarios from "@/docs/modalContent/Scenario.mdx"
+import Scenarios from "@/docs/modalContent/ScenarioInfo.mdx"
 
 const ConfigPage: React.FC = () => {
   const { activeTab } = useContext(ConfigTabContext)

@@ -9,8 +9,13 @@ import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
 import { EditButton } from "@/app/ui/components/common/EditButton"
 import { CountryFlag } from "@/app/ui/components/CountryFlag"
 import { FormGroup } from "@/app/ui/components/common/FormGroup"
+import { InformationCircleIcon } from "@heroicons/react/24/outline"
 
-export const GeneralContextDisplay: React.FC = () => {
+interface Props {
+  showInfo: () => void
+}
+
+export const GeneralContextDisplay: React.FC<Props> = ({ showInfo }) => {
   const { selectedScenario } = useContext(ScenarioContext)
   const navigation = useNavigation()
 
@@ -28,7 +33,12 @@ export const GeneralContextDisplay: React.FC = () => {
   return (
     <Card>
       <h2 className="flex items-center justify-between text-primary">
-        Tax and currency
+        <div className="flex gap-2 items-center">
+          Tax and currency
+          <button onClick={showInfo}>
+            <InformationCircleIcon className="w-6 h-6" />
+          </button>
+        </div>
         <EditButton onClick={handleGeneralContextEdit} />
       </h2>
 
