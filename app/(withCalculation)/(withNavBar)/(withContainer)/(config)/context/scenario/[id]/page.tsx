@@ -73,7 +73,6 @@ export default function ScenarioPage({ params }: { params: { id: string } }) {
           id="name"
           control={control}
           label={scenarioConstants.NAME.LABEL}
-          // validationRules={changeDetailsValidation}
           restrictedCharSet={ALPHA_NUMERIC}
           helpText={scenarioConstants.NAME.HELP_TEXT}
         />
@@ -81,8 +80,6 @@ export default function ScenarioPage({ params }: { params: { id: string } }) {
           id="description"
           control={control}
           label={scenarioConstants.DESCRIPTION.LABEL}
-          // validationRules={changeDetailsValidation}
-          //   restrictedCharSet={ALPHA_ONLY}
           helpText={scenarioConstants.DESCRIPTION.HELP_TEXT}
         />
       </form>

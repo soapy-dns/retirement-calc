@@ -6,10 +6,11 @@ import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/E
 import { ContextConfig } from "@/app/lib/data/schema/config"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
 import GeneralContextForm from "./GeneralContextForm"
 import { CountryEnum, IsFormNumberOpt } from "@/app/lib/data/schema/config/schemaUtils"
+import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
 
 const FormSchema = z
   .object({
@@ -29,7 +30,9 @@ export type FormDataType = z.infer<typeof FormSchema>
 
 const GeneralContextEditPage: React.FC = () => {
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
+
   const navigation = useNavigation()
+  const [showModal, setShowModal] = useState<boolean>(false)
 
   const { context } = selectedScenario
   const {
@@ -55,8 +58,13 @@ const GeneralContextEditPage: React.FC = () => {
     const { success } = await updateScenario(updatedScenario)
     if (success) navigation.goBack()
   }
+
   const handleBack = () => {
-    navigation.goBack()
+    if (isDirty) {
+      setShowModal(true)
+    } else {
+      navigation.goBack()
+    }
   }
 
   // Innefficent? FIXME:
@@ -75,6 +83,11 @@ const GeneralContextEditPage: React.FC = () => {
     >
       {/* @ts-ignore */}
       <GeneralContextForm control={control} taxResident={taxResident} currency={currency} />
+      <ChangesNotSavedModal
+        showModal={showModal}
+        handleCancel={() => setShowModal(false)}
+        continueAnyway={() => navigation.goBack()}
+      />
     </EditPageLayout>
   )
 }

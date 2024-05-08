@@ -1,14 +1,15 @@
 import React from "react"
-import { GenericModal, IGenericModalProps } from "./GenericModal"
+import { GenericModal } from "./GenericModal"
 import { ButtonGroup } from "../common/ButtonGroup"
 import { Button, ButtonType } from "../common/Button"
 
-interface Props extends Omit<IGenericModalProps, "children" | "heading"> {
-  handleSubmit: React.MouseEventHandler<HTMLButtonElement>
+export interface Props {
+  showModal: boolean
+  handleCancel: () => void
+  continueAnyway: () => void
 }
 
-// FIXME:
-export const ChangesNotSavedModal: React.FC<Props> = ({ showModal, handleCancel, handleSubmit }) => {
+export const ChangesNotSavedModal: React.FC<Props> = ({ showModal, handleCancel, continueAnyway }) => {
   const onCancel = () => {
     handleCancel()
   }
@@ -18,11 +19,11 @@ export const ChangesNotSavedModal: React.FC<Props> = ({ showModal, handleCancel,
       showModal={showModal}
       heading="Changes not saved!"
       handleCancel={handleCancel}
-      handleSubmit={handleSubmit}
+      handleSubmit={continueAnyway}
     >
       You&apos;re changes will not be saved.
       <ButtonGroup>
-        <Button onClick={handleSubmit} buttonType={ButtonType.primary}>
+        <Button onClick={continueAnyway} buttonType={ButtonType.primary}>
           Continue anyway
         </Button>
         <Button onClick={onCancel} buttonType={ButtonType.secondary}>

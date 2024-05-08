@@ -9,10 +9,11 @@ import { DECIMALS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
 import { contextConstants } from "../contextConstants"
 import { IsFormNumber } from "@/app/lib/data/schema/config/schemaUtils"
+import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
 
 const FormSchema = z.object({
   growthInterestRate: IsFormNumber,
@@ -22,11 +23,16 @@ export type FormDataType = z.infer<typeof FormSchema>
 
 const SharesPage: React.FC = () => {
   const navigation = useNavigation()
-
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
+  const [showChangesNotSavedModal, setShowChangesNotSavedModal] = useState<boolean>(false)
+
   const { context } = selectedScenario
   const { sharesAu } = context
-  const { control, handleSubmit } = useForm<FormDataType>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isDirty }
+  } = useForm<FormDataType>({
     defaultValues: {
       growthInterestRate: Math.round(sharesAu?.growthInterestRate * 10000) / 100,
       dividendInterestRate: Math.round(sharesAu?.dividendInterestRate * 10000) / 100
@@ -35,7 +41,11 @@ const SharesPage: React.FC = () => {
   })
 
   const handleBack = () => {
-    navigation.goBack()
+    if (isDirty) {
+      setShowChangesNotSavedModal(true)
+    } else {
+      navigation.goBack()
+    }
   }
 
   const onSubmit = async (data: FormDataType) => {
@@ -73,9 +83,7 @@ const SharesPage: React.FC = () => {
           control={control}
           label={contextConstants.SHARES_GROWTH.LABEL}
           suffix="%"
-          // defaultValue={context.sharesAu ? context.sharesAu.growthInterestRate * 100 : "n/a"}
           editable={true}
-          // validationRules={changeDetailsValidation}
           restrictedCharSet={DECIMALS_ONLY}
           helpText={contextConstants.SHARES_GROWTH.HELP_TEXT}
         />
@@ -84,13 +92,16 @@ const SharesPage: React.FC = () => {
           control={control}
           label={contextConstants.SHARES_INCOME.LABEL}
           suffix="%"
-          // defaultValue={context.sharesAu ? context.sharesAu.dividendInterestRate * 100 : "n/a"}
           editable={true}
-          // validationRules={changeDetailsValidation}
           restrictedCharSet={DECIMALS_ONLY}
           helpText={contextConstants.SHARES_INCOME.HELP_TEXT}
         />
       </form>
+      <ChangesNotSavedModal
+        showModal={showChangesNotSavedModal}
+        handleCancel={() => setShowChangesNotSavedModal(false)}
+        continueAnyway={() => navigation.goBack()}
+      />
     </EditPageLayout>
   )
 }

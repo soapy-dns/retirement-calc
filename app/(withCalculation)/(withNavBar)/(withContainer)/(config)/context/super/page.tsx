@@ -9,10 +9,11 @@ import { DECIMALS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
 import { contextConstants } from "../contextConstants"
 import { IsFormNumber } from "@/app/lib/data/schema/config/schemaUtils"
+import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
 
 const FormSchema = z.object({
   investmentReturn: IsFormNumber,
@@ -24,9 +25,15 @@ const SuperPage: React.FC = () => {
   const navigation = useNavigation()
 
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
+  const [showChangesNotSavedModal, setShowChangesNotSavedModal] = useState<boolean>(false)
+
   const { context } = selectedScenario
   const { superAu } = context
-  const { control, handleSubmit } = useForm<FormDataType>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isDirty }
+  } = useForm<FormDataType>({
     defaultValues: {
       investmentReturn: Math.round(superAu?.investmentReturn * 10000) / 100
     },
@@ -34,7 +41,11 @@ const SuperPage: React.FC = () => {
   })
 
   const handleBack = () => {
-    navigation.goBack()
+    if (isDirty) {
+      setShowChangesNotSavedModal(true)
+    } else {
+      navigation.goBack()
+    }
   }
 
   const onSubmit = async (data: FormDataType) => {
@@ -76,6 +87,12 @@ const SuperPage: React.FC = () => {
           helpText={contextConstants.SUPER_INVESTMENT_RETURN.HELP_TEXT}
         />
       </form>
+
+      <ChangesNotSavedModal
+        showModal={showChangesNotSavedModal}
+        handleCancel={() => setShowChangesNotSavedModal(false)}
+        continueAnyway={() => navigation.goBack()}
+      />
     </EditPageLayout>
   )
 }

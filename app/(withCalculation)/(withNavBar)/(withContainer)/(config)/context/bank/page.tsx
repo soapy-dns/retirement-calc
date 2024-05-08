@@ -82,13 +82,12 @@ const BankPage: React.FC = () => {
             helpText={contextConstants.CASH_INTEREST_RATE.HELP_TEXT}
           />
         </form>
+        <ChangesNotSavedModal
+          showModal={showModal}
+          handleCancel={() => setShowModal(false)}
+          continueAnyway={() => navigation.goBack()}
+        />
       </EditPageLayout>
-
-      <ChangesNotSavedModal
-        showModal={showModal}
-        handleCancel={() => setShowModal(false)}
-        handleSubmit={() => navigation.goBack()}
-      />
     </>
   )
 }
