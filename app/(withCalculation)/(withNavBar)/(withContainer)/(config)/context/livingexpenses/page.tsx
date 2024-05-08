@@ -95,6 +95,8 @@ const LivingExpensesPage: React.FC = () => {
     navigation.goBack()
   }
 
+  const removeDisabled = fields.length < 2
+
   return (
     <EditPageLayout
       heading={"Edit estimated living expenses"}
@@ -141,7 +143,7 @@ const LivingExpensesPage: React.FC = () => {
                   type="number"
                 />
                 <div>
-                  <Button onClick={() => handleDelete(index)}>
+                  <Button onClick={() => handleDelete(index)} disabled={removeDisabled}>
                     <div className="flex items-center gap-2">
                       <TrashIcon className="h-6 w-6" />
                       <div className="hidden md:flex ">Remove</div>
