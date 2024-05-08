@@ -8,9 +8,9 @@ export const contextConstants: Record<string, ItemProps> = {
     HELP_TEXT: "The country you live in for tax (there are no partial years)"
   },
   AU_2_UK_EXCHANGE_RATE: {
-    LABEL: "Australian to UK exchange rate",
+    LABEL: "Exchange rate",
     HELP_TEXT:
-      "The rate for converting AUD to GBP.  This value is required for tax calculations if necessary (to adjust the tax bands). This will become more generic at some future date."
+      "The exchange rate for converting from the currency country to the tax residency country.  This value is required for tax calculations if necessary (to adjust the tax bands)."
   },
   CURRENCY: {
     LABEL: "Currency being used",
