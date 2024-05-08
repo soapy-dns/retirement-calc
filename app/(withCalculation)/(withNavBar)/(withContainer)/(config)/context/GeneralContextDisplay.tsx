@@ -1,14 +1,14 @@
 import { useContext } from "react"
-import { PencilSquareIcon } from "@heroicons/react/24/outline"
 import { contextConstants } from "./contextConstants"
-import { currencyOptions, taxResidentOptions } from "./options"
+// import { currencyOptions, taxResidentOptions } from "./options"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
 import { Card } from "@/app/ui/components/Card"
-import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
 import { EditButton } from "@/app/ui/components/common/EditButton"
+import { CountryFlag } from "@/app/ui/components/CountryFlag"
+import { FormGroup } from "@/app/ui/components/common/FormGroup"
 
 export const GeneralContextDisplay: React.FC = () => {
   const { selectedScenario } = useContext(ScenarioContext)
@@ -18,8 +18,8 @@ export const GeneralContextDisplay: React.FC = () => {
 
   const { taxResident, currency, au2ukExchangeRate } = context
 
-  const taxResidentValue = taxResidentOptions.find((it) => it.value === taxResident)?.label
-  const currencyValue = currencyOptions.find((it) => it.value === currency)?.label
+  // const taxResidentValue = taxResidentOptions.find((it) => it.value === taxResident)?.label
+  // const currencyValue = currencyOptions.find((it) => it.value === currency)?.label
 
   const handleGeneralContextEdit = () => {
     navigation.goTo(AppPath.contextGeneralEdit)
@@ -31,17 +31,18 @@ export const GeneralContextDisplay: React.FC = () => {
         Tax and currency
         <EditButton onClick={handleGeneralContextEdit} />
       </h2>
-      <TextDisplayField
-        label={contextConstants.TAX_RESIDENCY.LABEL}
-        helpText={contextConstants.TAX_RESIDENCY.HELP_TEXT}
-        value={taxResidentValue || "-"}
-      />
 
-      <TextDisplayField
-        label={contextConstants.CURRENCY.LABEL}
-        helpText={contextConstants.CURRENCY.HELP_TEXT}
-        value={currencyValue || "-"}
-      />
+      <FormGroup
+        label={contextConstants.TAX_RESIDENCY.LABEL}
+        id="taxResidency"
+        helpText={contextConstants.TAX_RESIDENCY.HELP_TEXT}
+      >
+        <CountryFlag country={taxResident} />
+      </FormGroup>
+
+      <FormGroup label={contextConstants.CURRENCY.LABEL} id="currency" helpText={contextConstants.CURRENCY.HELP_TEXT}>
+        <CountryFlag country={currency} />
+      </FormGroup>
 
       {taxResident !== currency && (
         <TextDisplayField

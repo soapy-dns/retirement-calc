@@ -39,8 +39,6 @@ const GeneralContextEditPage: React.FC = () => {
       taxResident: data.taxResident,
       currency: data.currency,
       au2ukExchangeRate: data.au2ukExchangeRate ? +data.au2ukExchangeRate : undefined
-
-      // au2ukExchangeRate: data.au2ukExchangeRate ? +data.au2ukExchangeRate : undefined
     }
 
     const updatedScenario = { ...selectedScenario, context: updatedContext }

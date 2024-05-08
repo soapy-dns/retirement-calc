@@ -100,7 +100,7 @@ export const assetConstants = {
     AuSuper:
       "A superannuation scheme where the contributions make up a pension pot which will produce subsequent investment income, and the value of which can be drawn down.",
     AuDefinedBenefits: "A superannuation scheme which produces an income stream, but has no capital value.",
-    AuProperty: "A house or flat which can be lived in, rented out.",
+    AuProperty: "A house or flat which can be lived in, or rented out.",
     AuShares: "Shares assets owned directly outside of any investment vehicle like a superannuation scheme or ISA etc.",
     Salary: "A salary gives an income stream which will likely to taxed."
   }

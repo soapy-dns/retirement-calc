@@ -32,7 +32,6 @@ export const getGraphIncomeNpvData = (assetIncomes: AssetIncome[], inflationCont
     accum[asset.name] = assetNpvHistory as CellData[] // TODO: why do we have CellData here
     return accum
   }, {})
-  // console.log("--graphData--", graphData)
 
   return graphData
 }
