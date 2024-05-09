@@ -19,14 +19,14 @@ export const ConfigNavBar = () => {
     updateActiveTab(ConfigTab.transfers)
   }
 
-  const tabColors = "hover:bg-primary-lighter"
-  const selectedTabClassNames = "border-b-4 border-primary "
+  const tabColors = "hover:bg-primary-lightest"
+  const selectedTabClassNames = "border-b-4  bg-primary-lightest border-b-primary "
 
   return (
-    <div className=" mb-4 grid grid-cols-3 bg-primary-lightest ">
+    <div className=" mb-4 grid grid-cols-3 bg-gray-50  divide-x-2">
       <button
         onClick={handleContextClick}
-        className={`${tabColors} flex justify-center gap-2 mx-2 p-2 ${
+        className={`${tabColors} flex justify-center gap-2 p-2 ${
           activeTab === ConfigTab.context ? selectedTabClassNames : null
         }`}
       >
@@ -36,7 +36,7 @@ export const ConfigNavBar = () => {
 
       <button
         onClick={handleAssetsClick}
-        className={`${tabColors} flex justify-center gap-2 mx-2 p-2 ${
+        className={`${tabColors} flex justify-center gap-2 p-2 ${
           activeTab === ConfigTab.assets ? selectedTabClassNames : null
         }`}
       >
@@ -46,7 +46,7 @@ export const ConfigNavBar = () => {
 
       <button
         onClick={handleTransfersClick}
-        className={`${tabColors} flex justify-center gap-2 mx-2 p-2 ${
+        className={`${tabColors} flex justify-center gap-2 p-2 ${
           activeTab === ConfigTab.transfers ? selectedTabClassNames : null
         }`}
       >

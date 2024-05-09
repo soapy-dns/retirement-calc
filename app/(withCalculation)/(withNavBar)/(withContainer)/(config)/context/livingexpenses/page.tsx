@@ -14,7 +14,7 @@ import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ValidationError } from "@/app/ui/components/common/ValidationError"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
 import { YearValue } from "@/app/ui/components/YearValue"
-import { GenericModal } from "@/app/ui/components/GenericModal"
+import { GenericModal } from "@/app/ui/components/modals/GenericModal"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
 import { FormDataType, FormSchema } from "./types"
@@ -95,6 +95,8 @@ const LivingExpensesPage: React.FC = () => {
     navigation.goBack()
   }
 
+  const removeDisabled = fields.length < 2
+
   return (
     <EditPageLayout
       heading={"Edit estimated living expenses"}
@@ -141,7 +143,7 @@ const LivingExpensesPage: React.FC = () => {
                   type="number"
                 />
                 <div>
-                  <Button onClick={() => handleDelete(index)}>
+                  <Button onClick={() => handleDelete(index)} disabled={removeDisabled}>
                     <div className="flex items-center gap-2">
                       <TrashIcon className="h-6 w-6" />
                       <div className="hidden md:flex ">Remove</div>

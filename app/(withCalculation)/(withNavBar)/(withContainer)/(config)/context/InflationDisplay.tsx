@@ -38,7 +38,7 @@ export const InflationDisplay: React.FC<Props> = ({ showInfo }) => {
           <button onClick={showInfo}>
             <InformationCircleIcon className="w-6 h-6" />
           </button>
-        </div>{" "}
+        </div>
         <EditButton onClick={handleEdit} />
       </h2>
       <div>

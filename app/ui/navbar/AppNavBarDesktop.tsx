@@ -9,7 +9,7 @@ import { ScenarioMenu } from "../components/SelectMenu"
 export const AppNavBarDesktop = () => {
   const pathname = usePathname()
 
-  const selectedTabClassNames = "border-b-4"
+  const selectedTabClassNames = "border-b-4 bg-primary-darker"
 
   return (
     <div className=" flex h-10 flex-row justify-center border-0 bg-primary py-1 pl-3 text-white">

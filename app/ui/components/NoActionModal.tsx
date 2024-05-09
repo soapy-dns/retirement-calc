@@ -1,5 +1,5 @@
 import React from "react"
-import { GenericModal } from "./GenericModal"
+import { GenericModal } from "./modals/GenericModal"
 
 interface Props {
   heading: string

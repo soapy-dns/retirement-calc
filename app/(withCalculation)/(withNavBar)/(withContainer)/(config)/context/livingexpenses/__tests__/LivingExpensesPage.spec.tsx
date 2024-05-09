@@ -7,28 +7,11 @@ import { scenarios as defaultScenarios } from "@/app/lib/data/scenarios"
 import LivingExpensesPage from "../page"
 import { ScenarioProvider } from "@/app/ui/context/ScenarioProvider"
 import { HelpModalProvider } from "@/app/ui/context/HelpModalProvider"
-// import { useNavigation } from "@/app/ui/hooks/useNavigation"
-// import { useNavigation } from "../../../../../../../ui/hooks/useNavigation"
 
 const goBack = jest.fn()
 const onToggle = jest.fn()
 const updateScenario = jest.fn()
 
-// jest.mock("react", () => ({
-//   ...jest.requireActual("react"),
-//   useContext: () => ({
-//     navigate: mockNavigate,
-//     history: { replace: mockReplace },
-//     openModal: (arg: any) => mockOpenModal(arg),
-//     displaySystemErrorModal: jest.fn()
-//   })
-// }))
-// jest.mock("hooks/analytics/useAnalytics", () => ({
-//   useAnalytics: () => ({
-//     fireAnalyticsEvent: () => {},
-//     fireSaveUpdateAnalyticsEvent: () => {}
-//   })
-// }))
 jest.mock("react", () => ({
   ...jest.requireActual("react"),
   useContext: () => ({

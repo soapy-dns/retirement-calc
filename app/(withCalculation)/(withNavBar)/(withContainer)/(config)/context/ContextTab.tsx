@@ -7,13 +7,15 @@ import { SharesDisplay } from "./shares/SharesDisplay"
 import { PropertyDisplay } from "./property/PropertyDisplay"
 import { DefinedBenefitsAuDisplay } from "./definedBenefits/DefinedBenefitsAuDisplay"
 import { GeneralContextDisplay } from "./GeneralContextDisplay"
-import { GenericModal } from "@/app/ui/components/GenericModal"
+import { GenericModal } from "@/app/ui/components/modals/GenericModal"
 import { useState } from "react"
-import InflationRate from "@/docs/modalContent/InflationRate.mdx"
-import LivingExpenses from "@/docs/modalContent/LivingExpenses.mdx"
+import InflationRateInfo from "@/docs/modalContent/InflationRateInfo.mdx"
+import LivingExpensesInfo from "@/docs/modalContent/LivingExpensesInfo.mdx"
+import TaxAndCurrencyInfo from "@/docs/modalContent/TaxAndCurrencyInfo.mdx"
 
 enum InfoType {
   "NONE",
+  "TAX_AND_CURRENCY",
   "LIVING_EXPENSES",
   "INFLATION"
 }
@@ -27,7 +29,11 @@ export const ContextTab: React.FC = () => {
         living expenses, rates of return etc
       </p>
 
-      <GeneralContextDisplay />
+      <GeneralContextDisplay
+        showInfo={() => {
+          setInfoToggle(InfoType.TAX_AND_CURRENCY)
+        }}
+      />
 
       <OwnersDisplay />
 
@@ -60,7 +66,7 @@ export const ContextTab: React.FC = () => {
           setInfoToggle(InfoType.NONE)
         }}
       >
-        <InflationRate />
+        <InflationRateInfo />
       </GenericModal>
 
       <GenericModal
@@ -70,7 +76,17 @@ export const ContextTab: React.FC = () => {
           setInfoToggle(InfoType.NONE)
         }}
       >
-        <LivingExpenses />
+        <LivingExpensesInfo />
+      </GenericModal>
+
+      <GenericModal
+        showModal={infoToggle === InfoType.TAX_AND_CURRENCY}
+        heading="Tax and currency"
+        handleCancel={() => {
+          setInfoToggle(InfoType.NONE)
+        }}
+      >
+        <TaxAndCurrencyInfo />
       </GenericModal>
     </>
   )

@@ -1,12 +1,12 @@
 "use client"
 
-import React, { MouseEvent, SyntheticEvent, useContext, useEffect } from "react"
+import React, { useContext } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
-import { ContextConfig, InflationRecord, InflationSchema } from "@/app/lib/data/schema/config"
+import { ContextConfig } from "@/app/lib/data/schema/config"
 import { InputField } from "@/app/ui/components/form/InputField"
 import { inflationRateValidationRules, inflationYearValidationRules } from "@/app/ui/validation/inflationYear"
 import { DECIMALS_ONLY, INTEGERS_ONLY } from "@/app/ui/components/common/formRegExes"
@@ -14,7 +14,7 @@ import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ValidationError } from "@/app/ui/components/common/ValidationError"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(withCalculation)/(withoutNavBar)/components/EditPageLayout"
-import { GenericModal } from "@/app/ui/components/GenericModal"
+import { GenericModal } from "@/app/ui/components/modals/GenericModal"
 import { YearValue } from "@/app/ui/components/YearValue"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
@@ -101,6 +101,7 @@ const InflationEditPage: React.FC = () => {
   const handleBack = () => {
     navigation.goBack()
   }
+  const removeDisabled = fields.length < 2
 
   return (
     <EditPageLayout
@@ -153,10 +154,10 @@ const InflationEditPage: React.FC = () => {
                   type="number"
                 />
                 <div>
-                  <Button onClick={() => handleDelete(index)}>
+                  <Button onClick={() => handleDelete(index)} disabled={removeDisabled}>
                     <div className="flex items-center gap-2">
                       <TrashIcon className="h-6 w-6" />
-                      <div className="hidden md:flex">Remove</div>
+                      <div className={`hidden md:flex`}>Remove</div>
                     </div>
                   </Button>
                 </div>
