@@ -16,10 +16,13 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
           </Link>
         </div>
 
-        <div className="flex flex-row gap-4">
-          <div className="">
-            <DesktopSideMenu />
+        <div className="flex flex-row gap-4 ">
+          <div className="relative">
+            <div className="sticky top-20">
+              <DesktopSideMenu />
+            </div>
           </div>
+
           <div className="flex-1  ">{children}</div>
         </div>
       </Container>

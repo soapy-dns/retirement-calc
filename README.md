@@ -41,3 +41,11 @@ https://flagicons.lipis.dev/
 ## markdown
 
 https://mikebifulco.com/posts/mdx-auto-link-headings-with-rehype-slug
+
+## broken links
+
+npm install broken-link-checker -g
+
+blc http://localhost:3000/docs/about -ro
+
+Doesn't check header links
