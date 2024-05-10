@@ -37,3 +37,7 @@ https://www.chakshunyu.com/blog/how-to-mock-only-one-function-from-a-module-in-j
 ## Flags
 
 https://flagicons.lipis.dev/
+
+## markdown
+
+https://mikebifulco.com/posts/mdx-auto-link-headings-with-rehype-slug

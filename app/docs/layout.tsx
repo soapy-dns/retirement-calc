@@ -1,11 +1,10 @@
 import { Container } from "@/app/ui/components/Container"
 import { DesktopSideMenu } from "@/app/ui/components/docs/DesktopSideMenu"
 import Link from "next/link"
-// import { ChevronDoubleRightIcon, Cog8ToothIcon } from "@heroicons/react/24/outline"
 import { AppPath } from "@/app/ui/types"
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline"
 
-export default function MdxLayout({ children }: { children: React.ReactNode }) {
+export default function DocsLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className=" py-2 mt-20">
       <Container>
