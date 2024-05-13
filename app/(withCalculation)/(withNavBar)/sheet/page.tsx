@@ -12,9 +12,9 @@ import { ErrorDetails } from "@/app/ui/components/ErrorDetails"
 import { Container } from "@/app/ui/components/Container"
 import { Spinner } from "@/app/ui/components/common/Spinner"
 import { GenericModal } from "@/app/ui/components/modals/GenericModal"
-import IncomeInfo from "@/docs/modalContent/IncomeInfo.mdx"
-import DrawdownInfo from "@/docs/modalContent/DrawdownInfo.mdx"
-import ExpensesInfo from "@/docs/modalContent/ExpensesInfo.mdx"
+import IncomeInfo from "@/docs/info/IncomeInfo.mdx"
+import DrawdownInfo from "@/docs/info/DrawdownInfo.mdx"
+import ExpensesInfo from "@/docs/info/ExpensesInfo.mdx"
 
 const EmptyLine = () => {
   return (
