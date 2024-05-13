@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -18,12 +18,15 @@ import { GenericModal } from "@/app/ui/components/modals/GenericModal"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
 import { FormDataType, FormSchema } from "./types"
+import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
 
 const LivingExpensesPage: React.FC = () => {
   const navigation = useNavigation()
 
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
   const { showModal, onToggle } = useContext(HelpModalContext)
+  const [showChangesNotSavedModal, setShowChangesNotSavedModal] = useState<boolean>(false)
+
   const { context } = selectedScenario
   const { livingExpenses } = context
 
@@ -92,7 +95,11 @@ const LivingExpensesPage: React.FC = () => {
   }
 
   const handleBack = () => {
-    navigation.goBack()
+    if (isDirty) {
+      setShowChangesNotSavedModal(true)
+    } else {
+      navigation.goBack()
+    }
   }
 
   const removeDisabled = fields.length < 2
@@ -181,6 +188,12 @@ const LivingExpensesPage: React.FC = () => {
           valueHelpText={contextConstants.LIVING_EXPENSES.HELP_TEXT}
         />
       </GenericModal>
+
+      <ChangesNotSavedModal
+        showModal={showChangesNotSavedModal}
+        handleCancel={() => setShowChangesNotSavedModal(false)}
+        continueAnyway={() => navigation.goBack()}
+      />
     </EditPageLayout>
   )
 }

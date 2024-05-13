@@ -9,11 +9,12 @@ import { DECIMALS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { contextConstants } from "../contextConstants"
 import { IsFormNumber } from "@/app/lib/data/schema/config/schemaUtils"
+import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
 
 const FormSchema = z.object({
   growthRate: IsFormNumber
@@ -23,15 +24,25 @@ export type FormDataType = z.infer<typeof FormSchema>
 const PropertyPage: React.FC = () => {
   const navigation = useNavigation()
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
+  const [showChangesNotSavedModal, setShowChangesNotSavedModal] = useState<boolean>(false)
+
   const { context } = selectedScenario
   const { property } = context
-  const { control, handleSubmit } = useForm<FormDataType>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isDirty }
+  } = useForm<FormDataType>({
     defaultValues: { growthRate: Math.round(property.growthInterestRate * 10000) / 100 },
     resolver: zodResolver(FormSchema)
   })
 
   const handleBack = () => {
-    navigation.goBack()
+    if (isDirty) {
+      setShowChangesNotSavedModal(true)
+    } else {
+      navigation.goBack()
+    }
   }
 
   const onSubmit = async (data: FormDataType) => {
@@ -74,6 +85,11 @@ const PropertyPage: React.FC = () => {
           helpText={contextConstants.PROPERTY_GROWTH_RATE.HELP_TEXT}
         />
       </form>
+      <ChangesNotSavedModal
+        showModal={showChangesNotSavedModal}
+        handleCancel={() => setShowChangesNotSavedModal(false)}
+        continueAnyway={() => navigation.goBack()}
+      />
     </EditPageLayout>
   )
 }

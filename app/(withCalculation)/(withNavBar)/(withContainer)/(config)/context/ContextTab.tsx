@@ -9,9 +9,9 @@ import { DefinedBenefitsAuDisplay } from "./definedBenefits/DefinedBenefitsAuDis
 import { GeneralContextDisplay } from "./GeneralContextDisplay"
 import { GenericModal } from "@/app/ui/components/modals/GenericModal"
 import { useState } from "react"
-import InflationRateInfo from "@/docs/modalContent/InflationRateInfo.mdx"
-import LivingExpensesInfo from "@/docs/modalContent/LivingExpensesInfo.mdx"
-import TaxAndCurrencyInfo from "@/docs/modalContent/TaxAndCurrencyInfo.mdx"
+import InflationRateInfo from "@/docs/info/context/InflationRateInfo.mdx"
+import LivingExpensesInfo from "@/docs/info/context/LivingExpensesInfo.mdx"
+import TaxAndCurrencyInfo from "@/docs/info/context/TaxAndCurrencyInfo.mdx"
 
 enum InfoType {
   "NONE",

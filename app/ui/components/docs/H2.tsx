@@ -1,5 +1,19 @@
+import Link from "next/link"
 import { ReactNode } from "react"
 
-export default function H2({ children }: { children?: ReactNode }) {
-  return <h2 className="text-primary mb-4 text-xl">{children}</h2>
+/*
+Every heading on my markdown pages contains an ID, and is wrapped in a link to itself. 
+This makes it easy for readers to tap on the link to send it to their URL bar, 
+or to right-click/long-press and copy a link to the part of the article they want to link to.
+*/
+export default function H2({ id, children }: { id?: string; children?: ReactNode }) {
+  if (id) {
+    return (
+      <Link href={`#${id}`}>
+        <h2 id={id} className="text-primary mb-4 text-xl">
+          {children}
+        </h2>
+      </Link>
+    )
+  }
 }

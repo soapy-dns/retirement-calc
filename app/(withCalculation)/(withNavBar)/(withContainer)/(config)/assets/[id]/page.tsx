@@ -31,6 +31,8 @@ import {
   YesNoSchema
   // ZodInputStringPipe
 } from "@/app/lib/data/schema/config/schemaUtils"
+import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
+import { useState } from "react"
 
 // There is some duplication with AssetSchema - how can we minimise this?
 const FormSchema = z
@@ -210,7 +212,9 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   const navigation = useNavigation()
 
   const { getAssetDetails, updateAsset, addAsset, hasTransfers } = useAsset()
+  const [showChangesNotSavedModal, setShowChangesNotSavedModal] = useState<boolean>(false)
   const { getOwners } = useOwner()
+
   const assetConfig = getAssetDetails(id)
   const owners = getOwners()
 
@@ -254,7 +258,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     watch,
     control,
     register,
-    formState: { errors }
+    formState: { errors, isDirty }
   } = useForm<FormDataType>({
     defaultValues: {
       name,
@@ -300,7 +304,11 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   }
 
   const handleBack = () => {
-    navigation.goBack()
+    if (isDirty) {
+      setShowChangesNotSavedModal(true)
+    } else {
+      navigation.goBack()
+    }
   }
 
   const assetType = watch("assetType")
@@ -332,6 +340,11 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
         isRentedFormValue={isRentedFormValue}
         owners={owners}
         register={register}
+      />
+      <ChangesNotSavedModal
+        showModal={showChangesNotSavedModal}
+        handleCancel={() => setShowChangesNotSavedModal(false)}
+        continueAnyway={() => navigation.goBack()}
       />
     </EditPageLayout>
   )
