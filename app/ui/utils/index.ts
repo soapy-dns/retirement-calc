@@ -1,3 +1,4 @@
+import { Asset } from "@/app/lib/calculations/assets/Asset"
 import { AssetClass } from "@/app/lib/data/schema/config"
 
 export const getErrorMsgId = (id: string) => `${id}-validation-error`
@@ -20,3 +21,5 @@ export const isPropertyAsset = (className: AssetClass) => propertyAssetClassName
 export const isLiquidAsset = (className: AssetClass) => liquidAssetClassNames.includes(className)
 
 export const isCashAsset = (className: AssetClass) => cashAssetClassNames.includes(className)
+
+export const isIncomeProducingAsset = (asset: Asset) => asset.incomeProducing

@@ -1,9 +1,8 @@
 import { AssetIncome, EarningsTax, Tax } from "../assets/types"
 import { BandedTaxCalc } from "./taxCalcs/BandedTaxCalc"
-import { getScenarioTransfersForYear } from "../transfers/transferUtils"
-import { IScenario, Transfer, Country } from "../../data/schema/config"
+import { Transfer, Country } from "../../data/schema/config"
 import { Asset } from "../assets/Asset"
-import { AssetGroup, BasicYearData, InflationContext, RowData, YearsTaxData } from "../types"
+import { AssetGroup, BasicYearData, InflationContext, YearsTaxData } from "../types"
 import { removeUnusedHistoryFromTaxes } from "./removeUnusedHistoryFromTaxes"
 
 export const getOwnersTaxableIncomeAmt = (incomeFromAssets: AssetIncome[], owner: string, year: number) => {

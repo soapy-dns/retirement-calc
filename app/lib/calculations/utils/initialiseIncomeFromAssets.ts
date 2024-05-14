@@ -1,8 +1,6 @@
-import { isIncomeAsset } from "@/app/ui/utils"
+import { isIncomeProducingAsset } from "@/app/ui/utils"
 import { Asset } from "../assets/Asset"
 import { AssetIncome } from "../assets/types"
-import { Country } from "../tax/taxCalcs/types"
-import { getPercIncomeTaxable } from "../tax/utils"
 
 /**
  * Builds an array of 'income' details based on the Assets
@@ -11,7 +9,7 @@ import { getPercIncomeTaxable } from "../tax/utils"
 export const initialiseIncomeFromAssets = (assets: Asset[]): AssetIncome[] => {
   const incomeFromAssets: AssetIncome[] = []
 
-  const incomeProducingAssets = assets.filter((it) => isIncomeAsset(it.className))
+  const incomeProducingAssets = assets.filter((asset) => isIncomeProducingAsset(asset))
 
   incomeProducingAssets.forEach((asset) => {
     const { assetOwners, id, name, description, percOfIncomeTaxable } = asset

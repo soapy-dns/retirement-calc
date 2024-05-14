@@ -86,12 +86,9 @@ export interface SurplusYearData extends BasicYearData {
   adjustedAsset: string
 }
 export interface AssetData {
-  [key: string]: YearData[] | BasicYearData[]
+  [key: string]: BasicYearData[]
 }
-// TODO: can simplify these interfaces into 1
-export interface RowData {
-  [key: string]: YearData[] | BasicYearData[]
-}
+
 export interface SurplusRowData {
   [key: string]: SurplusYearData[]
 }
@@ -131,14 +128,11 @@ interface CalculationResultsSuccess {
   netPresentValue: BasicYearData[]
   totalAssetIncome: BasicYearData[]
   totalExpensesData: ExpenseYearData[]
-  // earningsTaxName: string
-  // earningsTaxData: BasicYearData[]
-  assetIncomeRowData: RowData
+  assetIncomeRowData: AssetData
   totalDrawdownData: DrawdownYearData[]
-  drawdownRowData: RowData
+  drawdownRowData: AssetData
   surplusRowData: SurplusRowData
-  expensesRowData: RowData
-  // calculationMessage: string
+  expensesRowData: AssetData
   inflationContext: InflationContext
   assetSplit: AssetSplitItem[]
   calculatedAssetData: AssetData
