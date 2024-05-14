@@ -18,11 +18,10 @@ import { getInflationContext } from "./utils/getInflationContext"
 import { calculateTotalAssetIncome } from "./assetIncome/utils"
 import { getYearRange } from "./utils/yearRange"
 import { getEarningsTaxCalculator, getEarningsTaxName, getIncomeTaxCalculator } from "./tax/taxCalcs/getTaxCalculator"
-import { AssetData, BasicYearData, CalculationResults, SurplusYearData } from "./types"
+import { AssetData, BasicYearData, CalculationResults, SurplusYearData, YearData } from "./types"
 import { getAssetSplit } from "./assets/getAssetClasses"
 import { getCalculatedNpvData, getGraphIncomeNpvData } from "./utils/getCalculatedNpvData"
 import { getStartingYear } from "./utils/getStartingYear"
-import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
 import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
 import { IScenario, ScenarioSchema } from "../data/schema/config"
 import { calculateEarningsTaxes } from "./tax/getEarningsTaxes"
@@ -225,11 +224,11 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     })
 
     // NOW CREATE DATA IN FORMAT WHICH CAN BE USED BY THE FRONT END
-    // TODO: THIS COULD BE MADE BETTER BY JUST PASSING INDIVIDUAL ROWS AND LETTING THE FRONT END DECIDE WHAT IT WANTS TO DO.
-
-    const assetRowData = assets.reduce((accum: AssetData, asset) => {
+    const assetRowData: AssetData = assets.reduce((accum: AssetData, asset) => {
       if (asset.capitalAsset) {
-        accum[asset.name] = asset.history as CellData[]
+        accum[asset.name] = asset.history.map((it: YearData) => {
+          return { year: it.year, value: it.value }
+        })
       }
       return accum
     }, {})

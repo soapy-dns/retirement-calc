@@ -1,8 +1,8 @@
 import { DrawdownYearData, YearData } from "../assets/types"
-import { BasicYearData } from "../types"
+import { AssetData, BasicYearData } from "../types"
 import { AutomatedDrawdown } from "./types"
 
-const getYearData = (initialRowData: Record<string, BasicYearData[]>, allDrawdowns: AutomatedDrawdown[]) => {
+const getYearData = (initialRowData: Record<string, BasicYearData[]>, allDrawdowns: AutomatedDrawdown[]): AssetData => {
   const yearData = allDrawdowns.reduce(
     (accum, automatedDrawdown) => {
       const drawdownData = accum[automatedDrawdown.fromName]
@@ -16,7 +16,8 @@ const getYearData = (initialRowData: Record<string, BasicYearData[]>, allDrawdow
       }
       return accum
     },
-    initialRowData as Record<string, BasicYearData[]>
+    initialRowData as AssetData
+    // initialRowData as Record<string, BasicYearData[]>
   )
 
   return yearData

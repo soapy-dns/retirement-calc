@@ -86,7 +86,7 @@ export interface SurplusYearData extends BasicYearData {
   adjustedAsset: string
 }
 export interface AssetData {
-  [key: string]: YearData[] | BasicYearData[]
+  [key: string]: BasicYearData[]
 }
 
 export interface SurplusRowData {
