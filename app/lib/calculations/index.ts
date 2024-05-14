@@ -96,6 +96,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const earningsTaxes = initEarningsTaxes(yearRange, owners)
 
     const incomeFromAssets: AssetIncome[] = initialiseIncomeFromAssets(assets)
+
     if (!scenario) throw new Error("No scenario found")
     // end of setup
 
