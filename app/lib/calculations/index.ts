@@ -26,6 +26,7 @@ import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData
 import { IScenario, ScenarioSchema } from "../data/schema/config"
 import { calculateEarningsTaxes } from "./tax/getEarningsTaxes"
 import { getScenarioTransfersForYear } from "./transfers/transferUtils"
+import { withData } from "./utils/withData"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -249,8 +250,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     const earningsTaxName = getEarningsTaxName(taxResident)
 
-    const incomeTaxRows = getTaxesRows(taxes, finalYear, "Income Tax")
-    const earningTaxRows = getTaxesRows(earningsTaxes, finalYear, earningsTaxName)
+    const incomeTaxRows = withData(getTaxesRows(taxes, finalYear, "Income Tax"))
+    const earningTaxRows = withData(getTaxesRows(earningsTaxes, finalYear, earningsTaxName))
     const livingExpensesRows = {
       "Living expenses (today's money)": livingExpensesTodaysMoneyToDisplay,
       "Living expenses": projectedLivingExpensesToDisplay
