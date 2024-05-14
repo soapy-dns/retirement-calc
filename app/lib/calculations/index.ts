@@ -16,10 +16,9 @@ import { AutomatedDrawdown } from "./autoDrawdowns/types"
 import { applyAutoDrawdowns } from "./autoDrawdowns/drawdown"
 import { getInflationContext } from "./utils/getInflationContext"
 import { calculateTotalAssetIncome } from "./assetIncome/utils"
-import { removeUnusedHistoryFromTaxes } from "./tax/removeUnusedHistoryFromTaxes"
 import { getYearRange } from "./utils/yearRange"
 import { getEarningsTaxCalculator, getEarningsTaxName, getIncomeTaxCalculator } from "./tax/taxCalcs/getTaxCalculator"
-import { AssetData, BasicYearData, CalculationData, CalculationResults, RowData, SurplusYearData } from "./types"
+import { AssetData, BasicYearData, CalculationResults, SurplusYearData } from "./types"
 import { getAssetSplit } from "./assets/getAssetClasses"
 import { getCalculatedNpvData, getGraphIncomeNpvData } from "./utils/getCalculatedNpvData"
 import { getStartingYear } from "./utils/getStartingYear"
@@ -55,7 +54,6 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const totalDrawdowns: DrawdownYearData[] = []
     const totalAssetIncome: BasicYearData[] = []
     const totalExpenses: ExpenseYearData[] = []
-    // const earningsTaxes: BasicYearData[] = []
     const automatedDrawdownMap: Record<number, AutomatedDrawdown[]> = {}
 
     const startingYear = getStartingYear()
@@ -237,7 +235,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const graphCalculatedAssetData = { ...assetRowData } as AssetData
     const graphCalculatedAssetNpvData = getCalculatedNpvData(assets, inflationContext) // for graph purposes
 
-    const assetIncomeRowData = incomeFromAssets.reduce((accum: RowData, assetIncome: AssetIncome) => {
+    const assetIncomeRowData = incomeFromAssets.reduce((accum: AssetData, assetIncome: AssetIncome) => {
       accum[`${assetIncome.name} (${assetIncome.owner})`] = assetIncome.history
       return accum
     }, {})
@@ -259,7 +257,6 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     }
 
     const expensesRowData = { ...incomeTaxRows, ...earningTaxRows, ...livingExpensesRows }
-
 
     const surplusRowData = { "Surplus (if -ve is tax liability for next yr)": surplusYearData }
 
