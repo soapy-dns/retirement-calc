@@ -12,6 +12,7 @@ import { InflationContext } from "@/app/lib/calculations/types"
 import { Salary } from "./Salary"
 import { getAssetData } from "../../data/scenarios"
 import { IAsset, IScenario } from "../../data/schema/config"
+import { CalculationError } from "../../utils/CalculationError"
 
 export const buildInitialAssets = (
   startingYear: number,
@@ -77,6 +78,10 @@ export const addAssetIncome = (year: number, assets: Asset[], incomeFromAssets: 
     const yearData = asset.getYearData(year)
 
     const nextYearData = asset.calcNextYear(yearData, assets)
+    if (nextYearData.value < 0)
+      throw new CalculationError(
+        `Value of '${asset.name}' in ${nextYearData.year} is less than zero.  Check configured Transfers`
+      )
 
     // GET INCOME FOR THIS ASSET - NOTE THERE COULD BE MULTIPLE AS THERE COULD BE MULTIPLE OWNERS OF THE ASSET
     // CALCULATE INCOME FROM ASSETS FOR THE YEAR AND MATCHING ASSET

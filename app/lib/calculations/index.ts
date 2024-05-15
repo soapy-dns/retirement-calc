@@ -27,8 +27,14 @@ import { IScenario, ScenarioSchema } from "../data/schema/config"
 import { calculateEarningsTaxes } from "./tax/getEarningsTaxes"
 import { getScenarioTransfersForYear } from "./transfers/transferUtils"
 import { withData } from "./utils/withData"
+import { CalculationError } from "@/app/lib/utils/CalculationError"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+const getErrorMessage = (error: unknown) => {
+  if (error instanceof Error) return error.message
+  return String(error)
+}
 
 export const calculate = async (data: unknown): Promise<CalculationResults> => {
   await sleep(1)
@@ -282,12 +288,15 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       totalExpensesData: totalExpenses
     }
   } catch (e) {
-    const getErrorMessage = (error: unknown) => {
-      if (error instanceof Error) return error.message
-      return String(error)
+    if (e instanceof CalculationError) {
+      const errMsg = getErrorMessage(e)
+
+      return {
+        success: false,
+        calculationMessage: errMsg
+      }
     }
-    const errMsg = getErrorMessage(e)
-    console.log("**ERROR**", errMsg)
-    throw new Error(`Server error ${errMsg}`)
+    console.log("**SERVER ERROR**", e)
+    throw new Error("SERVER ERROR")
   }
 }

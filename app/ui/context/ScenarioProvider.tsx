@@ -47,7 +47,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     try {
       setCalculating(true)
       const calculationResults = await calculate(selectedScenario)
-      console.log("calculationResults", calculationResults)
+      // console.log("calculationResults", calculationResults)
       setCalculationResults(calculationResults)
       setCalculating(false)
 
@@ -57,6 +57,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
         // server actions will return a 200 error for validation messages.  This may change in future
       } else if (!success) {
         if ("errors" in calculationResults) {
+          console.log("calculationResults", calculationResults)
           const { errors } = calculationResults
           if (errors) {
             displayErrorAlert(
@@ -68,6 +69,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
             )
           }
         } else {
+          // Not a complete fuck up.  Show the error returned.
           displayErrorAlert(`${calculationMessage}`)
         }
       }
@@ -75,7 +77,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     } catch (err) {
       // server error
       setCalculating(false)
-      console.log("--err--", err)
+      // console.log("--err--", err)
       displayErrorAlert("Error doing calculation.  Please check your configuration")
       return { success: false }
     }
