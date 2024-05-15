@@ -42,20 +42,18 @@ export const Input: React.FC<IInput> = ({
   }
 
   return (
-    <div className="justify-left flex items-center gap-0">
+    <div className="justify-left flex items-center gap-0 ">
       {prefix && <Prefix text={prefix} />}
-
       <input
         {...rest}
         id={id}
-        className={`my-2 h-8 w-3/4 p-4 ${roundedClasses} ${colorClasses} ${className}`}
+        className={`my-2 h-8 w-3/4 p-4 ${roundedClasses} ${colorClasses} ${className} focus:outline-none focus:ring-0 focus:border-primary focus:border-2 `}
         value={value}
         placeholder={placeholder}
         disabled={disabled}
         onChange={onChange}
         onBlur={onBlur}
       />
-
       {suffix && <Suffix text={suffix} />}
     </div>
   )
