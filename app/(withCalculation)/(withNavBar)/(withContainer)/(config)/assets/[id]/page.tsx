@@ -37,7 +37,7 @@ import { useState } from "react"
 // There is some duplication with AssetSchema - how can we minimise this?
 const FormSchema = z
   .object({
-    name: z.string().min(4),
+    name: z.string().min(2),
     description: z.string().optional(),
     country: CountryEnum,
     assetType: AssetClassEnum,

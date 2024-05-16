@@ -1,0 +1,81 @@
+[
+  {
+    "id": "c927be03-7b23-48f9-b75c-99ba63c8d70f",
+    "name": "Bank example",
+    "description": "Interest rate get applied to both, but the interest from 1 bank account gets accumulated in the other",
+    "assets": [
+      {
+        "name": "UK Bank",
+        "description": "UK Bank",
+        "country": "SC",
+        "className": "AuBank",
+        "assetOwners": ["Him"],
+        "value": 10000,
+        "canDrawdown": false,
+        "incomeBucket": true,
+        "id": "de3ff4e6-6894-43f2-a2f6-506d3a579088"
+      },
+      {
+        "id": "JOINT_AU_BANK",
+        "name": "Australian bank account",
+        "description": "Australian bank account",
+        "className": "AuBank",
+        "value": 10000,
+        "assetOwners": ["Her", "Him"],
+        "incomeBucket": false,
+        "canDrawdown": true,
+        "drawdown": {
+          "drawdownOrder": 10
+        },
+        "percOfEarningsTaxable": 100,
+        "country": "AU"
+      }
+    ],
+    "context": {
+      "taxResident": "AU",
+      "currency": "AU",
+      "owners": ["Him", "Her"],
+      "auBank": {
+        "interestRate": 0.1
+      },
+      "ukBank": {
+        "interestRate": 0.005
+      },
+      "superAu": {
+        "investmentReturn": 0.05,
+        "taxationRate": 0.15
+      },
+      "superUk": {
+        "investmentReturn": 0.04,
+        "taxationRate": 0
+      },
+      "definedBenefitsAu": {
+        "useInflationRate": true
+      },
+      "definedBenefitsUk": {
+        "useInflationRate": true
+      },
+      "sharesAu": {
+        "growthInterestRate": 0.03,
+        "dividendInterestRate": 0.03
+      },
+      "property": {
+        "growthInterestRate": 0.03
+      },
+      "inflation": [
+        {
+          "fromYear": 2024,
+          "inflationRate": 0
+        }
+      ],
+      "livingExpenses": [
+        {
+          "fromYear": 2024,
+          "amountInTodaysTerms": 0
+        }
+      ],
+      "au2ukExchangeRate": 0.52
+    },
+    "transfers": []
+  }
+]
