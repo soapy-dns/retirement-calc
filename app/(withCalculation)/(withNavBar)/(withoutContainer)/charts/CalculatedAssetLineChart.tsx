@@ -65,13 +65,16 @@ interface Props {
 export const CalculatedAssetLineChart: React.FC<Props> = ({ yearRange, graphData }) => {
   const labels = yearRange
   const assetData = graphData
+  const numColors = graphColors.length
 
   const datasets = Object.entries(assetData).map(([key, obj], index) => {
+    const remainder = index % numColors
+    console.log("remainder", remainder)
     return {
       id: key,
       label: key,
       fill: true,
-      backgroundColor: graphColors[index],
+      backgroundColor: graphColors[remainder],
       data: obj.map((it) => it.value)
     }
   })
