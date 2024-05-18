@@ -28,7 +28,7 @@ export const Textarea: React.FC<ITextArea> = ({
   return (
     <textarea
       {...rest}
-      className={`my-2 w-full p-4 ${colorClasses} resize-none appearance-none rounded`}
+      className={`my-2 w-full p-4 ${colorClasses} resize-none appearance-none rounded focus:outline-none focus:ring-0 focus:border-primary focus:border-2`}
       value={value}
       placeholder={placeholder}
       disabled={disabled}

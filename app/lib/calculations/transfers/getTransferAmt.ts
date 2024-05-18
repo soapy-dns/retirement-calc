@@ -12,8 +12,10 @@ export const getTransferAmt = (
   const { value: prevValue, year } = yearData
 
   const transfersForYear = transfers.filter((it) => it.year === year && (it.from === assetId || it.to === assetId))
-  const partialTransfersAmt = getPartialTransfers(transfersForYear, assetId)
-  const fullTransfersAmt = getFullTransfers(transfersForYear, assetId, assets, prevValue, year)
+  const partialTransferAmt = getPartialTransfers(transfersForYear, assetId)
+  const fullTransferAmt = getFullTransfers(transfersForYear, assetId, assets, prevValue, year)
 
-  return partialTransfersAmt + fullTransfersAmt
+  const totalTransferAmt = partialTransferAmt + fullTransferAmt
+
+  return totalTransferAmt
 }

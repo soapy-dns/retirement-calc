@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,9 +12,10 @@ import {
 } from "chart.js"
 import { Line } from "react-chartjs-2"
 import { graphColors } from "./colorConstants"
-import { AssetData } from "@/app/lib/calculations/types"
+import { AssetData, CapitalAssetGroup } from "@/app/lib/calculations/types"
 import { htmlLegendPlugin } from "./htmlLegendPlugin"
 import { numberFormatter } from "@/app/ui/utils/formatter"
+import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend)
 
@@ -45,40 +46,48 @@ export const options = {
       stacked: true,
       title: {
         display: true,
-        text: "Value (thousands)"
-      },
-      ticks: {
-        callback: function (value: number) {
-          const thousandth = value / 1000
-          return numberFormatter.format(thousandth)
-        }
+        text: "Percent"
       }
+      //   ticks: {
+      //     callback: function (value: number) {
+      //       const thousandth = value / 1000
+      //       return numberFormatter.format(thousandth)
+      //     }
+      //   }
     }
   }
 }
 
-interface Props {
-  yearRange: number[]
-  graphData: AssetData
-}
+export const AssetSplitLineChart: React.FC = () => {
+  const { calculationResults } = useContext(ScenarioContext)
 
-export const CalculatedAssetLineChart: React.FC<Props> = ({ yearRange, graphData }) => {
+  if (!calculationResults?.success) return null
+  const { assetSplitYearly } = calculationResults
+
+  if (!assetSplitYearly) return null
+
+  const yearRange = Object.keys(assetSplitYearly)
+
   const labels = yearRange
-  const assetData = graphData
   const numColors = graphColors.length
 
-  const lineDatasets = Object.entries(assetData).map(([key, obj], index) => {
-    const remainder = index % numColors
+  // take {year1: {a: 20, b: 30, c:50}} -> label = a, or b, or c, and data = 20, 30, 50
+  const graphKeys = Object.keys(CapitalAssetGroup)
 
+  const lineDatasets = graphKeys.map((assetGroup, index) => {
+    const lineData = Object.values(assetSplitYearly).map((assetSplitForYear) => {
+      const valueForAssetClass = assetSplitForYear.find((it) => it.assetClass === assetGroup)
+      return valueForAssetClass?.fraction || 0
+    })
+
+    const remainder = index % numColors
     const lineDataset = {
-      id: key,
-      label: key,
+      id: assetGroup,
+      label: assetGroup,
       fill: true,
       backgroundColor: graphColors[remainder],
-      data: obj.map((it) => it.value)
+      data: lineData
     }
-
-
     return lineDataset
   })
 
@@ -86,7 +95,6 @@ export const CalculatedAssetLineChart: React.FC<Props> = ({ yearRange, graphData
     labels,
     datasets: lineDatasets
   }
-
 
   return (
     <>

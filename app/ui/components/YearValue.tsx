@@ -1,11 +1,8 @@
-import { useEffect, useState } from "react"
 import { contextConstants } from "@/app/(withCalculation)/(withNavBar)/(withContainer)/(config)/context/contextConstants"
-import { SyntheticEvent } from "react"
 import { useForm } from "react-hook-form"
-import { inflationRateValidationRules, inflationYearValidationRules } from "../validation/inflationYear"
+import { inflationYearValidationRules } from "../validation/inflationYear"
 import { Button, ButtonType } from "./common/Button"
-import { DECIMALS_ONLY, INTEGERS_ONLY } from "./common/formRegExes"
-import { ValidationError } from "./common/ValidationError"
+import { INTEGERS_ONLY } from "./common/formRegExes"
 import { InputQuestion } from "./form/InputQuestion"
 // import { zodResolver } from "@hookform/resolvers/zod"
 

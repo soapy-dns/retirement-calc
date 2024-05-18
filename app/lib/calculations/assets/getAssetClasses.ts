@@ -1,15 +1,21 @@
+import { isCapitalAsset } from "@/app/ui/utils"
 import { Asset } from "./Asset"
-import { AssetGroup } from "@/app/lib/calculations/types"
+import { AssetGroup, CapitalAssetGroup } from "@/app/lib/calculations/types"
 
 export interface AssetSplitItem {
   assetClass: string
   fraction: number
 }
 
-export const getAssetSplit = (assets: Asset[]): AssetSplitItem[] => {
-  const groupedAssets = Object.keys(AssetGroup).map((assetClassKey) => {
-    const assetClassAmt = assets.reduce((accum, asset) => {
-      return asset.getAssetClass() === assetClassKey ? accum + asset.history[0].value : accum
+export const getAssetSplitByYear = (assets: Asset[], year: number): AssetSplitItem[] => {
+  const capitalAssets = assets.filter((it) => isCapitalAsset(it.className))
+
+  const groupedAssets = Object.keys(CapitalAssetGroup).map((assetClassKey) => {
+    const assetClassAmt = capitalAssets.reduce((accum, asset) => {
+      const yearData = asset.history.find((it) => it.year === year)
+      if (!yearData) return accum
+
+      return asset.getAssetClass() === assetClassKey ? accum + yearData.value : accum
     }, 0)
 
     return { assetClass: assetClassKey, value: assetClassAmt }
@@ -18,7 +24,7 @@ export const getAssetSplit = (assets: Asset[]): AssetSplitItem[] => {
   const totalAssetAmount = groupedAssets.reduce((accum, it) => it.value + accum, 0)
 
   const percGroupedAssets = groupedAssets.map((it) => {
-    const fraction = it.value / totalAssetAmount
+    const fraction = (it.value * 100) / totalAssetAmount
     return { assetClass: it.assetClass, fraction }
   })
 

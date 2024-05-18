@@ -42,7 +42,7 @@ export const Toggle: React.FC<Props> = ({
         return (
           <div
             key={`${optionValue}`}
-            className={`flex justify-center border-primary border-2  py-1  first:rounded-l-md last:rounded-r-md ${
+            className={`flex justify-center border-primary border  py-1  first:rounded-l-md last:rounded-r-md focus:outline-none focus:ring-0 focus:border-green-500 focus:border-2 ${
               selected ? selectedClasses : unselectedClasses
             }`}
           >
@@ -57,7 +57,7 @@ export const Toggle: React.FC<Props> = ({
               defaultChecked={value === optionValue}
               value={optionValue}
               onClick={onChange}
-              className="opacity-0"
+              className="opacity-0  "
             />
           </div>
         )

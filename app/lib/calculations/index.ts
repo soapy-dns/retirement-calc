@@ -18,8 +18,8 @@ import { getInflationContext } from "./utils/getInflationContext"
 import { calculateTotalAssetIncome } from "./assetIncome/utils"
 import { getYearRange } from "./utils/yearRange"
 import { getEarningsTaxCalculator, getEarningsTaxName, getIncomeTaxCalculator } from "./tax/taxCalcs/getTaxCalculator"
-import { AssetData, BasicYearData, CalculationResults, SurplusYearData, YearData } from "./types"
-import { getAssetSplit } from "./assets/getAssetClasses"
+import { AssetData, AssetSplitItem, BasicYearData, CalculationResults, SurplusYearData, YearData } from "./types"
+import { getAssetSplitByYear } from "./assets/getAssetClasses"
 import { getCalculatedNpvData, getGraphIncomeNpvData } from "./utils/getCalculatedNpvData"
 import { getStartingYear } from "./utils/getStartingYear"
 import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
@@ -27,8 +27,15 @@ import { IScenario, ScenarioSchema } from "../data/schema/config"
 import { calculateEarningsTaxes } from "./tax/getEarningsTaxes"
 import { getScenarioTransfersForYear } from "./transfers/transferUtils"
 import { withData } from "./utils/withData"
+import { CalculationError } from "@/app/lib/utils/CalculationError"
+import { isCapitalAsset } from "@/app/ui/utils"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+const getErrorMessage = (error: unknown) => {
+  if (error instanceof Error) return error.message
+  return String(error)
+}
 
 export const calculate = async (data: unknown): Promise<CalculationResults> => {
   await sleep(1)
@@ -209,7 +216,16 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       }
     })
 
-    const assetSplit = getAssetSplit(assets)
+    const capitalAssets = assets.filter((it) => isCapitalAsset(it.className) === true)
+
+    const assetSplitYearly: Record<number, AssetSplitItem[]> = calcYearRangeAssets.reduce(
+      (accum, year) => {
+        const assetSplit = getAssetSplitByYear(capitalAssets, year)
+        accum[year] = assetSplit
+        return accum
+      },
+      {} as Record<number, AssetSplitItem[]>
+    )
 
     const totalAssetsData = calcYearRangeAssets.map((year) => {
       const totalYearlyAssetAmt = assets.reduce((accum, it) => {
@@ -273,7 +289,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       calculatedAssetData: graphCalculatedAssetData,
       calculatedAssetNpvData: graphCalculatedAssetNpvData,
       graphIncomeNpvData,
-      assetSplit,
+      assetSplitYearly,
       calculationMessage,
       inflationContext,
       totalAssetsData,
@@ -282,12 +298,15 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       totalExpensesData: totalExpenses
     }
   } catch (e) {
-    const getErrorMessage = (error: unknown) => {
-      if (error instanceof Error) return error.message
-      return String(error)
+    if (e instanceof CalculationError) {
+      const errMsg = getErrorMessage(e)
+
+      return {
+        success: false,
+        calculationMessage: errMsg
+      }
     }
-    const errMsg = getErrorMessage(e)
-    console.log("**ERROR**", errMsg)
-    throw new Error(`Server error ${errMsg}`)
+    console.log("**SERVER ERROR**", e)
+    throw new Error("SERVER ERROR")
   }
 }
