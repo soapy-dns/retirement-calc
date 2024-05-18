@@ -5,7 +5,7 @@ import { AuShares } from "./AuShares"
 import { AuProperty } from "./AuProperty"
 import { Asset } from "./Asset"
 import { getDrawdownableAssets } from "../autoDrawdowns/getDrawdownableAssets"
-import { sortByPreference } from "../utils/sortAssetsByPreference"
+import { sortByDrawdownOrder } from "../utils/sortAssetsByPreference"
 import { groupAssetsByPreference } from "./groupAssetsByPreference"
 import { AssetIncome } from "./types"
 import { InflationContext } from "@/app/lib/calculations/types"
@@ -54,7 +54,7 @@ export const getGroupedDrawdownableAssets = (year: number, assets: Asset[]) => {
 
   drawdownableAssets.forEach((it) => it.name)
 
-  const sortedByPreference = sortByPreference(drawdownableAssets)
+  const sortedByPreference = sortByDrawdownOrder(drawdownableAssets)
 
   return groupAssetsByPreference(sortedByPreference)
 }

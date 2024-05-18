@@ -1,5 +1,5 @@
 import { generateMock } from "@anatine/zod-mock"
-import { sortByPreference } from "../sortAssetsByPreference"
+import { sortByDrawdownOrder } from "../sortAssetsByPreference"
 import { CashSchema, ScenarioSchema } from "@/app/lib/data/schema/config"
 import { AuBank } from "../../assets/AuBank"
 
@@ -20,7 +20,7 @@ describe("test", () => {
       new AuBank(mockAssetConfig2, year, mockScenarioConfig),
       new AuBank(mockAssetConfig1, year, mockScenarioConfig)
     ]
-    const result = sortByPreference(assets)
+    const result = sortByDrawdownOrder(assets)
     expect(result[0].drawdownOrder).toBe(10)
     expect(result[1].drawdownOrder).toBe(20)
   })

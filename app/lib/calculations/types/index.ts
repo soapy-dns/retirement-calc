@@ -134,7 +134,7 @@ interface CalculationResultsSuccess {
   surplusRowData: SurplusRowData
   expensesRowData: AssetData
   inflationContext: InflationContext
-  assetSplit: AssetSplitItem[]
+  assetSplitYearly: Record<number, AssetSplitItem[]>
   calculatedAssetData: AssetData
   calculatedAssetNpvData: AssetData
   graphIncomeNpvData: AssetData
@@ -142,6 +142,20 @@ interface CalculationResultsSuccess {
 
 export type CalculationResults = CalculationResultsSuccess | CalculationResultsFail
 
+export enum CapitalAssetGroup {
+  property = "property",
+  shares = "shares",
+  cash = "cash",
+  super = "super"
+  // income_defined_benefit = "income_defined_benefit",
+  // income_salary = "income_salary",
+  // other = "other"
+}
+
+export enum IncomeAssetGroup {
+  income_defined_benefit = "income_defined_benefit",
+  income_salary = "income_salary"
+}
 export enum AssetGroup {
   property = "property",
   shares = "shares",

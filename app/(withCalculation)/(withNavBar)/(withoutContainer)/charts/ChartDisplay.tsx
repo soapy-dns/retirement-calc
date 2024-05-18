@@ -8,7 +8,7 @@ import { Spinner } from "@/app/ui/components/common/Spinner"
 import { ErrorDetails } from "@/app/ui/components/ErrorDetails"
 import { Container } from "@/app/ui/components/Container"
 import { ChartType } from "./types"
-import { AssetSplit } from "./AssetSplit"
+import { AssetSplitLineChart } from "./AssetSplitLineChart"
 
 interface ChartDisplayProps {
   chartType: ChartType
@@ -42,7 +42,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ chartType }) => {
     case ChartType.income:
       return <CalculatedAssetLineChart yearRange={yearRange} graphData={graphIncomeNpvData} />
     case ChartType.assetSplit:
-      return <AssetSplit />
+      return <AssetSplitLineChart />
     case ChartType.drawdown:
       return <CalculatedAssetLineChart yearRange={yearRange} graphData={drawdownRowData} />
 

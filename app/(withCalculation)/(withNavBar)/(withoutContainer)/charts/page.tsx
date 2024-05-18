@@ -24,7 +24,7 @@ const ChartPage = () => {
     },
     {
       value: "assetSplit",
-      label: "Asset Split at start of term"
+      label: "Asset Split (%)"
     },
     {
       value: "drawdown",
