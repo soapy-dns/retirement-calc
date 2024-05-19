@@ -1,0 +1,75 @@
+[
+  {
+    "id": "AU_SUPER",
+    "name": "Australian super example",
+    "description": "Australian super example",
+    "assets": [
+      {
+        "id": "JOINT_AU_BANK",
+        "name": "Au bank accounts",
+        "description": "Australian bank accounts",
+        "className": "AuBank",
+        "value": 50000,
+        "assetOwners": ["Him"],
+        "incomeBucket": true,
+        "canDrawdown": true,
+        "drawdown": {
+          "drawdownOrder": 10,
+          "preferredMinAmt": 10000
+        },
+        "percOfEarningsTaxable": 100,
+        "country": "AU"
+      },
+      {
+        "id": "HIS_AU_SUPER",
+        "name": "Australian super",
+        "description": "Australian super - defined contributions",
+        "className": "AuSuper",
+        "value": 1000000,
+        "assetOwners": ["Him"],
+        "canDrawdown": true,
+        "drawdown": {
+          "drawdownOrder": 20
+        },
+        "percOfEarningsTaxable": 0,
+        "incomeBucket": false,
+        "country": "AU"
+      }
+    ],
+    "context": {
+      "taxResident": "AU",
+      "currency": "AU",
+      "owners": ["Him", "Her"],
+      "auBank": {
+        "interestRate": 0.01
+      },
+      "superAu": {
+        "investmentReturn": 0.05,
+        "taxationRate": 0.15
+      },
+      "definedBenefitsAu": {
+        "useInflationRate": true
+      },
+      "sharesAu": {
+        "growthInterestRate": 0.03,
+        "dividendInterestRate": 0.03
+      },
+      "property": {
+        "growthInterestRate": 0.03
+      },
+      "inflation": [
+        {
+          "fromYear": 2024,
+          "inflationRate": 0.01
+        }
+      ],
+      "livingExpenses": [
+        {
+          "fromYear": 2024,
+          "amountInTodaysTerms": 50000
+        }
+      ]
+    },
+    "transfers": []
+  }
+]
