@@ -33,6 +33,9 @@ export class AuBank extends Asset {
     this.history.push({ value: assetConfig.value, year: startingYear, income: 0, transferAmt: 0 })
   }
 
+  /*
+  Note this is not taking into account tax yet
+  */
   calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
     const { value: prevValue, year } = yearData
 
@@ -44,9 +47,11 @@ export class AuBank extends Asset {
 
     const income = (prevValue + transferAmt / 2) * investmentReturn
 
-    const value = prevValue + transferAmt // note does not add income just yet
+    // Note: Does not add income to this asset.  Income from all assets is accumulated and moved to the income bucket
+    const value = prevValue + transferAmt
     const incomeCalc = `(${prevValue} + ${transferAmt}/2) * ${investmentReturn}`
 
+    // Value does not include the income.  Why is this?
     const nextYearData = {
       year: year + 1,
       income: Math.round(income),
