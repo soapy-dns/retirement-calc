@@ -3,10 +3,10 @@ import Anchor from "@/app/ui/components/docs/Anchor"
 
 const DesktopSideMenu: React.FC = () => {
   return (
-    <div className="flex flex-col mt-10 px-4 divide-y divide-primary py-4">
+    <div className="flex flex-col mt-10 divide-y divide-primary divide-dashed">
       {Object.values(documentDetails).map((it, index) => {
         return (
-          <Anchor key={index} href={it.url}>
+          <Anchor key={index} href={it.url} className="leading-8">
             {it.menuText}
           </Anchor>
         )

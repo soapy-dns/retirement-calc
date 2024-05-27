@@ -5,9 +5,8 @@ import "./globals.css"
 import { AppBanner } from "./ui/AppBanner"
 
 export const metadata: Metadata = {
-  title: "The retirement project",
-  description:
-    "Using your current asset values and making estimates for external variables like inflation, your living expenses etc, project your wealth forward to get an idea of how long it will last."
+  title: "Retirement project",
+  description: "Calculate how long your assets will last for."
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

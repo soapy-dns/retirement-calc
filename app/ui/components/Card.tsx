@@ -9,5 +9,5 @@ interface CardProps {
 export const Card: React.FC<CardProps> = ({ children, type }) => {
   const bgColor = getBackgroundColor(type)
 
-  return <div className={`mb-4 border bg-gray-50 p-4 px-8 shadow-md ${bgColor}`}>{children} </div>
+  return <div className={`mb-8 border bg-gray-50 p-4 px-8 shadow-lg ${bgColor}`}>{children} </div>
 }
