@@ -78,7 +78,6 @@ export const CalculatedAssetLineChart: React.FC<Props> = ({ yearRange, graphData
       data: obj.map((it) => it.value)
     }
 
-
     return lineDataset
   })
 
@@ -87,11 +86,10 @@ export const CalculatedAssetLineChart: React.FC<Props> = ({ yearRange, graphData
     datasets: lineDatasets
   }
 
-
   return (
     <>
       <div className="relative bg-white">
-        <div className="w-full h-full">
+        <div className="w-auto min-h-full">
           {/* @ts-ignore */}
           <Line options={options} data={data} plugins={[htmlLegendPlugin]} />
         </div>

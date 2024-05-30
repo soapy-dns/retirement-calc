@@ -9,6 +9,7 @@ import { ErrorDetails } from "@/app/ui/components/ErrorDetails"
 import { Container } from "@/app/ui/components/Container"
 import { ChartType } from "./types"
 import { AssetSplitLineChart } from "./AssetSplitLineChart"
+import { StackedLineChart } from "./StackedLineChart"
 
 interface ChartDisplayProps {
   chartType: ChartType
@@ -35,6 +36,10 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ chartType }) => {
     calculationResults
 
   switch (chartType) {
+    case ChartType.rechart:
+      console.log("stacked line chart")
+      return <StackedLineChart yearRange={yearRange} graphData={calculatedAssetData} />
+
     case ChartType.capitalAssets:
       return <CalculatedAssetLineChart yearRange={yearRange} graphData={calculatedAssetData} />
     case ChartType.capitalAssetsNpv:

@@ -1,6 +1,5 @@
 import { useContext } from "react"
 import { contextConstants } from "./contextConstants"
-// import { currencyOptions, taxResidentOptions } from "./options"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
@@ -22,9 +21,6 @@ export const GeneralContextDisplay: React.FC<Props> = ({ showInfo }) => {
   const { context } = selectedScenario
 
   const { taxResident, currency, au2ukExchangeRate } = context
-
-  // const taxResidentValue = taxResidentOptions.find((it) => it.value === taxResident)?.label
-  // const currencyValue = currencyOptions.find((it) => it.value === currency)?.label
 
   const handleGeneralContextEdit = () => {
     navigation.goTo(AppPath.contextGeneralEdit)

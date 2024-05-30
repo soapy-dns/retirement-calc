@@ -3,5 +3,6 @@ export enum ChartType {
   capitalAssetsNpv = "capitalAssetsNpv",
   income = "income",
   assetSplit = "assetSplit",
-  drawdown = "drawdown"
+  drawdown = "drawdown",
+  rechart = "rechart"
 }

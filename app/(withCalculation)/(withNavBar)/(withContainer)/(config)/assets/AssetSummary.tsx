@@ -11,6 +11,8 @@ import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
 
 import { getAssetDisplayDetails } from "./utils"
 import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
+import { EditButton } from "@/app/ui/components/common/EditButton"
+import { RemoveButton } from "@/app/ui/components/common/RemoveButton"
 
 interface IAssetItemDisplay {
   removeAllowed: boolean
@@ -57,7 +59,14 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
 
         <div className="col-span-3 sm:col-span-2 px-4">
           <div className="mb-4">
-            <h2 className="my-auto text-primary">{name}</h2>
+            {/* <h2 className="my-auto text-primary">{name}</h2> */}
+            <h2 className="flex items-center justify-between text-primary">
+              {name}
+              <div className="flex flex-col items-start">
+                <EditButton onClick={handleEdit} />
+                <RemoveButton onClick={handleRemove} disabled={disabled} />
+              </div>
+            </h2>
           </div>
           <div>
             {hasValidationErrors(asset) && (
@@ -86,7 +95,7 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
               </p>
             )}
 
-            <ButtonGroup>
+            {/* <ButtonGroup>
               <Button buttonType={ButtonType.primary} onClick={handleEdit}>
                 <div className="flex items-center">
                   <PencilSquareIcon className="mx-2 h-6 w-6" />
@@ -99,7 +108,7 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
                   <div>Remove</div>
                 </div>
               </Button>
-            </ButtonGroup>
+            </ButtonGroup> */}
           </div>
         </div>
       </div>
