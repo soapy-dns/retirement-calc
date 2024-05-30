@@ -10,7 +10,7 @@ export default function H2({ id, children }: { id?: string; children?: ReactNode
   if (id) {
     return (
       <Link href={`#${id}`}>
-        <h2 id={id} className="text-primary mb-4 text-xl">
+        <h2 id={id} className="text-primary mt-4 mb-2 text-xl">
           {children}
         </h2>
       </Link>
