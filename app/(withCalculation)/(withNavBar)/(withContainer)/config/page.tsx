@@ -40,7 +40,7 @@ const ConfigPage: React.FC = () => {
         </h1>
       </div>
 
-      <div className="mb-4 flex justify-center">
+      <div className="mb-4">
         <Button buttonType={ButtonType.secondary} onClick={handleAdd}>
           <div className="flex items-center gap-2">
             <PlusCircleIcon className="h-6 w-6" />

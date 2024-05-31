@@ -81,7 +81,7 @@ export const AssetSummary = ({ asset, owners, removeAllowed }: IAssetItemDisplay
             )}
             <p className="flex gap-2">
               <b>Description:</b>
-              {description}
+              <div className="break-words">{description}</div>
             </p>
             {asset.className === "Salary" || asset.className === "AuDefinedBenefits" ? (
               <p className="flex gap-2">
