@@ -1,9 +1,10 @@
 import { PencilSquareIcon } from "@heroicons/react/24/outline"
 import { Card } from "../Card"
 import { Button, ButtonType } from "../common/Button"
+import { ReactNode } from "react"
 
 interface DisplayCardWithEditProps {
-  heading: string
+  heading: string | ReactNode
   handleEdit?: React.MouseEventHandler<HTMLButtonElement>
 
   children: React.ReactNode
@@ -11,17 +12,25 @@ interface DisplayCardWithEditProps {
 export const DisplayCardWithEdit: React.FC<DisplayCardWithEditProps> = ({ heading, handleEdit, children }) => {
   return (
     <Card>
-      <h2 className="flex items-center justify-between text-primary">
-        {heading}
-        {handleEdit && (
-          <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
-            <div className="flex items-center gap-2">
-              <PencilSquareIcon className="mx-2 h-6 w-6" /> <div className="text-base">Edit</div>
-            </div>
-          </Button>
-        )}
-      </h2>
+      {typeof heading === "string" ? (
+        <h2 className="flex items-center justify-between text-primary">{heading}</h2>
+      ) : (
+        heading
+      )}
+
       {children}
+      {handleEdit && (
+        <div className="grid grid-cols-1 md:grid-cols-4">
+          <div className="md:col-start-2 md:col-span-2">
+            <Button buttonType={ButtonType.primary} onClick={handleEdit}>
+              <div className="flex items-center justify-center">
+                <PencilSquareIcon className="mx-2 h-6 w-6" />
+                <div>Edit</div>
+              </div>
+            </Button>
+          </div>
+        </div>
+      )}
     </Card>
   )
 }

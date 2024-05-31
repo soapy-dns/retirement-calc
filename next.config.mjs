@@ -4,7 +4,7 @@ import createMDX from "@next/mdx"
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   // experimental: { TODO: including this gave errors with Link component- commenting for now.
   //   typedRoutes: true

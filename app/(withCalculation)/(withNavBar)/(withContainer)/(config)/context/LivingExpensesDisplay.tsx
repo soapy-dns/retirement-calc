@@ -4,6 +4,7 @@ import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { EditButton } from "@/app/ui/components/common/EditButton"
 import { Table } from "@/app/ui/components/common/Table"
+import { DisplayCardWithEdit } from "@/app/ui/components/form/DisplayCardWithEdit"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { ContextType, useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
@@ -37,17 +38,19 @@ export const LivingExpensesDisplay: React.FC<Props> = ({ showInfo }) => {
     navigation.goTo(AppPath.contextLivingExpensesEdit)
   }
 
+  const heading = (
+    <h2 className="flex items-center justify-between text-primary">
+      <div className="flex gap-2 items-center">
+        Living expenses
+        <button onClick={showInfo}>
+          <InformationCircleIcon className="w-6 h-6" />
+        </button>
+      </div>
+    </h2>
+  )
+
   return (
-    <Card>
-      <h2 className="flex items-center justify-between text-primary">
-        <div className="flex gap-2 items-center">
-          Living expenses
-          <button onClick={showInfo}>
-            <InformationCircleIcon className="w-6 h-6" />
-          </button>
-        </div>
-        <EditButton onClick={handleEdit} />
-      </h2>
+    <DisplayCardWithEdit heading={heading} handleEdit={handleEdit}>
       <div>
         {hasValidationErrors(ContextType.inflation) && (
           <div className="mb-4">
@@ -56,6 +59,6 @@ export const LivingExpensesDisplay: React.FC<Props> = ({ showInfo }) => {
         )}
         <Table caption="Living expenses configuration" headingData={headingData} rowData={rowData} border={false} />
       </div>{" "}
-    </Card>
+    </DisplayCardWithEdit>
   )
 }

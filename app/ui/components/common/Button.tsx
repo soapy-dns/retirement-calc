@@ -33,7 +33,7 @@ export const Button: React.FC<IButton> = ({ buttonType, disabled = false, onClic
       <button
         onClick={handleOnClick}
         disabled={disabled}
-        className="my-4 mx-4 rounded-full focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-opacity-75 focus:ring-primary bg-primary py-1 px-4 shadow-md shadow-primary-darker/50 hover:shadow-primary-darker/25 text-white hover:bg-primary-darker disabled:opacity-40"
+        className="my-4 rounded-full focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-opacity-75 focus:ring-primary bg-primary py-1 px-4 shadow-md shadow-primary-darker/50 hover:shadow-primary-darker/25 text-white hover:bg-primary-darker disabled:opacity-40 display-block w-full"
       >
         {children}
       </button>
@@ -43,7 +43,7 @@ export const Button: React.FC<IButton> = ({ buttonType, disabled = false, onClic
       <button
         onClick={handleOnClick}
         disabled={disabled}
-        className="my-4 mx-4 rounded-full border-2  border-primary  py-1 px-4 text-primary  disabled:opacity-40 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-opacity-75 focus:ring-primary"
+        className="display-block w-full my-4 rounded-full border-2  border-primary  py-1 px-4 text-primary  disabled:opacity-40 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-opacity-75 focus:ring-primary"
       >
         {children}
       </button>
@@ -51,7 +51,11 @@ export const Button: React.FC<IButton> = ({ buttonType, disabled = false, onClic
   } else {
     // This has a different y margin than the other buttons which may not be good
     return (
-      <button onClick={handleOnClick} disabled={disabled} className="mx-4 py-1 text-primary  disabled:opacity-40">
+      <button
+        onClick={handleOnClick}
+        disabled={disabled}
+        className="display-block w-full py-1 text-primary  disabled:opacity-40"
+      >
         {children}
       </button>
     )
