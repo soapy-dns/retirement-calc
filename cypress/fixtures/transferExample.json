@@ -2,7 +2,7 @@
   {
     "id": "K",
     "name": "Transfer example",
-    "description": "blah",
+    "description": "Transfer example - one bank account to another.",
     "assets": [
       {
         "id": "1",
