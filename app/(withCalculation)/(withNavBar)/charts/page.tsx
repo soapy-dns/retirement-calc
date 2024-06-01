@@ -66,6 +66,7 @@ const ChartPage = () => {
           />
         </div>
       </div>
+
       <ChartDisplay chartType={selectedChart} />
     </div>
   )
