@@ -16,7 +16,7 @@ import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
 import { useState, useContext } from "react"
 import { useForm } from "react-hook-form"
-import { contextConstants } from "../../(withNavBar)/(withContainer)/(config)/context/contextConstants"
+import { contextConstants } from "../../(withNavBar)/(forms)/(configEdit)/context/contextConstants"
 import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
 
 // TODO: make this a common utility

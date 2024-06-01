@@ -1,4 +1,4 @@
-import { contextConstants } from "@/app/(withCalculation)/(withNavBar)/(withContainer)/(config)/context/contextConstants"
+import { contextConstants } from "@/app/(withCalculation)/(withNavBar)/(forms)/(configEdit)/context/contextConstants"
 import { useForm } from "react-hook-form"
 import { inflationYearValidationRules } from "../validation/inflationYear"
 import { Button, ButtonType } from "./common/Button"

@@ -37,7 +37,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ chartType }) => {
 
   switch (chartType) {
     case ChartType.rechart:
-      console.log("stacked line chart")
+      // this option was a test of rechart - a lot of work for not much benefit
       return <StackedLineChart yearRange={yearRange} graphData={calculatedAssetData} />
 
     case ChartType.capitalAssets:

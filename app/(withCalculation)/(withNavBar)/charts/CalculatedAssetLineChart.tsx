@@ -20,7 +20,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 export const options = {
   responsive: true,
-  // maintainAspectRatio: false,
+  maintainAspectRatio: false,
   plugins: {
     htmlLegend: {
       // ID of the container to put the legend in
@@ -88,13 +88,14 @@ export const CalculatedAssetLineChart: React.FC<Props> = ({ yearRange, graphData
 
   return (
     <>
-      <div className="relative bg-white">
-        <div className="w-auto min-h-full">
-          {/* @ts-ignore */}
-          <Line options={options} data={data} plugins={[htmlLegendPlugin]} />
-        </div>
+      <div className="relative bg-white w-full h-screen max-h-[50vh]">
+        {/* @ts-ignore */}
+        <Line options={options} data={data} plugins={[htmlLegendPlugin]} />
       </div>
-      <div className="border-0" id="legend-container"></div>
+
+      <div className="mx-auto w-3/4">
+        <div className="" id="legend-container"></div>
+      </div>
     </>
   )
 }
