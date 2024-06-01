@@ -1,0 +1,85 @@
+[
+  {
+    "id": "e0fc55d7-c55a-45fe-90fb-b9dd63a70d50",
+    "name": "Property example",
+    "description": "Property example",
+    "assets": [
+      {
+        "id": "JOINT_AU_BANK",
+        "name": "Bank account",
+        "description": "blah blah",
+        "country": "SC",
+        "className": "AuBank",
+        "value": 1000000,
+        "assetOwners": ["Her", "Him"],
+        "incomeBucket": true,
+        "canDrawdown": true,
+        "drawdown": {
+          "drawdownOrder": 10,
+          "preferredMinAmt": 10000
+        }
+      },
+      {
+        "id": "AU_PROPERTY",
+        "name": "Property",
+        "description": "Property",
+        "className": "AuProperty",
+        "country": "SC",
+        "value": 500000,
+        "assetOwners": ["Her", "Him"],
+        "property": {
+          "isRented": true,
+          "rentalIncomePerMonth": 1000,
+          "rentalExpensesPerMonth": 200
+        }
+      }
+    ],
+    "context": {
+      "taxResident": "AU",
+      "currency": "AU",
+      "owners": ["Him", "Her"],
+      "auBank": {
+        "interestRate": 0.01
+      },
+      "superAu": {
+        "investmentReturn": 0.05
+      },
+      "definedBenefitsAu": {
+        "useInflationRate": true
+      },
+      "sharesAu": {
+        "growthInterestRate": 0.03,
+        "dividendInterestRate": 0.03
+      },
+      "property": {
+        "growthInterestRate": 0.03
+      },
+      "inflation": [
+        {
+          "fromYear": 2024,
+          "inflationRate": 0.04
+        },
+        {
+          "fromYear": 2025,
+          "inflationRate": 0.03
+        }
+      ],
+      "livingExpenses": [
+        {
+          "fromYear": 2024,
+          "amountInTodaysTerms": 50000
+        }
+      ]
+    },
+    "transfers": [
+      {
+        "year": 2026,
+        "from": "AU_PROPERTY",
+        "to": "JOINT_AU_BANK",
+        "migrateAll": true,
+        "costOfTransfer": 50000,
+        "id": "159e3ada-a37a-4f0e-a839-19509dd925f3"
+      }
+    ]
+  }
+]
