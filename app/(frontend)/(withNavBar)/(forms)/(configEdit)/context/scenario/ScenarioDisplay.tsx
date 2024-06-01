@@ -57,7 +57,7 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
       {removeButtonDisabled && (
         <div className="my-4">
           <Alert heading="Note" alertType={AlertType.info}>
-            There is only 1 scenario. It can only be edited (or duplicated) but not removed.
+            There is only 1 scenario. It can only be edited or duplicated but not removed.
           </Alert>
         </div>
       )}
