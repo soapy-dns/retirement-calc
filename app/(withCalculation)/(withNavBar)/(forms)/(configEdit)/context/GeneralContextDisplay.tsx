@@ -1,6 +1,5 @@
 import { useContext } from "react"
 import { contextConstants } from "./contextConstants"
-// import { currencyOptions, taxResidentOptions } from "./options"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
@@ -10,6 +9,7 @@ import { EditButton } from "@/app/ui/components/common/EditButton"
 import { CountryFlag } from "@/app/ui/components/CountryFlag"
 import { FormGroup } from "@/app/ui/components/common/FormGroup"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
+import { DisplayCardWithEdit } from "@/app/ui/components/form/DisplayCardWithEdit"
 
 interface Props {
   showInfo: () => void
@@ -23,25 +23,23 @@ export const GeneralContextDisplay: React.FC<Props> = ({ showInfo }) => {
 
   const { taxResident, currency, au2ukExchangeRate } = context
 
-  // const taxResidentValue = taxResidentOptions.find((it) => it.value === taxResident)?.label
-  // const currencyValue = currencyOptions.find((it) => it.value === currency)?.label
-
-  const handleGeneralContextEdit = () => {
+  const handleEdit = () => {
     navigation.goTo(AppPath.contextGeneralEdit)
   }
 
-  return (
-    <Card>
-      <h2 className="flex items-center justify-between text-primary">
-        <div className="flex gap-2 items-center">
-          Tax and currency
-          <button onClick={showInfo}>
-            <InformationCircleIcon className="w-6 h-6" />
-          </button>
-        </div>
-        <EditButton onClick={handleGeneralContextEdit} />
-      </h2>
+  const heading = (
+    <h2 className="flex items-center justify-between text-primary">
+      <div className="flex gap-2 items-center">
+        Tax and currency
+        <button onClick={showInfo}>
+          <InformationCircleIcon className="w-6 h-6" />
+        </button>
+      </div>
+    </h2>
+  )
 
+  return (
+    <DisplayCardWithEdit heading={heading} handleEdit={handleEdit}>
       <FormGroup
         label={contextConstants.TAX_RESIDENCY.LABEL}
         id="taxResidency"
@@ -98,6 +96,6 @@ export const GeneralContextDisplay: React.FC<Props> = ({ showInfo }) => {
         restrictedCharSet={INTEGERS_ONLY}
         helpText={contextConstants.MAX_YEARS.HELP_TEXT}
       /> */}
-    </Card>
+    </DisplayCardWithEdit>
   )
 }

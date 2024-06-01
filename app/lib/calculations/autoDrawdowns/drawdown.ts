@@ -77,14 +77,14 @@ export const applyAutoDrawdowns = (drawdownContext: IDrawdownContext): number =>
 
   const livingExpenseForYearAmt = getLivingExpensesAmtForYear(year, livingExpenses)
 
-  let totalTaxesAmt = 0
+  let totalIncomeTaxesAmt = 0
   let totalExpensesAmt = 0
   let automatedDrawdownsAmt = 0
 
   // TOTAL EXPENSES FOR THIS YEAR - taxes plus living expenses
-  totalTaxesAmt = getTaxAmtForYear(taxes, year) //all owners
+  totalIncomeTaxesAmt = getTaxAmtForYear(taxes, year) //all owners
   const totalEarningsTaxesAmt = getTaxAmtForYear(earningsTaxes, year)
-  totalExpensesAmt = totalTaxesAmt + livingExpenseForYearAmt + totalEarningsTaxesAmt
+  totalExpensesAmt = livingExpenseForYearAmt + totalIncomeTaxesAmt + totalEarningsTaxesAmt
 
   let remainingAmtToDrawdown = totalExpensesAmt
 
@@ -94,8 +94,8 @@ export const applyAutoDrawdowns = (drawdownContext: IDrawdownContext): number =>
 
     drawdownIteration(drawdownContext, remainingAmtToDrawdown)
 
-    totalTaxesAmt = getTaxAmtForYear(taxes, year) //all owners
-    totalExpensesAmt = totalTaxesAmt + livingExpenseForYearAmt
+    totalIncomeTaxesAmt = getTaxAmtForYear(taxes, year) //all owners
+    totalExpensesAmt = totalIncomeTaxesAmt + livingExpenseForYearAmt
 
     automatedDrawdownsAmt = getDrawdownAmt(automatedDrawdownMap[year])
 
@@ -106,7 +106,7 @@ export const applyAutoDrawdowns = (drawdownContext: IDrawdownContext): number =>
     year,
     value: totalExpensesAmt,
     livingExpenses: livingExpenseForYearAmt,
-    taxes: totalTaxesAmt
+    taxes: totalIncomeTaxesAmt
   })
 
   totalDrawdowns.push({

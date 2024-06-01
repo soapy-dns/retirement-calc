@@ -12,20 +12,22 @@ import {
 } from "chart.js"
 import { Line } from "react-chartjs-2"
 import { graphColors } from "./colorConstants"
-import { AssetData, CapitalAssetGroup } from "@/app/lib/calculations/types"
+import { CapitalAssetGroup } from "@/app/lib/calculations/types"
 import { htmlLegendPlugin } from "./htmlLegendPlugin"
-import { numberFormatter } from "@/app/ui/utils/formatter"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { LegendContainer } from "./LegendContainer"
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend)
 
+const legendContainerId = "legend-container-id"
+
 export const options = {
   responsive: true,
-  // maintainAspectRatio: false,
+  maintainAspectRatio: false,
   plugins: {
     htmlLegend: {
       // ID of the container to put the legend in
-      containerID: "legend-container"
+      containerID: legendContainerId
     },
     legend: {
       display: false
@@ -98,13 +100,23 @@ export const AssetSplitLineChart: React.FC = () => {
 
   return (
     <>
-      <div className="relative bg-white">
-        <div className="w-full h-full">
-          {/* @ts-ignore */}
-          <Line options={options} data={data} plugins={[htmlLegendPlugin]} />
-        </div>
+      <div className="relative bg-white w-full h-screen max-h-[50vh] mx-auto">
+        {/* @ts-ignore */}
+        <Line options={options} data={data} plugins={[htmlLegendPlugin]} />
       </div>
-      <div className="border-0" id="legend-container"></div>
+
+      <LegendContainer legendContainerId={legendContainerId} />
     </>
   )
+  // return (
+  //   <>
+  //     <div className="relative bg-white">
+  //       <div className="w-full h-full">
+  //         {/* @ts-ignore */}
+  //         <Line options={options} data={data} plugins={[htmlLegendPlugin]} />
+  //       </div>
+  //     </div>
+  //     <div className="border-0" id="legend-container"></div>
+  //   </>
+  // )
 }

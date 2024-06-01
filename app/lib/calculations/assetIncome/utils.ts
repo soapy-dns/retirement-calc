@@ -7,8 +7,8 @@ export const calculateTotalAssetIncome = (
   totalIncome: BasicYearData[]
 ) => {
   const totalIncomeFromAssetsAmt = incomeFromAssets.reduce((accum, incomeDetails) => {
-    const taxDetailsForYear = incomeDetails.history.find((it) => it.year === year)
-    const incomeAmt = taxDetailsForYear?.value || 0
+    const yearData = incomeDetails.history.find((it) => it.year === year)
+    const incomeAmt = yearData?.value || 0
     return accum + incomeAmt
   }, 0)
 

@@ -3,12 +3,47 @@ import { documentDetails } from "@/app/docs/documentDetails"
 
 # Calculations
 
-Taking the initial values and <Anchor href={documentDetails.context.url}>context</Anchor> into account, the year's income, expenditure, and any taxes are calculated to determine the state of play for the next year.
+Taking the initial values and <Anchor href={documentDetails.context.url}>context</Anchor> into account,
+the year's income, expenditure, drawdowns, transfers and taxes are calculated to
+determine the state of play for the next year.
 
 This is then repeated for subsequent years.
 
-Often it is necessary to drawdown on assets eg take money from your pension pot, or sell some shares.
-Configuration of <Anchor href={documentDetails.assets.url}>assets</Anchor> is done in such a way to determine what to cash in / drawdown and when.
+## Income
 
-Ultimately the calculation won't be able to work out what to drawdown. In this case the calculation will stop.
-If you want to continue you can configure <Anchor href={documentDetails.transfers.url}>transfers</Anchor>
+Income from assets apart from super, is accumulated and moved to the asset which is the 'income bucket'.
+
+## Expenses
+
+Expenses are calculated as the sum of living expenses, and taxes.
+
+## Drawdowns
+
+If expenses are bigger than income, then it will be necessary to drawdown on assets capital.
+e.g. take money from your pension pot, or sell some shares.
+
+We can automate this (to some extent), by the simple strategy of marking the order in which assets can be drawn down.
+
+For example we might want to drawdown on cash first (it is possible to set a minimum level for the asset),
+then super, then shares. Some assets may not be draw downable until a certain year - eg super assets.
+
+It is possible that some assets while drawdownable will be taxed. This is true for UK pensions / super.
+This means there will be more expenses so more drawdowns will be required.  
+This could almost go on forever, but will stop if less than a certain amount (eg 100),
+and this will be noted as a negative surplus.
+
+It is not possible to automatically drawdown on properties.
+
+Other strategies may be available in the future.
+
+Configuration of the drawdown order is done in the <Anchor href={documentDetails.assets.url}>assets</Anchor> config.
+
+Ultimately the calculation won't be able to work out what to drawdown.
+In this case the calculations will stop.
+If you want to continue you may be able configure <Anchor href={documentDetails.transfers.url}>transfers</Anchor>, eg the sale of a property.
+Note:- if you do sell a property and you then need to rent, your living expenses may go up.
+
+## Transfers
+
+When a <Anchor href={documentDetails.transfers.url}>transfers</Anchor> is set for example from asset A to asset B,
+then interest will be calculated for half the year on asset A and half the year on asset B.

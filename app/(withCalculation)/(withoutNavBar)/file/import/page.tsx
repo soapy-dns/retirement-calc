@@ -45,17 +45,6 @@ export default function ImportPage() {
         const scenarios: IScenario[] = JSON.parse(data)
 
         await importScenarios(scenarios)
-        // if (success) return navigation.goBack()
-        // console.log("should stay on this page")
-        // console.log("calculationResults", calculationResults)
-        // if (calculationResults && "errors" in calculationResults) {
-        //   const { errors = [{ code: "custom", message: "test msg", path: ["assets", 3, "something"] }] } =
-        //     calculationResults
-        //   console.log("errors>>>>>>>", errors)
-        //   setErrorsToFormat(errors)
-        //   // calculation has been done, so entire app is refreshed and modal is set back to not shown, as are the errors
-        //   setShowModal(true)
-        // }
       } catch (e) {
         throw new Error("Error importing file")
       }
@@ -79,7 +68,7 @@ export default function ImportPage() {
           <input
             id="file"
             accept="application/json"
-            className="border-2 file:bg-primary-lighter file:border-0 file:text-white"
+            className="border-2 file:bg-primary file:border-0 file:text-white"
             name="scenarioFile"
             type="file"
             onChange={changeHandler}

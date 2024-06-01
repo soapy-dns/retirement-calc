@@ -18,6 +18,10 @@ const ChartPage = () => {
       value: "capitalAssetsNpv",
       label: "Capital Assets (today's money)"
     },
+    // {
+    //   value: "rechart",
+    //   label: "Rechart - Capital Assets (today's money)"
+    // },
     {
       value: "income",
       label: "Income (today's money)"
@@ -50,21 +54,20 @@ const ChartPage = () => {
   return (
     <div className="my-24">
       <div className="mx-auto h-1/2 w-3/4">
-        <div className="border border-gray=500 my-8">
-          <div className="flex justify-center text-primary">
-            <Select
-              id="selectChart"
-              name="selectChart"
-              onChange={onChange}
-              isError={false}
-              value={selectedChart}
-              options={options}
-              allowsNull={false}
-            />
-          </div>
-          <ChartDisplay chartType={selectedChart} />
+        <div className="flex justify-center text-primary">
+          <Select
+            id="selectChart"
+            name="selectChart"
+            onChange={onChange}
+            isError={false}
+            value={selectedChart}
+            options={options}
+            allowsNull={false}
+          />
         </div>
       </div>
+
+      <ChartDisplay chartType={selectedChart} />
     </div>
   )
 }

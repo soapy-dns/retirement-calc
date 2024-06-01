@@ -15,16 +15,19 @@ import { graphColors } from "./colorConstants"
 import { AssetData } from "@/app/lib/calculations/types"
 import { htmlLegendPlugin } from "./htmlLegendPlugin"
 import { numberFormatter } from "@/app/ui/utils/formatter"
+import { LegendContainer } from "./LegendContainer"
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend)
 
+const legendContainerId = "legend-container-id"
+
 export const options = {
   responsive: true,
-  // maintainAspectRatio: false,
+  maintainAspectRatio: false,
   plugins: {
     htmlLegend: {
       // ID of the container to put the legend in
-      containerID: "legend-container"
+      containerID: legendContainerId
     },
     legend: {
       display: false
@@ -78,7 +81,6 @@ export const CalculatedAssetLineChart: React.FC<Props> = ({ yearRange, graphData
       data: obj.map((it) => it.value)
     }
 
-
     return lineDataset
   })
 
@@ -87,16 +89,14 @@ export const CalculatedAssetLineChart: React.FC<Props> = ({ yearRange, graphData
     datasets: lineDatasets
   }
 
-
   return (
     <>
-      <div className="relative bg-white">
-        <div className="w-full h-full">
-          {/* @ts-ignore */}
-          <Line options={options} data={data} plugins={[htmlLegendPlugin]} />
-        </div>
+      <div className="relative bg-white w-full h-screen max-h-[50vh]">
+        {/* @ts-ignore */}
+        <Line options={options} data={data} plugins={[htmlLegendPlugin]} />
       </div>
-      <div className="border-0" id="legend-container"></div>
+
+      <LegendContainer legendContainerId={legendContainerId} />
     </>
   )
 }

@@ -56,7 +56,8 @@ export class AuSuper extends Asset {
       year: year + 1,
       transferAmt,
       value: Math.round(value),
-      income: Math.round(income) //TODO: for fixed benefit test
+      income: Math.round(income), //TODO: for fixed benefit test
+      taxOnIncome: Math.round(taxOnIncome) // Is tax always 15% irrespective?
     }
 
     this.history.push(nextYearData)
@@ -64,6 +65,6 @@ export class AuSuper extends Asset {
   }
 
   getAssetClass = () => {
-    return AssetGroup.super
+    return AssetGroup.super // TODO: super is not a group.  It can be invested in cash or shares.
   }
 }
