@@ -22,7 +22,8 @@ export const TransfersTab: React.FC = () => {
       <p className="mx-4">
         Assets bought or sold <span className="text-primary">(transfers)</span> in the period can be defined here.
       </p>
-      <div className="my-4 flex justify-center">
+      {/* <div className="my-4 flex justify-center"> */}
+      <div className="mx-auto my-6 w-3/4">
         <Button buttonType={ButtonType.secondary} onClick={handleAdd}>
           <div className="flex items-center gap-2">
             <PlusCircleIcon className="h-6 w-6" />

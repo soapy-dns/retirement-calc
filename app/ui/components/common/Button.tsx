@@ -33,7 +33,7 @@ export const Button: React.FC<IButton> = ({ buttonType, disabled = false, onClic
       <button
         onClick={handleOnClick}
         disabled={disabled}
-        className="my-4 mx-4 rounded-full focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-opacity-75 focus:ring-primary bg-primary py-1 px-4 shadow-md shadow-primary-darker/50 hover:shadow-primary-darker/25 text-white hover:bg-primary-darker disabled:opacity-40 display-block w-full flex justify-center"
+        className="my-4 rounded-full focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-opacity-75 focus:ring-primary bg-primary py-1 px-4 shadow-md shadow-primary-darker/50 hover:shadow-primary-darker/25 text-white hover:bg-primary-darker disabled:opacity-40 display-block w-full flex justify-center"
       >
         {children}
       </button>
@@ -43,7 +43,7 @@ export const Button: React.FC<IButton> = ({ buttonType, disabled = false, onClic
       <button
         onClick={handleOnClick}
         disabled={disabled}
-        className="display-block w-full my-4 mx-4 rounded-full border-2  border-primary  py-1 px-4 text-primary  disabled:opacity-40 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-opacity-75 focus:ring-primary flex flex-row justify-center"
+        className="display-block w-full my-4 rounded-full border-2  border-primary  py-1 px-4 text-primary  disabled:opacity-40 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-opacity-75 focus:ring-primary flex flex-row justify-center"
       >
         {children}
       </button>

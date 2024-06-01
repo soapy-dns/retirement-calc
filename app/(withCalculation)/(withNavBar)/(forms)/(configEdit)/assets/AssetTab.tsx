@@ -27,7 +27,8 @@ export const AssetTab = () => {
         Resources <span className="text-primary">(assets)</span> used to hold or create economic value.
       </p>
 
-      <div className="my-4 flex justify-center">
+      {/* <div className="my-4 flex justify-center"> */}
+      <div className="mx-auto my-6 w-3/4">
         <Button buttonType={ButtonType.secondary} onClick={handleAdd}>
           <div className="flex items-center gap-2">
             <PlusCircleIcon className="h-6 w-6" />

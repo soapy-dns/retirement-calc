@@ -41,16 +41,16 @@ const ConfigPage: React.FC = () => {
       </div>
 
       <div className="mb-4">
+        <ScenarioDisplay />
+      </div>
+
+      <div className="mx-auto mb-16 w-3/4">
         <Button buttonType={ButtonType.secondary} onClick={handleAdd}>
           <div className="flex items-center gap-2">
             <PlusCircleIcon className="h-6 w-6" />
             Duplicate this scenario
           </div>
         </Button>
-      </div>
-
-      <div className="mb-12">
-        <ScenarioDisplay />
       </div>
 
       <ConfigNavBar />
