@@ -1,4 +1,8 @@
 describe("Rental property sold after a couple of years", () => {
+  before(() => {
+    const now = new Date(2024, 0, 1)
+    cy.clock(now)
+  })
   beforeEach(() => {
     cy.visit("sheet")
     cy.importFile("cypress/fixtures/propertyWithRentalSold.json")

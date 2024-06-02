@@ -49,3 +49,27 @@ npm install broken-link-checker -g
 blc http://localhost:3000/docs/about -ro
 
 Doesn't check header links
+
+## Setting up chrome for cypress on wsl2
+
+https://scottspence.com/posts/use-chrome-in-ubuntu-wsl
+
+### Update dependancies
+
+sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove
+
+### get chrome
+
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+### install chrome
+
+sudo apt -y install ./google-chrome-stable_current_amd64.deb
+
+### check
+
+google-chrome –version
+
+### Check it starts
+
+google-chrome

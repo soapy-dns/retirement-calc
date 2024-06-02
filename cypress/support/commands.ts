@@ -12,15 +12,19 @@
 //
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
+// NOTE: USING FORCE: TRUE SO THAT IF A TOAST APPEARS THE FUNCTIONALITY STILL WORKS
 Cypress.Commands.add("importFile", (fileName: string) => {
   cy.visit("file/import")
+  cy.get("input[type=file]").click({ force: true })
+
   cy.get("input[type=file]").as("InputFile")
 
-  cy.get("@InputFile").click()
+  cy.get("@InputFile").click({ force: true })
 
-  cy.get("@InputFile").selectFile(fileName)
+  cy.get("@InputFile").selectFile(fileName, { force: true })
 
-  cy.contains("Upload").click()
+  cy.contains("Upload").click({ force: true })
+  cy.wait(4000)
 })
 
 //
