@@ -33,16 +33,17 @@ export const DefinedBenefitsAuDisplay: React.FunctionComponent = (props) => {
         <TextDisplayField
           label={contextConstants.USE_INFLATION_RATE.LABEL}
           helpText={contextConstants.USE_INFLATION_RATE.HELP_TEXT}
-          value={definedBenefitsAu.useInflationRate ? "Yes" : "No"}
+          value="Yes"
+          // value={definedBenefitsAu.useInflationRate ? "Yes..." : "No"}
         />
 
-        {!definedBenefitsAu.useInflationRate && (
+        {/* {!definedBenefitsAu.useInflationRate && (
           <TextDisplayField
             label={contextConstants.DEFINED_BENEFITS_INDEXATION.LABEL}
             helpText={contextConstants.DEFINED_BENEFITS_INDEXATION.HELP_TEXT}
             value={definedBenefitsAu?.indexationRate ? definedBenefitsAu?.indexationRate * 100 : "-"}
           />
-        )}
+        )} */}
       </>
     </DisplayCardWithEdit>
   )

@@ -47,7 +47,7 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
       <div className="mb-8">
         <ButtonGroup>
           <Button buttonType={ButtonType.tertiary} onClick={handleAdd}>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-center gap-2">
               <PlusCircleIcon className="h-6 w-6" />
               Copy this scenario
             </div>

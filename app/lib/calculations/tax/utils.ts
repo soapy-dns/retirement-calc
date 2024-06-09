@@ -152,6 +152,18 @@ export const getPercDrawdownTaxable = (taxResident: Country, assetCountry: Count
   return 100
 }
 
+export const isIndexedDefinedBenefit = (
+  taxResident: Country,
+  assetCountry: Country = "AU",
+  isStatePension: boolean
+): boolean => {
+  if (taxResident === "AU" && assetCountry === "SC" && isStatePension) {
+    return false
+  } else {
+    return true
+  }
+}
+
 // TODO: this function to Asset?
 export const getPercIncomeTaxable = (taxResident: Country, assetCountry: Country = "AU", assetClass: AssetGroup) => {
   // maybe for things like ISAs?

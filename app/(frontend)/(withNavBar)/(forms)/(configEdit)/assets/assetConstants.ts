@@ -41,6 +41,10 @@ export const assetConstants = {
     LABEL: "Income",
     HELP_TEXT: "The gross (prior to tax) income amount per year.  This is assumed to increase in line with inflation."
   },
+  IS_STATE_PENSION: {
+    LABEL: "Is state pension",
+    HELP_TEXT: "Yes if this is a state pension, No if it is a personal pension."
+  },
   DESCRIPTION: {
     LABEL: "Description",
     HELP_TEXT: "A meaningful description of the asset."

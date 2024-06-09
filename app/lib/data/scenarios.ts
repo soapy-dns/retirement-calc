@@ -31,6 +31,7 @@ export const scenarios: IScenario[] = [
         description: "Defined benefits",
         country: "AU",
         className: "AuDefinedBenefits",
+        isStatePension: false,
         income: {
           incomeAmt: 10000
         },
@@ -158,6 +159,7 @@ export const scenarios: IScenario[] = [
         description: "Defined benefits",
         country: "SC",
         className: "AuDefinedBenefits",
+        isStatePension: false,
         income: {
           incomeAmt: 10000
         },

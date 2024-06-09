@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 import { drawdownOrderValidator, incomeValidator, propertyValidator } from "./validation"
-import { IsOptionalValidYear } from "./schemaUtils"
+import { IsOptionalValidYear, YesNoSchema } from "./schemaUtils"
 
 export const AssetClassEnum = z.enum(["AuBank", "AuSuper", "AuProperty", "Salary", "AuDefinedBenefits", "AuShares"])
 export type AssetClass = z.infer<typeof AssetClassEnum>
@@ -72,7 +72,8 @@ const SalarySchema = IncomeAssetSchema.extend({
 })
 
 const DefinedBenefitsSchema = IncomeAssetSchema.extend({
-  className: z.literal("AuDefinedBenefits")
+  className: z.literal("AuDefinedBenefits"),
+  isStatePension: z.boolean()
 })
 export type DefinedBenefits = z.infer<typeof DefinedBenefitsSchema>
 

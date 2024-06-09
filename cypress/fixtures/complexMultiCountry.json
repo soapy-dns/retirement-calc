@@ -25,6 +25,7 @@
         "description": "Australian super - defined benefits",
         "country": "AU",
         "className": "AuDefinedBenefits",
+        "isStatePension": false,
         "income": {
           "incomeAmt": 3000
         },
@@ -63,6 +64,7 @@
         "description": "UK super - defined benefits",
         "country": "SC",
         "className": "AuDefinedBenefits",
+        "isStatePension": false,
         "assetOwners": ["Her"],
         "income": {
           "incomeAmt": 1000

@@ -14,14 +14,22 @@ import {
   PropertyAsset,
   BaseAsset,
   LiquidAsset,
-  CashAsset
+  CashAsset,
+  DefinedBenefits
 } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(frontend)/(withoutNavBar)/components/EditPageLayout"
 import { useAsset } from "@/app/ui/hooks/useAsset"
 import { useOwner } from "@/app/ui/hooks/useOwner"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
-import { isCapitalAsset, isCashAsset, isIncomeAsset, isLiquidAsset, isPropertyAsset } from "@/app/ui/utils"
+import {
+  isCapitalAsset,
+  isCashAsset,
+  isDefinedBenefitAsset,
+  isIncomeAsset,
+  isLiquidAsset,
+  isPropertyAsset
+} from "@/app/ui/utils"
 import { YesNo } from "../../types"
 import {
   CountryEnum,
@@ -56,7 +64,8 @@ const FormSchema = z
     incomeAmt: IsFormNumberOpt, // value and income should be mutually exclusive
     incomeStartYear: IsOptionalValidYear,
     incomeEndYear: IsOptionalValidYear,
-    rateVariation: IsFormNumberOpt
+    rateVariation: IsFormNumberOpt,
+    isStatePension: YesNoSchema.optional()
   })
   .refine(
     ({ assetType, value }) => {
@@ -136,7 +145,8 @@ const getAssetConfigFromForm = (data: FormDataType): Omit<IAsset, "id"> => {
     incomeAmt,
     incomeStartYear,
     incomeEndYear,
-    rateVariation
+    rateVariation,
+    isStatePension
   } = data
 
   // strings should already be coerced into strings by zod
@@ -194,6 +204,11 @@ const getAssetConfigFromForm = (data: FormDataType): Omit<IAsset, "id"> => {
     cashAssetConfig.incomeBucket = incomeBucket === "Y"
   }
 
+  if (isDefinedBenefitAsset(assetType)) {
+    const definedBenefitsConfig = assetConfig as DefinedBenefits
+    definedBenefitsConfig.isStatePension = isStatePension === "Y"
+  }
+
   return assetConfig
 }
 
@@ -228,7 +243,6 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   }
 
   let incomeAmt, incomeStartYear, incomeEndYear
-
   if (className && isIncomeAsset(className)) {
     const { income } = assetConfig as IncomeAsset
     ;({ incomeAmt, incomeStartYear, incomeEndYear } = income)
@@ -250,6 +264,12 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     incomeAccumulated = cashAssetConfig.incomeBucket ? "Y" : "N"
   }
 
+  let isStatePension: YesNo | undefined
+  if (className && isDefinedBenefitAsset(className)) {
+    const definedBenefitsConfig = assetConfig as DefinedBenefits
+    isStatePension = definedBenefitsConfig.isStatePension ? "Y" : "N"
+  }
+
   const canDrawdownValue = canDrawdown ? "Y" : "N"
   const isRentedString = isRented ? "Y" : "N"
   const {
@@ -259,6 +279,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     register,
     formState: { errors, isDirty }
   } = useForm<FormDataType>({
+    // TODO: this is a bit of a mess
     defaultValues: {
       name,
       description: description,
@@ -279,7 +300,8 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       incomeAmt,
       incomeStartYear,
       incomeEndYear,
-      rateVariation
+      rateVariation,
+      isStatePension
     },
     resolver: zodResolver(FormSchema)
   })
@@ -324,7 +346,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
       handleBack={handleBack}
       handleCancel={handleBack}
     >
-      {/* {errors && <pre>{JSON.stringify(errors, null, 4)}</pre>} */}
+      {errors && <pre>{JSON.stringify(errors, null, 4)}</pre>}
       {assetConfig && hasTransfers(assetConfig) && (
         <Alert alertType={AlertType.warning} heading="Warning">
           This asset has transfers. It is not possible to remove this asset, and altering its initial value may have
