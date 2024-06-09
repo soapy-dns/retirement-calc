@@ -12,6 +12,7 @@ import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { FunctionComponent, useContext } from "react"
 import { transferConstants } from "./transferConstants"
 import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
+import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 
 interface Props {
   transfers: Transfer[]
@@ -19,10 +20,11 @@ interface Props {
 export const TransferDisplay: FunctionComponent<Props> = ({ transfers }) => {
   const navigation = useNavigation()
   const { removeTransfer } = useTransfer()
-  const { getSelectedScenarioAssetsOptions } = useContext(ScenarioContext)
+  const { getSelectedScenarioAssetsOptions, selectedScenario } = useContext(ScenarioContext)
   const { getCurrency } = useContextConfig()
   const currencyCountry = getCurrency()
   const currencyFormatter = getCurrencyFormatter(currencyCountry)
+  const { asAtYear } = selectedScenario
 
   const handleEdit = (id: string) => {
     navigation.goTo(AppPath.transferEdit, { id })
@@ -62,20 +64,23 @@ export const TransferDisplay: FunctionComponent<Props> = ({ transfers }) => {
               label={transferConstants.TRANSFER_COST.LABEL}
               value={costOfTransfer ? currencyFormatter.format(costOfTransfer) : ""}
             />
-            <ButtonGroup>
-              <Button buttonType={ButtonType.primary} onClick={(e) => handleEdit(id)}>
-                <div className="flex items-center justify-center">
-                  <PencilSquareIcon className="mx-2 h-6 w-6" />
-                  <div>Edit</div>
-                </div>
-              </Button>
-              <Button buttonType={ButtonType.secondary} onClick={() => handleRemove(id)}>
-                <div className="flex items-center justify-center">
-                  <TrashIcon className="mx-2 h-6 w-6" />
-                  <div>Remove</div>
-                </div>
-              </Button>
-            </ButtonGroup>
+
+            {asAtYear >= getCurrentYear() && (
+              <ButtonGroup>
+                <Button buttonType={ButtonType.primary} onClick={(e) => handleEdit(id)}>
+                  <div className="flex items-center justify-center">
+                    <PencilSquareIcon className="mx-2 h-6 w-6" />
+                    <div>Edit</div>
+                  </div>
+                </Button>
+                <Button buttonType={ButtonType.secondary} onClick={() => handleRemove(id)}>
+                  <div className="flex items-center justify-center">
+                    <TrashIcon className="mx-2 h-6 w-6" />
+                    <div>Remove</div>
+                  </div>
+                </Button>
+              </ButtonGroup>
+            )}
           </Card>
         )
       })}

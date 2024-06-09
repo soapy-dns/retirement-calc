@@ -6,6 +6,7 @@ import { PlusCircleIcon } from "@heroicons/react/24/outline"
 import { useContext } from "react"
 
 import { AssetSummary } from "./AssetSummary"
+import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 
 export const AssetTab = () => {
   const navigation = useNavigation()
@@ -13,7 +14,7 @@ export const AssetTab = () => {
   const { selectedScenario } = useContext(ScenarioContext)
   if (!selectedScenario) return null
 
-  const { assets, context } = selectedScenario
+  const { assets, context, asAtYear } = selectedScenario
 
   const { owners } = context
 
@@ -27,15 +28,16 @@ export const AssetTab = () => {
         Resources <span className="text-primary">(assets)</span> used to hold or create economic value.
       </p>
 
-      {/* <div className="my-4 flex justify-center"> */}
-      <div className="mx-auto my-6 w-3/4">
-        <Button buttonType={ButtonType.secondary} onClick={handleAdd}>
-          <div className="flex items-center gap-2">
-            <PlusCircleIcon className="h-6 w-6" />
-            Add another asset
-          </div>
-        </Button>
-      </div>
+      {asAtYear >= getCurrentYear() && (
+        <div className="mx-auto my-6 w-3/4">
+          <Button buttonType={ButtonType.secondary} onClick={handleAdd}>
+            <div className="flex items-center gap-2">
+              <PlusCircleIcon className="h-6 w-6" />
+              Add another asset
+            </div>
+          </Button>
+        </div>
+      )}
 
       {assets.map((asset, index) => {
         return (

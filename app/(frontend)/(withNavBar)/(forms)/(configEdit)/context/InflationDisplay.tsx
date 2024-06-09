@@ -1,3 +1,4 @@
+import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { Card } from "@/app/ui/components/Card"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
@@ -31,6 +32,8 @@ export const InflationDisplay: React.FC<Props> = ({ showInfo }) => {
     navigation.goTo(AppPath.contextInflationEdit)
   }
 
+  const handleEditFn = selectedScenario.asAtYear >= getCurrentYear() ? handleEdit : undefined
+
   const heading = (
     <h2 className="flex items-center justify-between text-primary">
       <div className="flex gap-2 items-center">
@@ -43,7 +46,7 @@ export const InflationDisplay: React.FC<Props> = ({ showInfo }) => {
   )
 
   return (
-    <DisplayCardWithEdit heading={heading} handleEdit={handleEdit}>
+    <DisplayCardWithEdit heading={heading} handleEdit={handleEditFn}>
       <div>
         {hasValidationErrors(ContextType.inflation) && (
           <div className="mb-4">

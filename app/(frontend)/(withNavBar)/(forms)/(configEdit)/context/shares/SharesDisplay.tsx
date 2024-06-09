@@ -7,22 +7,24 @@ import * as React from "react"
 import { contextConstants } from "../contextConstants"
 import { ContextType, useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
+import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 
 export const SharesDisplay: React.FunctionComponent = (props) => {
   const heading = "Shares"
   const navigation = useNavigation()
   const { hasValidationErrors } = useContextConfig()
+  const { selectedScenario } = React.useContext(ScenarioContext)
 
   const handleEdit = () => {
     navigation.goTo(AppPath.contextSharesEdit)
   }
 
-  const { selectedScenario } = React.useContext(ScenarioContext)
-  const { context } = selectedScenario
+  const { context, asAtYear } = selectedScenario
   const { sharesAu } = context
+  const handleEditFn = asAtYear >= getCurrentYear() ? handleEdit : undefined
 
   return (
-    <DisplayCardWithEdit heading={heading} handleEdit={handleEdit}>
+    <DisplayCardWithEdit heading={heading} handleEdit={handleEditFn}>
       {hasValidationErrors(ContextType.shares) && (
         <div className="mb-4">
           <Alert alertType={AlertType.error} heading="Has configuration errors" />

@@ -6,9 +6,10 @@ import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
-import { PencilSquareIcon, PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
+import { LockClosedIcon, PencilSquareIcon, PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { scenarioConstants } from "./scenarioConstants"
 import { ButtonGroup } from "@/app/ui/components/common/ButtonGroup"
+import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 
 // TODO: common card component - buttons top right or at the bottom
 
@@ -64,6 +65,17 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
         <div className="my-4">
           <Alert heading="Note" alertType={AlertType.info}>
             There is only 1 scenario. Therefore this scanario can only be edited or duplicated but not removed.
+          </Alert>
+        </div>
+      )}
+
+      {selectedScenario.asAtYear < getCurrentYear() && (
+        <div className="my-4">
+          <Alert alertType={AlertType.info}>
+            <div className="flex gap-4">
+              <LockClosedIcon className="w-6 h-6 text-primary" /> This scenario has an &apos;As at year&apos; in the
+              past. It is therefore locked to further changes.
+            </div>
           </Alert>
         </div>
       )}

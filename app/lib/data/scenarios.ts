@@ -1,11 +1,14 @@
+import { getCurrentYear } from "../calculations/utils/getCurrentYear"
 import { IAsset, IScenario } from "./schema/config"
+
+const currentYear = getCurrentYear()
 
 export const scenarios: IScenario[] = [
   {
     id: "A",
     name: "Australian example",
     description: "Example with all Australian asset types",
-    asAtYear: 2024,
+    asAtYear: currentYear,
     assets: [
       {
         id: "JOINT_AU_BANK",
@@ -69,7 +72,7 @@ export const scenarios: IScenario[] = [
         canDrawdown: true,
         drawdown: {
           drawdownOrder: 50,
-          drawdownFrom: 2026
+          drawdownFrom: currentYear + 2
         }
       },
       {
@@ -80,7 +83,7 @@ export const scenarios: IScenario[] = [
         assetOwners: ["Him"],
         income: {
           incomeAmt: 100000,
-          incomeEndYear: 2030
+          incomeEndYear: currentYear + 6
         },
         id: "7bf4c27d-9a73-49cd-9f5d-368269174f6a"
       }
@@ -107,21 +110,21 @@ export const scenarios: IScenario[] = [
       },
       inflation: [
         {
-          fromYear: 2024,
+          fromYear: currentYear,
           inflationRate: 0.04
         },
         {
-          fromYear: 2025,
+          fromYear: currentYear + 1,
           inflationRate: 0.03
         }
       ],
       livingExpenses: [
         {
-          fromYear: 2024,
+          fromYear: currentYear,
           amountInTodaysTerms: 80000
         },
         {
-          fromYear: 2038,
+          fromYear: currentYear + 14,
           amountInTodaysTerms: 50000
         }
       ]
@@ -132,7 +135,7 @@ export const scenarios: IScenario[] = [
     id: "e0fc55d7-c55a-45fe-90fb-b9dd63a70d50",
     name: "Scottish example",
     description: "Scottish example",
-    asAtYear: 2024,
+    asAtYear: currentYear,
     assets: [
       {
         id: "JOINT_AU_BANK",
@@ -196,7 +199,7 @@ export const scenarios: IScenario[] = [
         canDrawdown: true,
         drawdown: {
           drawdownOrder: 50,
-          drawdownFrom: 2026
+          drawdownFrom: currentYear + 2
         }
       },
       {
@@ -207,7 +210,7 @@ export const scenarios: IScenario[] = [
         assetOwners: ["Him"],
         income: {
           incomeAmt: 100000,
-          incomeEndYear: 2030
+          incomeEndYear: currentYear + 6
         },
         id: "7bf4c27d-9a73-49cd-9f5d-368269174f6a"
       }
@@ -234,21 +237,21 @@ export const scenarios: IScenario[] = [
       },
       inflation: [
         {
-          fromYear: 2024,
+          fromYear: currentYear,
           inflationRate: 0.04
         },
         {
-          fromYear: 2025,
+          fromYear: currentYear + 1,
           inflationRate: 0.03
         }
       ],
       livingExpenses: [
         {
-          fromYear: 2024,
+          fromYear: currentYear,
           amountInTodaysTerms: 80000
         },
         {
-          fromYear: 2038,
+          fromYear: currentYear + 14,
           amountInTodaysTerms: 50000
         }
       ]

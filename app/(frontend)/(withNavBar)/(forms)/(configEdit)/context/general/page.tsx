@@ -8,9 +8,9 @@ import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
-import GeneralContextForm from "./GeneralContextForm"
 import { CountryEnum, IsFormNumberOpt } from "@/app/lib/data/schema/config/schemaUtils"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
+import GeneralContextForm from "../GeneralContextForm"
 
 const FormSchema = z
   .object({
@@ -83,6 +83,7 @@ const GeneralContextEditPage: React.FC = () => {
     >
       {/* @ts-ignore */}
       <GeneralContextForm control={control} taxResident={taxResident} currency={currency} />
+
       <ChangesNotSavedModal
         showModal={showModal}
         handleCancel={() => setShowModal(false)}

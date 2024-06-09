@@ -6,12 +6,13 @@ import { PlusCircleIcon } from "@heroicons/react/24/outline"
 import { useContext } from "react"
 
 import { TransferDisplay } from "./TransferDisplay"
+import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 
 export const TransfersTab: React.FC = () => {
   const { selectedScenario } = useContext(ScenarioContext)
   const navigation = useNavigation()
 
-  const { transfers } = selectedScenario
+  const { transfers, asAtYear } = selectedScenario
 
   const handleAdd = () => {
     navigation.goTo(AppPath.transferAdd)
@@ -23,14 +24,16 @@ export const TransfersTab: React.FC = () => {
         Assets bought or sold <span className="text-primary">(transfers)</span> in the period can be defined here.
       </p>
       {/* <div className="my-4 flex justify-center"> */}
-      <div className="mx-auto my-6 w-3/4">
-        <Button buttonType={ButtonType.secondary} onClick={handleAdd}>
-          <div className="flex items-center gap-2">
-            <PlusCircleIcon className="h-6 w-6" />
-            Add another transfer
-          </div>
-        </Button>
-      </div>
+      {asAtYear >= getCurrentYear() && (
+        <div className="mx-auto my-6 w-3/4">
+          <Button buttonType={ButtonType.secondary} onClick={handleAdd}>
+            <div className="flex items-center gap-2">
+              <PlusCircleIcon className="h-6 w-6" />
+              Add another transfer
+            </div>
+          </Button>
+        </div>
+      )}
 
       {!transfers || transfers.length === 0 ? (
         <div>No transfers exist.</div>

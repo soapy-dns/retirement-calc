@@ -5,9 +5,9 @@ import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
 import * as React from "react"
 
-import { contextConstants } from "../contextConstants"
 import { ContextType, useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
+import { contextConstants } from "./contextConstants"
 
 export const DefinedBenefitsAuDisplay: React.FunctionComponent = (props) => {
   const heading = "Defined benefits pension"

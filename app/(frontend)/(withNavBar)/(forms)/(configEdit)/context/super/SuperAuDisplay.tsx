@@ -3,26 +3,28 @@ import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
-import * as React from "react"
 import { contextConstants } from "../contextConstants"
 import { ContextType, useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
+import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
+import { useContext } from "react"
 
 export const SuperAuDisplay: React.FunctionComponent = (props) => {
   const heading = "Super"
   const navigation = useNavigation()
   const { hasValidationErrors } = useContextConfig()
+  const { selectedScenario } = useContext(ScenarioContext)
 
   const handleEdit = () => {
     navigation.goTo(AppPath.contextSuperEdit)
   }
+  const handleEditFn = selectedScenario.asAtYear >= getCurrentYear() ? handleEdit : undefined
 
-  const { selectedScenario } = React.useContext(ScenarioContext)
   const { context } = selectedScenario
   const { superAu } = context
 
   return (
-    <DisplayCardWithEdit heading={heading} handleEdit={handleEdit}>
+    <DisplayCardWithEdit heading={heading} handleEdit={handleEditFn}>
       {hasValidationErrors(ContextType.super) && (
         <div className="mb-4">
           <Alert alertType={AlertType.error} heading="Has configuration errors" />
@@ -34,7 +36,6 @@ export const SuperAuDisplay: React.FunctionComponent = (props) => {
         value={superAu ? (superAu?.investmentReturn * 100).toFixed(2) : "-"}
         suffix="%"
       />
-
     </DisplayCardWithEdit>
   )
 }
