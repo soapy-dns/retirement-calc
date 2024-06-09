@@ -81,7 +81,7 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
       )}
 
       <TextDisplayField label={scenarioConstants.NAME.LABEL} helpText={scenarioConstants.NAME.HELP_TEXT} value={name} />
-      <EditButton />
+      {asAtYear === getCurrentYear() && <EditButton />}
       {/* <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
         <div className="flex items-center justify-center gap-2">
           <PencilSquareIcon className="h-6 w-6" />
@@ -94,7 +94,7 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
         helpText={scenarioConstants.DESCRIPTION.HELP_TEXT}
         value={description || "n/a"}
       />
-      <EditButton />
+      {asAtYear === getCurrentYear() && <EditButton />}
 
       <TextDisplayField
         label={scenarioConstants.AS_AT_YEAR.LABEL}
