@@ -86,14 +86,14 @@ export default function ScenarioPage({ params }: { params: { id: string } }) {
           label={scenarioConstants.DESCRIPTION.LABEL}
           helpText={scenarioConstants.DESCRIPTION.HELP_TEXT}
         />
-        <InputQuestion
+        {/* <InputQuestion
           id="asAtYear"
           control={control}
           label={scenarioConstants.AS_AT_YEAR.LABEL}
           restrictedCharSet={ALPHA_NUMERIC}
           helpText={scenarioConstants.AS_AT_YEAR.HELP_TEXT}
           disabled={true}
-        />
+        /> */}
       </form>
     </EditPageLayout>
   )
