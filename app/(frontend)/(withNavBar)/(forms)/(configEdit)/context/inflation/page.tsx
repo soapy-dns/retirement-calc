@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { ContextConfig } from "@/app/lib/data/schema/config"
 import { InputField } from "@/app/ui/components/form/InputField"
-import { inflationRateValidationRules, inflationYearValidationRules } from "@/app/ui/validation/inflationYear"
+// import { inflationRateValidationRules, inflationYearValidationRules } from "@/app/ui/validation/inflationYear"
 import { DECIMALS_ONLY, INTEGERS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ValidationError } from "@/app/ui/components/common/ValidationError"
@@ -18,7 +18,7 @@ import { GenericModal } from "@/app/ui/components/modals/GenericModal"
 import { YearValue } from "@/app/ui/components/YearValue"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
-import { FormDataType, FormSchema } from "./types"
+import { FormDataType, getFormSchema } from "./types"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
 
 const InflationEditPage: React.FC = () => {
@@ -48,7 +48,7 @@ const InflationEditPage: React.FC = () => {
     defaultValues: { items: inflationWithPerc },
     mode: "onBlur",
     reValidateMode: "onBlur",
-    resolver: zodResolver(FormSchema)
+    resolver: zodResolver(getFormSchema(selectedScenario))
   })
 
   const { fields, insert, remove } = useFieldArray({
@@ -146,7 +146,7 @@ const InflationEditPage: React.FC = () => {
                   id={`items.${index}.fromYear`}
                   control={control}
                   defaultValue={it.fromYear}
-                  validationRules={inflationYearValidationRules}
+                  // validationRules={inflationYearValidationRules}
                   restrictedCharSet={INTEGERS_ONLY}
                   // type="number"
                 />
@@ -155,7 +155,7 @@ const InflationEditPage: React.FC = () => {
                   id={`items.${index}.inflationRate`}
                   control={control}
                   defaultValue={it.inflationRate}
-                  validationRules={inflationRateValidationRules}
+                  // validationRules={inflationRateValidationRules}
                   restrictedCharSet={DECIMALS_ONLY}
                   type="number"
                 />

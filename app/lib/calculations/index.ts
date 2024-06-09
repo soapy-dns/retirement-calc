@@ -21,7 +21,6 @@ import { getEarningsTaxCalculator, getEarningsTaxName, getIncomeTaxCalculator } 
 import { AssetData, AssetSplitItem, BasicYearData, CalculationResults, SurplusYearData, YearData } from "./types"
 import { getAssetSplitByYear } from "./assets/getAssetClasses"
 import { getCalculatedNpvData, getGraphIncomeNpvData } from "./utils/getCalculatedNpvData"
-import { getStartingYear } from "./utils/getStartingYear"
 import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
 import { IScenario, ScenarioSchema } from "../data/schema/config"
 import { calculateEarningsTaxes } from "./tax/getEarningsTaxes"
@@ -54,6 +53,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
   }
 
   const scenario = result.data as IScenario
+  const { asAtYear } = scenario
 
   try {
     // setup
@@ -63,7 +63,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const totalExpenses: ExpenseYearData[] = []
     const automatedDrawdownMap: Record<number, AutomatedDrawdown[]> = {}
 
-    const startingYear = getStartingYear()
+    const startingYear = asAtYear
 
     const { context } = scenario
 

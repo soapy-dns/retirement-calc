@@ -1,6 +1,6 @@
 import { contextConstants } from "@/app/(frontend)/(withNavBar)/(forms)/(configEdit)/context/contextConstants"
 import { useForm } from "react-hook-form"
-import { inflationYearValidationRules } from "../validation/inflationYear"
+// import { inflationYearValidationRules } from "../validation/inflationYear"
 import { Button, ButtonType } from "./common/Button"
 import { INTEGERS_ONLY } from "./common/formRegExes"
 import { InputQuestion } from "./form/InputQuestion"
@@ -67,7 +67,7 @@ export const YearValue: React.FC<Props> = ({
           placeholder="Add a year"
           label={contextConstants.FROM_YEAR.LABEL}
           restrictedCharSet={INTEGERS_ONLY}
-          validationRules={inflationYearValidationRules}
+          // validationRules={inflationYearValidationRules}
           helpText={contextConstants.FROM_YEAR.HELP_TEXT}
         />
 

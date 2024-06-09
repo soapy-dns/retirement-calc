@@ -1,12 +1,13 @@
 import React from "react"
 import { screen } from "@testing-library/dom"
-import { act, fireEvent, render, waitFor } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import { act, render, waitFor } from "@testing-library/react"
 import { scenarios as defaultScenarios } from "@/app/lib/data/scenarios"
 
 import LivingExpensesPage from "../page"
 import { ScenarioProvider } from "@/app/ui/context/ScenarioProvider"
 import { HelpModalProvider } from "@/app/ui/context/HelpModalProvider"
+import { generateMock } from "@anatine/zod-mock"
+import { ScenarioSchema } from "@/app/lib/data/schema/config"
 
 const goBack = jest.fn()
 const onToggle = jest.fn()
@@ -28,6 +29,8 @@ jest.mock("../../../../../../../ui/hooks/useNavigation", () => ({
     return { goBack }
   }
 }))
+const mockScenarioConfig = generateMock(ScenarioSchema)
+mockScenarioConfig.asAtYear = 2024
 
 describe("Living expenses edit page", () => {
   it("should render ok", async () => {
@@ -52,22 +55,5 @@ describe("Living expenses edit page", () => {
 
     await act(() => addButton.click())
     expect(onToggle).toHaveBeenCalledTimes(1)
-
-    // screen.getByPlaceholderText("Add a year")
-
-    // screen.getByDisplayValue("2024")
-
-    // const firstYearInput = screen.getByDisplayValue("2024")
-    // const value = "2023"
-
-    // await act(() =>
-    //   fireEvent.change(firstYearInput, {
-    //     target: {
-    //       value
-    //     }
-    //   })
-    // )
-
-    // const updatedFirstYearInput = screen.getByDisplayValue("2023")
   })
 })

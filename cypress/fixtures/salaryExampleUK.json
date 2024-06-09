@@ -1,79 +1,72 @@
 [
-    {
-        "id": "57db4113-0d7b-4617-bc81-5ce6d3a55508",
-        "name": "Salary example",
-        "description": "Salary example",
-        "assets": [
-            {
-                "id": "JOINT_AU_BANK",
-                "name": "Bank account",
-                "description": "blah blah",
-                "country": "AU",
-                "className": "AuBank",
-                "value": 10000,
-                "assetOwners": [
-                    "Her",
-                    "Him"
-                ],
-                "incomeBucket": true,
-                "canDrawdown": true,
-                "drawdown": {
-                    "drawdownOrder": 20,
-                    "preferredMinAmt": 10000
-                }
-            },
-            {
-                "name": "Salary",
-                "description": "Salary",
-                "country": "AU",
-                "className": "Salary",
-                "assetOwners": [
-                    "Him"
-                ],
-                "income": {
-                    "incomeAmt": 100000,
-                    "incomeEndYear": 2030
-                },
-                "id": "7bf4c27d-9a73-49cd-9f5d-368269174f6a"
-            }
-        ],
-        "context": {
-            "taxResident": "SC",
-            "currency": "AU",
-            "owners": [
-                "Him",
-                "Her"
-            ],
-            "auBank": {
-                "interestRate": 0.005
-            },
-            "superAu": {
-                "investmentReturn": 0.05
-            },
-            "definedBenefitsAu": {
-                "useInflationRate": true
-            },
-            "sharesAu": {
-                "growthInterestRate": 0.03,
-                "dividendInterestRate": 0.03
-            },
-            "property": {
-                "growthInterestRate": 0.03
-            },
-            "inflation": [
-                {
-                    "fromYear": 2024,
-                    "inflationRate": 0.03
-                }
-            ],
-            "livingExpenses": [
-                {
-                    "fromYear": 2024,
-                    "amountInTodaysTerms": 50000
-                }
-            ],
-            "au2ukExchangeRate": 0.52
+  {
+    "id": "57db4113-0d7b-4617-bc81-5ce6d3a55508",
+    "name": "Salary example",
+    "description": "Salary example",
+    "asAtYear": 2024,
+    "assets": [
+      {
+        "id": "JOINT_AU_BANK",
+        "name": "Bank account",
+        "description": "blah blah",
+        "country": "AU",
+        "className": "AuBank",
+        "value": 10000,
+        "assetOwners": ["Her", "Him"],
+        "incomeBucket": true,
+        "canDrawdown": true,
+        "drawdown": {
+          "drawdownOrder": 20,
+          "preferredMinAmt": 10000
+        }
+      },
+      {
+        "name": "Salary",
+        "description": "Salary",
+        "country": "AU",
+        "className": "Salary",
+        "assetOwners": ["Him"],
+        "income": {
+          "incomeAmt": 100000,
+          "incomeEndYear": 2030
         },
-        "transfers": []
-    }
+        "id": "7bf4c27d-9a73-49cd-9f5d-368269174f6a"
+      }
+    ],
+    "context": {
+      "taxResident": "SC",
+      "currency": "AU",
+      "owners": ["Him", "Her"],
+      "auBank": {
+        "interestRate": 0.005
+      },
+      "superAu": {
+        "investmentReturn": 0.05
+      },
+      "definedBenefitsAu": {
+        "useInflationRate": true
+      },
+      "sharesAu": {
+        "growthInterestRate": 0.03,
+        "dividendInterestRate": 0.03
+      },
+      "property": {
+        "growthInterestRate": 0.03
+      },
+      "inflation": [
+        {
+          "fromYear": 2024,
+          "inflationRate": 0.03
+        }
+      ],
+      "livingExpenses": [
+        {
+          "fromYear": 2024,
+          "amountInTodaysTerms": 50000
+        }
+      ],
+      "au2ukExchangeRate": 0.52
+    },
+    "transfers": []
+  }
 ]

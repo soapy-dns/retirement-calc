@@ -3,6 +3,7 @@
     "id": "A",
     "name": "rate variation examples",
     "description": "rate variation examples",
+    "asAtYear": 2024,
     "assets": [
       {
         "id": "JOINT_AU_BANK",

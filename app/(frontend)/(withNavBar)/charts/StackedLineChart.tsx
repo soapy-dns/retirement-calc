@@ -73,7 +73,6 @@ export const StackedLineChart: React.FC<Props> = ({ yearRange, graphData }) => {
               bottom: 0
             }}
           >
-            {/* {console.log("area chart")} */}
             {/* Area Chart */}
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />

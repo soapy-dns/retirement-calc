@@ -17,7 +17,8 @@ interface IScenarioContext {
   deleteSelectedScenario: () => Promise<{ success: boolean }>
   addScenario: (
     name: string,
-    description: string
+    description: string,
+    asAtYear: number
   ) => Promise<{ success: boolean; calculationResults?: CalculationResults }>
   calculationResults?: CalculationResults
   calculationMessage?: string

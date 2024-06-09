@@ -3,6 +3,7 @@
     "id": "A",
     "name": "Multi-country example",
     "description": "Complex example.",
+    "asAtYear": 2024,
     "assets": [
       {
         "id": "HIS_AU_SUPER",

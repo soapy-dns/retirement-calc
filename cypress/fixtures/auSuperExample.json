@@ -3,6 +3,7 @@
     "id": "AU_SUPER",
     "name": "Australian super example",
     "description": "Australian super example",
+    "asAtYear": 2024,
     "assets": [
       {
         "id": "JOINT_AU_BANK",

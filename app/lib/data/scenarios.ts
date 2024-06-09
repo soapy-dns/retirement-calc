@@ -5,6 +5,7 @@ export const scenarios: IScenario[] = [
     id: "A",
     name: "Australian example",
     description: "Example with all Australian asset types",
+    asAtYear: 2024,
     assets: [
       {
         id: "JOINT_AU_BANK",
@@ -131,6 +132,7 @@ export const scenarios: IScenario[] = [
     id: "e0fc55d7-c55a-45fe-90fb-b9dd63a70d50",
     name: "Scottish example",
     description: "Scottish example",
+    asAtYear: 2024,
     assets: [
       {
         id: "JOINT_AU_BANK",

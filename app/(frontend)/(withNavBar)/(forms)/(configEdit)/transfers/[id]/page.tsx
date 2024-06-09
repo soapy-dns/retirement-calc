@@ -8,7 +8,7 @@ import { type Transfer } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useTransfer } from "@/app/ui/hooks/useTransfer"
 import EditPageLayout from "@/app/(frontend)/(withoutNavBar)/components/EditPageLayout"
-import { IsFormNumberOpt, IsFutureOrCurrentYear, YesNoSchema } from "@/app/lib/data/schema/config/schemaUtils"
+import { IsFormNumberOpt, IsValidYear, YesNoSchema } from "@/app/lib/data/schema/config/schemaUtils"
 
 const getTransferValuesFromForm = (data: FormDataType): Omit<Transfer, "id"> => {
   return {
@@ -21,7 +21,7 @@ const getTransferValuesFromForm = (data: FormDataType): Omit<Transfer, "id"> => 
 }
 
 const FormSchema = z.object({
-  year: IsFutureOrCurrentYear,
+  year: IsValidYear,
   from: z.string(),
   to: z.string(),
   migrateAll: YesNoSchema.optional(),

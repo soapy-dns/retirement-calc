@@ -41,12 +41,10 @@ export default function ImportPage() {
 
     if (selectedFile) {
       const data = await selectedFile.text()
-      console.log("selected filedata", data)
       try {
         const scenarios: IScenario[] = JSON.parse(data)
 
         await importScenarios(scenarios)
-        console.log("have imported scenarios")
       } catch (e) {
         throw new Error("Error importing file")
       }

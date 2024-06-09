@@ -14,19 +14,23 @@ import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 
 import { scenarioConstants } from "../scenarioConstants"
+import { IsFormNumber } from "@/app/lib/data/schema/config/schemaUtils"
 
+// set years validation
 const FormSchema = z.object({
   name: z.string().min(3),
-  description: z.string().min(3)
+  description: z.string().min(3),
+  asAtYear: IsFormNumber
 })
+
 export type FormDataType = z.infer<typeof FormSchema>
 
 export default function ScenarioPage({ params }: { params: { id: string } }) {
   const { id } = params
   const navigation = useNavigation()
   const { selectedScenario, updateScenario, addScenario } = useContext(ScenarioContext)
-  const { name, description } = selectedScenario
-  const defaultValues = id === "add" ? {} : { name, description }
+  const { name, description, asAtYear } = selectedScenario
+  const defaultValues = id === "add" ? {} : { name, description, asAtYear }
   const { control, handleSubmit } = useForm<FormDataType>({
     defaultValues,
     resolver: zodResolver(FormSchema)
@@ -37,13 +41,13 @@ export default function ScenarioPage({ params }: { params: { id: string } }) {
   }
 
   const onSubmit = async (data: FormDataType) => {
-    const { name, description } = data
+    const { name, description, asAtYear } = data
 
     if (id === "add") {
-      const { success } = await addScenario(name, description)
+      const { success } = await addScenario(name, description, asAtYear)
       if (success) navigation.goBack()
     } else {
-      const updatedScenario = { ...selectedScenario, name, description }
+      const updatedScenario = { ...selectedScenario, name, description, asAtYear }
 
       const { success } = await updateScenario(updatedScenario)
       if (success) navigation.goBack()
@@ -81,6 +85,13 @@ export default function ScenarioPage({ params }: { params: { id: string } }) {
           control={control}
           label={scenarioConstants.DESCRIPTION.LABEL}
           helpText={scenarioConstants.DESCRIPTION.HELP_TEXT}
+        />
+        <InputQuestion
+          id="asAtYear"
+          control={control}
+          label={scenarioConstants.AS_AT_YEAR.LABEL}
+          restrictedCharSet={ALPHA_NUMERIC}
+          helpText={scenarioConstants.AS_AT_YEAR.HELP_TEXT}
         />
       </form>
     </EditPageLayout>

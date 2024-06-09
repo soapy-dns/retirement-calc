@@ -1,28 +1,18 @@
-import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
-import {
-  AssetClass,
-  CashAsset,
-  IAsset,
-  IncomeAsset,
-  InflationRecord,
-  LiquidAsset,
-  LivingExpensesRecord,
-  PropertyAsset
-} from ".."
+import { AssetClass, CashAsset, IAsset, IncomeAsset, LiquidAsset, PropertyAsset } from ".."
 import { isCashAsset, isLiquidAsset } from "@/app/ui/utils"
 
 // VALIDATE CONTEXT
-export const validateLivingExpensesVsInflation = (
-  livingExpenses: LivingExpensesRecord[],
-  inflation: InflationRecord[]
-) => {
-  // TODO: sort - just getting the 1st for simplicity
-  if (livingExpenses[0]) {
-    const startYear = getStartingYear()
+// export const validateLivingExpensesVsInflation = (
+//   livingExpenses: LivingExpensesRecord[],
+//   inflation: InflationRecord[]
+// ) => {
+//   // TODO: sort - just getting the 1st for simplicity
+//   if (livingExpenses[0]) {
+//     const startYear = getStartingYear()
 
-    return livingExpenses[0].fromYear || startYear >= inflation[0].fromYear
-  }
-}
+//     return livingExpenses[0].fromYear || startYear >= inflation[0].fromYear
+//   }
+// }
 
 // VALIDATE ASSETS
 export const validateIncomeBucket = (assets: IAsset[]) => {
@@ -38,11 +28,11 @@ export const validateIncomeBucket = (assets: IAsset[]) => {
 }
 
 // VALIDATE TRANSFERS
-export const yearNotPassed = (year: number) => {
-  const nowYear = getStartingYear()
+// export const yearNotPassed = (year: number) => {
+//   const nowYear = getStartingYear()
 
-  return nowYear <= year
-}
+//   return nowYear <= year
+// }
 
 // The next validations related to assets. Perhaps this could be separated out.
 export const incomeValidator = {

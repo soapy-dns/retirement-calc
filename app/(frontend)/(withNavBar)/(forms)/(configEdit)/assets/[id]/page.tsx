@@ -25,10 +25,9 @@ import { isCapitalAsset, isCashAsset, isIncomeAsset, isLiquidAsset, isPropertyAs
 import { YesNo } from "../../types"
 import {
   CountryEnum,
-  IsFormNumber,
-  IsOptionalFutureOrCurrentYear,
   IsFormNumberOpt,
-  YesNoSchema
+  YesNoSchema,
+  IsOptionalValidYear
   // ZodInputStringPipe
 } from "@/app/lib/data/schema/config/schemaUtils"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
@@ -46,17 +45,17 @@ const FormSchema = z
     // assetOwners: z.string().array().nonempty(),
     incomeBucket: YesNoSchema.optional(),
     canDrawdown: YesNoSchema.optional(), //.transform((val) => val === "Y"),
-    drawdownFrom: IsOptionalFutureOrCurrentYear,
+    drawdownFrom: IsOptionalValidYear,
     drawdownOrder: IsFormNumberOpt,
     preferredMinAmt: IsFormNumberOpt,
     isRented: YesNoSchema.optional(),
-    rentalStartYear: IsOptionalFutureOrCurrentYear,
-    rentalEndYear: IsOptionalFutureOrCurrentYear,
+    rentalStartYear: IsOptionalValidYear,
+    rentalEndYear: IsOptionalValidYear,
     rentalIncome: IsFormNumberOpt,
     rentalExpenses: IsFormNumberOpt,
     incomeAmt: IsFormNumberOpt, // value and income should be mutually exclusive
-    incomeStartYear: IsOptionalFutureOrCurrentYear,
-    incomeEndYear: IsOptionalFutureOrCurrentYear,
+    incomeStartYear: IsOptionalValidYear,
+    incomeEndYear: IsOptionalValidYear,
     rateVariation: IsFormNumberOpt
   })
   .refine(

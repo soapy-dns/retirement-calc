@@ -1,7 +1,6 @@
 import * as React from "react"
 
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
-import { Card } from "@/app/ui/components/Card"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
@@ -9,8 +8,6 @@ import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
 import { PencilSquareIcon, PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { scenarioConstants } from "./scenarioConstants"
-import { EditButton } from "@/app/ui/components/common/EditButton"
-import { RemoveButton } from "@/app/ui/components/common/RemoveButton"
 import { ButtonGroup } from "@/app/ui/components/common/ButtonGroup"
 
 // TODO: common card component - buttons top right or at the bottom
@@ -33,9 +30,18 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
     }
   }
 
-  const { name, description } = selectedScenario
+  const { name, description, asAtYear } = selectedScenario
 
   const removeButtonDisabled = scenarios?.length === 1
+
+  const EditButton = () => (
+    <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
+      <div className="flex items-center justify-center gap-2">
+        <PencilSquareIcon className="h-6 w-6" />
+        <div>Edit</div>
+      </div>
+    </Button>
+  )
 
   return (
     <>
@@ -63,31 +69,27 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
       )}
 
       <TextDisplayField label={scenarioConstants.NAME.LABEL} helpText={scenarioConstants.NAME.HELP_TEXT} value={name} />
-      <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
+      <EditButton />
+      {/* <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
         <div className="flex items-center justify-center gap-2">
           <PencilSquareIcon className="h-6 w-6" />
           <div>Edit</div>
         </div>
-      </Button>
+      </Button> */}
+
       <TextDisplayField
         label={scenarioConstants.DESCRIPTION.LABEL}
         helpText={scenarioConstants.DESCRIPTION.HELP_TEXT}
         value={description || "n/a"}
       />
-      <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
-        <div className="flex items-center justify-center gap-2">
-          <PencilSquareIcon className="h-6 w-6" />
-          <div>Edit</div>
-        </div>
-      </Button>
-      {/* <ButtonGroup>
-        <Button buttonType={ButtonType.primary} onClick={handleEdit}>
-          <div className="flex items-center justify-center gap-2">
-            <PencilSquareIcon className="h-6 w-6" />
-            <div>Edit</div>
-          </div>
-        </Button>
-      </ButtonGroup> */}
+      <EditButton />
+
+      <TextDisplayField
+        label={scenarioConstants.AS_AT_YEAR.LABEL}
+        helpText={scenarioConstants.AS_AT_YEAR.HELP_TEXT}
+        value={asAtYear}
+      />
+      <EditButton />
     </>
   )
 }
