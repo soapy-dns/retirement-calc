@@ -92,6 +92,7 @@ export default function ScenarioPage({ params }: { params: { id: string } }) {
           label={scenarioConstants.AS_AT_YEAR.LABEL}
           restrictedCharSet={ALPHA_NUMERIC}
           helpText={scenarioConstants.AS_AT_YEAR.HELP_TEXT}
+          disabled={true}
         />
       </form>
     </EditPageLayout>

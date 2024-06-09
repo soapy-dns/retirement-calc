@@ -11,8 +11,6 @@ import { scenarioConstants } from "./scenarioConstants"
 import { ButtonGroup } from "@/app/ui/components/common/ButtonGroup"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 
-// TODO: common card component - buttons top right or at the bottom
-
 export const ScenarioDisplay: React.FunctionComponent = (props) => {
   const navigation = useNavigation()
   const { selectedScenario, deleteSelectedScenario, scenarios } = React.useContext(ScenarioContext)
@@ -46,20 +44,22 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
 
   return (
     <>
-      <ButtonGroup>
-        <Button buttonType={ButtonType.tertiary} onClick={handleAdd}>
-          <div className="flex items-center gap-2">
-            <PlusCircleIcon className="h-6 w-6" />
-            Duplicate this scenario
-          </div>
-        </Button>
-        <Button buttonType={ButtonType.tertiary} onClick={handleRemove} disabled={removeButtonDisabled}>
-          <div className="flex items-center justify-center gap-2">
-            <TrashIcon className="h-6 w-6" />
-            <div>Remove this scenario</div>
-          </div>
-        </Button>
-      </ButtonGroup>
+      <div className="mb-8">
+        <ButtonGroup>
+          <Button buttonType={ButtonType.tertiary} onClick={handleAdd}>
+            <div className="flex items-center gap-2">
+              <PlusCircleIcon className="h-6 w-6" />
+              Copy this scenario
+            </div>
+          </Button>
+          <Button buttonType={ButtonType.tertiary} onClick={handleRemove} disabled={removeButtonDisabled}>
+            <div className="flex items-center justify-center gap-2">
+              <TrashIcon className="h-6 w-6" />
+              <div>Remove this scenario</div>
+            </div>
+          </Button>
+        </ButtonGroup>
+      </div>
 
       {removeButtonDisabled && (
         <div className="my-4">
@@ -101,7 +101,6 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
         helpText={scenarioConstants.AS_AT_YEAR.HELP_TEXT}
         value={asAtYear}
       />
-      <EditButton />
     </>
   )
 }
