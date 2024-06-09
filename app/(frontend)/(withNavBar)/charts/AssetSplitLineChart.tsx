@@ -82,6 +82,8 @@ export const AssetSplitLineChart: React.FC = () => {
       return valueForAssetClass?.fraction || 0
     })
 
+    lineData.pop() // FIXME: the last causes the graph to go haywire cose of nexatives
+
     const remainder = index % numColors
     const lineDataset = {
       id: assetGroup,
