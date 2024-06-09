@@ -1,5 +1,4 @@
 import { z } from "zod"
-import { yearNotPassed } from "./validation"
 
 const castEmptyStringToUndefined = (val?: unknown) => (val !== "" ? val : undefined)
 
@@ -19,30 +18,51 @@ export const IsFormNumberOpt = z.preprocess(
 
 export const IsFormNumber = z.preprocess((val) => castEmptyStringToUndefined(val), z.coerce.number())
 
-export const IsFutureOrCurrentYear = z.preprocess(
+const validStartYear = 2020
+const validEndYear = 2100
+export const IsValidYear = z.preprocess(
   (val) => castEmptyStringToUndefined(val),
   z.coerce.number().refine(
-    (val) => yearNotPassed(val),
-    (val) => ({ message: `${val} is in the past` })
+    (val) => val >= validStartYear && val <= validEndYear,
+    (val) => ({ message: `The year ${val} is not valid` })
   )
 )
 
-export const IsOptionalFutureOrCurrentYear = z.preprocess(
+export const IsOptionalValidYear = z.preprocess(
   (val) => castEmptyStringToUndefined(val),
   z.coerce
     .number()
     .optional()
     .refine(
-      (val) => val === undefined || yearNotPassed(val),
-      (val) => {
-        return val === 0
-          ? { message: "This value is required." }
-          : {
-              message: `${val} is in the past.`
-            }
-      }
+      (val) => val === undefined || (val >= validStartYear && val <= validEndYear),
+      (val) => ({ message: `The year ${val} is not valid` })
     )
 )
+
+// export const IsFutureOrCurrentYear = z.preprocess(
+//   (val) => castEmptyStringToUndefined(val),
+//   z.coerce.number().refine(
+//     (val) => yearNotPassed(val),
+//     (val) => ({ message: `${val} is in the past` })
+//   )
+// )
+
+// export const IsOptionalFutureOrCurrentYear = z.preprocess(
+//   (val) => castEmptyStringToUndefined(val),
+//   z.coerce
+//     .number()
+//     .optional()
+//     .refine(
+//       (val) => val === undefined || yearNotPassed(val),
+//       (val) => {
+//         return val === 0
+//           ? { message: "This value is required." }
+//           : {
+//               message: `${val} is in the past.`
+//             }
+//       }
+//     )
+// )
 
 export const CountryEnum = z.enum(["AU", "SC"])
 export const YesNoSchema = z.enum(["Y", "N"])

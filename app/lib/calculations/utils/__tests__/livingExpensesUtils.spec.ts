@@ -1,6 +1,4 @@
 import { getLivingExpenses, getLivingExpensesInTodaysMoney } from "../livingExpensesUtils"
-// import { getStartingYear } from "../getStartingYear"
-// import { range } from "lodash"
 import { LivingExpensesRecord } from "@/app/lib/data/schema/config"
 
 describe("test", () => {

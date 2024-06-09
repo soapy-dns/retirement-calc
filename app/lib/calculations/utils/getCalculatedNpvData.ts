@@ -1,4 +1,4 @@
-import { CellData } from "@/app/(withCalculation)/(withNavBar)/sheet/row/types"
+import { CellData } from "@/app/(frontend)/(withNavBar)/sheet/row/types"
 import { Asset } from "../assets/Asset"
 import { AssetIncome } from "../assets/types"
 import { AssetData, InflationContext } from "../types"

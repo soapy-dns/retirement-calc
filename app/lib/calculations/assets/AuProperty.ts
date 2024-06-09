@@ -5,6 +5,7 @@ import { YearData } from "./types"
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
 import { IAsset, IScenario, PropertyContext, Transfer } from "../../data/schema/config"
 import { getTransferAmt } from "../transfers/getTransferAmt"
+import { validForRentalIncome } from "./validForRentalIncome"
 
 export class AuProperty extends Asset {
   capitalAsset: boolean // if all assets have this, shouldn't it be in the Asset class
@@ -50,13 +51,6 @@ export class AuProperty extends Asset {
     this.history.push({ value, year: startingYear, transferAmt: 0, income: 0 })
   }
 
-  private shouldHaveRent = (currentYear: number) => {
-    const startYear = this.rentalStartYear || 0
-    const endYear = this.rentalEndYear || 0
-    if (currentYear >= startYear && currentYear < endYear) return true
-    return false
-  }
-
   // assets passed in so can calculate full transfers
   calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
     const { value: prevValue, year } = yearData
@@ -69,11 +63,13 @@ export class AuProperty extends Asset {
     const inflationFactor = this.inflationContext[year].factor
 
     let rentalIncome = 0
-    if (this.shouldHaveRent(year)) {
+
+    if (validForRentalIncome(year, this.rentalStartYear, this.rentalEndYear) && prevValue > 0) {
       rentalIncome =
         this.rentalIncomePerMonth > 0 || this.rentalExpensesPerMonth > 0
           ? (this.rentalIncomePerMonth - this.rentalExpensesPerMonth) * 12 * inflationFactor
           : 0 // TODO: income tax
+      if (transferAmt) rentalIncome = rentalIncome / 2 // only half the year
     }
 
     const growth = (prevValue + transferAmt) * investmentReturn

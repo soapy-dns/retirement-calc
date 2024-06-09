@@ -1,4 +1,8 @@
 describe("Partial transfer pricing", () => {
+  before(() => {
+    const now = new Date(2024, 0, 1)
+    cy.clock(now)
+  })
   beforeEach(() => {
     cy.visit("sheet")
   })

@@ -1,8 +1,8 @@
 import { z } from "zod"
 
-import { validateIncomeBucket, validateLivingExpensesVsInflation } from "./validation"
+import { validateIncomeBucket } from "./validation"
 import { AssetSchema } from "./asset"
-import { CountryEnum, IsFutureOrCurrentYear, YesNoSchema } from "./schemaUtils"
+import { CountryEnum, IsValidYear, YesNoSchema } from "./schemaUtils"
 import { numberFormatter } from "@/app/ui/utils/formatter"
 
 const cashContextSchema = z.object({
@@ -29,18 +29,18 @@ const superContextSchema = z.object({
 })
 
 export const InflationSchema = z.object({
-  fromYear: IsFutureOrCurrentYear,
+  fromYear: IsValidYear,
   inflationRate: z.coerce.number()
 })
 
 export const LivingExpensesSchema = z.object({
-  fromYear: IsFutureOrCurrentYear,
+  fromYear: IsValidYear,
   amountInTodaysTerms: z.coerce.number().nonnegative()
 })
 
 const transferBaseSchema = z.object({
   id: z.string(),
-  year: IsFutureOrCurrentYear,
+  year: IsValidYear,
   from: z.string(),
   to: z.string(),
   migrateAll: z.boolean(),
@@ -69,29 +69,28 @@ const transferSchema = z.discriminatedUnion("migrateAll", [transferWithMigrateAl
   })
 )
 
-const contextSchema = z
-  .object({
-    taxResident: CountryEnum,
-    au2ukExchangeRate: z.number().optional(),
-    currency: CountryEnum,
-    numOfYears: z.number().optional(),
-    owners: z.string().array().nonempty(),
-    auBank: cashContextSchema,
-    definedBenefitsAu: definedBenefitsContextSchema,
-    property: propertyContextSchema,
-    sharesAu: sharesContextSchema,
-    superAu: superContextSchema,
-    inflation: z.array(InflationSchema),
-    livingExpenses: z.array(LivingExpensesSchema)
-  })
-  .refine(
-    ({ livingExpenses, inflation }) => validateLivingExpensesVsInflation(livingExpenses, inflation),
-    ({ livingExpenses }) => {
-      return {
-        message: `Living expenses for ${livingExpenses[0].fromYear} has no matching inflation rate.`
-      }
-    }
-  )
+const contextSchema = z.object({
+  taxResident: CountryEnum,
+  au2ukExchangeRate: z.number().optional(),
+  currency: CountryEnum,
+  numOfYears: z.number().optional(),
+  owners: z.string().array().nonempty(),
+  auBank: cashContextSchema,
+  definedBenefitsAu: definedBenefitsContextSchema,
+  property: propertyContextSchema,
+  sharesAu: sharesContextSchema,
+  superAu: superContextSchema,
+  inflation: z.array(InflationSchema),
+  livingExpenses: z.array(LivingExpensesSchema)
+})
+// .refine(
+//   ({ livingExpenses, inflation }) => validateLivingExpensesVsInflation(livingExpenses, inflation),
+//   ({ livingExpenses }) => {
+//     return {
+//       message: `Living expenses for ${livingExpenses[0].fromYear} has no matching inflation rate.`
+//     }
+//   }
+// )
 
 export const ScenarioSchema = z
   .object({
@@ -99,6 +98,7 @@ export const ScenarioSchema = z
     test: z.string().optional(),
     name: z.string(),
     description: z.string().optional(),
+    asAtYear: z.number(),
     assets: z.array(AssetSchema),
     context: contextSchema,
     transfers: z.array(transferSchema).optional()

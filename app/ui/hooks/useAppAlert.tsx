@@ -26,11 +26,15 @@ const useAppAlert = () => {
     toast.remove()
     const { dismissible = true } = toastOptions || {}
 
+    const now = new Date()
+
     const id = toast.custom(
       (t) => (
         <div className="fixed top-20">
           <AlertBanner
             variant={AlertType.warning}
+            // message={now.toDateString()}
+            // message={toastOptions?.duration ? toastOptions.duration.toString() : "no duration"}
             message={message}
             onClose={() => {
               if (onClose) onClose()

@@ -2,7 +2,8 @@
   {
     "id": "K",
     "name": "Transfer example",
-    "description": "blah",
+    "description": "Transfer example - one bank account to another.",
+    "asAtYear": 2024,
     "assets": [
       {
         "id": "1",
