@@ -2,7 +2,7 @@ import { createContext } from "react"
 import { ISelectOption } from "@/app/lib/data/types"
 import { IScenario } from "@/app/lib/data/schema/config"
 
-import { scenarios } from "@/app/lib/data/scenarios"
+import { getDefaultScenarios } from "@/app/lib/data/scenarios"
 import { CalculationResults } from "@/app/lib/calculations/types"
 
 interface IScenarioContext {
@@ -23,6 +23,7 @@ interface IScenarioContext {
   calculationResults?: CalculationResults
   calculationMessage?: string
 }
+const scenarios = getDefaultScenarios()
 
 export const ScenarioContext = createContext<IScenarioContext>({
   selectedScenario: scenarios[0],

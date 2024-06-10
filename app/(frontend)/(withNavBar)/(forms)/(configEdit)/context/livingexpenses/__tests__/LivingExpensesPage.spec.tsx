@@ -1,13 +1,15 @@
 import React from "react"
 import { screen } from "@testing-library/dom"
 import { act, render, waitFor } from "@testing-library/react"
-import { scenarios as defaultScenarios } from "@/app/lib/data/scenarios"
 
 import LivingExpensesPage from "../page"
 import { ScenarioProvider } from "@/app/ui/context/ScenarioProvider"
 import { HelpModalProvider } from "@/app/ui/context/HelpModalProvider"
 import { generateMock } from "@anatine/zod-mock"
 import { ScenarioSchema } from "@/app/lib/data/schema/config"
+import { getDefaultScenarios } from "@/app/lib/data/scenarios"
+
+const defaultScenarios = getDefaultScenarios()
 
 const goBack = jest.fn()
 const onToggle = jest.fn()

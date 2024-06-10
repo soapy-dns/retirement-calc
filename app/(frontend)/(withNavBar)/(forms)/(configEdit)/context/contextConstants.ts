@@ -73,9 +73,8 @@ export const contextConstants: Record<string, ItemProps> = {
     HELP_TEXT: "The income per year as a percentage of the share value."
   },
   USE_INFLATION_RATE: {
-    LABEL: "Indexed in line with inflation.",
-    HELP_TEXT:
-      "If 'Yes', then the inflation rate (for the year) will be used, otherwise an indexation rate will need to be defined and that value will be applied to all years."
+    LABEL: "Indexed in line with inflation",
+    HELP_TEXT: "If 'Yes', then the inflation rate will be used to determine the income."
   },
   FROM_YEAR: {
     LABEL: "From year",
