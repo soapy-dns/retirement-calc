@@ -4,9 +4,8 @@ import { DECIMALS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { SelectQuestion } from "@/app/ui/components/form/SelectQuestion"
 import { Control } from "react-hook-form"
-import { contextConstants } from "../contextConstants"
-
-import { currencyOptions, taxResidentOptions } from "../options"
+import { contextConstants } from "./contextConstants"
+import { currencyOptions, taxResidentOptions } from "./options"
 
 interface Props {
   control: Control<any, object>

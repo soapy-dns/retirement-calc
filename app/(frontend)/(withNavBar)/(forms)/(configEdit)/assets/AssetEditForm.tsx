@@ -12,7 +12,14 @@ import { assetTypeOptions, drawdownOrderOptions } from "./assetTypeOptions"
 import { validateOwners } from "@/app/ui/validation/ownersValidation"
 import { YesNo } from "../types"
 import { AssetType } from "@/app/lib/data/types"
-import { isCapitalAsset, isCashAsset, isIncomeAsset, isLiquidAsset, isPropertyAsset } from "@/app/ui/utils"
+import {
+  isCapitalAsset,
+  isCashAsset,
+  isDefinedBenefitAsset,
+  isIncomeAsset,
+  isLiquidAsset,
+  isPropertyAsset
+} from "@/app/ui/utils"
 import { AssetClass } from "@/app/lib/data/schema/config"
 import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
 
@@ -76,6 +83,18 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         variant={RadioQuestionVariant.VERTICAL}
         helpText={assetConstants.COUNTRY.HELP_TEXT}
       />
+
+      {isDefinedBenefitAsset(assetType) && (
+        <RadioButtonQuestion
+          id="isStatePension"
+          label={assetConstants.IS_STATE_PENSION.LABEL}
+          control={control}
+          values={yesNoOptions}
+          variant={RadioQuestionVariant.BLOCK}
+          helpText={assetConstants.IS_STATE_PENSION.HELP_TEXT}
+        />
+      )}
+
       <CheckboxQuestion
         id="owners"
         control={control}

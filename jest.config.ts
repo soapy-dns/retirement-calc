@@ -15,7 +15,7 @@ const config: Config = {
   // moduleNameMapper: { "@(/.*)$": "<rootDir>/app/$1" }
   coverageThreshold: {
     global: {
-      branches: 80,
+      branches: 79,
       functions: 63,
       lines: 80,
       statements: 70

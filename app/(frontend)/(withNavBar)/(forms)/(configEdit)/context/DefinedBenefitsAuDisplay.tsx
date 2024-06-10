@@ -5,9 +5,9 @@ import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
 import * as React from "react"
 
-import { contextConstants } from "../contextConstants"
 import { ContextType, useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
+import { contextConstants } from "./contextConstants"
 
 export const DefinedBenefitsAuDisplay: React.FunctionComponent = (props) => {
   const heading = "Defined benefits pension"
@@ -33,16 +33,17 @@ export const DefinedBenefitsAuDisplay: React.FunctionComponent = (props) => {
         <TextDisplayField
           label={contextConstants.USE_INFLATION_RATE.LABEL}
           helpText={contextConstants.USE_INFLATION_RATE.HELP_TEXT}
-          value={definedBenefitsAu.useInflationRate ? "Yes" : "No"}
+          value="Yes"
+          // value={definedBenefitsAu.useInflationRate ? "Yes..." : "No"}
         />
 
-        {!definedBenefitsAu.useInflationRate && (
+        {/* {!definedBenefitsAu.useInflationRate && (
           <TextDisplayField
             label={contextConstants.DEFINED_BENEFITS_INDEXATION.LABEL}
             helpText={contextConstants.DEFINED_BENEFITS_INDEXATION.HELP_TEXT}
             value={definedBenefitsAu?.indexationRate ? definedBenefitsAu?.indexationRate * 100 : "-"}
           />
-        )}
+        )} */}
       </>
     </DisplayCardWithEdit>
   )

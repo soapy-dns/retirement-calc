@@ -4,7 +4,7 @@ import { ScenarioContext } from "./ScenarioContext"
 import { ISelectOption } from "@/app/lib/data/types"
 import { IScenario } from "@/app/lib/data/schema/config"
 
-import { scenarios as defaultScenarios } from "@/app/lib/data/scenarios"
+import { getDefaultScenarios } from "@/app/lib/data/scenarios"
 import { calculate } from "@/app/lib/calculations"
 import { CalculationResults } from "@/app/lib/calculations/types"
 import { useAppAlert } from "../hooks/useAppAlert"
@@ -21,6 +21,8 @@ const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
   }))
   return scenarioOptions
 }
+
+const defaultScenarios = getDefaultScenarios()
 
 export const ScenarioProvider = ({ children }: { children: React.ReactNode }) => {
   const [calculating, setCalculating] = useState<boolean>(false)

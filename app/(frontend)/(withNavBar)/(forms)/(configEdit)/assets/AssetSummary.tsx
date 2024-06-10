@@ -11,6 +11,9 @@ import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
 
 import { getAssetDisplayDetails } from "./utils"
 import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
+import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
+import { useContext } from "react"
+import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 
 interface IAssetItemDisplay {
   removeAllowed: boolean
@@ -22,6 +25,8 @@ export const AssetSummary = ({ asset, removeAllowed }: IAssetItemDisplay) => {
   const navigation = useNavigation()
   const { removeAsset, hasTransfers, hasValidationErrors } = useAsset()
   const { getCurrency } = useContextConfig()
+  const { selectedScenario } = useContext(ScenarioContext)
+
   const currencyCountry = getCurrency()
   const currencyFormatter = getCurrencyFormatter(currencyCountry)
 
@@ -29,6 +34,7 @@ export const AssetSummary = ({ asset, removeAllowed }: IAssetItemDisplay) => {
     const { id } = asset
     navigation.goTo(AppPath.assetEdit, { id })
   }
+  const handleEditFn = selectedScenario.asAtYear >= getCurrentYear() ? handleEdit : undefined
 
   const handleRemove = () => {
     if (disabled) return
@@ -86,20 +92,22 @@ export const AssetSummary = ({ asset, removeAllowed }: IAssetItemDisplay) => {
               </p>
             )}
 
-            <ButtonGroup>
-              <Button buttonType={ButtonType.primary} onClick={handleEdit}>
-                <div className="flex items-center gap-2">
-                  <PencilSquareIcon className="h-6 w-6" />
-                  <div>Edit</div>
-                </div>
-              </Button>
-              <Button buttonType={ButtonType.secondary} onClick={handleRemove} disabled={disabled}>
-                <div className="flex items-center gap-2">
-                  <TrashIcon className="h-6 w-6" />
-                  <div>Remove</div>
-                </div>
-              </Button>
-            </ButtonGroup>
+            {selectedScenario.asAtYear >= getCurrentYear() && (
+              <ButtonGroup>
+                <Button buttonType={ButtonType.primary} onClick={handleEdit}>
+                  <div className="flex items-center gap-2">
+                    <PencilSquareIcon className="h-6 w-6" />
+                    <div>Edit</div>
+                  </div>
+                </Button>
+                <Button buttonType={ButtonType.secondary} onClick={handleRemove} disabled={disabled}>
+                  <div className="flex items-center gap-2">
+                    <TrashIcon className="h-6 w-6" />
+                    <div>Remove</div>
+                  </div>
+                </Button>
+              </ButtonGroup>
+            )}
           </div>
         </div>
       </div>

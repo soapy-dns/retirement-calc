@@ -49,6 +49,7 @@
         "description": "Defined benefits",
         "country": "AU",
         "className": "AuDefinedBenefits",
+        "isStatePension": false,
         "income": {
           "incomeAmt": 10000
         },
@@ -61,6 +62,7 @@
         "className": "AuDefinedBenefits",
         "assetOwners": ["Him"],
         "rateVariation": 1,
+        "isStatePension": false,
         "income": {
           "incomeAmt": 10000
         },

@@ -1,6 +1,6 @@
 import { Asset } from "./Asset"
 import { AssetGroup, InflationContext } from "@/app/lib/calculations/types"
-import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
+import { getPercDrawdownTaxable, getPercIncomeTaxable, isIndexedDefinedBenefit } from "../tax/utils"
 import { DefinedBenefitsContext, IAsset, IScenario, Transfer } from "../../data/schema/config"
 import { YearData } from "./types"
 
@@ -15,6 +15,7 @@ export class AuDefinedBenefits extends Asset {
   incomeEndYear?: number
   incomeAmount: number
   inflationContext: InflationContext
+  isIndexed: boolean
 
   constructor(assetConfig: IAsset, startingYear: number, scenario: IScenario, inflationContext: InflationContext) {
     // is income producing - it has to be - that is all it does
@@ -31,6 +32,7 @@ export class AuDefinedBenefits extends Asset {
     this.assetGroup = AssetGroup.income_defined_benefit
     this.percOfIncomeTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
     this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.isIndexed = isIndexedDefinedBenefit(taxResident, assetConfig.country, assetConfig.isStatePension)
     this.definedBenefitsContext = definedBenefitsAu
 
     const { income } = assetConfig
@@ -62,6 +64,8 @@ export class AuDefinedBenefits extends Asset {
       (this.incomeStartYear && this.incomeStartYear > year)
     ) {
       newIncome = 0
+    } else if (!this.isIndexed) {
+      newIncome = this.incomeAmount
     } else {
       const rateVarianceFactor = this.rateVariation ? this.rateVariation + 1 : 1
 

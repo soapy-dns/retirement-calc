@@ -6,11 +6,10 @@ import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
 import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
-import { PencilSquareIcon, PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
+import { LockClosedIcon, PencilSquareIcon, PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { scenarioConstants } from "./scenarioConstants"
 import { ButtonGroup } from "@/app/ui/components/common/ButtonGroup"
-
-// TODO: common card component - buttons top right or at the bottom
+import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 
 export const ScenarioDisplay: React.FunctionComponent = (props) => {
   const navigation = useNavigation()
@@ -45,20 +44,22 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
 
   return (
     <>
-      <ButtonGroup>
-        <Button buttonType={ButtonType.tertiary} onClick={handleAdd}>
-          <div className="flex items-center gap-2">
-            <PlusCircleIcon className="h-6 w-6" />
-            Duplicate this scenario
-          </div>
-        </Button>
-        <Button buttonType={ButtonType.tertiary} onClick={handleRemove} disabled={removeButtonDisabled}>
-          <div className="flex items-center justify-center gap-2">
-            <TrashIcon className="h-6 w-6" />
-            <div>Remove this scenario</div>
-          </div>
-        </Button>
-      </ButtonGroup>
+      <div className="mb-8">
+        <ButtonGroup>
+          <Button buttonType={ButtonType.tertiary} onClick={handleAdd}>
+            <div className="flex items-center justify-center gap-2">
+              <PlusCircleIcon className="h-6 w-6" />
+              Copy this scenario
+            </div>
+          </Button>
+          <Button buttonType={ButtonType.tertiary} onClick={handleRemove} disabled={removeButtonDisabled}>
+            <div className="flex items-center justify-center gap-2">
+              <TrashIcon className="h-6 w-6" />
+              <div>Remove this scenario</div>
+            </div>
+          </Button>
+        </ButtonGroup>
+      </div>
 
       {removeButtonDisabled && (
         <div className="my-4">
@@ -68,8 +69,19 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
         </div>
       )}
 
+      {selectedScenario.asAtYear < getCurrentYear() && (
+        <div className="my-4">
+          <Alert alertType={AlertType.info}>
+            <div className="flex gap-4">
+              <LockClosedIcon className="w-6 h-6 text-primary" /> This scenario has an &apos;As at year&apos; in the
+              past. It is therefore locked to further changes.
+            </div>
+          </Alert>
+        </div>
+      )}
+
       <TextDisplayField label={scenarioConstants.NAME.LABEL} helpText={scenarioConstants.NAME.HELP_TEXT} value={name} />
-      <EditButton />
+      {asAtYear === getCurrentYear() && <EditButton />}
       {/* <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
         <div className="flex items-center justify-center gap-2">
           <PencilSquareIcon className="h-6 w-6" />
@@ -82,14 +94,13 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
         helpText={scenarioConstants.DESCRIPTION.HELP_TEXT}
         value={description || "n/a"}
       />
-      <EditButton />
+      {asAtYear === getCurrentYear() && <EditButton />}
 
       <TextDisplayField
         label={scenarioConstants.AS_AT_YEAR.LABEL}
         helpText={scenarioConstants.AS_AT_YEAR.HELP_TEXT}
         value={asAtYear}
       />
-      <EditButton />
     </>
   )
 }

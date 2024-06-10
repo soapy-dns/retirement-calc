@@ -10,6 +10,7 @@ import { CountryFlag } from "@/app/ui/components/CountryFlag"
 import { FormGroup } from "@/app/ui/components/common/FormGroup"
 import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import { DisplayCardWithEdit } from "@/app/ui/components/form/DisplayCardWithEdit"
+import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 
 interface Props {
   showInfo: () => void
@@ -27,6 +28,8 @@ export const GeneralContextDisplay: React.FC<Props> = ({ showInfo }) => {
     navigation.goTo(AppPath.contextGeneralEdit)
   }
 
+  const handleEditFn = selectedScenario.asAtYear >= getCurrentYear() ? handleEdit : undefined
+
   const heading = (
     <h2 className="flex items-center justify-between text-primary">
       <div className="flex gap-2 items-center">
@@ -39,7 +42,7 @@ export const GeneralContextDisplay: React.FC<Props> = ({ showInfo }) => {
   )
 
   return (
-    <DisplayCardWithEdit heading={heading} handleEdit={handleEdit}>
+    <DisplayCardWithEdit heading={heading} handleEdit={handleEditFn}>
       <FormGroup
         label={contextConstants.TAX_RESIDENCY.LABEL}
         id="taxResidency"

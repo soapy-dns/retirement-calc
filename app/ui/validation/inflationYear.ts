@@ -1,4 +1,4 @@
-import { getStartingYear } from "@/app/lib/calculations/utils/getStartingYear"
+import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 
 const INVALID_INFLATION_RATE = "The inflation rate should be a number - 0.01 <-> 100%"
 const REQUIRED_MSG = "Value is required."
