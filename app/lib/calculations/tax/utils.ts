@@ -128,6 +128,12 @@ export const calculateTaxes = (
     const ownersTaxableIncomeAmt = getOwnersTaxableIncomeAmt(incomeFromAssets, owner, year)
 
     const ownersTotalTaxableAmt = ownersTaxableIncomeAmt + manualTaxableDrawdownAmt
+    console.log(
+      "--ownersTotalTaxableAmt, ownersTaxableIncomeAmt, manualTaxableDrawdownAmt--",
+      ownersTotalTaxableAmt,
+      ownersTaxableIncomeAmt,
+      manualTaxableDrawdownAmt
+    )
 
     const ownersTaxAmt = incomeTaxCalculator.getTax(ownersTotalTaxableAmt, year)
 

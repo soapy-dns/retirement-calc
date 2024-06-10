@@ -8,6 +8,7 @@ export const getDefaultScenarios = (): IScenario[] => {
       id: "A",
       name: "Australian example",
       description: "Example with all Australian asset types",
+
       asAtYear: currentYear,
       assets: [
         {
