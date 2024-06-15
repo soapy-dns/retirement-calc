@@ -12,7 +12,10 @@ export default function Anchor({
 }) {
   if (href?.substring(0, 1) === "/") {
     return (
-      <Link href={href} className={` text-primary text-base ${className}`}>
+      <Link
+        href={href}
+        className={` text-primary text-base focus:outline focus:outline-2 focus:outline-primary ${className}`}
+      >
         {children}
       </Link>
     )

@@ -9,7 +9,7 @@ or to right-click/long-press and copy a link to the part of the article they wan
 export default function H2({ id, children }: { id?: string; children?: ReactNode }) {
   if (id) {
     return (
-      <Link href={`#${id}`}>
+      <Link href={`#${id}`} tabIndex={-1}>
         <h2 id={id} className="text-primary mt-4 mb-2 text-xl">
           {children}
         </h2>
