@@ -3,7 +3,7 @@
 import { Toaster } from "react-hot-toast"
 
 import { HelpModalProvider } from "../ui/context/HelpModalProvider"
-import { ScenarioProvider } from "../ui/context/ScenarioProvider"
+import { ScenarioProvider } from "../ui/context/scenario/ScenarioProvider"
 export default function WithCalculationLayout({ children }: { children: React.ReactNode }) {
   return (
     <div>

@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { useRouter } from "next/navigation"
 
-import { ScenarioContext } from "../context/ScenarioContext"
+import { ScenarioContext } from "../context/scenario/ScenarioContext"
 import { useNavigation } from "../hooks/useNavigation"
 import { AppPath } from "../types"
 import { Button, ButtonType } from "./common/Button"

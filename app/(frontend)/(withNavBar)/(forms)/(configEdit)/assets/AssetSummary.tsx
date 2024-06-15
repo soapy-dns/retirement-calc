@@ -13,7 +13,7 @@ import { getAssetDisplayDetails } from "./utils"
 import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { useContext } from "react"
-import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 
 interface IAssetItemDisplay {
   removeAllowed: boolean

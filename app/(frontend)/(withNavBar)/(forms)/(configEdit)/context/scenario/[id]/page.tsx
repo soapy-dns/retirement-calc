@@ -10,17 +10,19 @@ import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { ALPHA_NUMERIC } from "@/app/ui/components/common/formRegExes"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { TextAreaQuestion } from "@/app/ui/components/form/TextAreaQuestion"
-import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 
 import { scenarioConstants } from "../scenarioConstants"
 import { IsFormNumber } from "@/app/lib/data/schema/config/schemaUtils"
+import { useSearchParams } from "next/navigation"
+import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 
 // set years validation
 const FormSchema = z.object({
   name: z.string().min(3),
-  description: z.string().min(3),
-  asAtYear: IsFormNumber
+  description: z.string().min(3)
+  // asAtYear: IsFormNumber
 })
 
 export type FormDataType = z.infer<typeof FormSchema>
@@ -29,9 +31,17 @@ export default function ScenarioPage({ params }: { params: { id: string } }) {
   const { id } = params
   const navigation = useNavigation()
   const { selectedScenario, updateScenario, addScenario } = useContext(ScenarioContext)
-  const { name, description, asAtYear } = selectedScenario
-  const defaultValues = id === "add" ? {} : { name, description, asAtYear }
-  const { control, handleSubmit } = useForm<FormDataType>({
+  const searchParams = useSearchParams()
+
+  const debug = searchParams.get("debug")
+
+  const { name, description } = selectedScenario
+  const defaultValues = id === "add" ? {} : { name, description }
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isDirty }
+  } = useForm<FormDataType>({
     defaultValues,
     resolver: zodResolver(FormSchema)
   })
@@ -41,13 +51,13 @@ export default function ScenarioPage({ params }: { params: { id: string } }) {
   }
 
   const onSubmit = async (data: FormDataType) => {
-    const { name, description, asAtYear } = data
+    const { name, description } = data
 
     if (id === "add") {
-      const { success } = await addScenario(name, description, asAtYear)
+      const { success } = await addScenario(name, description)
       if (success) navigation.goBack()
     } else {
-      const updatedScenario = { ...selectedScenario, name, description, asAtYear }
+      const updatedScenario = { ...selectedScenario, name, description }
 
       const { success } = await updateScenario(updatedScenario)
       if (success) navigation.goBack()
@@ -70,6 +80,17 @@ export default function ScenarioPage({ params }: { params: { id: string } }) {
           by editing after saving.
         </Alert>
       )}
+      {id === "add" && selectedScenario.asAtYear < getCurrentYear() && (
+        <div className="my-4">
+          <Alert heading="Note" alertType={AlertType.info}>
+            As you are copying a historical scenario, and historical scenarios are locked for changes, some aspects may
+            be updated e.g. the &apos;As at date&apos;. Asset details will remain unchanged and these must be updated
+            manually.
+          </Alert>
+        </div>
+      )}
+
+      {debug && errors && <pre>{JSON.stringify(errors, null, 4)}</pre>}
 
       <form>
         {/* @ts-ignore */}

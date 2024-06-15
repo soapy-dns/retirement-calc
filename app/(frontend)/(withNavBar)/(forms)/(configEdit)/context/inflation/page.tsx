@@ -5,7 +5,7 @@ import { useFieldArray, useForm } from "react-hook-form"
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { ContextConfig } from "@/app/lib/data/schema/config"
 import { InputField } from "@/app/ui/components/form/InputField"
 // import { inflationRateValidationRules, inflationYearValidationRules } from "@/app/ui/validation/inflationYear"

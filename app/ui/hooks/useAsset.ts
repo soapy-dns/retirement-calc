@@ -1,7 +1,7 @@
 import { IAsset } from "@/app/lib/data/schema/config"
 import { getRandomKey } from "@/app/lib/utils/getRandomKey"
 import { useContext } from "react"
-import { ScenarioContext } from "../context/ScenarioContext"
+import { ScenarioContext } from "../context/scenario/ScenarioContext"
 import { sortAssetConfig } from "../utils/sortAssetConfig"
 
 export const useAsset = () => {

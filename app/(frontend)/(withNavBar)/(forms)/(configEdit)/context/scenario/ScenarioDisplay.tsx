@@ -3,7 +3,7 @@ import * as React from "react"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
-import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
 import { LockClosedIcon, PencilSquareIcon, PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
@@ -82,12 +82,6 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
 
       <TextDisplayField label={scenarioConstants.NAME.LABEL} helpText={scenarioConstants.NAME.HELP_TEXT} value={name} />
       {asAtYear === getCurrentYear() && <EditButton />}
-      {/* <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
-        <div className="flex items-center justify-center gap-2">
-          <PencilSquareIcon className="h-6 w-6" />
-          <div>Edit</div>
-        </div>
-      </Button> */}
 
       <TextDisplayField
         label={scenarioConstants.DESCRIPTION.LABEL}

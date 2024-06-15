@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { contextConstants } from "./contextConstants"
-import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
 import { Card } from "@/app/ui/components/Card"

@@ -1,5 +1,5 @@
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
-import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
 import { PlusCircleIcon } from "@heroicons/react/24/outline"

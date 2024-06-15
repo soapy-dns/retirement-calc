@@ -3,7 +3,7 @@ import { screen } from "@testing-library/dom"
 import { act, render, waitFor } from "@testing-library/react"
 
 import LivingExpensesPage from "../page"
-import { ScenarioProvider } from "@/app/ui/context/ScenarioProvider"
+import { ScenarioProvider } from "@/app/ui/context/scenario/ScenarioProvider"
 import { HelpModalProvider } from "@/app/ui/context/HelpModalProvider"
 import { generateMock } from "@anatine/zod-mock"
 import { ScenarioSchema } from "@/app/lib/data/schema/config"

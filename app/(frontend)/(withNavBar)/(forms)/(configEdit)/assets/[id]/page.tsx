@@ -2,13 +2,10 @@
 
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-// import { z } from "@/app/lib/data/schema/config/validation/customZod"
-// import { z } from "zod"
 
 import { AssetEditForm } from "../AssetEditForm"
 import {
   IAsset,
-  AssetClassEnum,
   IncomeAsset,
   CapitalAsset,
   PropertyAsset,
@@ -31,13 +28,6 @@ import {
   isPropertyAsset
 } from "@/app/ui/utils"
 import { YesNo } from "../../types"
-// import {
-//   CountryEnum,
-//   IsFormNumberOpt,
-//   YesNoSchema,
-//   IsOptionalValidYear
-//   // ZodInputStringPipe
-// } from "@/app/lib/data/schema/config/schemaUtils"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"

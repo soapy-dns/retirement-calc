@@ -1,6 +1,6 @@
 import { DisplayCardWithEdit } from "@/app/ui/components/form/DisplayCardWithEdit"
 import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
-import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
 import { useContext } from "react"

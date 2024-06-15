@@ -1,7 +1,7 @@
 "use client"
 import { IScenario } from "@/app/lib/data/schema/config"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
-import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
 import { ChangeEvent, useContext } from "react"
