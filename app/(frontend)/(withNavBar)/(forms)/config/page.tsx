@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useContext } from "react"
-import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import { AssetTab } from "../(configEdit)/assets/AssetTab"
 import { ContextTab } from "../(configEdit)/context/ContextTab"
 import { TransfersTab } from "../(configEdit)/transfers/TransferTab"
@@ -12,6 +11,7 @@ import { ConfigTabContext } from "@/app/ui/context/ConfigTabProvider"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { ConfigNavBar } from "../(configEdit)/ConfigNavBar"
 import Scenarios from "@/docs/info/ScenarioInfo.mdx"
+import { InfoButton } from "@/app/ui/components/common/accordian/InfoButton"
 // import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 
 const ConfigPage: React.FC = () => {
@@ -30,9 +30,7 @@ const ConfigPage: React.FC = () => {
       <div className="flex content-center text-primary">
         <h1 className="flex items-center gap-2">
           {headingText}
-          <button onClick={toggleHelpText}>
-            <InformationCircleIcon className="h-6 w-6 " />
-          </button>
+          <InfoButton showInfo={toggleHelpText} />
         </h1>
       </div>
 

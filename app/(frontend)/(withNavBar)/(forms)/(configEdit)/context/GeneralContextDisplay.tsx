@@ -8,9 +8,9 @@ import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
 import { EditButton } from "@/app/ui/components/common/EditButton"
 import { CountryFlag } from "@/app/ui/components/CountryFlag"
 import { FormGroup } from "@/app/ui/components/common/FormGroup"
-import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import { DisplayCardWithEdit } from "@/app/ui/components/form/DisplayCardWithEdit"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
+import { InfoButton } from "@/app/ui/components/common/accordian/InfoButton"
 
 interface Props {
   showInfo: () => void
@@ -34,9 +34,7 @@ export const GeneralContextDisplay: React.FC<Props> = ({ showInfo }) => {
     <h2 className="flex items-center justify-between text-primary">
       <div className="flex gap-2 items-center">
         Tax and currency
-        <button onClick={showInfo}>
-          <InformationCircleIcon className="w-6 h-6" />
-        </button>
+        <InfoButton showInfo={showInfo} />
       </div>
     </h2>
   )
