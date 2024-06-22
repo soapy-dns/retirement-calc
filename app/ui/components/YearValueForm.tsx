@@ -95,14 +95,6 @@ export const YearValueForm: React.FC<Props> = ({
             </Button>
           )}
         </ButtonGroup>
-        {/* <ButtonGroup>
-          <Button onClick={handleSubmit} buttonType={ButtonType.primary}>
-            {saveText}
-          </Button>
-          <Button onClick={handleCancel} buttonType={ButtonType.secondary}>
-            {cancelText}
-          </Button>
-        </ButtonGroup> */}
       </div>
     </form>
   )
