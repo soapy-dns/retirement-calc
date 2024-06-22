@@ -1,6 +1,5 @@
 "use client"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { TransferForm } from "../TransferForm"
@@ -8,7 +7,7 @@ import { type Transfer } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useTransfer } from "@/app/ui/hooks/useTransfer"
 import EditPageLayout from "@/app/(frontend)/(withoutNavBar)/components/EditPageLayout"
-import { IsFormNumberOpt, IsValidYear, YesNoSchema } from "@/app/lib/data/schema/config/schemaUtils"
+import { FormDataType, FormSchema } from "./FormSchema"
 
 const getTransferValuesFromForm = (data: FormDataType): Omit<Transfer, "id"> => {
   return {
@@ -19,17 +18,6 @@ const getTransferValuesFromForm = (data: FormDataType): Omit<Transfer, "id"> => 
     costOfTransfer: data.costOfTransfer ? +data.costOfTransfer : undefined
   }
 }
-
-const FormSchema = z.object({
-  year: IsValidYear,
-  from: z.string(),
-  to: z.string(),
-  migrateAll: YesNoSchema.optional(),
-  value: IsFormNumberOpt,
-  costOfTransfer: IsFormNumberOpt
-})
-
-type FormDataType = z.infer<typeof FormSchema>
 
 const marshall = (data: FormDataType, transfer: Transfer): Transfer => {
   const newFields = getTransferValuesFromForm(data)
@@ -72,7 +60,6 @@ export default function TransferEditPage({ params }: { params: { id: string } })
 
   //   This is probably a really bad way to do it as we will re-render the entire form when one value changes - FIXME:
   const migrateAllValue = watch("migrateAll")
-  // return <div>Dynamic page {params.id}</div>
 
   return (
     <EditPageLayout

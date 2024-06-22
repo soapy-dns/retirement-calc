@@ -36,6 +36,7 @@ const useAppAlert = () => {
             // message={now.toDateString()}
             // message={toastOptions?.duration ? toastOptions.duration.toString() : "no duration"}
             message={message}
+            // message="Warning alert"
             onClose={() => {
               if (onClose) onClose()
               toast.remove(t.id)
@@ -47,6 +48,7 @@ const useAppAlert = () => {
       {
         ...defaultConfig.toastOptions,
         ...toastOptions
+        // duration: 50000
       }
     )
     return id

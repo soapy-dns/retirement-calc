@@ -37,7 +37,6 @@ export const FormSchema = z
   })
   .refine(
     ({ assetType, value }) => {
-      // TODO: this is cast to undefined if itis a string
       if (isCapitalAsset(assetType) && !value) return false
       return true
     },
