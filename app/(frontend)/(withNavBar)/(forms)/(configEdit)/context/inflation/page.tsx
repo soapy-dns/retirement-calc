@@ -15,7 +15,7 @@ import { ValidationError } from "@/app/ui/components/common/ValidationError"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(frontend)/(withoutNavBar)/components/EditPageLayout"
 import { GenericModal } from "@/app/ui/components/modals/GenericModal"
-import { YearValue } from "@/app/ui/components/YearValue"
+import { YearValueForm } from "@/app/ui/components/YearValueForm"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
 import { FormDataType, getFormSchema } from "./types"
@@ -191,7 +191,7 @@ const InflationEditPage: React.FC = () => {
       </form>
 
       <GenericModal showModal={showModal} heading="Add inflation row" handleCancel={onToggle}>
-        <YearValue
+        <YearValueForm
           handleCancel={onToggle}
           handleAdd={handleAdd}
           valueLabel={contextConstants.RATE.LABEL}

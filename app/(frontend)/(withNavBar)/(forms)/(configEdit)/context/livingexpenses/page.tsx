@@ -13,7 +13,7 @@ import { DECIMALS_ONLY, INTEGERS_ONLY } from "@/app/ui/components/common/formReg
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ValidationError } from "@/app/ui/components/common/ValidationError"
 import EditPageLayout from "@/app/(frontend)/(withoutNavBar)/components/EditPageLayout"
-import { YearValue } from "@/app/ui/components/YearValue"
+import { YearValueForm } from "@/app/ui/components/YearValueForm"
 import { GenericModal } from "@/app/ui/components/modals/GenericModal"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
@@ -178,7 +178,7 @@ const LivingExpensesPage: React.FC = () => {
       </>
 
       <GenericModal showModal={showModal} heading="Add living expenses row" handleCancel={onToggle}>
-        <YearValue
+        <YearValueForm
           handleCancel={onToggle}
           handleAdd={handleAdd}
           valueLabel={contextConstants.LIVING_EXPENSES.LABEL}
