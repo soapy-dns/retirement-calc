@@ -49,7 +49,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     try {
       setCalculating(true)
       const calculationResults = await calculate(selectedScenario)
-      // console.log("calculationResults", calculationResults)
+      console.log("calculationResults", calculationResults)
       setCalculationResults(calculationResults)
       setCalculating(false)
 
