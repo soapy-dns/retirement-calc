@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { Button, ButtonType } from "./common/Button"
 import { INTEGERS_ONLY } from "./common/formRegExes"
 import { InputQuestion } from "./form/InputQuestion"
+import { ButtonGroup } from "./common/ButtonGroup"
 // import { zodResolver } from "@hookform/resolvers/zod"
 
 interface Props {
@@ -23,7 +24,7 @@ interface ChangedFormData {
 // TODO: How so I re-use this for inflation and living expenses.  I could pass in
 // the appropriate zodResolver function and have a generic as part of handleAdd, but that
 // sound needlessly complicated
-export const YearValue: React.FC<Props> = ({
+export const YearValueForm: React.FC<Props> = ({
   handleCancel,
   handleAdd,
   valueLabel,
@@ -81,7 +82,7 @@ export const YearValue: React.FC<Props> = ({
           helpText={valueHelpText}
         />
 
-        <div className="grid grid-cols-2">
+        <ButtonGroup>
           {handleCancel && (
             <Button onClick={onCancel} buttonType={ButtonType.secondary}>
               Cancel
@@ -93,7 +94,7 @@ export const YearValue: React.FC<Props> = ({
               Add
             </Button>
           )}
-        </div>
+        </ButtonGroup>
       </div>
     </form>
   )

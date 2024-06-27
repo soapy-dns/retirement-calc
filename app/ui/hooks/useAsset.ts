@@ -1,7 +1,7 @@
 import { IAsset } from "@/app/lib/data/schema/config"
 import { getRandomKey } from "@/app/lib/utils/getRandomKey"
 import { useContext } from "react"
-import { ScenarioContext } from "../context/ScenarioContext"
+import { ScenarioContext } from "../context/scenario/ScenarioContext"
 import { sortAssetConfig } from "../utils/sortAssetConfig"
 
 export const useAsset = () => {
@@ -41,19 +41,25 @@ export const useAsset = () => {
     const index = assets.findIndex((it) => it.id === asset.id) || 0
 
     assets.splice(index, 1, asset)
-    selectedScenario.assets = assets
+
+    const newAssets = sortAssetConfig(assets)
+
+    selectedScenario.assets = newAssets
 
     const { success } = await updateScenario(selectedScenario)
     return { success }
   }
 
   const removeAsset = async (id: string): Promise<{ success: boolean }> => {
-    const newAssets = [...selectedScenario.assets]
+    const assets = [...selectedScenario.assets]
 
-    const index = selectedScenario?.assets.findIndex((it) => it.id === id) || 0
+    const index = assets.findIndex((it) => it.id === id) || 0
     if (index === -1) throw new Error(`Asset ${id} not found`)
 
-    newAssets.splice(index, 1)
+    assets.splice(index, 1)
+
+    const newAssets = sortAssetConfig(assets)
+
     selectedScenario.assets = newAssets
 
     const { success } = await updateScenario(selectedScenario)
@@ -65,12 +71,6 @@ export const useAsset = () => {
     const additionalAsset = { ...assetConfig, id: getRandomKey() } as IAsset
 
     const newAssets = sortAssetConfig(oldAssets.concat([additionalAsset]))
-
-    // newAssets.sort((a, b) => {
-    //   if (a.className > b.className) return 1
-    //   if (a.className < b.className) return -1
-    //   return 0
-    // })
 
     selectedScenario.assets = newAssets
 

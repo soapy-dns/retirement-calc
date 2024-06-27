@@ -5,17 +5,16 @@ import { useFieldArray, useForm } from "react-hook-form"
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { ContextConfig } from "@/app/lib/data/schema/config"
 import { InputField } from "@/app/ui/components/form/InputField"
-// import { inflationRateValidationRules, inflationYearValidationRules } from "@/app/ui/validation/inflationYear"
 import { DECIMALS_ONLY, INTEGERS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { ValidationError } from "@/app/ui/components/common/ValidationError"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import EditPageLayout from "@/app/(frontend)/(withoutNavBar)/components/EditPageLayout"
 import { GenericModal } from "@/app/ui/components/modals/GenericModal"
-import { YearValue } from "@/app/ui/components/YearValue"
+import { YearValueForm } from "@/app/ui/components/YearValueForm"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
 import { FormDataType, getFormSchema } from "./types"
@@ -191,7 +190,7 @@ const InflationEditPage: React.FC = () => {
       </form>
 
       <GenericModal showModal={showModal} heading="Add inflation row" handleCancel={onToggle}>
-        <YearValue
+        <YearValueForm
           handleCancel={onToggle}
           handleAdd={handleAdd}
           valueLabel={contextConstants.RATE.LABEL}

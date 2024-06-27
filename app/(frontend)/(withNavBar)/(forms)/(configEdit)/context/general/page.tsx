@@ -4,7 +4,7 @@ import { z } from "zod"
 
 import EditPageLayout from "@/app/(frontend)/(withoutNavBar)/components/EditPageLayout"
 import { ContextConfig } from "@/app/lib/data/schema/config"
-import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext, useState } from "react"
 import { useForm } from "react-hook-form"

@@ -7,12 +7,12 @@ import { IScenario } from "@/app/lib/data/schema/config"
 import { getDefaultScenarios } from "@/app/lib/data/scenarios"
 import { calculate } from "@/app/lib/calculations"
 import { CalculationResults } from "@/app/lib/calculations/types"
-import { useAppAlert } from "../hooks/useAppAlert"
-import { getRandomKey } from "@/app/lib/utils/getRandomKey"
-import { Spinner } from "../components/common/Spinner"
+import { useAppAlert } from "../../hooks/useAppAlert"
+import { Spinner } from "../../components/common/Spinner"
 
-import { FormattedErrors } from "../components/formattedErrors/FormattedErrors"
-import { isIncomeAsset } from "../utils"
+import { FormattedErrors } from "../../components/formattedErrors/FormattedErrors"
+import { isIncomeAsset } from "../../utils"
+import { getNewScenario } from "./getNewScenario"
 
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
   const scenarioOptions = scenarios.map((scenario) => ({
@@ -49,7 +49,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     try {
       setCalculating(true)
       const calculationResults = await calculate(selectedScenario)
-      // console.log("calculationResults", calculationResults)
+      console.log("calculationResults", calculationResults)
       setCalculationResults(calculationResults)
       setCalculating(false)
 
@@ -176,8 +176,12 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     return { success: false }
   }
 
+  /*
+  Note: although this is 'adding' a scenario, it is doing so by copying another. 
+  If the as at date is in the past we will have to do some manipulations
+  */
   const addScenario = async (name: string, description: string): Promise<{ success: boolean }> => {
-    const newScenario = { ...selectedScenario, name, description, id: getRandomKey() }
+    const newScenario = await getNewScenario(selectedScenario, name, description)
     const { success } = await doCalculations(newScenario)
 
     const mergedScenarios = scenarios.concat([newScenario])

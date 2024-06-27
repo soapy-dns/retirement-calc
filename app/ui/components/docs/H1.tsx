@@ -9,8 +9,8 @@ or to right-click/long-press and copy a link to the part of the article they wan
 export default function H1({ id, children }: { id?: string; children?: ReactNode }) {
   if (id) {
     return (
-      <Link href={`#${id}`}>
-        <h1 id={id} className="text-primary mt-8 mb-2 text-2xl">
+      <Link href={`#${id}`} tabIndex={-1}>
+        <h1 id={id} className="text-primary mt-8 mb-2 text-2xl focus:outline focus:outline-2 focus:outline-primary">
           {children}
         </h1>
       </Link>

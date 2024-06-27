@@ -1,11 +1,14 @@
 import { CapitalAsset, IAsset, IncomeAsset } from "@/app/lib/data/schema/config"
 import { isCapitalAsset, isIncomeAsset } from "."
 
+const classNameSortOrder = { Salary: 1, AuProperty: 2, AuSuper: 3, AuDefinedBenefits: 4, AuBank: 5, AuShares: 6 }
+
 export const sortAssetConfig = (assets: IAsset[]) => {
+  console.log("sortAssetConfig")
   const newAssets = [...assets]
   newAssets.sort((a, b) => {
-    if (a.className > b.className) return 1
-    if (a.className < b.className) return -1
+    if (classNameSortOrder[a.className] > classNameSortOrder[b.className]) return 1
+    if (classNameSortOrder[a.className] < classNameSortOrder[b.className]) return -1
 
     // both have same asset className
     if (isCapitalAsset(a.className)) {

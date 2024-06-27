@@ -4,7 +4,7 @@ import { YearData } from "./types"
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
 import { IAsset, IScenario, SuperContext, Transfer } from "../../data/schema/config"
 import { getTransferAmt } from "../transfers/getTransferAmt"
-import { getSuperIncomeTax } from "../tax/taxCalcs/SuperTaxCalc"
+import { getInvestmentTax } from "../tax/taxCalcs/SuperTaxCalc"
 
 export class AuSuper extends Asset {
   capitalAsset: boolean
@@ -48,7 +48,7 @@ export class AuSuper extends Asset {
 
     const income = (prevValue + transferAmt / 2) * investmentReturn
 
-    const taxOnIncome = getSuperIncomeTax(income, this.country)
+    const taxOnIncome = getInvestmentTax(income, this.country)
 
     const value = prevValue + income + transferAmt - taxOnIncome
 

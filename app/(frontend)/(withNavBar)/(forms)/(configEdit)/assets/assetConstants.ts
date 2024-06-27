@@ -39,7 +39,8 @@ export const assetConstants = {
   },
   INCOME: {
     LABEL: "Income",
-    HELP_TEXT: "The gross (prior to tax) income amount per year.  This is assumed to increase in line with inflation."
+    HELP_TEXT:
+      "The gross (prior to tax) income amount per year, but not including any mandatory payments made on your behalf by your employer e.g. super / national insurance.  This is assumed to increase in line with inflation."
   },
   IS_STATE_PENSION: {
     LABEL: "Is state pension",

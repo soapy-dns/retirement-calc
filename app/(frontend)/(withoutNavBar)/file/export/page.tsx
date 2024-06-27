@@ -2,7 +2,7 @@
 
 import { CheckboxQuestion } from "@/app/ui/components/form/CheckboxQuestion"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
-import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext } from "react"
 import { useForm } from "react-hook-form"

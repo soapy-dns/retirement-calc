@@ -73,3 +73,10 @@ google-chrome –version
 ### Check it starts
 
 google-chrome
+
+## Accessibility
+
+https://www.upyoura11y.com/category/fundamentals
+https://www.w3.org/WAI/tutorials/
+https://webaim.org/techniques/keyboard/
+https://www.sarasoueidan.com/blog/focus-indicators/

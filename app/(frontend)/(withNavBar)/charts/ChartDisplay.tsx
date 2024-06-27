@@ -3,7 +3,7 @@
 import React, { useContext } from "react"
 
 import { CalculatedAssetLineChart } from "./CalculatedAssetLineChart"
-import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { Spinner } from "@/app/ui/components/common/Spinner"
 import { ErrorDetails } from "@/app/ui/components/ErrorDetails"
 import { Container } from "@/app/ui/components/Container"

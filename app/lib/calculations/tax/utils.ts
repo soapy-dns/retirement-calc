@@ -93,6 +93,31 @@ export const getTaxesRows = (
   )
 }
 
+// TODO: complete!
+// export const getTotalTaxes = (
+//   incomeTaxes: Tax[],
+//   earningTaxes: EarningsTax[],
+//   finalYear: number,
+// ): BasicYearData[]  => {
+
+//   const incomeYearData: BasicYearData[] = incomeTaxes.reduce((accum, it) => {
+
+//     const x = it.history
+//   }, [] as BasicYearData[])
+//   const cleanedTIncomeTaxes = removeUnusedHistoryFromTaxes(incomeTaxes, finalYear)
+//     const cleanedTEarningTaxes = removeUnusedHistoryFromTaxes(earningTaxes, finalYear)
+//     const
+
+//   return cleanedTaxes.reduce(
+//     (accum, tax: Tax | EarningsTax) => {
+//       const key: string = `${taxName} (${tax.owner})`
+//       accum[key] = tax.history
+//       return accum
+//     },
+//     {} as BasicYearData[]>
+//   )
+// }
+
 export const initEarningsTaxes = (yearRange: number[], owners: string[]): EarningsTax[] => {
   const earningsTaxes = owners.map((owner) => ({
     owner,
@@ -128,6 +153,12 @@ export const calculateTaxes = (
     const ownersTaxableIncomeAmt = getOwnersTaxableIncomeAmt(incomeFromAssets, owner, year)
 
     const ownersTotalTaxableAmt = ownersTaxableIncomeAmt + manualTaxableDrawdownAmt
+    // console.log(
+    //   "--ownersTotalTaxableAmt, ownersTaxableIncomeAmt, manualTaxableDrawdownAmt--",
+    //   ownersTotalTaxableAmt,
+    //   ownersTaxableIncomeAmt,
+    //   manualTaxableDrawdownAmt
+    // )
 
     const ownersTaxAmt = incomeTaxCalculator.getTax(ownersTotalTaxableAmt, year)
 

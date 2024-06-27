@@ -1,13 +1,13 @@
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { Table } from "@/app/ui/components/common/Table"
+import { InfoButton } from "@/app/ui/components/common/accordian/InfoButton"
 import { DisplayCardWithEdit } from "@/app/ui/components/form/DisplayCardWithEdit"
-import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { ContextType, useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
 import { getCurrencyFormatter } from "@/app/ui/utils/formatter"
-import { InformationCircleIcon } from "@heroicons/react/24/outline"
 import { useContext } from "react"
 
 interface Props {
@@ -40,9 +40,7 @@ export const LivingExpensesDisplay: React.FC<Props> = ({ showInfo }) => {
     <h2 className="flex items-center justify-between text-primary">
       <div className="flex gap-2 items-center">
         Living expenses
-        <button onClick={showInfo}>
-          <InformationCircleIcon className="w-6 h-6" />
-        </button>
+        <InfoButton showInfo={showInfo} />
       </div>
     </h2>
   )

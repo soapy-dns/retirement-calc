@@ -1,0 +1,115 @@
+[
+  {
+    "id": "c927be03-7b23-48f9-b75c-99ba63c8d70f",
+    "name": "Defined benefits example",
+    "description": "Defined benefits example",
+    "asAtYear": 2024,
+    "assets": [
+      {
+        "id": "JOINT_AU_BANK",
+        "name": "Bank account",
+        "description": "Bank account",
+        "className": "AuBank",
+        "value": 10000,
+        "assetOwners": ["Her", "Him"],
+        "incomeBucket": true,
+        "canDrawdown": true,
+        "drawdown": {
+          "drawdownOrder": 10,
+          "preferredMinAmt": 10000
+        },
+        "percOfEarningsTaxable": 100,
+        "country": "AU"
+      },
+      {
+        "id": "HER_AU_DEFINED_BENEFIT",
+        "name": "UK Defined benefits",
+        "description": "UK Defined benefits in AU, this should be taxed.  It should be index linked",
+        "className": "AuDefinedBenefits",
+        "income": {
+          "incomeAmt": 20000
+        },
+        "assetOwners": ["Her"],
+        "percOfEarningsTaxable": 0,
+        "canDrawdown": false,
+        "incomeBucket": false,
+        "country": "SC",
+        "isStatePension": false
+      },
+      {
+        "name": "UK state pension",
+        "description": "UK state pension - in AU, this should be taxed and not indexed",
+        "country": "SC",
+        "className": "AuDefinedBenefits",
+        "income": {
+          "incomeAmt": 10000
+        },
+        "assetOwners": ["Him"],
+        "canDrawdown": false,
+        "incomeBucket": false,
+        "id": "bb42a45b-acee-46b4-81f0-431ba2ff6a33",
+        "isStatePension": true
+      },
+      {
+        "name": "AU defined benefits",
+        "description": "AU defined benefits - in AU this should not be subject to tax",
+        "country": "AU",
+        "className": "AuDefinedBenefits",
+        "income": {
+          "incomeAmt": 80000
+        },
+        "assetOwners": ["Her"],
+        "canDrawdown": false,
+        "incomeBucket": false,
+        "id": "f80a9e54-8d70-4c7f-bdcb-4dd43b8244ae",
+        "isStatePension": false
+      }
+    ],
+    "context": {
+      "taxResident": "AU",
+      "currency": "AU",
+      "owners": ["Him", "Her"],
+      "auBank": {
+        "interestRate": 0.005
+      },
+      "ukBank": {
+        "interestRate": 0.005
+      },
+      "superAu": {
+        "investmentReturn": 0.05,
+        "taxationRate": 0.15
+      },
+      "superUk": {
+        "investmentReturn": 0.04,
+        "taxationRate": 0
+      },
+      "definedBenefitsAu": {
+        "useInflationRate": true
+      },
+      "definedBenefitsUk": {
+        "useInflationRate": true
+      },
+      "sharesAu": {
+        "growthInterestRate": 0.03,
+        "dividendInterestRate": 0.03
+      },
+      "property": {
+        "growthInterestRate": 0.03
+      },
+      "inflation": [
+        {
+          "fromYear": 2024,
+          "inflationRate": 0.05
+        }
+      ],
+      "livingExpenses": [
+        {
+          "fromYear": 2024,
+          "amountInTodaysTerms": 100000
+        }
+      ],
+      "au2ukExchangeRate": 0.52
+    },
+    "transfers": []
+  }
+]

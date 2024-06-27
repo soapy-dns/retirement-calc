@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { ScenarioContext } from "../context/ScenarioContext"
+import { ScenarioContext } from "../context/scenario/ScenarioContext"
 import { Country } from "@/app/lib/data/schema/config"
 
 export enum ContextType {

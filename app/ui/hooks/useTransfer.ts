@@ -1,7 +1,7 @@
 import { Transfer } from "@/app/lib/data/schema/config"
 import { getRandomKey } from "@/app/lib/utils/getRandomKey"
 import { useContext } from "react"
-import { ScenarioContext } from "../context/ScenarioContext"
+import { ScenarioContext } from "../context/scenario/ScenarioContext"
 
 export const useTransfer = () => {
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)

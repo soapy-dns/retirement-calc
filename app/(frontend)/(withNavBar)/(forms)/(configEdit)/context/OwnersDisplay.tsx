@@ -3,7 +3,7 @@ import { Card } from "@/app/ui/components/Card"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
 import { EditButton } from "@/app/ui/components/common/EditButton"
 import { DisplayCardWithEdit } from "@/app/ui/components/form/DisplayCardWithEdit"
-import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useContext } from "react"
 
 export const OwnersDisplay: React.FC = () => {

@@ -14,7 +14,7 @@ import { Line } from "react-chartjs-2"
 import { graphColors } from "./colorConstants"
 import { CapitalAssetGroup } from "@/app/lib/calculations/types"
 import { htmlLegendPlugin } from "./htmlLegendPlugin"
-import { ScenarioContext } from "@/app/ui/context/ScenarioContext"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { LegendContainer } from "./LegendContainer"
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend)

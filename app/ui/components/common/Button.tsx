@@ -40,7 +40,11 @@ export const Button: React.FC<IButton> = ({ buttonType, disabled = false, onClic
   } else {
     // This has a different y margin than the other buttons which may not be good
     return (
-      <button onClick={handleOnClick} disabled={disabled} className="py-1 text-primary  disabled:opacity-40">
+      <button
+        onClick={handleOnClick}
+        disabled={disabled}
+        className="py-1 text-primary  disabled:opacity-40 focus:outline focus:outline-2 focus:outline-primary"
+      >
         {children}
       </button>
     )

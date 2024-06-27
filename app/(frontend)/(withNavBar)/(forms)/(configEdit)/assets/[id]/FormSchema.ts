@@ -29,7 +29,7 @@ export const FormSchema = z
     rentalEndYear: IsOptionalValidYear,
     rentalIncome: IsFormNumberOpt,
     rentalExpenses: IsFormNumberOpt,
-    incomeAmt: IsFormNumberOpt, // value and income should be mutually exclusive
+    incomeAmt: IsFormNumberOpt,
     incomeStartYear: IsOptionalValidYear,
     incomeEndYear: IsOptionalValidYear,
     rateVariation: IsFormNumberOpt,
@@ -37,7 +37,6 @@ export const FormSchema = z
   })
   .refine(
     ({ assetType, value }) => {
-      // TODO: this is cast to undefined if itis a string
       if (isCapitalAsset(assetType) && !value) return false
       return true
     },

@@ -1,5 +1,6 @@
 import Anchor from "@/app/ui/components/docs/Anchor"
 import { documentDetails } from "@/app/docs/documentDetails"
+import taxConfig from "@/app/lib/config.json"
 
 # Assets
 
@@ -44,3 +45,8 @@ E.g. Bank accounts, money under the bed, term deposits. These assets are low ris
 This property that you own as your own home, or as an investment property.
 It is not commercial property, or any type of property funds.  
 If a rental property is sold in a year, then rental income will be assumed for half the year only.
+
+## Super
+
+Super contributions and investment earnings are taxed in Australia at a rate of {taxConfig.superTax.AU.superIncomeTaxPercent}% (2024).
+This is taken account within the calculations.

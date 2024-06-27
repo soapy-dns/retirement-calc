@@ -47,7 +47,7 @@ export const Input: React.FC<IInput> = ({
       <input
         {...rest}
         id={id}
-        className={`my-2 h-8 w-3/4 p-4 ${roundedClasses} ${colorClasses} ${className} focus:outline-none focus:ring-0 focus:border-primary focus:border-2 `}
+        className={`my-2 h-8 w-3/4 p-4 ${roundedClasses} ${colorClasses} ${className} focus:outline focus:outline-2 focus:outline-primary`}
         value={value}
         placeholder={placeholder}
         disabled={disabled}
