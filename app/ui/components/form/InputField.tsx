@@ -101,11 +101,8 @@ export const InputField: React.FC<InputProps> = ({
               data-testid={id}
               disabled={disabled}
               name={renderName}
-              // type={type}
               value={value}
-              // onChange={handleOnChange}
               onChange={(event: ChangeEvent<HTMLInputElement>) => handleOnChange(event.target.value, onChange)}
-              // onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, onChange)}
               // // This assumes handleSubmit performs validation
               onBlur={() => setTimeout(onBlur, 100)}
               placeholder={placeholder}

@@ -35,10 +35,10 @@
   },
   "superTax": {
     "AU": {
-      "superIncomeTaxRate": 0.15
+      "superIncomeTaxPercent": 15
     },
     "SC": {
-      "superIncomeTaxRate": 0
+      "superIncomeTaxPercent": 0
     }
   }
 }

@@ -11,7 +11,7 @@ export type AssetClass = z.infer<typeof AssetClassEnum>
 const CountryEnum = z.enum(["AU", "SC"])
 
 const IncomeDetailsSchema = z.object({
-  incomeAmt: z.number(),
+  incomeAmt: z.number().min(1),
   incomeStartYear: IsOptionalValidYear,
   incomeEndYear: IsOptionalValidYear
 })

@@ -29,7 +29,7 @@ export const FormSchema = z
     rentalEndYear: IsOptionalValidYear,
     rentalIncome: IsFormNumberOpt,
     rentalExpenses: IsFormNumberOpt,
-    incomeAmt: IsFormNumberOpt, // value and income should be mutually exclusive
+    incomeAmt: IsFormNumberOpt,
     incomeStartYear: IsOptionalValidYear,
     incomeEndYear: IsOptionalValidYear,
     rateVariation: IsFormNumberOpt,
