@@ -273,6 +273,35 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       "Living expenses": projectedLivingExpensesToDisplay
     }
 
+    const incomeTaxesYearData = taxes
+      .map((tax) => {
+        return tax.history.map((hist) => {
+          return { year: hist.year, value: hist.value }
+        })
+      })
+      .flat()
+
+    const earningsTaxesYearData = earningsTaxes
+      .map((earningTax) => {
+        return earningTax.history.map((hist) => {
+          return { year: hist.year, value: hist.value }
+        })
+      })
+      .flat()
+
+    const allTaxesYearData = incomeTaxesYearData.concat(earningsTaxesYearData)
+
+    const totalTaxesYearData = allTaxesYearData.reduce((accum, yearData) => {
+      const foundYearData = accum.find((it) => it.year === yearData.year)
+      if (foundYearData) {
+        foundYearData.value = foundYearData.value + yearData.value
+      } else if (finalYear >= yearData.year) {
+        // only include new data if <= final year we will display
+        accum.push(yearData)
+      }
+      return accum
+    }, [] as BasicYearData[])
+
     const expensesRowData = { ...incomeTaxRows, ...earningTaxRows, ...livingExpensesRows }
 
     const surplusRowData = { "Surplus (if -ve is tax liability for next yr)": surplusYearData }
@@ -295,7 +324,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       totalAssetsData,
       netPresentValue,
       totalAssetIncome,
-      totalExpensesData: totalExpenses
+      totalExpensesData: totalExpenses,
+      totalTaxesData: totalTaxesYearData
     }
   } catch (e) {
     if (e instanceof CalculationError) {
