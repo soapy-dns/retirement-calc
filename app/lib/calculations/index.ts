@@ -28,6 +28,7 @@ import { getScenarioTransfersForYear } from "./transfers/transferUtils"
 import { withData } from "./utils/withData"
 import { CalculationError } from "@/app/lib/utils/CalculationError"
 import { isCapitalAsset } from "@/app/ui/utils"
+import { accumToBasicYearData } from "./utils/accumToBasicYearData"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -273,34 +274,10 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       "Living expenses": projectedLivingExpensesToDisplay
     }
 
-    const incomeTaxesYearData = taxes
-      .map((tax) => {
-        return tax.history.map((hist) => {
-          return { year: hist.year, value: hist.value }
-        })
-      })
-      .flat()
+    const incomeTaxesYearData = accumToBasicYearData(taxes.map((it) => it.history).flat())
+    const earningsTaxesYearData = accumToBasicYearData(earningsTaxes.map((it) => it.history).flat())
 
-    const earningsTaxesYearData = earningsTaxes
-      .map((earningTax) => {
-        return earningTax.history.map((hist) => {
-          return { year: hist.year, value: hist.value }
-        })
-      })
-      .flat()
-
-    const allTaxesYearData = incomeTaxesYearData.concat(earningsTaxesYearData)
-
-    const totalTaxesYearData = allTaxesYearData.reduce((accum, yearData) => {
-      const foundYearData = accum.find((it) => it.year === yearData.year)
-      if (foundYearData) {
-        foundYearData.value = foundYearData.value + yearData.value
-      } else if (finalYear >= yearData.year) {
-        // only include new data if <= final year we will display
-        accum.push(yearData)
-      }
-      return accum
-    }, [] as BasicYearData[])
+    const totalTaxesYearData = accumToBasicYearData(incomeTaxesYearData.concat(earningsTaxesYearData))
 
     const expensesRowData = { ...incomeTaxRows, ...earningTaxRows, ...livingExpensesRows }
 

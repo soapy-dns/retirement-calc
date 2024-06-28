@@ -58,10 +58,10 @@ export interface Income {
   history: YearData[]
 }
 
-export interface Tax {
-  owner: string
-  history: YearsTaxData[]
-}
+// export interface Tax {
+//   owner: string
+//   history: YearsTaxData[]
+// }
 
 // this should be renamed i think
 export interface AssetConfig extends Omit<IAsset, "className"> {

@@ -1,5 +1,5 @@
 import { AutomatedDrawdown } from "../../autoDrawdowns/types"
-import { IScenario, IAsset } from "../../../data/schema/config"
+// import { IScenario, IAsset } from "../../../data/schema/config"
 
 import { BasicYearData } from "../../types"
 
