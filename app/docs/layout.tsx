@@ -11,7 +11,7 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <>
-      <div className="fixed top-10 z-10 bg-white pt-10 pb-4 w-full">
+      <div className="fixed top-10 border-b border-gray-200  bg-white  bg-opacity-90 pt-10 pb-4 w-full backdrop-filter backdrop-blur-sm">
         <div className="mb-4 flex items-center justify-center">
           <div className="display-block my-4 rounded-full border-2  border-primary  py-1 px-4 text-primary  disabled:opacity-40 flex flex-row justify-center items-center">
             <Link href={AppPath.config} className=" focus:outline-2  focus:outline-primary">
