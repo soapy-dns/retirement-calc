@@ -72,6 +72,7 @@ const SheetPage: React.FC = () => {
     drawdownRowData,
     totalDrawdownData,
     expensesRowData,
+    totalTaxesData,
     surplusRowData
   } = calculationResults
 
@@ -126,6 +127,8 @@ const SheetPage: React.FC = () => {
               Object.entries(expensesRowData).map(([rowIdentifier, expensesData], index) => {
                 return <Row key={index} rowIdentifier={rowIdentifier} row={expensesData} onToggle={onHelpModalToggle} />
               })}
+            <Row rowIdentifier="Total Taxes" bold={true} row={totalTaxesData} onToggle={onHelpModalToggle} />
+
             <Row rowIdentifier="Total Expenses" bold={true} row={totalExpensesData} onToggle={onHelpModalToggle} />
 
             <EmptyLine />

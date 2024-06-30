@@ -28,6 +28,7 @@ import { getScenarioTransfersForYear } from "./transfers/transferUtils"
 import { withData } from "./utils/withData"
 import { CalculationError } from "@/app/lib/utils/CalculationError"
 import { isCapitalAsset } from "@/app/ui/utils"
+import { accumToBasicYearData } from "./utils/accumToBasicYearData"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -266,14 +267,20 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     const earningsTaxName = getEarningsTaxName(taxResident)
 
-    const incomeTaxRows = withData(getTaxesRows(taxes, finalYear, "Income Tax"))
-    const earningTaxRows = withData(getTaxesRows(earningsTaxes, finalYear, earningsTaxName))
+    // const incomeTaxRows = withData(getTaxesRows(taxes, finalYear, "Income Tax"))
+    // const earningTaxRows = withData(getTaxesRows(earningsTaxes, finalYear, earningsTaxName))
     const livingExpensesRows = {
       "Living expenses (today's money)": livingExpensesTodaysMoneyToDisplay,
       "Living expenses": projectedLivingExpensesToDisplay
     }
 
-    const expensesRowData = { ...incomeTaxRows, ...earningTaxRows, ...livingExpensesRows }
+    const incomeTaxesYearData = accumToBasicYearData(taxes.map((it) => it.history).flat())
+    const earningsTaxesYearData = accumToBasicYearData(earningsTaxes.map((it) => it.history).flat())
+
+    const totalTaxesYearData = accumToBasicYearData(incomeTaxesYearData.concat(earningsTaxesYearData))
+
+    // const expensesRowData = { ...incomeTaxRows, ...earningTaxRows, ...livingExpensesRows }
+    const expensesRowData = { ...livingExpensesRows }
 
     const surplusRowData = { "Surplus (if -ve is tax liability for next yr)": surplusYearData }
 
@@ -295,7 +302,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       totalAssetsData,
       netPresentValue,
       totalAssetIncome,
-      totalExpensesData: totalExpenses
+      totalExpensesData: totalExpenses,
+      totalTaxesData: totalTaxesYearData
     }
   } catch (e) {
     if (e instanceof CalculationError) {

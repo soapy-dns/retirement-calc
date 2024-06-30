@@ -74,6 +74,11 @@ google-chrome –version
 
 google-chrome
 
+### Issues with cypress
+
+- The Test Runner unexpectedly exited via a exit event with signal SIGSEGV
+  this could be because of ...
+
 ## Accessibility
 
 https://www.upyoura11y.com/category/fundamentals

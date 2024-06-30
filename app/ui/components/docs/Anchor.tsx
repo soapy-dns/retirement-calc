@@ -14,6 +14,7 @@ export default function Anchor({
     return (
       <Link
         href={href}
+        scroll={true}
         className={` text-primary text-base focus:outline focus:outline-2 focus:outline-primary ${className}`}
       >
         {children}
