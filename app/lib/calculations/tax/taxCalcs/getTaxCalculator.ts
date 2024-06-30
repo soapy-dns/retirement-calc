@@ -20,9 +20,11 @@ export const getIncomeTaxCalculator = ({
 }: IGetTaxCalculator): BandedTaxCalc => {
   const currencyConversionFactor = taxResident !== currency ? au2ukExchangeRate ?? 1 : 1
 
-  if (taxResident === "AU")
+  if (taxResident === "AU") {
     return new BandedTaxCalc(currencyConversionFactor, config.incomeTax.AU.rates, inflationContext)
-
+  } else if (taxResident === "SC") {
+    return new BandedTaxCalc(currencyConversionFactor, config.incomeTax.SC.rates, inflationContext)
+  }
   return new BandedTaxCalc(currencyConversionFactor, config.incomeTax.SC.rates, inflationContext)
 }
 

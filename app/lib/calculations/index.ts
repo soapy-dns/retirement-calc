@@ -267,8 +267,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     const earningsTaxName = getEarningsTaxName(taxResident)
 
-    const incomeTaxRows = withData(getTaxesRows(taxes, finalYear, "Income Tax"))
-    const earningTaxRows = withData(getTaxesRows(earningsTaxes, finalYear, earningsTaxName))
+    // const incomeTaxRows = withData(getTaxesRows(taxes, finalYear, "Income Tax"))
+    // const earningTaxRows = withData(getTaxesRows(earningsTaxes, finalYear, earningsTaxName))
     const livingExpensesRows = {
       "Living expenses (today's money)": livingExpensesTodaysMoneyToDisplay,
       "Living expenses": projectedLivingExpensesToDisplay
@@ -279,7 +279,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     const totalTaxesYearData = accumToBasicYearData(incomeTaxesYearData.concat(earningsTaxesYearData))
 
-    const expensesRowData = { ...incomeTaxRows, ...earningTaxRows, ...livingExpensesRows }
+    // const expensesRowData = { ...incomeTaxRows, ...earningTaxRows, ...livingExpensesRows }
+    const expensesRowData = { ...livingExpensesRows }
 
     const surplusRowData = { "Surplus (if -ve is tax liability for next yr)": surplusYearData }
 

@@ -21,10 +21,31 @@
         { "rate": 0.45, "bandTop": 125140 },
         { "rate": 0.48, "bandTop": 9999999999 }
       ]
+    },
+    "EN": {
+      "$TODO:": "TODO:",
+      "name": "Income tax",
+      "rates": [
+        { "rate": 0, "bandTop": 12570 },
+        { "rate": 0.19, "bandTop": 14876 },
+        { "rate": 0.2, "bandTop": 26561 },
+        { "rate": 0.21, "bandTop": 43662 },
+        { "rate": 0.42, "bandTop": 75000 },
+        { "rate": 0.45, "bandTop": 125140 },
+        { "rate": 0.48, "bandTop": 9999999999 }
+      ]
     }
   },
   "earningsTax": {
     "SC": {
+      "name": "National insurance",
+      "rates": [
+        { "rate": 0, "bandTop": 12584 },
+        { "rate": 0.08, "bandTop": 50284 },
+        { "rate": 0.02, "bandTop": 99999999 }
+      ]
+    },
+    "EN": {
       "name": "National insurance",
       "rates": [
         { "rate": 0, "bandTop": 12584 },
@@ -38,6 +59,9 @@
       "superIncomeTaxPercent": 15
     },
     "SC": {
+      "superIncomeTaxPercent": 0
+    },
+    "EN": {
       "superIncomeTaxPercent": 0
     }
   }

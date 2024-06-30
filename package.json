@@ -13,7 +13,8 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "cy:open": "cypress open",
-    "cy": "cypress run --browser chrome"
+    "cy": "cypress run --browser chrome",
+    "cy:electron": "cypress run"
   },
   "dependencies": {
     "@anatine/zod-mock": "^3.13.4",
