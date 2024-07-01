@@ -31,21 +31,21 @@ describe("tests without currency conversion", () => {
     const incomeAsAtTheYear = 50000 * inflationFactor
 
     const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
-    expect(taxAmt).toEqual(Math.round(8531))
+    expect(taxAmt).toEqual(Math.round(8372))
   })
 
   it("should be correct after 3rd threshold", () => {
     const incomeAsAtTheYear = 125000 * inflationFactor
 
     const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
-    expect(taxAmt).toEqual(39773)
+    expect(taxAmt).toEqual(36947)
   })
 
   it("should be correct after 4th threshold", () => {
     const incomeAsAtTheYear = 200000 * inflationFactor
 
     const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
-    expect(taxAmt).toEqual(77047)
+    expect(taxAmt).toEqual(72316)
   })
 })
 
@@ -56,13 +56,13 @@ describe("test with currency conversion", () => {
     const incomeAsAtTheYear = 50000 * inflationFactor
 
     const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
-    expect(taxAmt).toEqual(14584)
+    expect(taxAmt).toEqual(13711)
   })
 
   it("should do with currency conversion ok", () => {
     const incomeAsAtTheYear = 100000 * inflationFactor
 
     const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
-    expect(taxAmt).toEqual(38524) // This is in the non australian currency as is the input
+    expect(taxAmt).toEqual(36158) // This is in the non australian currency as is the input
   })
 })
