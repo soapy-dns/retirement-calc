@@ -52,7 +52,7 @@ export const FormSchema = z
   .refine(
     ({ incomeStartYear, incomeEndYear }) => {
       if (!incomeStartYear || !incomeEndYear) return true
-      return incomeStartYear < incomeEndYear
+      return incomeStartYear <= incomeEndYear
     },
     ({ incomeStartYear, incomeEndYear }) => {
       return {

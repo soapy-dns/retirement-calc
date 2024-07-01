@@ -1,6 +1,6 @@
 {
-  "asAt": "1st July 2024",
   "incomeTax": {
+    "asAt": "1st July 2024",
     "AU": {
       "name": "Income tax",
       "rates": [
@@ -8,6 +8,16 @@
         { "rate": 0.19, "bandTop": 45000 },
         { "rate": 0.3, "bandTop": 135000 },
         { "rate": 0.37, "bandTop": 190000 },
+        { "rate": 0.45, "bandTop": 99999999 }
+      ]
+    },
+    "AU prior to 2024": {
+      "name": "Income tax",
+      "rates": [
+        { "rate": 0, "bandTop": 18200 },
+        { "rate": 0.19, "bandTop": 45000 },
+        { "rate": 0.325, "bandTop": 120000 },
+        { "rate": 0.37, "bandTop": 180000 },
         { "rate": 0.45, "bandTop": 99999999 }
       ]
     },
