@@ -113,9 +113,11 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     let calculatedEndYear = startingYear
     while (year < to && canDrawdownAssets(assets, year)) {
       calculatedEndYear = year + 1
+      // console.log("--adding asset income for year", year)
       addAssetIncome(year, assets, incomeFromAssets)
 
       const manualTransfersForYear = getScenarioTransfersForYear(scenario, year)
+      // console.log("--manualTransfersForYear--", manualTransfersForYear)
       calculateTaxes(taxes, year, assets, owners, incomeTaxCalculator, incomeFromAssets, manualTransfersForYear)
       calculateEarningsTaxes(earningsTaxes, assets, year, earningsTaxCalculator)
 
@@ -268,6 +270,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const earningsTaxName = getEarningsTaxName(taxResident)
 
     // const incomeTaxRows = withData(getTaxesRows(taxes, finalYear, "Income Tax"))
+    // console.log("--incomeTaxRows--", incomeTaxRows)
+    // console.log("--taxes--", taxes)
     // const earningTaxRows = withData(getTaxesRows(earningsTaxes, finalYear, earningsTaxName))
     const livingExpensesRows = {
       "Living expenses (today's money)": livingExpensesTodaysMoneyToDisplay,

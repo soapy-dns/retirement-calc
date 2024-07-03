@@ -3,7 +3,7 @@ import { AssetGroup } from "@/app/lib/calculations/types"
 import { YearData } from "./types"
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
 import { IAsset, IScenario, SuperContext, Transfer } from "../../data/schema/config"
-import { getTransferAmt } from "../transfers/getTransferAmt"
+import { getNetTransferAmt } from "../transfers/getNetTransferAmt"
 import { getInvestmentTax } from "../tax/taxCalcs/SuperTaxCalc"
 
 export class AuSuper extends Asset {
@@ -44,7 +44,7 @@ export class AuSuper extends Asset {
       ? this.superContext.investmentReturn + this.rateVariation
       : this.superContext.investmentReturn
 
-    const transferAmt = getTransferAmt(this.id, yearData, this.transfers, assets)
+    const transferAmt = getNetTransferAmt(this.id, yearData, this.transfers, assets)
 
     const income = (prevValue + transferAmt / 2) * investmentReturn
 
@@ -59,6 +59,9 @@ export class AuSuper extends Asset {
       income: Math.round(income), //TODO: for fixed benefit test
       taxOnIncome: Math.round(taxOnIncome) // Is tax always 15% irrespective?
     }
+    // if (year === 2024 && this.name === "Australian Retirement Trust") {
+    //   console.log("**2025 super** nextYearData", this.name, nextYearData)
+    // }
 
     this.history.push(nextYearData)
     return nextYearData // TODO: do we need to return this?

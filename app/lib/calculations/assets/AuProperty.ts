@@ -4,7 +4,7 @@ import { AssetGroup, InflationContext } from "@/app/lib/calculations/types"
 import { YearData } from "./types"
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
 import { IAsset, IScenario, PropertyContext, Transfer } from "../../data/schema/config"
-import { getTransferAmt } from "../transfers/getTransferAmt"
+import { getNetTransferAmt } from "../transfers/getNetTransferAmt"
 import { validForRentalIncome } from "./validForRentalIncome"
 
 export class AuProperty extends Asset {
@@ -58,7 +58,8 @@ export class AuProperty extends Asset {
       ? this.propertyContext.growthInterestRate + this.rateVariation
       : this.propertyContext.growthInterestRate
 
-    const transferAmt = getTransferAmt(this.id, yearData, this.transfers, assets)
+    const transferAmt = getNetTransferAmt(this.id, yearData, this.transfers, assets)
+    // console.log("property calc next year transferAmt", this.name, transferAmt)
 
     const inflationFactor = this.inflationContext[year].factor
 
