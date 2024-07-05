@@ -8,6 +8,8 @@ export const getScenarioTransfersForYear = (scenario: IScenario, year: number): 
   return transfersForYear
 }
 
+// There shouldn't be 2 full transfers from an asset, but definitely too an asset
+
 export const getFullTransfers = (
   transfersForYear: Transfer[],
   assetId: string,
@@ -15,19 +17,35 @@ export const getFullTransfers = (
   prevValue: number,
   year: number
 ) => {
-  const fullTransferFrom = transfersForYear.find((it) => it.from === assetId && it.migrateAll)
-  const fullTransferTo = transfersForYear.find((it) => it.to === assetId && it.migrateAll)
+  const fullTransfersMatchingFrom = transfersForYear.filter((it) => it.from === assetId && it.migrateAll)
+  if (fullTransfersMatchingFrom.length > 1) throw new Error("Cannot do 2 full transfers from 1 asset")
 
-  if (fullTransferFrom || fullTransferTo) {
-    const costOfTransfer = fullTransferTo?.costOfTransfer || 0
-    // no need to calc the amt in the middle of the year - subsequent calculations will do this
-    if (fullTransferTo) {
-      // need to find the Value of the 'from' asset for this year
-      const matchingAsset = assets.find((it) => it.id === fullTransferTo?.from)
-      const matchingYearData = matchingAsset?.history.find((it) => it.year === year)
-      return matchingYearData ? matchingYearData.value - costOfTransfer : 0
-    }
-    if (fullTransferFrom) return -prevValue
+  const fullTransfersMatchingTo = transfersForYear.filter((it) => it.to === assetId && it.migrateAll)
+
+  if (fullTransfersMatchingFrom.length > 0 && fullTransfersMatchingTo.length > 0) {
+    throw new Error("Cannot have a full transfer into and out of the same asset")
+  }
+
+  if (fullTransfersMatchingFrom && fullTransfersMatchingFrom[0]) {
+    if (fullTransfersMatchingFrom) return -prevValue
+  }
+
+  if (fullTransfersMatchingTo.length > 0) {
+    const totalCostOfTransfers = fullTransfersMatchingTo.reduce((accum, it) => {
+      const { costOfTransfer = 0 } = it
+      return accum + costOfTransfer
+    }, 0)
+
+    const totalTransferAmt = fullTransfersMatchingTo.reduce((accum, it) => {
+      const matchingAsset = assets.find((asset) => asset.id === it?.from)
+      const matchingYearData = matchingAsset?.history.find((yearData) => yearData.year === year)
+
+      if (matchingYearData) return accum + matchingYearData?.value
+
+      return accum
+    }, 0)
+
+    return totalTransferAmt - totalCostOfTransfers
   }
 
   return 0

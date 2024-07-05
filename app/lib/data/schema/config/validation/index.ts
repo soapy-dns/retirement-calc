@@ -42,7 +42,7 @@ export const incomeValidator = {
       const { income } = data as IncomeAsset
       const { incomeStartYear, incomeEndYear } = income
       if (!incomeStartYear || !incomeEndYear) return true
-      return incomeStartYear < incomeEndYear
+      return incomeStartYear <= incomeEndYear
     }
     return true
   },
@@ -51,6 +51,8 @@ export const incomeValidator = {
     if (className === "Salary" || className === "AuDefinedBenefits") {
       const { income } = data as IncomeAsset
       const { incomeStartYear, incomeEndYear } = income
+      // if (!incomeStartYear || !incomeEndYear) return true
+      // return incomeStartYear <= incomeEndYear
       return {
         message: `The income start year ${incomeStartYear} should be before the income end year ${incomeEndYear}`,
         path: ["income.incomeStartYear"]

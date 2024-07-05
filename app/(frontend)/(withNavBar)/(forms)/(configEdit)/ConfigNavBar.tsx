@@ -3,27 +3,34 @@ import { useContext } from "react"
 import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/solid"
 import { ConfigTabContext } from "@/app/ui/context/ConfigTabProvider"
 import { ConfigTab } from "@/app/ui/context/types"
+import { scrollFieldIntoView } from "@/app/ui/utils/scrollUtils"
+
+const id = "config-nav-bar"
 
 export const ConfigNavBar = () => {
   const { activeTab, updateActiveTab } = useContext(ConfigTabContext)
 
   const handleContextClick = () => {
     updateActiveTab(ConfigTab.context)
+    scrollFieldIntoView(id, 10)
+    // scrollBy({ top: 10 })
   }
 
   const handleAssetsClick = () => {
     updateActiveTab(ConfigTab.assets)
+    scrollFieldIntoView(id, 10)
   }
 
   const handleTransfersClick = () => {
     updateActiveTab(ConfigTab.transfers)
+    scrollFieldIntoView(id, 10)
   }
 
   const tabColors = "hover:bg-primary-lightest"
   const selectedTabClassNames = "border-b-4  bg-primary-lightest border-b-primary "
 
   return (
-    <div className=" mb-4 grid grid-cols-3 bg-gray-50  divide-x-2">
+    <div id={id} className=" mb-4 grid grid-cols-3 bg-gray-50  divide-x-2">
       <button
         onClick={handleContextClick}
         className={`${tabColors} flex justify-center gap-2 p-2 ${

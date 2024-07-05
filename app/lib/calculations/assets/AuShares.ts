@@ -3,7 +3,7 @@ import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
 import { Asset } from "./Asset"
 import { YearData } from "./types"
 import { IAsset, IScenario, SharesContext, Transfer } from "../../data/schema/config"
-import { getTransferAmt } from "../transfers/getTransferAmt"
+import { getNetTransferAmt } from "../transfers/getNetTransferAmt"
 
 export class AuShares extends Asset {
   capitalAsset: boolean
@@ -41,7 +41,7 @@ export class AuShares extends Asset {
   calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
     const { value: prevValue, year } = yearData
 
-    const transferAmt = getTransferAmt(this.id, yearData, this.transfers, assets)
+    const transferAmt = getNetTransferAmt(this.id, yearData, this.transfers, assets)
 
     const dividendIncome = (prevValue + transferAmt / 2) * this.shareContext.dividendInterestRate
 

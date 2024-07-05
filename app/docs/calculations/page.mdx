@@ -1,5 +1,6 @@
 import Anchor from "@/app/ui/components/docs/Anchor"
 import { documentDetails } from "@/app/docs/documentDetails"
+import config from "@/app/lib/config"
 
 # Calculations
 
@@ -53,4 +54,7 @@ then interest will be calculated for half the year on asset A and half the year 
 Income tax, and any earnings tax (e.g. National Insurance in the UK) are automatically calculated using individuals allowances.  
 Income tax bands are assumed to increase in line with inflation, although governments often don't do this (fiscal drag) as it increases there tax income.
 
-_Note:_ Capital gains taxes are not yet calculated.
+_Notes:_
+
+1. Capital gains taxes are not yet calculated.
+2. Tax rates are correct as at {config.asAt}

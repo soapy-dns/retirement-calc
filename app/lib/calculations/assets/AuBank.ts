@@ -3,7 +3,7 @@ import { YearData } from "../assets/types"
 import { AssetGroup } from "@/app/lib/calculations/types"
 import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
 import { CashContext, IAsset, IScenario, Transfer } from "../../data/schema/config"
-import { getTransferAmt } from "../transfers/getTransferAmt"
+import { getNetTransferAmt } from "../transfers/getNetTransferAmt"
 
 export class AuBank extends Asset {
   capitalAsset: boolean
@@ -43,7 +43,7 @@ export class AuBank extends Asset {
       ? this.cashContext.interestRate + this.rateVariation
       : this.cashContext.interestRate
 
-    const transferAmt = getTransferAmt(this.id, yearData, this.transfers, assets)
+    const transferAmt = getNetTransferAmt(this.id, yearData, this.transfers, assets)
 
     const income = (prevValue + transferAmt / 2) * investmentReturn
 

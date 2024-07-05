@@ -10,8 +10,16 @@ const inflationContext = {
   }
 }
 
+const taxRates = [
+  { rate: 0, bandTop: 18200 },
+  { rate: 0.19, bandTop: 45000 },
+  { rate: 0.325, bandTop: 120000 },
+  { rate: 0.37, bandTop: 180000 },
+  { rate: 0.45, bandTop: 99999999 }
+]
+
 describe("tests without currency conversion", () => {
-  const taxCalc = new BandedTaxCalc(1, config.incomeTax.AU.rates, inflationContext)
+  const taxCalc = new BandedTaxCalc(1, taxRates, inflationContext)
 
   it("should be no tax below threshold 1", () => {
     const incomeAsAtTheYear = 18199 * inflationFactor
@@ -31,38 +39,38 @@ describe("tests without currency conversion", () => {
     const incomeAsAtTheYear = 50000 * inflationFactor
 
     const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
-    expect(taxAmt).toEqual(Math.round(8372))
+    expect(taxAmt).toEqual(Math.round(8531))
   })
 
   it("should be correct after 3rd threshold", () => {
     const incomeAsAtTheYear = 125000 * inflationFactor
 
     const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
-    expect(taxAmt).toEqual(36947)
+    expect(taxAmt).toEqual(39773)
   })
 
   it("should be correct after 4th threshold", () => {
     const incomeAsAtTheYear = 200000 * inflationFactor
 
     const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
-    expect(taxAmt).toEqual(72316)
+    expect(taxAmt).toEqual(77047)
   })
 })
 
 describe("test with currency conversion", () => {
-  const taxCalc = new BandedTaxCalc(2, config.incomeTax.AU.rates, inflationContext)
+  const taxCalc = new BandedTaxCalc(2, taxRates, inflationContext)
 
   it("should do with currency conversion ok", () => {
     const incomeAsAtTheYear = 50000 * inflationFactor
 
     const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
-    expect(taxAmt).toEqual(13711)
+    expect(taxAmt).toEqual(14584)
   })
 
   it("should do with currency conversion ok", () => {
     const incomeAsAtTheYear = 100000 * inflationFactor
 
     const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
-    expect(taxAmt).toEqual(36158) // This is in the non australian currency as is the input
+    expect(taxAmt).toEqual(38524) // This is in the non australian currency as is the input
   })
 })
