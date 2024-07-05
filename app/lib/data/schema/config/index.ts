@@ -57,17 +57,19 @@ const transferWithoutMigrateAll = transferBaseSchema.extend({
   value: z.number()
 })
 
-const transferSchema = z.discriminatedUnion("migrateAll", [transferWithMigrateAll, transferWithoutMigrateAll]).refine(
-  ({ costOfTransfer = 0, value, migrateAll }) => {
-    if (migrateAll) return true
-    return value && costOfTransfer <= value
-  },
-  ({ costOfTransfer = 0, value }) => ({
-    message: `Cost of transfer (${numberFormatter.format(
-      costOfTransfer
-    )}) cannot be more than the value to transfer (${numberFormatter.format(value || 0)})`
-  })
-)
+export const TransferSchema = z
+  .discriminatedUnion("migrateAll", [transferWithMigrateAll, transferWithoutMigrateAll])
+  .refine(
+    ({ costOfTransfer = 0, value, migrateAll }) => {
+      if (migrateAll) return true
+      return value && costOfTransfer <= value
+    },
+    ({ costOfTransfer = 0, value }) => ({
+      message: `Cost of transfer (${numberFormatter.format(
+        costOfTransfer
+      )}) cannot be more than the value to transfer (${numberFormatter.format(value || 0)})`
+    })
+  )
 
 const contextSchema = z.object({
   taxResident: CountryEnum,
@@ -101,7 +103,7 @@ export const ScenarioSchema = z
     asAtYear: z.number(),
     assets: z.array(AssetSchema),
     context: contextSchema,
-    transfers: z.array(transferSchema).optional()
+    transfers: z.array(TransferSchema).optional()
   })
   .refine(({ assets }) => validateIncomeBucket(assets), {
     message: "Please mark 1 and only 1 asset for accumulating any income."
@@ -122,6 +124,6 @@ export * from "./asset"
 // export type IAsset = z.infer<typeof AssetSchema> // move IAsset to AssetType TODO:
 export type AssetType = z.infer<typeof AssetSchema> // duplicate
 
-export type Transfer = z.infer<typeof transferSchema>
+export type Transfer = z.infer<typeof TransferSchema>
 export type Country = z.infer<typeof CountryEnum>
 export type YesNoType = z.infer<typeof YesNoSchema>

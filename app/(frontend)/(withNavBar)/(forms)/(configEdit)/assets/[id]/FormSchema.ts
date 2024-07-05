@@ -37,10 +37,19 @@ export const FormSchema = z
   })
   .refine(
     ({ assetType, value }) => {
-      if (isCapitalAsset(assetType) && !value) return false
+      console.log("--value--", value)
+      if (isCapitalAsset(assetType) && value === undefined) return false
       return true
     },
     { message: "The asset value is required", path: ["value"] }
+  )
+  .refine(
+    ({ assetType, value }) => {
+      console.log("--value--", value)
+      if (isCapitalAsset(assetType) && value && value === 0) return false
+      return true
+    },
+    { message: "The asset value must have a value (at least 1 - this will be fixed)", path: ["value"] }
   )
   .refine(
     ({ assetType, incomeAmt }) => {

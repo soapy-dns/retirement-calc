@@ -1,6 +1,6 @@
 import { Transfer } from "../../data/schema/config"
 import { Asset } from "../assets/Asset"
-import { YearData } from "../types"
+import { BasicYearData } from "../types"
 import { getFullTransfers, getPartialTransfers } from "./transferUtils"
 
 // TODO: right some tests for
@@ -13,13 +13,15 @@ This should get the net transfer amount into this asset - a -ve value is a trans
 */
 export const getNetTransferAmt = (
   assetId: string,
-  yearData: YearData,
+  previouslyCalculatedYearData: BasicYearData,
   transfers: Transfer[] = [],
   assets: Asset[]
 ): number => {
-  const { value: prevValue, year } = yearData
+  const { value: prevValue, year } = previouslyCalculatedYearData
 
   const transfersForYear = transfers.filter((it) => it.year === year && (it.from === assetId || it.to === assetId))
+  // console.log("--transfersForYear--", transfersForYear)
+  // console.log("--assetId--", assetId)
   const partialTransferAmt = getPartialTransfers(transfersForYear, assetId)
   // console.log("--partialTransferAmt--", partialTransferAmt)
   const fullTransferAmt = getFullTransfers(transfersForYear, assetId, assets, prevValue, year)

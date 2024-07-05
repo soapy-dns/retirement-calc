@@ -267,7 +267,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const projectedLivingExpensesToDisplay = projectedLivingExpenses.splice(0, numOfCalculatedYears)
     const livingExpensesTodaysMoneyToDisplay = livingExpensesTodaysMoney.splice(0, numOfCalculatedYears)
 
-    const earningsTaxName = getEarningsTaxName(taxResident)
+    // const earningsTaxName = getEarningsTaxName(taxResident)
 
     // const incomeTaxRows = withData(getTaxesRows(taxes, finalYear, "Income Tax"))
     // console.log("--incomeTaxRows--", incomeTaxRows)
@@ -278,6 +278,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       "Living expenses": projectedLivingExpensesToDisplay
     }
 
+    console.log("--taxes--", taxes)
     const incomeTaxesYearData = accumToBasicYearData(taxes.map((it) => it.history).flat())
     const earningsTaxesYearData = accumToBasicYearData(earningsTaxes.map((it) => it.history).flat())
 
