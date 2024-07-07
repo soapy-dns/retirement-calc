@@ -13,7 +13,7 @@ interface Props {
 export const AlertBanner: React.FC<Props> = ({ onClose, variant, message, dismissible = true }) => {
   const backgroundColor = getBackgroundColor(variant)
   return (
-    <div className={`border-2 ${backgroundColor} w-screen p-4`}>
+    <div className={`border border-primary ${backgroundColor} w-screen p-4`}>
       <h2 className="text-primary">
         <div className="grid grid-cols-3">
           <div></div>

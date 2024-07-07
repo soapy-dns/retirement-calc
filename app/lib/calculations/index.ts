@@ -278,7 +278,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       "Living expenses": projectedLivingExpensesToDisplay
     }
 
-    console.log("--taxes--", taxes)
+    // console.log("--taxes--", taxes)
     const incomeTaxesYearData = accumToBasicYearData(taxes.map((it) => it.history).flat())
     const earningsTaxesYearData = accumToBasicYearData(earningsTaxes.map((it) => it.history).flat())
 

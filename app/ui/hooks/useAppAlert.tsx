@@ -12,9 +12,6 @@ const useAppAlert = () => {
     toastOptions: {
       // defaulting the duration to Infinity as user needs to dismiss the alerts in most cases explicitly.
       duration: Infinity
-    },
-    containerStyle: {
-      inset: "0px"
     }
   }
 
@@ -30,20 +27,18 @@ const useAppAlert = () => {
 
     const id = toast.custom(
       (t) => (
-        <div className="fixed top-20">
-          <AlertBanner
-            variant={AlertType.warning}
-            // message={now.toDateString()}
-            // message={toastOptions?.duration ? toastOptions.duration.toString() : "no duration"}
-            message={message}
-            // message="Warning alert"
-            onClose={() => {
-              if (onClose) onClose()
-              toast.remove(t.id)
-            }}
-            dismissible={dismissible}
-          />
-        </div>
+        <AlertBanner
+          variant={AlertType.warning}
+          // message={now.toDateString()}
+          // message={toastOptions?.duration ? toastOptions.duration.toString() : "no duration"}
+          message={message}
+          // message="Warning alert"
+          onClose={() => {
+            if (onClose) onClose()
+            toast.remove(t.id)
+          }}
+          dismissible={dismissible}
+        />
       ),
       {
         ...defaultConfig.toastOptions,
