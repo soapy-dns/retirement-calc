@@ -7,7 +7,9 @@ import { type Transfer } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useTransfer } from "@/app/ui/hooks/useTransfer"
 import EditPageLayout from "@/app/(frontend)/(withoutNavBar)/components/EditPageLayout"
-import { FormDataType, FormSchema } from "./FormSchema"
+import { FormDataType, FormSchema, getFormSchema } from "./FormSchema"
+import { useContext } from "react"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 
 const getTransferValuesFromForm = (data: FormDataType): Omit<Transfer, "id"> => {
   return {
@@ -32,6 +34,8 @@ const marshall = (data: FormDataType, transfer: Transfer): Transfer => {
 export default function TransferEditPage({ params }: { params: { id: string } }) {
   let { id } = params
   const navigation = useNavigation()
+  const { selectedScenario } = useContext(ScenarioContext)
+
   const { getTransferDetails, updateTransfer, addTransfer } = useTransfer()
   const transfer = getTransferDetails(id) // should I do something different for 'add'?
 
@@ -40,7 +44,7 @@ export default function TransferEditPage({ params }: { params: { id: string } })
 
   const { handleSubmit, watch, control } = useForm<FormDataType>({
     defaultValues: { from, to, value, year, migrateAll: migrateAllFormVal, costOfTransfer },
-    resolver: zodResolver(FormSchema)
+    resolver: zodResolver(getFormSchema(selectedScenario))
   })
 
   const onSubmit = async (data: FormDataType) => {
