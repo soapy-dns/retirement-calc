@@ -13,9 +13,9 @@ export const contextConstants: Record<string, ItemProps> = {
       "The exchange rate of the currency country to the tax residency country.  For example, if one British pound equals 2 dollar, then if the tax residency was Scotland and the currency AUD, the exchange rate would be 0.5.  This value is required for tax calculations."
   },
   CURRENCY: {
-    LABEL: "Currency being used.",
+    LABEL: "Country of currency being used.",
     HELP_TEXT:
-      "The currency being used across the application.  Note: this is across all assets irrespective of the country the asset is from.  This is important when the currency is different from the currency of the tax residence."
+      "The country of the currency being used across the application.  Note: this is across all assets irrespective of the country the asset is from.  This is important when the currency is different from the currency of the tax residence."
   },
   STARTING_YEAR: {
     LABEL: "Starting year.",

@@ -8,11 +8,17 @@ interface CountryFlagProps {
 
 const flag = {
   SC: "/images/gb-sct.svg",
+  EN: "/images/gb-eng.svg",
+  WA: "/images/gb-wls.svg",
+  NI: "/images/gb-nir.svg",
   AU: "/images/au.svg"
 }
 
 const text = {
   SC: "Scotland",
+  EN: "England",
+  WA: "Wales",
+  NI: "Northern Ireland",
   AU: "Australia"
 }
 

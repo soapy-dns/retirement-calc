@@ -1,6 +1,7 @@
+import { Country } from "@/app/lib/data/schema/config"
 import { InflationContext } from "../../types"
 import { BandedTaxCalc } from "./BandedTaxCalc"
-import { Country } from "./types"
+// import { Country } from "./types"
 import config from "@/app/lib/config.json"
 
 export interface IGetTaxCalculator {

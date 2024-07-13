@@ -1,5 +1,6 @@
 {
   "incomeTax": {
+    "$comment": "perhaps asAt should be at a lower level",
     "asAt": "1st July 2024",
     "AU": {
       "name": "Income tax",
@@ -34,16 +35,30 @@
       ]
     },
     "EN": {
-      "$TODO:": "TODO:",
       "name": "Income tax",
       "rates": [
         { "rate": 0, "bandTop": 12570 },
-        { "rate": 0.19, "bandTop": 14876 },
-        { "rate": 0.2, "bandTop": 26561 },
-        { "rate": 0.21, "bandTop": 43662 },
-        { "rate": 0.42, "bandTop": 75000 },
-        { "rate": 0.45, "bandTop": 125140 },
-        { "rate": 0.48, "bandTop": 9999999999 }
+        { "rate": 0.2, "bandTop": 50270 },
+        { "rate": 0.4, "bandTop": 125140 },
+        { "rate": 0.45, "bandTop": 9999999999 }
+      ]
+    },
+    "WA": {
+      "name": "Income tax",
+      "rates": [
+        { "rate": 0, "bandTop": 12570 },
+        { "rate": 0.2, "bandTop": 50270 },
+        { "rate": 0.4, "bandTop": 125140 },
+        { "rate": 0.45, "bandTop": 9999999999 }
+      ]
+    },
+    "NI": {
+      "name": "Income tax",
+      "rates": [
+        { "rate": 0, "bandTop": 12570 },
+        { "rate": 0.2, "bandTop": 50270 },
+        { "rate": 0.4, "bandTop": 125140 },
+        { "rate": 0.45, "bandTop": 9999999999 }
       ]
     }
   },
@@ -73,6 +88,12 @@
       "superIncomeTaxPercent": 0
     },
     "EN": {
+      "superIncomeTaxPercent": 0
+    },
+    "WA": {
+      "superIncomeTaxPercent": 0
+    },
+    "NI": {
       "superIncomeTaxPercent": 0
     }
   }

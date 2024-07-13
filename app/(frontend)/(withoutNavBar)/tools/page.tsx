@@ -2,7 +2,7 @@
 import { useSearchParams } from "next/navigation"
 
 import { getIncomeTaxCalculator } from "@/app/lib/calculations/tax/taxCalcs/getTaxCalculator"
-import { Country } from "@/app/lib/calculations/tax/taxCalcs/types"
+// import { Country } from "@/app/lib/calculations/tax/taxCalcs/types"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { Card } from "@/app/ui/components/Card"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
@@ -17,6 +17,8 @@ import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
 import { useState, useContext } from "react"
 import { useForm } from "react-hook-form"
 import { contextConstants } from "../../(withNavBar)/(forms)/(configEdit)/context/contextConstants"
+import { taxResidentOptions } from "../../(withNavBar)/(forms)/(configEdit)/context/options"
+import { Country } from "@/app/lib/data/schema/config"
 
 // TODO: make this a common utility
 const scrollFieldIntoView = (id: string) => {
@@ -103,10 +105,7 @@ export default function ToolsPage() {
           label={contextConstants.TAX_RESIDENCY.LABEL}
           // defaultValue=""
           editable={true}
-          options={[
-            { value: "AU", label: "Australia" },
-            { value: "SC", label: "Scotland" }
-          ]}
+          options={taxResidentOptions}
         />
         <SelectQuestion
           id="currency"

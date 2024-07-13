@@ -22,6 +22,7 @@ import {
 } from "@/app/ui/utils"
 import { AssetClass } from "@/app/lib/data/schema/config"
 import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
+import { taxResidentOptions } from "../context/options"
 
 interface Props {
   control: Control<any, object>
@@ -76,10 +77,12 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         id="country"
         control={control}
         label={assetConstants.COUNTRY.LABEL}
-        values={[
-          { label: "Australia", value: "AU" },
-          { label: "Scotland", value: "SC" }
-        ]}
+        values={taxResidentOptions}
+        // values={[
+        //   { label: "Australia", value: "AU" },
+        //   { label: "Scotland", value: "SC" },
+        //   { label: "England", value: "EN" }
+        // ]}
         variant={RadioQuestionVariant.VERTICAL}
         helpText={assetConstants.COUNTRY.HELP_TEXT}
       />

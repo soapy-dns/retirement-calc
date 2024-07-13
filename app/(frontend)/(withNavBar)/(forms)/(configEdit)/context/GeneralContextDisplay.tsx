@@ -53,6 +53,7 @@ export const GeneralContextDisplay: React.FC<Props> = ({ showInfo }) => {
         <CountryFlag country={currency} />
       </FormGroup>
 
+      {/* TODO: GBP / AUD? */}
       {taxResident !== currency && (
         <TextDisplayField
           label={contextConstants.AU_2_UK_EXCHANGE_RATE.LABEL}
@@ -60,43 +61,6 @@ export const GeneralContextDisplay: React.FC<Props> = ({ showInfo }) => {
           value={au2ukExchangeRate || "-"}
         />
       )}
-
-      {/* <SelectQuestion
-        id="currency"
-        control={control}
-        label={contextConstants.CURRENCY.LABEL}
-        defaultValue={context.currency}
-        editable={editable}
-        helpText={contextConstants.CURRENCY.HELP_TEXT}
-        options={[
-          { code: "AU", label: "AUD" },
-          { code: "SC", label: "GBP" }
-        ]}
-      /> */}
-
-      {/* {taxResident !== currency && (
-        <InputQuestion
-          id="au2ukExchangeRate"
-          control={control}
-          label={contextConstants.AU_2_UK_EXCHANGE_RATE.LABEL}
-          defaultValue={context.au2ukExchangeRate}
-          editable={editable}
-          // validationRules={changeDetailsValidation}
-          restrictedCharSet={DECIMALS_ONLY}
-          helpText={contextConstants.AU_2_UK_EXCHANGE_RATE.HELP_TEXT}
-        />
-      )} */}
-
-      {/* <InputQuestion
-        id="maxYears"
-        control={control}
-        label={contextConstants.MAX_YEARS.LABEL}
-        defaultValue={context.numOfYears}
-        editable={editable}
-        // validationRules={changeDetailsValidation}
-        restrictedCharSet={INTEGERS_ONLY}
-        helpText={contextConstants.MAX_YEARS.HELP_TEXT}
-      /> */}
     </DisplayCardWithEdit>
   )
 }

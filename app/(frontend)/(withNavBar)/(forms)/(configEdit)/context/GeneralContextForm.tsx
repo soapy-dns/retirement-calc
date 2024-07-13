@@ -5,7 +5,7 @@ import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { SelectQuestion } from "@/app/ui/components/form/SelectQuestion"
 import { Control } from "react-hook-form"
 import { contextConstants } from "./contextConstants"
-import { currencyOptions, taxResidentOptions } from "./options"
+import { taxResidentOptions } from "./options"
 
 interface Props {
   control: Control<any, object>
@@ -28,7 +28,7 @@ const GeneralContextForm: React.FC<Props> = ({ control, taxResident, currency })
         control={control}
         label={contextConstants.CURRENCY.LABEL}
         helpText={contextConstants.CURRENCY.HELP_TEXT}
-        options={currencyOptions}
+        options={taxResidentOptions}
       />
 
       {taxResident !== currency && (

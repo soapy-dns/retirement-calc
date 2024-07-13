@@ -1,14 +1,14 @@
 import { z } from "zod"
 
 import { drawdownOrderValidator, incomeValidator, propertyValidator } from "./validation"
-import { IsOptionalValidYear, YesNoSchema } from "./schemaUtils"
+import { CountryEnum, IsOptionalValidYear, YesNoSchema } from "./schemaUtils"
 
 export const AssetClassEnum = z.enum(["AuBank", "AuSuper", "AuProperty", "Salary", "AuDefinedBenefits", "AuShares"])
 export type AssetClass = z.infer<typeof AssetClassEnum>
 
 // FIXME: I can't get these to work by importing
 // const IsOptionalFutureOrCurrentYear = z.number().optional()
-const CountryEnum = z.enum(["AU", "SC"])
+// const CountryEnum = z.enum(["AU", "SC", "EN"])
 
 const IncomeDetailsSchema = z.object({
   incomeAmt: z.number().min(1),
