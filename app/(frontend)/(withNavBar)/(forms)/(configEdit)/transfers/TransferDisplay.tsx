@@ -33,7 +33,7 @@ export const TransferDisplay: FunctionComponent<Props> = ({ transfers }) => {
   const handleRemove = (id: string) => {
     removeTransfer(id)
 
-    // TODO: modal to confirm
+    // TODO: modal to confirm.
   }
 
   const transferOptions = getSelectedScenarioAssetsOptions({ excludeIncome: true })

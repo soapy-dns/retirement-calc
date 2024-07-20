@@ -28,21 +28,20 @@ export const Radio: React.FC<RadioProps> = ({
     <div className={variant === RadioVariant.HORIZONTAL ? "flex flex-row gap-4" : "flex flex-col"}>
       {options.map((option, index) => {
         const { label, value: optionValue } = option
-
         return (
           <div key={`${optionValue}`}>
             <div className="flex gap-2">
               <input
                 type="radio"
-                id={id}
-                data-testid={id}
+                id={`${id}-${optionValue}`}
+                data-testid={`${id}-${optionValue}`}
                 name={name}
                 defaultChecked={value === optionValue}
                 value={optionValue}
                 onClick={onChange}
                 className="mt-1 h-6 w-6 shrink-0 appearance-none rounded-full border-2 border-primary bg-white  ring-primary  checked:border-white checked:bg-primary checked:ring-2"
               />
-              <label htmlFor={id} className="my-auto">
+              <label htmlFor={`${id}-${optionValue}`} className="my-auto">
                 {label}
               </label>
             </div>

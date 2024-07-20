@@ -1,7 +1,7 @@
 import { YearData } from "./types"
 import { AssetGroup } from "@/app/lib/calculations/types"
-import { Country } from "../tax/taxCalcs/types"
-import { AssetClass, CashAsset, IAsset, LiquidAsset } from "../../data/schema/config"
+// import { Country } from "../tax/taxCalcs/types"
+import { AssetClass, CashAsset, Country, IAsset, LiquidAsset } from "../../data/schema/config"
 import { isCashAsset, isLiquidAsset } from "@/app/ui/utils"
 
 type Props = IAsset & {

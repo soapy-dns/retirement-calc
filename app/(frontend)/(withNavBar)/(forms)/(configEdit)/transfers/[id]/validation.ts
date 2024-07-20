@@ -1,7 +1,10 @@
 import { Transfer } from "@/app/lib/data/schema/config"
 import { FormDataType } from "./FormSchema"
 
-export const testForMultipleMigrateAll = ({ from, year, migrateAll }: FormDataType, transfers: Transfer[] = []) => {
+export const testForMultipleMigrateAll = (
+  { from, year, migrateAll }: FormDataType,
+  transfers: Transfer[] = []
+): boolean => {
   if (migrateAll === "Y") {
     const isAnotherMigrateAllFrom = transfers?.find((it) => {
       return it.year === year && it.from === from && it.migrateAll

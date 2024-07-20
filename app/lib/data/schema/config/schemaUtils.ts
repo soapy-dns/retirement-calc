@@ -64,5 +64,5 @@ export const IsOptionalValidYear = z.preprocess(
 //     )
 // )
 
-export const CountryEnum = z.enum(["AU", "SC"])
+export const CountryEnum = z.enum(["AU", "SC", "EN", "WA", "NI"])
 export const YesNoSchema = z.enum(["Y", "N"])

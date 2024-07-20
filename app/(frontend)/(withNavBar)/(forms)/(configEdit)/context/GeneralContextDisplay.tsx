@@ -6,7 +6,7 @@ import { AppPath } from "@/app/ui/types"
 import { Card } from "@/app/ui/components/Card"
 import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
 import { EditButton } from "@/app/ui/components/common/EditButton"
-import { CountryFlag } from "@/app/ui/components/CountryFlag"
+import { CountryTile } from "@/app/ui/components/CountryTile"
 import { FormGroup } from "@/app/ui/components/common/FormGroup"
 import { DisplayCardWithEdit } from "@/app/ui/components/form/DisplayCardWithEdit"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
@@ -46,13 +46,14 @@ export const GeneralContextDisplay: React.FC<Props> = ({ showInfo }) => {
         id="taxResidency"
         helpText={contextConstants.TAX_RESIDENCY.HELP_TEXT}
       >
-        <CountryFlag country={taxResident} />
+        <CountryTile country={taxResident} />
       </FormGroup>
 
       <FormGroup label={contextConstants.CURRENCY.LABEL} id="currency" helpText={contextConstants.CURRENCY.HELP_TEXT}>
-        <CountryFlag country={currency} />
+        <CountryTile country={currency} />
       </FormGroup>
 
+      {/* TODO: GBP / AUD? */}
       {taxResident !== currency && (
         <TextDisplayField
           label={contextConstants.AU_2_UK_EXCHANGE_RATE.LABEL}
@@ -60,43 +61,6 @@ export const GeneralContextDisplay: React.FC<Props> = ({ showInfo }) => {
           value={au2ukExchangeRate || "-"}
         />
       )}
-
-      {/* <SelectQuestion
-        id="currency"
-        control={control}
-        label={contextConstants.CURRENCY.LABEL}
-        defaultValue={context.currency}
-        editable={editable}
-        helpText={contextConstants.CURRENCY.HELP_TEXT}
-        options={[
-          { code: "AU", label: "AUD" },
-          { code: "SC", label: "GBP" }
-        ]}
-      /> */}
-
-      {/* {taxResident !== currency && (
-        <InputQuestion
-          id="au2ukExchangeRate"
-          control={control}
-          label={contextConstants.AU_2_UK_EXCHANGE_RATE.LABEL}
-          defaultValue={context.au2ukExchangeRate}
-          editable={editable}
-          // validationRules={changeDetailsValidation}
-          restrictedCharSet={DECIMALS_ONLY}
-          helpText={contextConstants.AU_2_UK_EXCHANGE_RATE.HELP_TEXT}
-        />
-      )} */}
-
-      {/* <InputQuestion
-        id="maxYears"
-        control={control}
-        label={contextConstants.MAX_YEARS.LABEL}
-        defaultValue={context.numOfYears}
-        editable={editable}
-        // validationRules={changeDetailsValidation}
-        restrictedCharSet={INTEGERS_ONLY}
-        helpText={contextConstants.MAX_YEARS.HELP_TEXT}
-      /> */}
     </DisplayCardWithEdit>
   )
 }
