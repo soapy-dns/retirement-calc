@@ -78,6 +78,22 @@
         { "rate": 0.08, "bandTop": 50284 },
         { "rate": 0.02, "bandTop": 99999999 }
       ]
+    },
+    "WA": {
+      "name": "National insurance",
+      "rates": [
+        { "rate": 0, "bandTop": 12584 },
+        { "rate": 0.08, "bandTop": 50284 },
+        { "rate": 0.02, "bandTop": 99999999 }
+      ]
+    },
+    "NI": {
+      "name": "National insurance",
+      "rates": [
+        { "rate": 0, "bandTop": 12584 },
+        { "rate": 0.08, "bandTop": 50284 },
+        { "rate": 0.02, "bandTop": 99999999 }
+      ]
     }
   },
   "superTax": {

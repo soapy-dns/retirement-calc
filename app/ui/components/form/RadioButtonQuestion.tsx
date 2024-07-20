@@ -4,11 +4,13 @@ import { useError } from "../../hooks/useError"
 import { FormGroup } from "../common/FormGroup"
 import { Radio, RadioVariant } from "../common/Radio"
 import { Toggle, ToggleVariant } from "../common/Toggle"
+import { CountryTiles } from "../common/CountryTiles"
 
 export enum RadioQuestionVariant {
   VERTICAL = "VERTICAL",
   HORIZONTAL = "HORIZONTAL",
-  BLOCK = "BLOCK"
+  BLOCK = "BLOCK",
+  TILE = "TILE"
 }
 
 type RadioProps = {
@@ -59,45 +61,155 @@ export const RadioButtonQuestion: FunctionComponent<RadioProps> = ({
       errorMsg={errorMsg}
       helpText={helpText}
     >
-      {variant === RadioQuestionVariant.BLOCK ? (
-        <Controller
-          name={nameOfEl}
-          control={control}
-          defaultValue={defaultValue}
-          rules={validationRules}
-          render={({ field: { value, onChange, name: renderName, onBlur, ref } }) => (
-            <Toggle
-              id={id}
-              data-testid={id}
-              name={renderName}
-              options={values}
-              value={value}
-              onChange={onChange}
-              variant={ToggleVariant.FULLWIDTH}
-            />
-          )}
-        />
-      ) : (
-        <Controller
-          name={nameOfEl}
-          control={control}
-          defaultValue={defaultValue}
-          rules={validationRules}
-          render={({ field: { value, onChange, name: renderName, onBlur, ref } }) => (
-            <Radio
-              id={id}
-              data-testid={id}
-              name={renderName}
-              options={values}
-              value={value}
-              onChange={onChange}
-              variant={variant === RadioQuestionVariant.HORIZONTAL ? RadioVariant.HORIZONTAL : RadioVariant.VERTICAL}
-              //   onBlur={() => setTimeout(onBlur, 100)}
-              //   ref={ref}
-            />
-          )}
-        />
-      )}
+      <Controller
+        name={nameOfEl}
+        control={control}
+        defaultValue={defaultValue}
+        rules={validationRules}
+        render={({ field: { value, onChange, name: renderName, onBlur, ref } }) => {
+          switch (variant) {
+            case RadioQuestionVariant.BLOCK:
+              return (
+                <Toggle
+                  id={id}
+                  data-testid={id}
+                  name={renderName}
+                  options={values}
+                  value={value}
+                  onChange={onChange}
+                  variant={ToggleVariant.FULLWIDTH}
+                />
+              )
+
+            // case RadioQuestionVariant.TILE:
+            //   console.log("radio tile")
+            //   return (
+            //     <CountryTiles
+            //       id={id}
+            //       data-testid={id}
+            //       name={renderName}
+            //       // options={values}
+            //       value={value}
+            //       onChange={onChange}
+            //       //  variant={
+            //       //    variant === RadioQuestionVariant.HORIZONTAL
+            //       //      ? RadioVariant.HORIZONTAL
+            //       //      : RadioVariant.VERTICAL
+            //       //  }
+            //       //   onBlur={() => setTimeout(onBlur, 100)}
+            //       //   ref={ref}
+            //     />
+            //   )
+
+            default:
+              return (
+                <Radio
+                  id={id}
+                  data-testid={id}
+                  name={renderName}
+                  options={values}
+                  value={value}
+                  onChange={onChange}
+                  variant={
+                    variant === RadioQuestionVariant.HORIZONTAL ? RadioVariant.HORIZONTAL : RadioVariant.VERTICAL
+                  }
+                  //   onBlur={() => setTimeout(onBlur, 100)}
+                  //   ref={ref}
+                />
+              )
+          }
+        }}
+      />
     </FormGroup>
   )
 }
+//       <>
+//       {
+//       () => { return switch (true) {
+//         case variant === RadioQuestionVariant.BLOCK:
+//           return (<Controller
+//           name={nameOfEl}
+//           control={control}
+//           defaultValue={defaultValue}
+//           rules={validationRules}
+//           render={({ field: { value, onChange, name: renderName, onBlur, ref } }) => (
+//             <Toggle
+//               id={id}
+//               data-testid={id}
+//               name={renderName}
+//               options={values}
+//               value={value}
+//               onChange={onChange}
+//               variant={ToggleVariant.FULLWIDTH}
+//             />
+//           )}
+//         />
+//       default:
+//         return (
+//           <Controller
+//               name={nameOfEl}
+//               control={control}
+//               defaultValue={defaultValue}
+//               rules={validationRules}
+//               render={({ field: { value, onChange, name: renderName, onBlur, ref } }) => (
+// <Radio
+//   id={id}
+//   data-testid={id}
+//   name={renderName}
+//   options={values}
+//   value={value}
+//   onChange={onChange}
+//   variant={variant === RadioQuestionVariant.HORIZONTAL ? RadioVariant.HORIZONTAL : RadioVariant.VERTICAL}
+//   //   onBlur={() => setTimeout(onBlur, 100)}
+//   //   ref={ref}
+// />
+//               )}
+//             />
+//         )
+
+//       }}}
+//             </>
+
+//     </FormGroup>
+//   )
+// }
+
+// {variant === RadioQuestionVariant.BLOCK ? (
+//         <Controller
+//           name={nameOfEl}
+//           control={control}
+//           defaultValue={defaultValue}
+//           rules={validationRules}
+//           render={({ field: { value, onChange, name: renderName, onBlur, ref } }) => (
+//             <Toggle
+//               id={id}
+//               data-testid={id}
+//               name={renderName}
+//               options={values}
+//               value={value}
+//               onChange={onChange}
+//               variant={ToggleVariant.FULLWIDTH}
+//             />
+//           )}
+//         />
+//       ) : (
+//         <Controller
+//           name={nameOfEl}
+//           control={control}
+//           defaultValue={defaultValue}
+//           rules={validationRules}
+//           render={({ field: { value, onChange, name: renderName, onBlur, ref } }) => (
+//             <Radio
+//               id={id}
+//               data-testid={id}
+//               name={renderName}
+//               options={values}
+//               value={value}
+//               onChange={onChange}
+//               variant={variant === RadioQuestionVariant.HORIZONTAL ? RadioVariant.HORIZONTAL : RadioVariant.VERTICAL}
+//               //   onBlur={() => setTimeout(onBlur, 100)}
+//               //   ref={ref}
+//             />
+//           )}
+//         />
+//       )}

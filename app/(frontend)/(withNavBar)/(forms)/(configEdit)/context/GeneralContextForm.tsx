@@ -6,6 +6,8 @@ import { SelectQuestion } from "@/app/ui/components/form/SelectQuestion"
 import { Control } from "react-hook-form"
 import { contextConstants } from "./contextConstants"
 import { taxResidentOptions } from "./options"
+import { RadioButtonQuestion, RadioQuestionVariant } from "@/app/ui/components/form/RadioButtonQuestion"
+import { CountrySelector } from "@/app/ui/components/form/CountrySelector"
 
 interface Props {
   control: Control<any, object>
@@ -16,19 +18,18 @@ interface Props {
 const GeneralContextForm: React.FC<Props> = ({ control, taxResident, currency }) => {
   return (
     <form>
-      <SelectQuestion
+      <CountrySelector
         id="taxResident"
         control={control}
         label={contextConstants.TAX_RESIDENCY.LABEL}
         helpText={contextConstants.TAX_RESIDENCY.HELP_TEXT}
-        options={taxResidentOptions}
       />
-      <SelectQuestion
+
+      <CountrySelector
         id="currency"
         control={control}
         label={contextConstants.CURRENCY.LABEL}
         helpText={contextConstants.CURRENCY.HELP_TEXT}
-        options={taxResidentOptions}
       />
 
       {taxResident !== currency && (

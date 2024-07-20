@@ -78,11 +78,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         control={control}
         label={assetConstants.COUNTRY.LABEL}
         values={taxResidentOptions}
-        // values={[
-        //   { label: "Australia", value: "AU" },
-        //   { label: "Scotland", value: "SC" },
-        //   { label: "England", value: "EN" }
-        // ]}
         variant={RadioQuestionVariant.VERTICAL}
         helpText={assetConstants.COUNTRY.HELP_TEXT}
       />

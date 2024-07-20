@@ -6,7 +6,7 @@ import { AppPath } from "@/app/ui/types"
 import { Card } from "@/app/ui/components/Card"
 import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
 import { EditButton } from "@/app/ui/components/common/EditButton"
-import { CountryFlag } from "@/app/ui/components/CountryFlag"
+import { CountryTile } from "@/app/ui/components/CountryTile"
 import { FormGroup } from "@/app/ui/components/common/FormGroup"
 import { DisplayCardWithEdit } from "@/app/ui/components/form/DisplayCardWithEdit"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
@@ -46,11 +46,11 @@ export const GeneralContextDisplay: React.FC<Props> = ({ showInfo }) => {
         id="taxResidency"
         helpText={contextConstants.TAX_RESIDENCY.HELP_TEXT}
       >
-        <CountryFlag country={taxResident} />
+        <CountryTile country={taxResident} />
       </FormGroup>
 
       <FormGroup label={contextConstants.CURRENCY.LABEL} id="currency" helpText={contextConstants.CURRENCY.HELP_TEXT}>
-        <CountryFlag country={currency} />
+        <CountryTile country={currency} />
       </FormGroup>
 
       {/* TODO: GBP / AUD? */}
