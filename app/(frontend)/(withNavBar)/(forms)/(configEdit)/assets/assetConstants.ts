@@ -7,7 +7,7 @@ export const assetConstants = {
   },
   COUNTRY: {
     LABEL: "Country of asset",
-    HELP_TEXT: "The country the asset is in (defaults to Australia)."
+    HELP_TEXT: "The country the asset is in (defaults to Australia). This is used in tax calculations."
   },
   INCOME_BUCKET: {
     LABEL: "Income to be accumulated in this asset?",
