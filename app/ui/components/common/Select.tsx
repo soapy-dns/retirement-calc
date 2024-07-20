@@ -39,12 +39,6 @@ export const Select: React.FC<ISelect> = ({
 
   return (
     <>
-      {summaryText && (
-        <Alert heading="Summary" alertType={AlertType.info}>
-          {summaryText}
-        </Alert>
-      )}
-
       <select
         onChange={handleSelect}
         value={value}
@@ -59,6 +53,12 @@ export const Select: React.FC<ISelect> = ({
             </option>
           ))}
       </select>
+
+      {summaryText && (
+        <Alert heading="Summary" alertType={AlertType.info}>
+          {summaryText}
+        </Alert>
+      )}
     </>
   )
 }
