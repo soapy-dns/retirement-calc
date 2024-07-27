@@ -1,6 +1,6 @@
 "use client"
 import { useSearchParams } from "next/navigation"
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 
 import { Cell as HeadingCell } from "./heading/Cell"
 import { Row } from "./row/Row"
@@ -41,6 +41,9 @@ const SheetPage: React.FC = () => {
   const [infoModal, setInfoModal] = useState<InfoType>(InfoType.NONE)
 
   const searchParams = useSearchParams()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const debug = searchParams.get("debug")
 
