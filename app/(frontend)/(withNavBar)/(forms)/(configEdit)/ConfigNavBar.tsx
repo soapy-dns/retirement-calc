@@ -11,19 +11,20 @@ export const ConfigNavBar = () => {
   const { activeTab, updateActiveTab } = useContext(ConfigTabContext)
 
   const handleContextClick = () => {
+    scrollFieldIntoView(id, 30)
     updateActiveTab(ConfigTab.context)
-    scrollFieldIntoView(id, 10)
+
     // scrollBy({ top: 10 })
   }
 
   const handleAssetsClick = () => {
-    updateActiveTab(ConfigTab.assets)
     scrollFieldIntoView(id, 10)
+    updateActiveTab(ConfigTab.assets)
   }
 
   const handleTransfersClick = () => {
-    updateActiveTab(ConfigTab.transfers)
     scrollFieldIntoView(id, 10)
+    updateActiveTab(ConfigTab.transfers)
   }
 
   const tabColors = "hover:bg-secondary"
