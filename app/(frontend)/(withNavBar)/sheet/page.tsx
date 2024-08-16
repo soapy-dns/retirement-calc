@@ -1,6 +1,6 @@
 "use client"
 import { useSearchParams } from "next/navigation"
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 
 import { Cell as HeadingCell } from "./heading/Cell"
 import { Row } from "./row/Row"
@@ -41,6 +41,9 @@ const SheetPage: React.FC = () => {
   const [infoModal, setInfoModal] = useState<InfoType>(InfoType.NONE)
 
   const searchParams = useSearchParams()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const debug = searchParams.get("debug")
 
@@ -90,7 +93,7 @@ const SheetPage: React.FC = () => {
         <table className="relative min-w-full table-fixed divide-y divide-gray-200 py-4">
           <thead className="sticky top-0 z-30 bg-gray-50 ">
             <tr>
-              <th key="name" className="z-30 bg-gray-50 italic text-primary md:first:sticky md:first:left-0">
+              <th key="name" className="z-30 bg-gray-50 italic text-primary-foreground md:first:sticky md:first:left-0">
                 {selectedScenario.name}
               </th>
               {headingRow.map((value, index) => {

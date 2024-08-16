@@ -54,7 +54,7 @@ const ChartPage = () => {
   return (
     <div className="my-24">
       <div className="mx-auto h-1/2 w-3/4">
-        <div className="flex justify-center text-primary">
+        <div className="flex justify-center text-primary-foreground">
           <Select
             id="selectChart"
             name="selectChart"

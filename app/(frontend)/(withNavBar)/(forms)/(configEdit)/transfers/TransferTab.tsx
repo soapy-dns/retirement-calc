@@ -21,7 +21,8 @@ export const TransfersTab: React.FC = () => {
   return (
     <>
       <p className="mx-4">
-        Assets bought or sold <span className="text-primary">(transfers)</span> in the period can be defined here.
+        Assets bought or sold <span className="text-primary-foreground">(transfers)</span> in the period can be defined
+        here.
       </p>
       {/* <div className="my-4 flex justify-center"> */}
       {asAtYear >= getCurrentYear() && (

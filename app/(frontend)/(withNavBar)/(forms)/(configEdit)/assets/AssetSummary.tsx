@@ -56,14 +56,14 @@ export const AssetSummary = ({ asset, removeAllowed }: IAssetItemDisplay) => {
   return (
     <Card>
       <div className="grid grid-cols-3 justify-items-auto ">
-        <div className="sm:flex-col  border-r border-primary text-primary justify-center items-center text-center hidden sm:flex">
+        <div className="sm:flex-col  border-r border-primary text-primary-foreground justify-center items-center text-center hidden sm:flex">
           <AssetClassIcon className="h-12 w-12" />
           <div className="font-semibold">{type}</div>
         </div>
 
         <div className="col-span-3 sm:col-span-2 px-4">
           <div className="mb-4">
-            <h2 className="my-auto text-primary">{name}</h2>
+            <h2 className="my-auto text-primary-foreground">{name}</h2>
           </div>
           <div>
             {hasValidationErrors(asset) && (

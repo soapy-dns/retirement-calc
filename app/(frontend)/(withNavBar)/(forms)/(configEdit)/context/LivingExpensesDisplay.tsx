@@ -37,7 +37,7 @@ export const LivingExpensesDisplay: React.FC<Props> = ({ showInfo }) => {
   const handleEditFn = selectedScenario.asAtYear >= getCurrentYear() ? handleEdit : undefined
 
   const heading = (
-    <h2 className="flex items-center justify-between text-primary">
+    <h2 className="flex items-center justify-between text-primary-foreground">
       <div className="flex gap-2 items-center">
         Living expenses
         <InfoButton showInfo={showInfo} />

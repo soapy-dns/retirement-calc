@@ -21,17 +21,17 @@ export const ErrorDetails: React.FC = () => {
   const handleTry = () => router.refresh()
 
   return (
-    <div className="flex flex-col items-center text-primary">
+    <div className="flex flex-col items-center text-primary-foreground">
       {serverError ? (
         <>
-          <h1 className="text-primary">Ooops and error has occured!</h1>
+          <h1 className="text-primary-foreground">Ooops and error has occured!</h1>
           <Button buttonType={ButtonType.primary} onClick={handleTry}>
             Retry
           </Button>{" "}
         </>
       ) : (
         <>
-          <h1 className="text-primary">There is an error with the configuration.</h1>
+          <h1 className="text-primary-foreground">There is an error with the configuration.</h1>
 
           {calculationMessage}
           <Button buttonType={ButtonType.primary} onClick={handleFixConfig}>

@@ -27,7 +27,7 @@ export const Toggle: React.FC<Props> = ({
 
   // hover: bg - primary - darker
   const selectedClasses = "  bg-primary  text-white "
-  const unselectedClasses = " text-primary  "
+  const unselectedClasses = " text-primary-foreground  "
 
   return (
     <div className="grid w-1/3 grid-cols-2">

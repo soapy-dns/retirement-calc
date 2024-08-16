@@ -4,16 +4,16 @@ import { AlertType } from "@/app/ui/components/alert/Alert"
 export const getBackgroundColor = (alertType?: AlertType) => {
   switch (alertType) {
     case AlertType.success:
-      return "bg-alert-success"
+      return "bg-success"
 
     case AlertType.error:
-      return "bg-alert-error"
+      return "bg-error"
 
     case AlertType.warning:
-      return "bg-alert-warning"
+      return "bg-warning"
 
     case AlertType.info:
-      return "bg-alert-info"
+      return "bg-info"
 
     default:
       return "bg-monochrome"

@@ -17,7 +17,11 @@ export const AccordionItem: React.FC<IAccordianItem> = (props: IAccordianItem) =
 
   return (
     <div className="rounded-t-lg border-b border-neutral-200 bg-white">
-      <button className="flex w-full flex-row justify-between text-primary" type="button" onClick={toggleItem}>
+      <button
+        className="flex w-full flex-row justify-between text-primary-foreground"
+        type="button"
+        onClick={toggleItem}
+      >
         <h2>{heading}</h2>
         {open ? <ChevronUpIcon className="h-6 w-6" /> : <ChevronDownIcon className="h-6 w-6" />}
       </button>

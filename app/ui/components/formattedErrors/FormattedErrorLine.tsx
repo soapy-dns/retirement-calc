@@ -48,7 +48,7 @@ export const FormattedErrorLine: React.FC<ComponentProps> = ({ error, assets, tr
       {path && linkText && (
         <>
           Error in{" "}
-          <Link className="text-primary underline" href={path}>
+          <Link className="text-primary-foreground underline" href={path}>
             {linkText}
           </Link>
           {" - "}

@@ -73,8 +73,8 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
         <div className="my-4">
           <Alert alertType={AlertType.info}>
             <div className="flex gap-4">
-              <LockClosedIcon className="w-6 h-6 text-primary" /> This scenario has an &apos;As at year&apos; in the
-              past. It is therefore locked to further changes.
+              <LockClosedIcon className="w-6 h-6 text-primary-foreground" /> This scenario has an &apos;As at year&apos;
+              in the past. It is therefore locked to further changes.
             </div>
           </Alert>
         </div>

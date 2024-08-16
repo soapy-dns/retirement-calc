@@ -15,14 +15,14 @@ export default function Anchor({
       <Link
         href={href}
         scroll={true}
-        className={` text-primary text-base focus:outline focus:outline-2 focus:outline-primary ${className}`}
+        className={` text-primary-foreground text-base focus:outline focus:outline-2 focus:outline-primary ${className}`}
       >
         {children}
       </Link>
     )
   }
   return (
-    <a href={href} className={` text-primary text-base ${className}`}>
+    <a href={href} className={` text-primary-foreground text-base ${className}`}>
       {children}
     </a>
   )

@@ -24,7 +24,7 @@ export const Spinner: React.FC<Props> = ({ className, text }) => {
             />
           </svg>
           <span className="sr-only">Loading...</span>
-          <div className="text-primary">{text}</div>
+          <div className="text-primary-foreground">{text}</div>
         </div>
       </div>
     </>

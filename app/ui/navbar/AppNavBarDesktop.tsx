@@ -16,6 +16,7 @@ export const AppNavBarDesktop = () => {
       <ScenarioMenu />
       <Link
         href={AppPath.config}
+        // scroll={true} // this doesn't seem to do anything
         className={`flex items-center justify-center border-x hover:bg-primary-darker ${
           pathname === AppPath.config ? selectedTabClassNames : null
         }`}
@@ -38,6 +39,7 @@ export const AppNavBarDesktop = () => {
 
       <Link
         href={AppPath.sheet}
+        // scroll={true} // this doesn't seem to do anything
         className={`flex items-center justify-center border-x hover:bg-primary-darker ${
           pathname === AppPath.sheet ? selectedTabClassNames : null
         }`}

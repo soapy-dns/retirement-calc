@@ -26,8 +26,8 @@ export const ConfigNavBar = () => {
     scrollFieldIntoView(id, 10)
   }
 
-  const tabColors = "hover:bg-primary-lightest"
-  const selectedTabClassNames = "border-b-4  bg-primary-lightest border-b-primary "
+  const tabColors = "hover:bg-secondary"
+  const selectedTabClassNames = "border-b-4  bg-secondary border-b-primary-foreground "
 
   return (
     <div id={id} className=" mb-4 grid grid-cols-3 bg-gray-50  divide-x-2">

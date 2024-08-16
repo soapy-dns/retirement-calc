@@ -13,7 +13,7 @@ export const DisplayCardWithEdit: React.FC<DisplayCardWithEditProps> = ({ headin
   return (
     <Card>
       {typeof heading === "string" ? (
-        <h2 className="flex items-center justify-between text-primary">{heading}</h2>
+        <h2 className="flex items-center justify-between text-primary-foreground">{heading}</h2>
       ) : (
         heading
       )}
