@@ -1,5 +1,5 @@
 import React from "react"
-import toast, { ToastOptions } from "react-hot-toast"
+import toast, { Toast, ToastOptions, ToastPosition } from "react-hot-toast"
 import { AlertType } from "../components/alert/Alert"
 import { AlertBanner } from "../components/alert/AlertBanner"
 
@@ -7,11 +7,14 @@ interface CustomToastOptions extends ToastOptions {
   dismissible?: boolean
 }
 
+const bottomRight: ToastPosition = "bottom-right"
+
 const useAppAlert = () => {
   const defaultConfig = {
     toastOptions: {
       // defaulting the duration to Infinity as user needs to dismiss the alerts in most cases explicitly.
-      duration: Infinity
+      duration: Infinity,
+      position: bottomRight
     }
   }
 
@@ -26,7 +29,7 @@ const useAppAlert = () => {
     const now = new Date()
 
     const id = toast.custom(
-      (t) => (
+      (t: Toast) => (
         <AlertBanner
           variant={AlertType.warning}
           // message={now.toDateString()}
@@ -37,6 +40,7 @@ const useAppAlert = () => {
             if (onClose) onClose()
             toast.remove(t.id)
           }}
+          maxSize="half"
           dismissible={dismissible}
         />
       ),
@@ -59,6 +63,7 @@ const useAppAlert = () => {
           variant={AlertType.info}
           message={message}
           onClose={() => toast.remove(t.id)}
+          maxSize="half"
           dismissible={dismissible}
         />
       ),
@@ -80,6 +85,7 @@ const useAppAlert = () => {
           variant={AlertType.error}
           message={message}
           onClose={() => toast.remove(t.id)}
+          maxSize="half"
           dismissible={dismissible}
         />
       ),
@@ -100,6 +106,7 @@ const useAppAlert = () => {
           variant={AlertType.success}
           message={message}
           onClose={() => toast.remove(t.id)}
+          maxSize="half"
           dismissible={dismissible}
         />
       ),

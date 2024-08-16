@@ -25,8 +25,8 @@ export const ContextTab: React.FC = () => {
   return (
     <>
       <p className="mx-4">
-        The operating environment <span className="text-primary">(context)</span> for the calculations e.g. inflation,
-        living expenses, rates of return etc
+        The operating environment <span className="text-primary-foreground">(context)</span> for the calculations e.g.
+        inflation, living expenses, rates of return etc
       </p>
 
       <GeneralContextDisplay

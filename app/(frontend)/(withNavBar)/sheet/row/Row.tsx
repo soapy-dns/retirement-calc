@@ -14,7 +14,7 @@ export const Row = ({ rowIdentifier, row, bold = false }: IRow) => {
     <tr className="hover:bg-secondary-lightest bg-white group">
       <th
         scope="row"
-        className={`text-left whitespace-nowrap py-2 px-6 group-hover:bg-secondary-lightest md:sticky left-0 bg-white text-primary`}
+        className={`text-left whitespace-nowrap py-2 px-6 group-hover:bg-secondary-lightest md:sticky left-0 bg-white text-primary-foreground`}
       >
         <p className="font-semibold">{rowIdentifier}</p>
       </th>

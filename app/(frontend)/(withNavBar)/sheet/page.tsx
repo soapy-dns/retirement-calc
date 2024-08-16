@@ -93,7 +93,7 @@ const SheetPage: React.FC = () => {
         <table className="relative min-w-full table-fixed divide-y divide-gray-200 py-4">
           <thead className="sticky top-0 z-30 bg-gray-50 ">
             <tr>
-              <th key="name" className="z-30 bg-gray-50 italic text-primary md:first:sticky md:first:left-0">
+              <th key="name" className="z-30 bg-gray-50 italic text-primary-foreground md:first:sticky md:first:left-0">
                 {selectedScenario.name}
               </th>
               {headingRow.map((value, index) => {

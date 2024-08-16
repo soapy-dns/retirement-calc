@@ -57,12 +57,12 @@ export default function ImportPage() {
   return (
     <div className="flex flex-col items-center">
       <Button onClick={handleBack} buttonType={ButtonType.tertiary}>
-        <div className="flex items-center gap-2 text-primary">
+        <div className="flex items-center gap-2 text-primary-foreground">
           <ChevronDoubleLeftIcon className="h-6 w-6" />
           <div>Back</div>
         </div>
       </Button>
-      <h1 className="text-primary">Import a scenario file</h1>
+      <h1 className="text-primary-foreground">Import a scenario file</h1>
       <form>
         <div className="flex flex-col justify-center">
           <input

@@ -17,7 +17,7 @@ export const OwnersDisplay: React.FC = () => {
 
   const handleEditFn = asAtYear >= getCurrentYear() ? handleEdit : undefined
 
-  const heading = <h2 className="flex items-center justify-between text-primary">Asset owners</h2>
+  const heading = <h2 className="flex items-center justify-between text-primary-foreground">Asset owners</h2>
 
   return (
     <DisplayCardWithEdit heading={heading} handleEdit={handleEditFn}>

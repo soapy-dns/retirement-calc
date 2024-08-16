@@ -30,7 +30,9 @@ export const Input: React.FC<IInput> = ({
   suffix,
   ...rest
 }) => {
-  const colorClasses = isError ? "border-error text-error border-2" : "border border-gray-500"
+  const colorClasses = isError
+    ? "border-destructive-foreground text-destructive-foreground border-2 bg-destructive"
+    : "border border-gray-500"
 
   let roundedClasses
   if (!prefix && !suffix) {
@@ -47,7 +49,7 @@ export const Input: React.FC<IInput> = ({
       <input
         {...rest}
         id={id}
-        className={`my-2 h-8 w-3/4 p-4 ${roundedClasses} ${colorClasses} ${className} focus:outline focus:outline-2 focus:outline-primary`}
+        className={`my-2 h-8 w-3/4 p-4 ${roundedClasses} ${colorClasses} ${className} focus:outline focus:outline-2 focus:outline-primary-foreground`}
         value={value}
         placeholder={placeholder}
         disabled={disabled}

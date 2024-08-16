@@ -16,13 +16,13 @@ export const AlertIcon: React.FC<AlertIconProps> = ({ alertType }) => {
       return <ExclamationCircleIcon className="h-6 w-6 text-error" />
 
     case AlertType.warning:
-      return <ExclamationTriangleIcon className="h-6 w-6 text-primary" />
+      return <ExclamationTriangleIcon className="h-6 w-6 text-primary-foreground" />
 
     case AlertType.success:
-      return <CheckCircleIcon className="h-6 w-6 text-primary" />
+      return <CheckCircleIcon className="h-6 w-6 text-primary-foreground" />
 
     case AlertType.info:
-      return <InformationCircleIcon className="h-6 w-6 text-primary" />
+      return <InformationCircleIcon className="h-6 w-6 text-primary-foreground" />
 
     default:
       return null

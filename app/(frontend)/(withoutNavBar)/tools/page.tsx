@@ -78,7 +78,7 @@ export default function ToolsPage() {
 
   return (
     <Container>
-      <div className="flex flex-col items-center text-primary">
+      <div className="flex flex-col items-center text-primary-foreground">
         <Button onClick={handleBack} buttonType={ButtonType.tertiary}>
           <div className="flex items-center gap-2">
             <ChevronDoubleLeftIcon className="h-6 w-6" />
@@ -144,7 +144,7 @@ export default function ToolsPage() {
       </Card>
       {debug && (
         <Card>
-          <h2 className="text-primary">Selected scenario config</h2>
+          <h2 className="text-primary-foreground">Selected scenario config</h2>
           <pre>{JSON.stringify(selectedScenario, null, 4)}</pre>
         </Card>
       )}

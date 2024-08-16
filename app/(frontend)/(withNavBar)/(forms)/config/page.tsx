@@ -27,7 +27,7 @@ const ConfigPage: React.FC = () => {
 
   return (
     <>
-      <div className="flex content-center text-primary">
+      <div className="flex content-center text-primary-foreground">
         <h1 className="flex items-center gap-2">
           {headingText}
           <InfoButton showInfo={toggleHelpText} />

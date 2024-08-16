@@ -31,10 +31,10 @@ export const GenericModal = (props: IGenericModalProps) => {
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
         <div className="flex items-center justify-center">
           <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg p-4">
-            <h1 className="mx-2 text-primary flex justify-between items-center">
+            <h1 className="mx-2 text-primary-foreground flex justify-between items-center">
               {heading}
               <button onClick={onCancel} className="hover:bg-gray-100 rounded-full p-1">
-                <XMarkIcon className="h-6 w-6 font-bold text-primary" />
+                <XMarkIcon className="h-6 w-6 font-bold text-primary-foreground" />
               </button>
             </h1>
             <div className="mx-2">{children}</div>
