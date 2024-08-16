@@ -12,11 +12,9 @@ import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { ConfigNavBar } from "../(configEdit)/ConfigNavBar"
 import Scenarios from "@/docs/info/ScenarioInfo.mdx"
 import { InfoButton } from "@/app/ui/components/common/accordian/InfoButton"
-// import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 
 const ConfigPage: React.FC = () => {
   const { activeTab } = useContext(ConfigTabContext)
-  // const { selectedScenario, deleteSelectedScenario, scenarios } = React.useContext(ScenarioContext)
 
   const { onToggle: onHelpModalToggle, showModal } = useContext(HelpModalContext)
 
