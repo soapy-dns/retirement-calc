@@ -112,7 +112,7 @@ const InflationEditPage: React.FC = () => {
     <EditPageLayout
       heading={"Edit estimated inflation values"}
       backText="Back to main context"
-      cancelText="Cancel and return to context"
+      cancelText="Cancel"
       saveText="Save changes"
       handleSubmit={handleSubmit(onSubmit)}
       handleBack={handleBack}

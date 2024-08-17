@@ -69,7 +69,7 @@ export default function TransferEditPage({ params }: { params: { id: string } })
     <EditPageLayout
       heading={id === "add" ? "Add a transfer" : "Edit a transfer"}
       backText="Back to transfers"
-      cancelText="Cancel and return to transfers"
+      cancelText="Cancel"
       saveText="Save changes"
       handleSubmit={handleSubmit(onSubmit)}
       handleBack={handleBack}

@@ -70,7 +70,7 @@ const SharesPage: React.FC = () => {
     <EditPageLayout
       heading="Shares"
       backText="Back to context"
-      cancelText="Cancel and return to context"
+      cancelText="Cancel"
       saveText="Save changes"
       handleSubmit={handleSubmit(onSubmit)}
       handleBack={handleBack}

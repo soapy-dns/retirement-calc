@@ -57,8 +57,6 @@ export const ContextTab: React.FC = () => {
 
       <PropertyDisplay />
 
-      <DefinedBenefitsAuDisplay />
-
       <GenericModal
         showModal={infoToggle === InfoType.INFLATION}
         heading="Inflation"

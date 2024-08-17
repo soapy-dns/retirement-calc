@@ -252,7 +252,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     <EditPageLayout
       heading={id === "add" ? "Add an asset" : "Edit an asset"}
       backText="Back to assets"
-      cancelText="Cancel and return to assets"
+      cancelText="Cancel"
       saveText="Save changes"
       handleSubmit={handleSubmit(onSubmit)}
       handleBack={handleBack}
