@@ -5,25 +5,25 @@ import { ConfigTabContext } from "@/app/ui/context/ConfigTabProvider"
 import { ConfigTab } from "@/app/ui/context/types"
 import { scrollFieldIntoView } from "@/app/ui/utils/scrollUtils"
 
-const id = "config-nav-bar"
+export const configNavBarId = "config-nav-bar"
 
 export const ConfigNavBar = () => {
   const { activeTab, updateActiveTab } = useContext(ConfigTabContext)
 
   const handleContextClick = () => {
-    scrollFieldIntoView(id, 30)
+    scrollFieldIntoView(configNavBarId, 30)
     updateActiveTab(ConfigTab.context)
 
     // scrollBy({ top: 10 })
   }
 
   const handleAssetsClick = () => {
-    scrollFieldIntoView(id, 10)
+    scrollFieldIntoView(configNavBarId, 10)
     updateActiveTab(ConfigTab.assets)
   }
 
   const handleTransfersClick = () => {
-    scrollFieldIntoView(id, 10)
+    scrollFieldIntoView(configNavBarId, 10)
     updateActiveTab(ConfigTab.transfers)
   }
 
@@ -31,7 +31,7 @@ export const ConfigNavBar = () => {
   const selectedTabClassNames = "border-b-4  bg-secondary border-b-primary-foreground "
 
   return (
-    <div id={id} className=" mb-4 grid grid-cols-3 bg-gray-50  divide-x-2">
+    <div id={configNavBarId} className=" mb-4 grid grid-cols-3 bg-gray-50  divide-x-2">
       <button
         onClick={handleContextClick}
         className={`${tabColors} flex justify-center gap-2 p-2 ${
