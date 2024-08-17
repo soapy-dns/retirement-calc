@@ -13,6 +13,8 @@ import { FunctionComponent, useContext } from "react"
 import { transferConstants } from "./transferConstants"
 import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
+import { scrollFieldIntoView } from "@/app/ui/utils/scrollUtils"
+import { configNavBarId } from "../ConfigNavBar"
 
 interface Props {
   transfers: Transfer[]
@@ -32,6 +34,8 @@ export const TransferDisplay: FunctionComponent<Props> = ({ transfers }) => {
 
   const handleRemove = (id: string) => {
     removeTransfer(id)
+    // scroll to config nav
+    scrollFieldIntoView(configNavBarId, 30)
 
     // TODO: modal to confirm.
   }

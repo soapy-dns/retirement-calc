@@ -19,7 +19,7 @@ export const TransfersTab: React.FC = () => {
   }
 
   return (
-    <>
+    <div>
       <p className="mx-4">
         Assets bought or sold <span className="text-primary-foreground">(transfers)</span> in the period can be defined
         here.
@@ -30,17 +30,17 @@ export const TransfersTab: React.FC = () => {
           <Button buttonType={ButtonType.secondary} onClick={handleAdd}>
             <div className="flex items-center gap-2">
               <PlusCircleIcon className="h-6 w-6" />
-              Add another transfer
+              {transfers?.length === 0 ? <div>Add a transfer</div> : <div>Add another transfer</div>}
             </div>
           </Button>
         </div>
       )}
 
       {!transfers || transfers.length === 0 ? (
-        <div>No transfers exist.</div>
+        <p className="mx-4 min-h-96 h-96">No transfers exist.</p>
       ) : (
         <TransferDisplay transfers={transfers} />
       )}
-    </>
+    </div>
   )
 }
