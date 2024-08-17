@@ -22,15 +22,13 @@ export const FormGroup: React.FC<IFormGroup> = ({ id, label, helpText, errorMsg,
 
   return (
     <div className="my-4">
-      <div className="ml-2 flex">
-        <>
-          <Label htmlFor={id}>{label}</Label>
-          {helpText && (
-            <button onClick={toggleHelpText} className="focus:outline focus:outline-2 focus:outline-primary">
-              <QuestionMarkCircleIcon className="ml-2 h-5 w-5 text-primary-foreground" />
-            </button>
-          )}
-        </>
+      <div className="ml-2 flex gap-2">
+        <Label htmlFor={id}>{label}</Label>
+        {helpText && (
+          <button onClick={toggleHelpText} className="focus:outline focus:outline-2 focus:outline-primary">
+            <QuestionMarkCircleIcon className="h-5 w-5 text-primary-foreground" />
+          </button>
+        )}
       </div>
       <div className="ml-8">{children}</div>
 
