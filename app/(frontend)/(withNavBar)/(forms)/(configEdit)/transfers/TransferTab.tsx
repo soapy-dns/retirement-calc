@@ -37,7 +37,7 @@ export const TransfersTab: React.FC = () => {
       )}
 
       {!transfers || transfers.length === 0 ? (
-        <p className="mx-4 min-h-96 h-96">No transfers exist.</p>
+        <p className="mx-4 min-h-screen">No transfers exist.</p>
       ) : (
         <TransferDisplay transfers={transfers} />
       )}
