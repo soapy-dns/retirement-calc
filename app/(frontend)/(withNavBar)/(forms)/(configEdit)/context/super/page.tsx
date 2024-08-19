@@ -1,7 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "@/app/lib/data/schema/config/validation/customZod"
+// import { z } from "@/app/lib/data/schema/config/validation/customZod"
 
 import EditPageLayout from "@/app/(frontend)/(withoutNavBar)/components/EditPageLayout"
 import { ContextConfig } from "@/app/lib/data/schema/config"
@@ -14,15 +14,19 @@ import { useForm } from "react-hook-form"
 import { contextConstants } from "../contextConstants"
 import { IsFormNumber } from "@/app/lib/data/schema/config/schemaUtils"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
+import { z } from "zod"
+import { useSearchParams } from "next/navigation"
 
 const FormSchema = z.object({
-  investmentReturn: IsFormNumber,
-  taxationRate: IsFormNumber
+  investmentReturn: IsFormNumber
 })
 export type FormDataType = z.infer<typeof FormSchema>
 
 const SuperPage: React.FC = () => {
   const navigation = useNavigation()
+  const searchParams = useSearchParams()
+
+  const debug = searchParams.get("debug")
 
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
   const [showChangesNotSavedModal, setShowChangesNotSavedModal] = useState<boolean>(false)
@@ -32,7 +36,7 @@ const SuperPage: React.FC = () => {
   const {
     control,
     handleSubmit,
-    formState: { isDirty }
+    formState: { isDirty, errors }
   } = useForm<FormDataType>({
     defaultValues: {
       investmentReturn: Math.round(superAu?.investmentReturn * 10000) / 100
@@ -49,7 +53,7 @@ const SuperPage: React.FC = () => {
   }
 
   const onSubmit = async (data: FormDataType) => {
-    const { investmentReturn, taxationRate } = data
+    const { investmentReturn } = data
     const { context } = selectedScenario
 
     const updatedContext: ContextConfig = {
@@ -69,12 +73,14 @@ const SuperPage: React.FC = () => {
     <EditPageLayout
       heading="Super"
       backText="Back to context"
-      cancelText="Cancel and return to context"
+      cancelText="Cancel"
       saveText="Save changes"
       handleSubmit={handleSubmit(onSubmit)}
       handleBack={handleBack}
       handleCancel={handleBack}
     >
+      {debug && errors && <pre>{JSON.stringify(errors, null, 4)}</pre>}
+
       <form>
         {/* @ts-ignore */}
         <InputQuestion

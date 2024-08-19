@@ -11,7 +11,6 @@ import { useState } from "react"
 import InflationRateInfo from "@/docs/info/context/InflationRateInfo.mdx"
 import LivingExpensesInfo from "@/docs/info/context/LivingExpensesInfo.mdx"
 import TaxAndCurrencyInfo from "@/docs/info/context/TaxAndCurrencyInfo.mdx"
-import { DefinedBenefitsAuDisplay } from "./DefinedBenefitsAuDisplay"
 
 enum InfoType {
   "NONE",
@@ -56,8 +55,6 @@ export const ContextTab: React.FC = () => {
       <SharesDisplay />
 
       <PropertyDisplay />
-
-      <DefinedBenefitsAuDisplay />
 
       <GenericModal
         showModal={infoToggle === InfoType.INFLATION}

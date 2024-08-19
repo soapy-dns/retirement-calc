@@ -68,7 +68,7 @@ export default function ScenarioPage({ params }: { params: { id: string } }) {
     <EditPageLayout
       heading="Scenario Edit"
       backText="Back to config"
-      cancelText="Cancel and return to config"
+      cancelText="Cancel"
       saveText="Save changes"
       handleSubmit={handleSubmit(onSubmit)}
       handleBack={handleBack}

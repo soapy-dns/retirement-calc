@@ -19,7 +19,7 @@ export const Alert: React.FC<IAlert> = ({ id = "alert", alertType, heading, chil
   const bgColor = getBackgroundColor(alertType)
 
   return (
-    <div id={id} className={`${bgColor} p-2 border`} role="alert" tabIndex={-1}>
+    <div id={id} className={`${bgColor} p-2 border border-primary-foreground`} role="alert" tabIndex={-1}>
       <>
         {heading && (
           <div className="flex gap-2">
@@ -27,7 +27,6 @@ export const Alert: React.FC<IAlert> = ({ id = "alert", alertType, heading, chil
             {<div className="font-semibold">{heading}</div>}
           </div>
         )}
-
         {children && children}
       </>
     </div>

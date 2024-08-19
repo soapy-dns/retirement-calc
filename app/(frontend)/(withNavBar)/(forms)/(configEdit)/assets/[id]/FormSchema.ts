@@ -37,7 +37,6 @@ export const FormSchema = z
   })
   .refine(
     ({ assetType, value }) => {
-      console.log("--value--", value)
       if (isCapitalAsset(assetType) && value === undefined) return false
       return true
     },
@@ -45,7 +44,6 @@ export const FormSchema = z
   )
   .refine(
     ({ assetType, value }) => {
-      console.log("--value--", value)
       if (isCapitalAsset(assetType) && value && value === 0) return false
       return true
     },

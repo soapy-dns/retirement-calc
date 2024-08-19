@@ -75,7 +75,7 @@ const GeneralContextEditPage: React.FC = () => {
     <EditPageLayout
       heading={"Edit tax and currency details"}
       backText="Back to main context"
-      cancelText="Cancel and return to context"
+      cancelText="Cancel"
       saveText="Save changes"
       handleSubmit={handleSubmit(onSubmit)}
       handleBack={handleBack}

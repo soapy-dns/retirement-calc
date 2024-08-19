@@ -92,12 +92,19 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const assets = buildInitialAssets(startingYear, scenario, inflationContext)
 
     // if we are 90% in AU and 10% in hrow, does that mean we have 2 different tax calculators?
-    const incomeTaxCalculator = getIncomeTaxCalculator({ taxResident, currency, inflationContext, au2ukExchangeRate })
+    const incomeTaxCalculator = getIncomeTaxCalculator({
+      taxResident,
+      currency,
+      inflationContext,
+      au2ukExchangeRate,
+      asAtYear
+    })
     const earningsTaxCalculator = getEarningsTaxCalculator({
       taxResident,
       currency,
       inflationContext,
-      au2ukExchangeRate
+      au2ukExchangeRate,
+      asAtYear
     })
 
     const taxes = initTaxes(yearRange, owners)
@@ -113,11 +120,9 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     let calculatedEndYear = startingYear
     while (year < to && canDrawdownAssets(assets, year)) {
       calculatedEndYear = year + 1
-      // console.log("--adding asset income for year", year)
       addAssetIncome(year, assets, incomeFromAssets)
 
       const manualTransfersForYear = getScenarioTransfersForYear(scenario, year)
-      // console.log("--manualTransfersForYear--", manualTransfersForYear)
       calculateTaxes(taxes, year, assets, owners, incomeTaxCalculator, incomeFromAssets, manualTransfersForYear)
       calculateEarningsTaxes(earningsTaxes, assets, year, earningsTaxCalculator)
 
@@ -319,7 +324,11 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
         calculationMessage: errMsg
       }
     }
-    console.log("**SERVER ERROR**", e)
+    if (e instanceof Error) {
+      console.log("**SERVER ERROR**", e.message)
+    } else {
+      console.log("**SERVER ERROR**", e)
+    }
     throw new Error("SERVER ERROR")
   }
 }

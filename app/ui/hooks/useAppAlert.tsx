@@ -26,8 +26,6 @@ const useAppAlert = () => {
     toast.remove()
     const { dismissible = true } = toastOptions || {}
 
-    const now = new Date()
-
     const id = toast.custom(
       (t: Toast) => (
         <AlertBanner
@@ -38,7 +36,7 @@ const useAppAlert = () => {
           // message="Warning alert"
           onClose={() => {
             if (onClose) onClose()
-            toast.remove(t.id)
+            toast.dismiss(t.id)
           }}
           maxSize="half"
           dismissible={dismissible}
@@ -47,7 +45,6 @@ const useAppAlert = () => {
       {
         ...defaultConfig.toastOptions,
         ...toastOptions
-        // duration: 50000
       }
     )
     return id

@@ -1,19 +1,16 @@
 import { ISelectOption } from "@/app/lib/data/types"
-import { ChangeEvent, ReactNode } from "react"
+import { ChangeEvent } from "react"
 import { Alert, AlertType } from "../alert/Alert"
 
 interface ISelect {
   id: string
   name?: string
   disabled?: boolean
-  // placeholder?: string
   isError: boolean
   selectedOption?: ISelectOption
   value?: string | number
   options?: ISelectOption[]
   summaryText?: string
-  //   ref: RefCallback<HTMLDivElement>
-  //   onChange: (event: ChangeEvent<HTMLSelectElement>) => void
   onChange: (value?: string) => void
   allowsNull?: boolean
 }
@@ -22,7 +19,6 @@ export const Select: React.FC<ISelect> = ({
   name,
   isError,
   options,
-  // placeholder,
   summaryText,
   disabled,
   value,
@@ -54,8 +50,9 @@ export const Select: React.FC<ISelect> = ({
           ))}
       </select>
 
+      {/* Should probably pass in the heading too */}
       {summaryText && (
-        <Alert heading="Summary" alertType={AlertType.info}>
+        <Alert heading="Details" alertType={AlertType.info}>
           {summaryText}
         </Alert>
       )}

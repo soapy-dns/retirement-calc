@@ -14,7 +14,7 @@ export const getFormSchema = (scenario: IScenario) => {
       return items[0].fromYear === asAtYear
     },
     {
-      message: `The first row should have a year matching the 'As at year' of ${asAtYear}`,
+      message: `The first row should have a year matching the scenario's 'As at year' - ${asAtYear}`,
       path: ["items", 0, "fromYear"]
     }
   ).refine(

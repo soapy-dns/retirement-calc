@@ -1,100 +1,128 @@
 {
   "incomeTax": {
-    "$comment": "perhaps asAt should be at a lower level",
-    "asAt": "1st July 2024",
-    "AU": {
-      "name": "Income tax",
-      "rates": [
-        { "rate": 0, "bandTop": 18200 },
-        { "rate": 0.19, "bandTop": 45000 },
-        { "rate": 0.3, "bandTop": 135000 },
-        { "rate": 0.37, "bandTop": 190000 },
-        { "rate": 0.45, "bandTop": 99999999 }
-      ]
-    },
-    "AU prior to 2024": {
-      "name": "Income tax",
-      "rates": [
-        { "rate": 0, "bandTop": 18200 },
-        { "rate": 0.19, "bandTop": 45000 },
-        { "rate": 0.325, "bandTop": 120000 },
-        { "rate": 0.37, "bandTop": 180000 },
-        { "rate": 0.45, "bandTop": 99999999 }
-      ]
-    },
-    "SC": {
-      "name": "Income tax",
-      "rates": [
-        { "rate": 0, "bandTop": 12570 },
-        { "rate": 0.19, "bandTop": 14876 },
-        { "rate": 0.2, "bandTop": 26561 },
-        { "rate": 0.21, "bandTop": 43662 },
-        { "rate": 0.42, "bandTop": 75000 },
-        { "rate": 0.45, "bandTop": 125140 },
-        { "rate": 0.48, "bandTop": 9999999999 }
-      ]
-    },
-    "EN": {
-      "name": "Income tax",
-      "rates": [
-        { "rate": 0, "bandTop": 12570 },
-        { "rate": 0.2, "bandTop": 50270 },
-        { "rate": 0.4, "bandTop": 125140 },
-        { "rate": 0.45, "bandTop": 9999999999 }
-      ]
-    },
-    "WA": {
-      "name": "Income tax",
-      "rates": [
-        { "rate": 0, "bandTop": 12570 },
-        { "rate": 0.2, "bandTop": 50270 },
-        { "rate": 0.4, "bandTop": 125140 },
-        { "rate": 0.45, "bandTop": 9999999999 }
-      ]
-    },
-    "NI": {
-      "name": "Income tax",
-      "rates": [
-        { "rate": 0, "bandTop": 12570 },
-        { "rate": 0.2, "bandTop": 50270 },
-        { "rate": 0.4, "bandTop": 125140 },
-        { "rate": 0.45, "bandTop": 9999999999 }
-      ]
-    }
+    "AU": [
+      {
+        "fromYear": 2021,
+        "name": "Income tax",
+        "rates": [
+          { "rate": 0, "bandTop": 18200 },
+          { "rate": 0.19, "bandTop": 45000 },
+          { "rate": 0.325, "bandTop": 120000 },
+          { "rate": 0.37, "bandTop": 180000 },
+          { "rate": 0.45, "bandTop": 99999999 }
+        ]
+      },
+      {
+        "fromYear": 2024,
+        "name": "Income tax",
+        "rates": [
+          { "rate": 0, "bandTop": 18200 },
+          { "rate": 0.19, "bandTop": 45000 },
+          { "rate": 0.3, "bandTop": 135000 },
+          { "rate": 0.37, "bandTop": 190000 },
+          { "rate": 0.45, "bandTop": 99999999 }
+        ]
+      }
+    ],
+
+    "SC": [
+      {
+        "name": "Income tax",
+        "fromYear": 2024,
+
+        "rates": [
+          { "rate": 0, "bandTop": 12570 },
+          { "rate": 0.19, "bandTop": 14876 },
+          { "rate": 0.2, "bandTop": 26561 },
+          { "rate": 0.21, "bandTop": 43662 },
+          { "rate": 0.42, "bandTop": 75000 },
+          { "rate": 0.45, "bandTop": 125140 },
+          { "rate": 0.48, "bandTop": 9999999999 }
+        ]
+      }
+    ],
+    "EN": [
+      {
+        "name": "Income tax",
+        "fromYear": 2024,
+        "rates": [
+          { "rate": 0, "bandTop": 12570 },
+          { "rate": 0.2, "bandTop": 50270 },
+          { "rate": 0.4, "bandTop": 125140 },
+          { "rate": 0.45, "bandTop": 9999999999 }
+        ]
+      }
+    ],
+    "WA": [
+      {
+        "name": "Income tax",
+        "fromYear": 2024,
+        "rates": [
+          { "rate": 0, "bandTop": 12570 },
+          { "rate": 0.2, "bandTop": 50270 },
+          { "rate": 0.4, "bandTop": 125140 },
+          { "rate": 0.45, "bandTop": 9999999999 }
+        ]
+      }
+    ],
+    "NI": [
+      {
+        "name": "Income tax",
+        "fromYear": 2024,
+        "rates": [
+          { "rate": 0, "bandTop": 12570 },
+          { "rate": 0.2, "bandTop": 50270 },
+          { "rate": 0.4, "bandTop": 125140 },
+          { "rate": 0.45, "bandTop": 9999999999 }
+        ]
+      }
+    ]
   },
   "earningsTax": {
-    "SC": {
-      "name": "National insurance",
-      "rates": [
-        { "rate": 0, "bandTop": 12584 },
-        { "rate": 0.08, "bandTop": 50284 },
-        { "rate": 0.02, "bandTop": 99999999 }
-      ]
-    },
-    "EN": {
-      "name": "National insurance",
-      "rates": [
-        { "rate": 0, "bandTop": 12584 },
-        { "rate": 0.08, "bandTop": 50284 },
-        { "rate": 0.02, "bandTop": 99999999 }
-      ]
-    },
-    "WA": {
-      "name": "National insurance",
-      "rates": [
-        { "rate": 0, "bandTop": 12584 },
-        { "rate": 0.08, "bandTop": 50284 },
-        { "rate": 0.02, "bandTop": 99999999 }
-      ]
-    },
-    "NI": {
-      "name": "National insurance",
-      "rates": [
-        { "rate": 0, "bandTop": 12584 },
-        { "rate": 0.08, "bandTop": 50284 },
-        { "rate": 0.02, "bandTop": 99999999 }
-      ]
-    }
+    "SC": [
+      {
+        "name": "National insurance",
+        "fromYear": 2024,
+        "rates": [
+          { "rate": 0, "bandTop": 12584 },
+          { "rate": 0.08, "bandTop": 50284 },
+          { "rate": 0.02, "bandTop": 99999999 }
+        ]
+      }
+    ],
+    "EN": [
+      {
+        "name": "National insurance",
+        "fromYear": 2024,
+        "rates": [
+          { "rate": 0, "bandTop": 12584 },
+          { "rate": 0.08, "bandTop": 50284 },
+          { "rate": 0.02, "bandTop": 99999999 }
+        ]
+      }
+    ],
+    "WA": [
+      {
+        "name": "National insurance",
+        "fromYear": 2024,
+        "rates": [
+          { "rate": 0, "bandTop": 12584 },
+          { "rate": 0.08, "bandTop": 50284 },
+          { "rate": 0.02, "bandTop": 99999999 }
+        ]
+      }
+    ],
+    "NI": [
+      {
+        "name": "National insurance",
+        "fromYear": 2024,
+        "rates": [
+          { "rate": 0, "bandTop": 12584 },
+          { "rate": 0.08, "bandTop": 50284 },
+          { "rate": 0.02, "bandTop": 99999999 }
+        ]
+      }
+    ]
   },
   "superTax": {
     "AU": {
