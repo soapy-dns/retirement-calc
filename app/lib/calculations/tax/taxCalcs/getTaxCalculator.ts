@@ -21,12 +21,21 @@ export const getIncomeTaxCalculator = ({
 }: IGetTaxCalculator): BandedTaxCalc => {
   const currencyConversionFactor = taxResident !== currency ? au2ukExchangeRate ?? 1 : 1
 
-  if (taxResident === "AU") {
-    return new BandedTaxCalc(currencyConversionFactor, config.incomeTax.AU.rates, inflationContext)
-  } else if (taxResident === "SC") {
-    return new BandedTaxCalc(currencyConversionFactor, config.incomeTax.SC.rates, inflationContext)
+  let rates
+  switch (taxResident) {
+    case "AU":
+      rates = config.incomeTax.AU.rates
+    case "EN":
+      rates = config.incomeTax.EN.rates
+    case "WA":
+      rates = config.incomeTax.WA.rates
+    case "NI":
+      rates = config.incomeTax.NI.rates
+    default:
+      rates = config.incomeTax.SC.rates
   }
-  return new BandedTaxCalc(currencyConversionFactor, config.incomeTax.SC.rates, inflationContext)
+
+  return new BandedTaxCalc(currencyConversionFactor, rates, inflationContext)
 }
 
 // eg National insurance in the uk
@@ -37,9 +46,23 @@ export const getEarningsTaxCalculator = ({
   au2ukExchangeRate = 1
 }: IGetTaxCalculator): BandedTaxCalc | undefined => {
   const currencyConversionFactor = taxResident !== currency ? au2ukExchangeRate ?? 1 : 1
-  if (taxResident === "AU") return
 
-  return new BandedTaxCalc(currencyConversionFactor, config.earningsTax.SC.rates, inflationContext)
+  let rates
+  switch (taxResident) {
+    case "SC":
+      rates = config.earningsTax.SC.rates
+    case "EN":
+      rates = config.earningsTax.EN.rates
+    case "WA":
+      rates = config.earningsTax.WA.rates
+    case "NI":
+      rates = config.earningsTax.NI.rates
+  }
+
+  if (rates) {
+    return new BandedTaxCalc(currencyConversionFactor, rates, inflationContext)
+  }
+  return
 }
 
 export const getEarningsTaxName = (taxResidentCountry: Country) => {

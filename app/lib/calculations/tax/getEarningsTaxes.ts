@@ -5,7 +5,6 @@ import { getEarningsTaxCalculator } from "./taxCalcs/getTaxCalculator"
 import { ContextConfig } from "../../data/schema/config"
 import { BandedTaxCalc } from "./taxCalcs/BandedTaxCalc"
 import { EarningsTax } from "../assets/types"
-import { ExecOptionsWithBufferEncoding } from "child_process"
 
 const getEarnings = (assetsWithEarnings: Asset[]) => {
   const earningsTaxes = assetsWithEarnings.reduce((accum, asset: Asset) => {
