@@ -66,6 +66,7 @@ export default function ToolsPage() {
     const { taxResident, currency, au2ukExchangeRate, income } = data
     const incomeTaxCalculator = getIncomeTaxCalculator({
       taxResident,
+      asAtYear: 2024, // TODO: stop hard coding this
       currency,
       inflationContext: undefined,
       au2ukExchangeRate

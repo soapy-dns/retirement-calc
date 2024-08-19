@@ -1,70 +1,84 @@
 import { Country } from "@/app/lib/data/schema/config"
 import { InflationContext } from "../../types"
 import { BandedTaxCalc } from "./BandedTaxCalc"
-// import { Country } from "./types"
 import config from "@/app/lib/config.json"
 
 export interface IGetTaxCalculator {
   taxResident: Country
+  asAtYear: number
   currency: Country
   inflationContext?: InflationContext
   au2ukExchangeRate?: number
-  // income: number
 }
+
+interface TaxRate {
+  rate: number
+  bandTop: number
+}
+
+interface TaxCountryDetails {
+  name: string
+  fromYear: number
+  rates: TaxRate[]
+}
+
+type IncomeTaxDetails = Record<Country, TaxCountryDetails[]>
+type EarningsTaxDetails = Partial<Record<Country, TaxCountryDetails[]>>
+
+const { incomeTax }: { incomeTax: IncomeTaxDetails } = config
+const { earningsTax }: { earningsTax: EarningsTaxDetails } = config
 
 // TODO: change name of currency
 export const getIncomeTaxCalculator = ({
   taxResident,
+  asAtYear,
   currency,
   inflationContext,
   au2ukExchangeRate = 1
 }: IGetTaxCalculator): BandedTaxCalc => {
   const currencyConversionFactor = taxResident !== currency ? au2ukExchangeRate ?? 1 : 1
 
-  let rates
-  switch (taxResident) {
-    case "AU":
-      rates = config.incomeTax.AU.rates
-    case "EN":
-      rates = config.incomeTax.EN.rates
-    case "WA":
-      rates = config.incomeTax.WA.rates
-    case "NI":
-      rates = config.incomeTax.NI.rates
-    default:
-      rates = config.incomeTax.SC.rates
+  console.log("--incomeTax[taxResident]--", incomeTax[taxResident])
+  if (incomeTax[taxResident]) {
+    const relevantTaxYearDetails = incomeTax[taxResident].findLast((taxDetails) => {
+      return taxDetails.fromYear <= asAtYear
+    })
+    console.log("--relevantTaxYearDetails--", relevantTaxYearDetails)
+    if (relevantTaxYearDetails) {
+      return new BandedTaxCalc(currencyConversionFactor, relevantTaxYearDetails.rates, inflationContext)
+    }
   }
-
-  return new BandedTaxCalc(currencyConversionFactor, rates, inflationContext)
+  throw new Error(`No income tax config for ${asAtYear}`)
 }
 
 // eg National insurance in the uk
 export const getEarningsTaxCalculator = ({
   taxResident,
+  asAtYear,
   currency,
   inflationContext,
   au2ukExchangeRate = 1
 }: IGetTaxCalculator): BandedTaxCalc | undefined => {
   const currencyConversionFactor = taxResident !== currency ? au2ukExchangeRate ?? 1 : 1
 
-  let rates
-  switch (taxResident) {
-    case "SC":
-      rates = config.earningsTax.SC.rates
-    case "EN":
-      rates = config.earningsTax.EN.rates
-    case "WA":
-      rates = config.earningsTax.WA.rates
-    case "NI":
-      rates = config.earningsTax.NI.rates
+  if (earningsTax[taxResident]) {
+    const relevantTaxYearDetails = earningsTax[taxResident]?.findLast((taxDetails) => {
+      return taxDetails.fromYear <= asAtYear
+    })
+    if (relevantTaxYearDetails) {
+      return new BandedTaxCalc(currencyConversionFactor, relevantTaxYearDetails.rates, inflationContext)
+    }
   }
 
-  if (rates) {
-    return new BandedTaxCalc(currencyConversionFactor, rates, inflationContext)
-  }
   return
 }
 
-export const getEarningsTaxName = (taxResidentCountry: Country) => {
-  return taxResidentCountry === "SC" ? config.earningsTax.SC.name : "Earnings Tax"
+export const getEarningsTaxName = (taxResidentCountry: Country, asAtYear: number) => {
+  if (earningsTax[taxResidentCountry]) {
+    const relevantTaxYearDetails = earningsTax[taxResidentCountry]?.findLast((taxDetails) => {
+      return taxDetails.fromYear < asAtYear
+    })
+
+    return relevantTaxYearDetails?.name || "Earnings Tax"
+  }
 }
