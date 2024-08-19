@@ -24,7 +24,7 @@ export const ChangesNotSavedModal: React.FC<Props> = ({ showModal, handleCancel,
       You&apos;re changes will not be saved.
       <ButtonGroup>
         <Button onClick={continueAnyway} buttonType={ButtonType.primary}>
-          Continue anyway
+          Confirm
         </Button>
         <Button onClick={onCancel} buttonType={ButtonType.secondary}>
           Back to changes
