@@ -38,17 +38,15 @@ export const getIncomeTaxCalculator = ({
 }: IGetTaxCalculator): BandedTaxCalc => {
   const currencyConversionFactor = taxResident !== currency ? au2ukExchangeRate ?? 1 : 1
 
-  console.log("--incomeTax[taxResident]--", incomeTax[taxResident])
   if (incomeTax[taxResident]) {
     const relevantTaxYearDetails = incomeTax[taxResident].findLast((taxDetails) => {
       return taxDetails.fromYear <= asAtYear
     })
-    console.log("--relevantTaxYearDetails--", relevantTaxYearDetails)
     if (relevantTaxYearDetails) {
       return new BandedTaxCalc(currencyConversionFactor, relevantTaxYearDetails.rates, inflationContext)
     }
   }
-  throw new Error(`No income tax config for ${asAtYear}`)
+  throw new Error(`No income tax config for country ${taxResident}, year ${asAtYear}`) // this shouldn't happen
 }
 
 // eg National insurance in the uk
