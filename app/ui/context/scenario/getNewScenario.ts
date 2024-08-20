@@ -18,7 +18,7 @@ export const getNewScenario = async (scenario: IScenario, name: string, descript
 
   if (isYearUpdated) {
     const calculationResults: CalculationResults = await calculate(scenario)
-    console.log("--calculationResults--", calculationResults)
+    console.log("--calculationResults>>>--", calculationResults)
 
     const { success } = calculationResults
     if (!success) throw new Error("Error with calculation while building new scenario.")
@@ -49,24 +49,24 @@ export const getNewScenario = async (scenario: IScenario, name: string, descript
     }
     newScenario.context.inflation = newInflationConfig
 
-    // living expenses
+    // living expenses - the first record should always be this asAtYear
     const { livingExpenses } = scenario.context
-    const newLivingExpenses = livingExpenses.reduce((accum, row) => {
-      if (row.fromYear < thisYear) return accum
-      accum.push(row)
-      return accum
-    }, [] as LivingExpensesRecord[])
-    if (newLivingExpenses.length === 0 || (newLivingExpenses[0] && newLivingExpenses[0].fromYear !== thisYear)) {
-      // need to add a new first row
-      const expensesData = calculationResults.expensesRowData["Living expenses"] // This should use a better key TODO:
-      const livingExpensesForYear = expensesData?.find((it) => it.year === thisYear)
-      if (!livingExpensesForYear) throw new Error("Cannot copy scenaro as no living expenses exist.")
-      const newFirstRow = {
-        fromYear: thisYear,
-        amountInTodaysTerms: livingExpensesForYear.value
-      }
-      newLivingExpenses.unshift(newFirstRow)
-    }
+
+    const newYearsConfig = livingExpenses.reduce(
+      (accum, inflationRow) => {
+        if (inflationRow.fromYear <= thisYear) return accum
+        accum.push(inflationRow.fromYear)
+        return accum
+      },
+      [thisYear] as number[]
+    )
+    const expensesData = calculationResults.expensesRowData["Living expenses"] // This should use a better key TODO:
+    const newLivingExpenses = newYearsConfig.map((year) => {
+      const livingExpensesForYear = expensesData?.find((it) => it.year === year)
+      if (!livingExpensesForYear) throw Error(`Living expenses not calculated for ${year}`)
+      return { fromYear: year, amountInTodaysTerms: livingExpensesForYear.value }
+    })
+
     newScenario.context.livingExpenses = newLivingExpenses
 
     // update capital value for all capital assets, as some assets may no longer exist
