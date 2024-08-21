@@ -55,27 +55,29 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
       setCalculating(false)
 
       const { success, calculationMessage } = calculationResults
-      if (selectedScenario.asAtYear >= getCurrentYear()) {
-        if (success && calculationMessage) {
+      const currentYear = getCurrentYear()
+      const { asAtYear } = selectedScenario
+      if (success && calculationMessage) {
+        if (asAtYear >= currentYear) {
           displayWarningAlert(calculationMessage, { duration: 1000 })
-          // server actions will return a 200 error for validation messages.  This may change in future
-        } else if (!success) {
-          if ("errors" in calculationResults) {
-            console.log("calculationResults", calculationResults)
-            const { errors } = calculationResults
-            if (errors) {
-              displayErrorAlert(
-                <FormattedErrors
-                  errors={errors}
-                  assets={selectedScenario.assets}
-                  transfers={selectedScenario.transfers || []}
-                />
-              )
-            }
-          } else {
-            // Not a complete fuck up.  Show the error returned.
-            displayErrorAlert(`${calculationMessage}`)
+        }
+        // server actions will return a 200 error for validation messages.  This may change in future
+      } else if (!success) {
+        if ("errors" in calculationResults) {
+          console.log("calculationResults", calculationResults)
+          const { errors } = calculationResults
+          if (errors) {
+            displayErrorAlert(
+              <FormattedErrors
+                errors={errors}
+                assets={selectedScenario.assets}
+                transfers={selectedScenario.transfers || []}
+              />
+            )
           }
+        } else {
+          // Not a complete fuck up.  Show the error returned.
+          displayErrorAlert(`${calculationMessage}`)
         }
       }
 
