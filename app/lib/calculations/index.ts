@@ -313,6 +313,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       netPresentValue,
       totalAssetIncome,
       totalExpensesData: totalExpenses,
+      incomeTaxesData: incomeTaxesYearData,
+      earningsTaxesData: earningsTaxesYearData,
       totalTaxesData: totalTaxesYearData
     }
   } catch (e) {

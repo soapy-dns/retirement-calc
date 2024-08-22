@@ -133,6 +133,8 @@ interface CalculationResultsSuccess {
   drawdownRowData: AssetData
   surplusRowData: SurplusRowData
   expensesRowData: AssetData
+  incomeTaxesData: BasicYearData[]
+  earningsTaxesData: BasicYearData[]
   totalTaxesData: BasicYearData[]
   inflationContext: InflationContext
   assetSplitYearly: Record<number, AssetSplitItem[]>
