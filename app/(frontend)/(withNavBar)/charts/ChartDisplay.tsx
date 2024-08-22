@@ -32,8 +32,14 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ chartType }) => {
     )
   }
 
-  const { yearRange, calculatedAssetNpvData, calculatedAssetData, graphIncomeNpvData, drawdownRowData } =
-    calculationResults
+  const {
+    yearRange,
+    calculatedAssetNpvData,
+    calculatedAssetData,
+    graphIncomeNpvData,
+    drawdownRowData,
+    totalTaxesData
+  } = calculationResults
 
   switch (chartType) {
     case ChartType.rechart:
@@ -41,6 +47,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ chartType }) => {
       return <StackedLineChart yearRange={yearRange} graphData={calculatedAssetData} />
 
     case ChartType.capitalAssets:
+      console.log("calculatedAssetData", calculatedAssetData)
       return <CalculatedAssetLineChart yearRange={yearRange} graphData={calculatedAssetData} />
     case ChartType.capitalAssetsNpv:
       return <CalculatedAssetLineChart yearRange={yearRange} graphData={calculatedAssetNpvData} />
@@ -50,6 +57,9 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ chartType }) => {
       return <AssetSplitLineChart />
     case ChartType.drawdown:
       return <CalculatedAssetLineChart yearRange={yearRange} graphData={drawdownRowData} />
+    case ChartType.tax:
+      const graphData = { "Total Taxes": totalTaxesData }
+      return <CalculatedAssetLineChart yearRange={yearRange} graphData={graphData} />
 
     default:
       return <div>Chart does not exist</div>
