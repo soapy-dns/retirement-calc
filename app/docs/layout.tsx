@@ -5,13 +5,9 @@ import { AppPath } from "@/app/ui/types"
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline"
 
 export default function DocsLayout({ children }: { children: React.ReactNode }) {
-  // const handleClick = () => {
-  //   navigation.goTo(AppPath.config)
-  // }
-
   return (
     <>
-      <div className="fixed top-10 border-b border-gray-200  bg-white  bg-opacity-90 pt-10 pb-4 w-full backdrop-filter backdrop-blur-sm">
+      <div className="fixed top-10  bg-white  bg-opacity-80 pt-10 pb-4 w-full backdrop-filter backdrop-blur-sm">
         <div className="mb-4 flex items-center justify-center">
           <div className="display-block my-4 rounded-full border-2  border-primary  py-1 px-4 text-primary-foreground  disabled:opacity-40 flex flex-row justify-center items-center">
             <Link href={AppPath.config} className=" focus:outline-2  focus:outline-primary">

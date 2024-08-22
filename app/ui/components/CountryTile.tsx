@@ -31,7 +31,6 @@ const text = {
 
 // Flag svgs are 4 x 3
 export const CountryTile: React.FC<CountryFlagProps> = ({ country, selected = false }) => {
-  console.log("selected", selected)
   return (
     <div
       className={clsx("flex flex-col gap-2 border  justify-center items-center w-[100px] h-[100px]", {
@@ -44,10 +43,4 @@ export const CountryTile: React.FC<CountryFlagProps> = ({ country, selected = fa
       {text[country]}
     </div>
   )
-  // return (
-  //   <div className="flex gap-2">
-  //     <Image src={flag[country]} width={24} height={16} alt="Country flag" />
-  //     {text[country]}
-  //   </div>
-  // )
 }

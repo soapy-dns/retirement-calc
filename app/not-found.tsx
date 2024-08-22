@@ -4,7 +4,6 @@ import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline"
 
 export default function NotFound() {
   return (
-    // <div className="flex justify-center items-center">
     <div className="flex flex-col justify-center items-center mt-16">
       <h2 className="text-primary-foreground">404 - This page cannot be found</h2>
 
