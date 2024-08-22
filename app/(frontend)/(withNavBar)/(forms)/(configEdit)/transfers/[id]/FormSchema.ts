@@ -6,7 +6,6 @@ import { IScenario } from "@/app/lib/data/schema/config"
 import { testForMultipleMigrateAllFrom, testForMultipleMigrateAllFromAndTo } from "./validation"
 
 export const getFormSchema = (scenario: IScenario, id: string) => {
-  console.log("--getFormSchema id--", id)
   const { transfers } = scenario
 
   const otherTransfers = transfers?.filter((it) => it.id !== id)
