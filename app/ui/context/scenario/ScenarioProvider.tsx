@@ -13,6 +13,7 @@ import { Spinner } from "../../components/common/Spinner"
 import { FormattedErrors } from "../../components/formattedErrors/FormattedErrors"
 import { isIncomeAsset } from "../../utils"
 import { getNewScenario } from "./getNewScenario"
+import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
   const scenarioOptions = scenarios.map((scenario) => ({
@@ -54,8 +55,12 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
       setCalculating(false)
 
       const { success, calculationMessage } = calculationResults
+      const currentYear = getCurrentYear()
+      const { asAtYear } = selectedScenario
       if (success && calculationMessage) {
-        displayWarningAlert(calculationMessage, { duration: 1000 })
+        if (asAtYear >= currentYear) {
+          displayWarningAlert(calculationMessage, { duration: 1000 })
+        }
         // server actions will return a 200 error for validation messages.  This may change in future
       } else if (!success) {
         if ("errors" in calculationResults) {
@@ -75,6 +80,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
           displayErrorAlert(`${calculationMessage}`)
         }
       }
+
       return { success, calculationResults }
     } catch (err) {
       // server error

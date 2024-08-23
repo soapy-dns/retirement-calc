@@ -44,7 +44,7 @@ export default function TransferEditPage({ params }: { params: { id: string } })
 
   const { handleSubmit, watch, control } = useForm<FormDataType>({
     defaultValues: { from, to, value, year, migrateAll: migrateAllFormVal, costOfTransfer },
-    resolver: zodResolver(getFormSchema(selectedScenario))
+    resolver: zodResolver(getFormSchema(selectedScenario, id))
   })
 
   const onSubmit = async (data: FormDataType) => {

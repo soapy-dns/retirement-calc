@@ -104,6 +104,9 @@
   th {
     @apply p-4;
   }
+  li {
+    @apply mb-2 ml-4;
+  }
 }
 
 /* reset rules */

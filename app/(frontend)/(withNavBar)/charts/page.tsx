@@ -33,6 +33,10 @@ const ChartPage = () => {
     {
       value: "drawdown",
       label: "Drawdown"
+    },
+    {
+      value: "tax",
+      label: "Total Taxes"
     }
   ]
 

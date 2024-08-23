@@ -178,7 +178,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     if (calculatedEndYear !== to)
       calculationMessage = `Cannot automate further capital asset drawdowns after ${calculatedEndYear}.  
-      Some assets will need to be sold.  (Go to the Transfers tab under Config)`
+      Some assets will need to be sold.  (Go to the Transfers on the 'Configuration' page)`
 
     const finalYear = year + 1
     const numOfCalculatedYears = calculatedEndYear - startingYear
@@ -313,6 +313,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       netPresentValue,
       totalAssetIncome,
       totalExpensesData: totalExpenses,
+      incomeTaxesData: incomeTaxesYearData,
+      earningsTaxesData: earningsTaxesYearData,
       totalTaxesData: totalTaxesYearData
     }
   } catch (e) {

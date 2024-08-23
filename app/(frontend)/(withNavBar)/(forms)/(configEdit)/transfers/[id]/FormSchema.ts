@@ -3,19 +3,30 @@ import { z } from "zod"
 import { IsFormNumberOpt, IsValidYear, YesNoSchema } from "@/app/lib/data/schema/config/schemaUtils"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { IScenario } from "@/app/lib/data/schema/config"
-import { testForMultipleMigrateAll } from "./validation"
+import { testForMultipleMigrateAllFrom, testForMultipleMigrateAllFromAndTo } from "./validation"
 
-export const getFormSchema = (scenario: IScenario) => {
+export const getFormSchema = (scenario: IScenario, id: string) => {
   const { transfers } = scenario
+
+  const otherTransfers = transfers?.filter((it) => it.id !== id)
 
   const refinedFormSchema = FormSchema.refine(
     (formData) => {
-      return testForMultipleMigrateAll(formData, transfers)
+      return testForMultipleMigrateAllFrom(formData, otherTransfers)
     },
 
     {
       message: `There is already a total transfer from this asset.`,
-      path: ["migrateAll"]
+      path: ["from"]
+    }
+  ).refine(
+    (formData) => {
+      return testForMultipleMigrateAllFromAndTo(formData, otherTransfers)
+    },
+
+    {
+      message: `There is already a total transfer from this asset.`,
+      path: ["to"]
     }
   )
 
