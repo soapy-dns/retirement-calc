@@ -5,6 +5,7 @@ export enum AppPath {
   contextSuperEdit = "/context/super",
   contextSharesEdit = "/context/shares",
   contextPropertyEdit = "/context/property",
+  contextOwnersEdit = "/context/owners",
   contextDefinedBenefitsEdit = "/context/definedBenefits",
   contextInflationEdit = "/context/inflation",
   contextLivingExpensesEdit = "/context/livingexpenses",

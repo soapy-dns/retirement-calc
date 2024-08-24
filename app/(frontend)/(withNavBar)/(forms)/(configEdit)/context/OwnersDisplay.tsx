@@ -1,18 +1,20 @@
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
-import { Card } from "@/app/ui/components/Card"
-import { Button, ButtonType } from "@/app/ui/components/common/Button"
-import { EditButton } from "@/app/ui/components/common/EditButton"
+
 import { DisplayCardWithEdit } from "@/app/ui/components/form/DisplayCardWithEdit"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
+import { AppPath } from "@/app/ui/types"
 import { useContext } from "react"
+import { useNavigation } from "@/app/ui/hooks/useNavigation"
 
 export const OwnersDisplay: React.FC = () => {
   const { selectedScenario } = useContext(ScenarioContext)
+  const navigation = useNavigation()
+
   const { context, asAtYear } = selectedScenario
   const { owners } = context
 
   const handleEdit = () => {
-    alert("To be implemented")
+    navigation.goTo(AppPath.contextOwnersEdit)
   }
 
   const handleEditFn = asAtYear >= getCurrentYear() ? handleEdit : undefined
