@@ -10,7 +10,7 @@
         "description": "UK Bank",
         "country": "SC",
         "className": "AuBank",
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "value": 10000,
         "canDrawdown": false,
         "incomeBucket": true,
@@ -22,7 +22,7 @@
         "description": "Australian bank account",
         "className": "AuBank",
         "value": 10000,
-        "assetOwners": ["Her", "Him"],
+        "assetOwners": ["HER", "HIM"],
         "incomeBucket": false,
         "canDrawdown": true,
         "drawdown": {
@@ -35,7 +35,10 @@
     "context": {
       "taxResident": "AU",
       "currency": "AU",
-      "owners": ["Him", "Her"],
+      "owners": [
+        { "identifier": "HIM", "ownerName": "Him" },
+        { "identifier": "HER", "ownerName": "Her" }
+      ],
       "auBank": {
         "interestRate": 0.1
       },

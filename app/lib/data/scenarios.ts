@@ -18,7 +18,7 @@ export const getDefaultScenarios = (): IScenario[] => {
           country: "AU",
           className: "AuBank",
           value: 10000,
-          assetOwners: ["Her", "Him"],
+          assetOwners: ["HER", "HIM"],
           incomeBucket: true,
           canDrawdown: true,
           drawdown: {
@@ -36,7 +36,7 @@ export const getDefaultScenarios = (): IScenario[] => {
           income: {
             incomeAmt: 10000
           },
-          assetOwners: ["Her"]
+          assetOwners: ["HER"]
         },
         {
           id: "AU_PROPERTY",
@@ -45,7 +45,7 @@ export const getDefaultScenarios = (): IScenario[] => {
           className: "AuProperty",
           country: "AU",
           value: 500000,
-          assetOwners: ["Her", "Him"],
+          assetOwners: ["HER", "HIM"],
           property: {
             isRented: false
           }
@@ -57,7 +57,7 @@ export const getDefaultScenarios = (): IScenario[] => {
           country: "AU",
           className: "AuShares",
           value: 20000,
-          assetOwners: ["Her", "Him"],
+          assetOwners: ["HER", "HIM"],
           canDrawdown: true,
           drawdown: {
             drawdownOrder: 50
@@ -70,7 +70,7 @@ export const getDefaultScenarios = (): IScenario[] => {
           country: "AU",
           className: "AuSuper",
           value: 500000,
-          assetOwners: ["Him"],
+          assetOwners: ["HIM"],
           canDrawdown: true,
           drawdown: {
             drawdownOrder: 50,
@@ -82,7 +82,7 @@ export const getDefaultScenarios = (): IScenario[] => {
           description: "Salary",
           country: "AU",
           className: "Salary",
-          assetOwners: ["Him"],
+          assetOwners: ["HIM"],
           income: {
             incomeAmt: 100000,
             incomeEndYear: currentYear + 6
@@ -93,7 +93,10 @@ export const getDefaultScenarios = (): IScenario[] => {
       context: {
         taxResident: "AU",
         currency: "AU",
-        owners: ["Him", "Her"],
+        owners: [
+          { identifier: "HIM", ownerName: "Him" },
+          { identifier: "HER", ownerName: "Her" }
+        ],
         auBank: {
           interestRate: 0.005
         },
@@ -146,7 +149,7 @@ export const getDefaultScenarios = (): IScenario[] => {
           country: "SC",
           className: "AuBank",
           value: 10000,
-          assetOwners: ["Her", "Him"],
+          assetOwners: ["HER", "HIM"],
           incomeBucket: true,
           canDrawdown: true,
           drawdown: {
@@ -164,7 +167,7 @@ export const getDefaultScenarios = (): IScenario[] => {
           income: {
             incomeAmt: 10000
           },
-          assetOwners: ["Her"]
+          assetOwners: ["HER"]
         },
         {
           id: "AU_PROPERTY",
@@ -173,7 +176,7 @@ export const getDefaultScenarios = (): IScenario[] => {
           className: "AuProperty",
           country: "SC",
           value: 500000,
-          assetOwners: ["Her", "Him"],
+          assetOwners: ["HER", "HIM"],
           property: {
             isRented: false
           }
@@ -185,7 +188,7 @@ export const getDefaultScenarios = (): IScenario[] => {
           country: "SC",
           className: "AuShares",
           value: 20000,
-          assetOwners: ["Her", "Him"],
+          assetOwners: ["HER", "HIM"],
           canDrawdown: true,
           drawdown: {
             drawdownOrder: 50
@@ -198,7 +201,7 @@ export const getDefaultScenarios = (): IScenario[] => {
           country: "SC",
           className: "AuSuper",
           value: 500000,
-          assetOwners: ["Him"],
+          assetOwners: ["HIM"],
           canDrawdown: true,
           drawdown: {
             drawdownOrder: 50,
@@ -210,7 +213,7 @@ export const getDefaultScenarios = (): IScenario[] => {
           description: "Salary",
           country: "SC",
           className: "Salary",
-          assetOwners: ["Him"],
+          assetOwners: ["HIM"],
           income: {
             incomeAmt: 100000,
             incomeEndYear: currentYear + 6
@@ -221,7 +224,10 @@ export const getDefaultScenarios = (): IScenario[] => {
       context: {
         taxResident: "SC",
         currency: "SC",
-        owners: ["Him", "Her"],
+        owners: [
+          { identifier: "HIM", ownerName: "Him" },
+          { identifier: "HER", ownerName: "Her" }
+        ],
         auBank: {
           interestRate: 0.005
         },

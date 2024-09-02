@@ -22,7 +22,7 @@ export const Alert: React.FC<IAlert> = ({ id = "alert", alertType, heading, chil
     <div id={id} className={`${bgColor} p-2 border border-primary-foreground`} role="alert" tabIndex={-1}>
       <>
         {heading && (
-          <div className="flex gap-2">
+          <div className="flex gap-2 mb-4">
             <AlertIcon alertType={alertType} />
             {<div className="font-semibold">{heading}</div>}
           </div>

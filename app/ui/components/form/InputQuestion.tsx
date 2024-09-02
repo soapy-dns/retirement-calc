@@ -28,7 +28,7 @@ type InputProps = {
   restrictedCharSet?: RegExp
   //   labelVariant?: LabelVariant
   disabled?: boolean
-  editable?: boolean
+  editable?: boolean // TODO: remove this?
   helpText?: string
 }
 
@@ -38,7 +38,7 @@ export const InputQuestion: React.FC<InputProps> = ({
   name,
   defaultValue,
   helpText,
-  editable = false,
+  // editable = false,
   type,
   control,
   prefix,

@@ -1,13 +1,13 @@
 import { AssetIncome, EarningsTax, Tax } from "../assets/types"
 import { BandedTaxCalc } from "./taxCalcs/BandedTaxCalc"
-import { Transfer, Country } from "../../data/schema/config"
+import { Transfer, Country, OwnerContext, OwnersContext } from "../../data/schema/config"
 import { Asset } from "../assets/Asset"
 import { AssetGroup, BasicYearData, InflationContext, YearsTaxData } from "../types"
 import { removeUnusedHistoryFromTaxes } from "./removeUnusedHistoryFromTaxes"
 
-export const getOwnersTaxableIncomeAmt = (incomeFromAssets: AssetIncome[], owner: string, year: number) => {
+export const getOwnersTaxableIncomeAmt = (incomeFromAssets: AssetIncome[], ownerId: string, year: number) => {
   const ownersTaxableIncomeFromAssets = incomeFromAssets.filter(
-    (assetIncome) => assetIncome.owner === owner && assetIncome.percOfIncomeTaxable > 0
+    (assetIncome) => assetIncome.ownerId === ownerId && assetIncome.percOfIncomeTaxable > 0
   )
 
   const ownersTaxableIncomeFromAssetsAmt = ownersTaxableIncomeFromAssets.reduce((accum, assetIncome) => {
@@ -25,12 +25,8 @@ export const getOwnersTaxableIncomeAmt = (incomeFromAssets: AssetIncome[], owner
  *
  * TODO, rather than passing the scenario for the asset config, maybe add relevant info to the asset object?
  */
-export const getTaxableDrawdownAmt = (
-  // scenario: IScenario,
-  transfersForYear: Transfer[],
-  owner: string,
-  assets: Asset[]
-): number => {
+export const getTaxableDrawdownAmt = (transfersForYear: Transfer[], ownerId: string, assets: Asset[]): number => {
+  // console.log("--transfersForYear--", transfersForYear)
   if (!transfersForYear) return 0
 
   const taxableDrawdownAmt = transfersForYear?.reduce((accum, transfer) => {
@@ -43,10 +39,10 @@ export const getTaxableDrawdownAmt = (
     if (!matchingAsset) return accum
 
     //  drawdowns are not taxed unless in a different country
-    const { assetOwners } = matchingAsset || {}
+    const { ownerIds } = matchingAsset || {}
 
-    if (assetOwners.includes(owner)) {
-      const increment = (value * matchingAsset.percOfDrawdownTaxable) / 100 / assetOwners.length
+    if (ownerIds.includes(ownerId)) {
+      const increment = (value * matchingAsset.percOfDrawdownTaxable) / 100 / ownerIds.length
       return accum + increment
     }
     return accum
@@ -55,9 +51,9 @@ export const getTaxableDrawdownAmt = (
   return Math.round(taxableDrawdownAmt)
 }
 
-export const initTaxes = (yearRange: number[], owners: string[]): Tax[] => {
+export const initTaxes = (yearRange: number[], owners: OwnersContext): Tax[] => {
   const taxes = owners.map((owner) => ({
-    owner,
+    ownerId: owner.identifier,
     history: []
   }))
 
@@ -85,7 +81,7 @@ export const getTaxesRows = (
   const cleanedTaxes = removeUnusedHistoryFromTaxes(taxes, finalYear)
   return cleanedTaxes.reduce(
     (accum, tax: Tax | EarningsTax) => {
-      const key: string = `${taxName} (${tax.owner})`
+      const key: string = `${taxName} (${tax.ownerId})`
       accum[key] = tax.history
       return accum
     },
@@ -93,34 +89,9 @@ export const getTaxesRows = (
   )
 }
 
-// TODO: complete!
-// export const getTotalTaxes = (
-//   incomeTaxes: Tax[],
-//   earningTaxes: EarningsTax[],
-//   finalYear: number,
-// ): BasicYearData[]  => {
-
-//   const incomeYearData: BasicYearData[] = incomeTaxes.reduce((accum, it) => {
-
-//     const x = it.history
-//   }, [] as BasicYearData[])
-//   const cleanedTIncomeTaxes = removeUnusedHistoryFromTaxes(incomeTaxes, finalYear)
-//     const cleanedTEarningTaxes = removeUnusedHistoryFromTaxes(earningTaxes, finalYear)
-//     const
-
-//   return cleanedTaxes.reduce(
-//     (accum, tax: Tax | EarningsTax) => {
-//       const key: string = `${taxName} (${tax.owner})`
-//       accum[key] = tax.history
-//       return accum
-//     },
-//     {} as BasicYearData[]>
-//   )
-// }
-
-export const initEarningsTaxes = (yearRange: number[], owners: string[]): EarningsTax[] => {
+export const initEarningsTaxes = (yearRange: number[], owners: OwnersContext): EarningsTax[] => {
   const earningsTaxes = owners.map((owner) => ({
-    owner,
+    ownerId: owner.identifier,
     history: []
   }))
 
@@ -140,30 +111,24 @@ export const calculateTaxes = (
   taxes: Tax[], // TODO: maybe we create and return?
   year: number,
   assets: Asset[],
-  owners: string[],
+  owners: OwnersContext,
   incomeTaxCalculator: BandedTaxCalc,
   incomeFromAssets: AssetIncome[],
   manualTransfersForYear: Transfer[]
 ) => {
-  owners.forEach((owner: string) => {
-    const tax = taxes.find((it) => it.owner === owner)
-    if (!tax) throw new Error(`tax object not foound for ${owner}`)
-    const manualTaxableDrawdownAmt = getTaxableDrawdownAmt(manualTransfersForYear, owner, assets)
+  owners.forEach((owner: OwnerContext) => {
+    const tax = taxes.find((it) => it.ownerId === owner.identifier)
+    if (!tax) throw new Error(`tax object not foound for ${owner.identifier}`)
+    const manualTaxableDrawdownAmt = getTaxableDrawdownAmt(manualTransfersForYear, owner.identifier, assets)
 
-    const ownersTaxableIncomeAmt = getOwnersTaxableIncomeAmt(incomeFromAssets, owner, year)
+    const ownersTaxableIncomeAmt = getOwnersTaxableIncomeAmt(incomeFromAssets, owner.identifier, year)
 
     const ownersTotalTaxableAmt = ownersTaxableIncomeAmt + manualTaxableDrawdownAmt
-    // console.log(
-    //   "--ownersTotalTaxableAmt, ownersTaxableIncomeAmt, manualTaxableDrawdownAmt--",
-    //   ownersTotalTaxableAmt,
-    //   ownersTaxableIncomeAmt,
-    //   manualTaxableDrawdownAmt
-    // )
 
     const ownersTaxAmt = incomeTaxCalculator.getTax(ownersTotalTaxableAmt, year)
 
     const taxHistory = tax.history.find((it) => it.year === year)
-    if (!taxHistory) throw new Error(`No history found for ${owner} in ${year}`)
+    if (!taxHistory) throw new Error(`No history found for ${owner.identifier} in ${year}`)
 
     taxHistory.totalTaxableAmt = Math.round(ownersTotalTaxableAmt)
     taxHistory.taxableIncomeAmt = Math.round(ownersTaxableIncomeAmt)

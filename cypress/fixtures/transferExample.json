@@ -12,7 +12,7 @@
         "country": "AU",
         "className": "AuBank",
         "value": 100000,
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "incomeBucket": true,
         "canDrawdown": true,
         "drawdown": { "drawdownOrder": 20 }
@@ -24,7 +24,7 @@
         "country": "AU",
         "className": "AuBank",
         "value": 100000,
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "incomeBucket": false,
         "canDrawdown": true,
         "drawdown": { "drawdownOrder": 20 }
@@ -35,7 +35,7 @@
       "au2ukExchangeRate": 0.52,
       "currency": "AU",
       "numOfYears": 1,
-      "owners": ["Him"],
+      "owners": [{ "identifier": "HIM", "ownerName": "Him" }],
       "auBank": {
         "interestRate": 0
       },

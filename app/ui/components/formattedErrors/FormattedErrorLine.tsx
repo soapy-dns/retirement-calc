@@ -12,6 +12,7 @@ export const FormattedErrorLine: React.FC<ComponentProps> = ({ error, assets, tr
   let path, linkText
 
   if (error.path[0] === "context") {
+    console.log("error.path", error.path)
     path = `/context/${error.path[1]}`
 
     switch (error.path[1]) {
@@ -20,6 +21,10 @@ export const FormattedErrorLine: React.FC<ComponentProps> = ({ error, assets, tr
         break
       case "livingExpenses":
         linkText = "Living Expenses"
+        break
+      case "owners":
+        linkText = error.path[2] !== undefined ? `Owner ${Number(error.path[2]) + 1}` : "Owners"
+        path = `/context/owners`
         break
       case "auBank":
         linkText = "Cash"
@@ -43,6 +48,7 @@ export const FormattedErrorLine: React.FC<ComponentProps> = ({ error, assets, tr
   } else {
     linkText = `${error.path[0]} ${error.path[1]}`
   }
+
   return (
     <li>
       {path && linkText && (
@@ -51,8 +57,8 @@ export const FormattedErrorLine: React.FC<ComponentProps> = ({ error, assets, tr
           <Link className="text-primary-foreground underline" href={path}>
             {linkText}
           </Link>
-          {" - "}
-          {error.message}
+          {/* {" - "}
+          {error.message} */}
         </>
       )}
       {!path && <div>{error.message}</div>}

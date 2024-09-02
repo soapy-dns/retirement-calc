@@ -5,7 +5,8 @@ import {
   ArrowLeftOnRectangleIcon,
   ArrowRightOnRectangleIcon,
   DocumentIcon,
-  EllipsisVerticalIcon
+  EllipsisVerticalIcon,
+  WrenchScrewdriverIcon
 } from "@heroicons/react/24/outline"
 import { AppPath } from "./types"
 import Link from "next/link"
@@ -85,7 +86,7 @@ export const MoreMenu = () => {
               )}
             </Menu.Item>
 
-            {/* <Menu.Item>
+            <Menu.Item>
               {({ active }) => (
                 <Link
                   href={AppPath.tools}
@@ -100,7 +101,7 @@ export const MoreMenu = () => {
                   </div>
                 </Link>
               )}
-            </Menu.Item> */}
+            </Menu.Item>
 
             <Menu.Item>
               {({ active }) => (

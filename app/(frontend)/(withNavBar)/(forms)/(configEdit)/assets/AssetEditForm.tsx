@@ -20,7 +20,7 @@ import {
   isLiquidAsset,
   isPropertyAsset
 } from "@/app/ui/utils"
-import { AssetClass } from "@/app/lib/data/schema/config"
+import { AssetClass, OwnerContext, OwnersContext } from "@/app/lib/data/schema/config"
 import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { CountrySelector } from "@/app/ui/components/form/CountrySelector"
 
@@ -30,7 +30,7 @@ interface Props {
   assetType: AssetClass
   drawdownSet: string
   isRentedFormValue: YesNo
-  owners: string[]
+  owners: OwnersContext
 }
 
 export const AssetEditForm: FunctionComponent<Props> = ({
@@ -44,7 +44,8 @@ export const AssetEditForm: FunctionComponent<Props> = ({
   const { getCurrencySymbol } = useContextConfig()
   const currency = getCurrencySymbol()
   const showDrawdown = drawdownSet === "Y"
-  const ownersOptions = owners.map((it) => ({ label: it, value: it }))
+  const ownerOptions = owners.map((it) => ({ label: it.ownerName, value: it.identifier }))
+  console.log("ownerOptions", ownerOptions)
 
   // TODO: change to use common
   const showIncomeStartDate = [AssetType.AuDefinedBenefits, AssetType.Salary].includes(assetType)
@@ -77,8 +78,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         id="country"
         control={control}
         label={assetConstants.COUNTRY.LABEL}
-        // values={taxResidentOptions}
-        // variant={RadioQuestionVariant.VERTICAL}
         helpText={assetConstants.COUNTRY.HELP_TEXT}
       />
 
@@ -97,7 +96,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         id="owners"
         control={control}
         label={assetConstants.OWNERS.LABEL}
-        options={ownersOptions}
+        options={ownerOptions}
         {...register("owners", {
           validate: { validateOwners }
         })}

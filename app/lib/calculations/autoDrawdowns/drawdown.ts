@@ -1,6 +1,6 @@
 import { Asset } from "../assets/Asset"
 import { DrawdownYearData, AssetIncome, ExpenseYearData, Tax, EarningsTax } from "../assets/types"
-import { IScenario } from "../../data/schema/config"
+import { IScenario, OwnersContext } from "../../data/schema/config"
 import { getDrawdownAmt } from "../income/getDrawdowns"
 import { getTaxAmtForYear } from "../tax/getTaxAmt"
 import { BandedTaxCalc } from "../tax/taxCalcs/BandedTaxCalc"
@@ -18,7 +18,7 @@ interface IDrawdownContext {
   automatedDrawdownMap: Record<number, AutomatedDrawdown[]>
   taxes: Tax[]
   incomeTaxCalculator: BandedTaxCalc
-  owners: string[]
+  owners: OwnersContext
   incomeFromAssets: AssetIncome[]
   livingExpenses: BasicYearData[]
   earningsTaxes: EarningsTax[]
@@ -40,15 +40,14 @@ const drawdownIteration = (
   automatedDrawdownMap[year] = automatedDrawdownsForYear
 
   owners.forEach((owner) => {
-    const taxForOwner = taxes.find((it) => it.owner === owner)
+    const taxForOwner = taxes.find((it) => it.ownerId === owner.identifier)
     if (!taxForOwner) throw new Error("No tax for owner")
     const taxHistory = taxForOwner.history.find((it) => it.year === year)
     if (!taxHistory) throw new Error("No tax history")
 
     const taxableAutomatedDrawdownAmt = getTaxableDrawdownAmt(
-      // scenario,
       automatedDrawdownsForYear,
-      owner,
+      owner.identifier,
       groupedAssets.flat()
     )
 

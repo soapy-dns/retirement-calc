@@ -18,6 +18,19 @@ const propertyContextSchema = z.object({
   growthInterestRate: z.number()
 })
 
+const OwnerSchema = z.object({
+  identifier: z.string(),
+  ownerName: z.string(),
+  birthYear: z.number().optional(),
+  gender: z.enum(["M", "F"]).optional()
+})
+
+const OwnersSchema = z.array(OwnerSchema).min(1).max(2)
+
+export type OwnerContext = z.infer<typeof OwnerSchema>
+
+export type OwnersContext = z.infer<typeof OwnersSchema>
+
 const sharesContextSchema = z.object({
   growthInterestRate: z.number(),
   dividendInterestRate: z.number()
@@ -76,7 +89,8 @@ const contextSchema = z.object({
   au2ukExchangeRate: z.number().optional(),
   currency: CountryEnum,
   numOfYears: z.number().optional(),
-  owners: z.string().array().nonempty(),
+  // owners: z.string().array().nonempty(),
+  owners: OwnersSchema,
   auBank: cashContextSchema,
   definedBenefitsAu: definedBenefitsContextSchema,
   property: propertyContextSchema,

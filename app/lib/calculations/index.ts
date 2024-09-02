@@ -39,13 +39,18 @@ const getErrorMessage = (error: unknown) => {
 
 export const calculate = async (data: unknown): Promise<CalculationResults> => {
   await sleep(1)
+  // console.log("--calculate data--", JSON.stringify(data, null, 4))
+  // console.log("--data.context--", data.context);
+  // if (data.context)
 
   const result = ScenarioSchema.safeParse(data)
 
   if (!result.success) {
     const firstCustomError = result.error.issues.find((it) => it.code === "custom")
 
-    console.log("errors ---> ", result.error.issues)
+    console.log("--firstCustomError--", firstCustomError)
+
+    console.log("Validation errors ---> ", result.error.issues)
     return {
       success: false,
       calculationMessage: firstCustomError?.message || "Invalid configuration",
@@ -57,6 +62,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
   const { asAtYear } = scenario
 
   try {
+    console.log("----DO CALCULATION ---")
     // setup
     let calculationMessage = ""
     const totalDrawdowns: DrawdownYearData[] = []
@@ -124,6 +130,11 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
       const manualTransfersForYear = getScenarioTransfersForYear(scenario, year)
       calculateTaxes(taxes, year, assets, owners, incomeTaxCalculator, incomeFromAssets, manualTransfersForYear)
+      if (year === 2048) {
+        const hists = taxes.map((it) => it.history.find((hist) => hist.year === 2048))
+        console.log("--hists--", hists)
+        // console.log("--taxes--", JSON.stringify(taxes, null, 4))
+      }
       calculateEarningsTaxes(earningsTaxes, assets, year, earningsTaxCalculator)
 
       // TOTAL INCOME FOR THIS YEAR -will be moved to the 'incomeBucket' asset
@@ -261,7 +272,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const graphCalculatedAssetNpvData = getCalculatedNpvData(assets, inflationContext) // for graph purposes
 
     const assetIncomeRowData = incomeFromAssets.reduce((accum: AssetData, assetIncome: AssetIncome) => {
-      accum[`${assetIncome.name} (${assetIncome.owner})`] = assetIncome.history
+      const ownerName = owners.find((owner) => owner.identifier === assetIncome.ownerId)?.ownerName || "Unknown"
+      accum[`${assetIncome.name} (${ownerName})`] = assetIncome.history
       return accum
     }, {})
 

@@ -1,4 +1,5 @@
 "use client"
+
 import { useSearchParams } from "next/navigation"
 import React, { useContext, useEffect, useState } from "react"
 
@@ -71,12 +72,10 @@ const SheetPage: React.FC = () => {
     assetIncomeRowData,
     totalAssetIncome,
     totalExpensesData,
-    // inflationContext,
     drawdownRowData,
     totalDrawdownData,
     expensesRowData,
     incomeTaxesData,
-    earningsTaxesData,
     totalTaxesData,
     surplusRowData
   } = calculationResults
@@ -85,7 +84,6 @@ const SheetPage: React.FC = () => {
   const headingRow = yearRange
 
   const { showModal: showHelpModal, onToggle: onHelpModalToggle, modalData: helpModalData = {} } = helpModalContext
-  // const HelpModalContent = getHelpContent(helpModalData)
 
   if (!selectedScenario) return <div>Select a scenario</div>
 
@@ -98,8 +96,8 @@ const SheetPage: React.FC = () => {
               <th key="name" className="z-30 bg-gray-50 italic text-primary-foreground md:first:sticky md:first:left-0">
                 {selectedScenario.name}
               </th>
-              {headingRow.map((value, index) => {
-                return <HeadingCell key={index} value={value} index={index} />
+              {headingRow.map((year, index) => {
+                return <HeadingCell key={index} year={year} yearIndex={index} />
               })}
             </tr>
           </thead>

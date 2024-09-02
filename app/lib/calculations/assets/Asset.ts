@@ -21,8 +21,7 @@ export abstract class Asset {
   name = "UnNamed Asset"
   description
   incomeProducing = false
-  assetOwners
-  // scenario // TODO: Why do I need scenarop here?
+  ownerIds
   abstract readonly percOfIncomeTaxable: number
   abstract readonly percOfDrawdownTaxable: number // eg defined contributions which will have 25% tax free in UK
   incomeBucket = false
@@ -53,7 +52,7 @@ export abstract class Asset {
     this.name = name
     this.description = description
     this.incomeProducing = incomeProducing
-    this.assetOwners = assetOwners
+    this.ownerIds = assetOwners
     this.country = country
     this.rateVariation = rateVariation ? rateVariation / 100 : 0
 

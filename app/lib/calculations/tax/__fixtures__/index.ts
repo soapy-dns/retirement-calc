@@ -9,7 +9,10 @@ export const simpleAuContext: ContextConfig = {
   taxResident: "AU",
   // au2ukExchangeRate: 0.52,
   currency: "AU",
-  owners: ["Him", "Her"],
+  owners: [
+    { identifier: "HIM", ownerName: "Him" },
+    { identifier: "HER", ownerName: "Her" }
+  ],
   auBank: {
     interestRate: 0.005
   },
@@ -41,7 +44,7 @@ const definedContributionsAssetConfig: IAsset = {
   country: "AU",
   className: "AuSuper",
   value: 500000,
-  assetOwners: ["Her"],
+  assetOwners: ["HER"],
   canDrawdown: true,
   drawdown: {
     drawdownOrder: 50

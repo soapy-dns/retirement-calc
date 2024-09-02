@@ -20,8 +20,6 @@ export const DisplayCardWithEdit: React.FC<DisplayCardWithEditProps> = ({ headin
 
       {children}
       {handleEdit && (
-        // <div className="grid grid-cols-1 md:grid-cols-4">
-        //   <div className="md:col-start-2 md:col-span-2">
         <div className="mx-auto my-6 w-3/4">
           <Button buttonType={ButtonType.primary} onClick={handleEdit}>
             <div className="flex items-center justify-center gap-2">
@@ -30,7 +28,6 @@ export const DisplayCardWithEdit: React.FC<DisplayCardWithEditProps> = ({ headin
             </div>
           </Button>
         </div>
-        // </div>
       )}
     </Card>
   )

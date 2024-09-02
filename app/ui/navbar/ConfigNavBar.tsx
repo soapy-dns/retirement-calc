@@ -7,23 +7,23 @@ import { scrollFieldIntoView } from "@/app/ui/utils/scrollUtils"
 
 export const configNavBarId = "config-nav-bar"
 
+const scroll = () => scrollFieldIntoView(configNavBarId, 30)
+
 export const ConfigNavBar = () => {
   const { activeTab, updateActiveTab } = useContext(ConfigTabContext)
 
   const handleContextClick = () => {
-    scrollFieldIntoView(configNavBarId, 30)
+    scroll()
     updateActiveTab(ConfigTab.context)
-
-    // scrollBy({ top: 10 })
   }
 
   const handleAssetsClick = () => {
-    scrollFieldIntoView(configNavBarId, 10)
+    scroll()
     updateActiveTab(ConfigTab.assets)
   }
 
   const handleTransfersClick = () => {
-    scrollFieldIntoView(configNavBarId, 10)
+    scroll()
     updateActiveTab(ConfigTab.transfers)
   }
 

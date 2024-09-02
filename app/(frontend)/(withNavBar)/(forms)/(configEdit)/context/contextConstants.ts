@@ -84,5 +84,20 @@ export const contextConstants: Record<string, ItemProps> = {
   RATE: {
     LABEL: "Percentage",
     HELP_TEXT: "The percentage, eg 3 rather than 0.03."
+  },
+  OWNER_BIRTH_YEAR: {
+    LABEL: "Year of birth (optional)",
+    HELP_TEXT:
+      "Optional, but can be used to improve tax calculations and help compare calculation results against a possible life expectancy."
+  },
+  OWNER_GENDER: {
+    LABEL: "Sex (optional)",
+    HELP_TEXT:
+      "Optional, but can be used to improve tax calculations and help compare calculation results against a possible life expectancy."
+  },
+  OWNER_IDENTIFIER: {
+    LABEL: "Name",
+    HELP_TEXT:
+      "Helps identify income etc on the spreadsheet.  Can be a name, nickname or anything which uniquely identifies the owner."
   }
 }
