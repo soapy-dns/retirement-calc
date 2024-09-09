@@ -130,11 +130,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
       const manualTransfersForYear = getScenarioTransfersForYear(scenario, year)
       calculateTaxes(taxes, year, assets, owners, incomeTaxCalculator, incomeFromAssets, manualTransfersForYear)
-      if (year === 2048) {
-        const hists = taxes.map((it) => it.history.find((hist) => hist.year === 2048))
-        console.log("--hists--", hists)
-        // console.log("--taxes--", JSON.stringify(taxes, null, 4))
-      }
+
       calculateEarningsTaxes(earningsTaxes, assets, year, earningsTaxCalculator)
 
       // TOTAL INCOME FOR THIS YEAR -will be moved to the 'incomeBucket' asset

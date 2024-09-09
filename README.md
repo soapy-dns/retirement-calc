@@ -18,6 +18,10 @@ bun dev
 
 Application documentation uses MDX. We do not use the remote version of MDX as the non-remote version doesn't need frontmatter, we can make use of the file structure, and it integrates better with existing components.
 
+## Double rendering
+
+reactStrictMode: true, in nextConfig will cause double rendering. This can help you spot bugs so best to leave it.
+
 ## find out what is running on port 3000
 
 pkill next-serv

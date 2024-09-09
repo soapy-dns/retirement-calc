@@ -12,7 +12,6 @@ import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { ConfigNavBar } from "../../../../ui/navbar/ConfigNavBar"
 import Scenarios from "@/docs/info/ScenarioInfo.mdx"
 import { InfoButton } from "@/app/ui/components/common/accordian/InfoButton"
-import Image from "next/image"
 
 const ConfigPage: React.FC = () => {
   const { activeTab } = useContext(ConfigTabContext)

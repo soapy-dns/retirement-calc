@@ -1,6 +1,5 @@
 import { isEarnedIncomeAsset } from "@/app/ui/utils"
 import { Asset } from "../assets/Asset"
-import { YearData } from "../types"
 import { BandedTaxCalc } from "./taxCalcs/BandedTaxCalc"
 import { EarningsTax } from "../assets/types"
 

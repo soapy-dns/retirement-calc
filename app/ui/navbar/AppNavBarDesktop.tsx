@@ -14,6 +14,7 @@ export const AppNavBarDesktop = () => {
   return (
     <div className=" flex h-10 flex-row justify-center border-0 bg-primary py-1 pl-3 text-white">
       <ScenarioMenu />
+
       <Link
         href={AppPath.config}
         // scroll={true} // this doesn't seem to do anything

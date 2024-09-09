@@ -34,7 +34,7 @@ export const MoreMenu = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline focus:outline-2 focus:outline-primary">
+        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg  focus:outline  focus:outline-white border-2 border-primary-foreground">
           <div className="py-1">
             {/*<Menu.Item>
                {({ active }) => (

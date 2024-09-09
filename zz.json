@@ -1,0 +1,93 @@
+{
+  "id": "A",
+  "name": "Australian example",
+  "description": "Example with all Australian asset types",
+  "asAtYear": 2024,
+  "assets": [
+    {
+      "id": "JOINT_AU_BANK",
+      "name": "Bank account",
+      "description": "blah blah",
+      "country": "AU",
+      "className": "AuBank",
+      "value": 10000,
+      "assetOwners": ["HER", "HIM"],
+      "incomeBucket": true,
+      "canDrawdown": true,
+      "drawdown": { "drawdownOrder": 20, "preferredMinAmt": 10000 }
+    },
+    {
+      "id": "HER_AU_DEFINED_BENEFIT",
+      "name": "Defined benefits",
+      "description": "Defined benefits",
+      "country": "AU",
+      "className": "AuDefinedBenefits",
+      "isStatePension": false,
+      "income": { "incomeAmt": 10000 },
+      "assetOwners": ["HER"]
+    },
+    {
+      "id": "AU_PROPERTY",
+      "name": "Property",
+      "description": "Property",
+      "className": "AuProperty",
+      "country": "AU",
+      "value": 500000,
+      "assetOwners": ["HER", "HIM"],
+      "property": { "isRented": false }
+    },
+    {
+      "id": "JOINT_SHARES",
+      "name": "Shares",
+      "description": "Some shares",
+      "country": "AU",
+      "className": "AuShares",
+      "value": 20000,
+      "assetOwners": ["HER", "HIM"],
+      "canDrawdown": true,
+      "drawdown": { "drawdownOrder": 50 }
+    },
+    {
+      "id": "HIS_AU_SUPER",
+      "name": "Defined contributions",
+      "description": "defined contributions",
+      "country": "AU",
+      "className": "AuSuper",
+      "value": 500000,
+      "assetOwners": ["HIM"],
+      "canDrawdown": true,
+      "drawdown": { "drawdownOrder": 50, "drawdownFrom": 2026 }
+    },
+    {
+      "name": "Salary1",
+      "description": "Salary",
+      "country": "AU",
+      "className": "Salary",
+      "assetOwners": ["HIM"],
+      "income": { "incomeAmt": 100000, "incomeEndYear": 2030 },
+      "id": "7bf4c27d-9a73-49cd-9f5d-368269174f6a"
+    }
+  ],
+  "context": {
+    "taxResident": "AU",
+    "currency": "AU",
+    "owners": [
+      { "identifier": "HIM", "ownerName": "Neil", "birthYear": 1962, "gender": "M" },
+      { "identifier": "HER", "ownerName": "Grace", "birthYear": 1962, "gender": "F" }
+    ],
+    "auBank": { "interestRate": 0.005 },
+    "superAu": { "investmentReturn": 0.05 },
+    "definedBenefitsAu": { "useInflationRate": true },
+    "sharesAu": { "growthInterestRate": 0.03, "dividendInterestRate": 0.03 },
+    "property": { "growthInterestRate": 0.03 },
+    "inflation": [
+      { "fromYear": 2024, "inflationRate": 0.04 },
+      { "fromYear": 2025, "inflationRate": 0.03 }
+    ],
+    "livingExpenses": [
+      { "fromYear": 2024, "amountInTodaysTerms": 80000 },
+      { "fromYear": 2038, "amountInTodaysTerms": 50000 }
+    ]
+  },
+  "transfers": []
+}
