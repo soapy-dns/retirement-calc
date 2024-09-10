@@ -18,10 +18,6 @@ const ChartPage = () => {
       value: "capitalAssetsNpv",
       label: "Capital Assets (today's money)"
     },
-    // {
-    //   value: "rechart",
-    //   label: "Rechart - Capital Assets (today's money)"
-    // },
     {
       value: "income",
       label: "Income (today's money)"
