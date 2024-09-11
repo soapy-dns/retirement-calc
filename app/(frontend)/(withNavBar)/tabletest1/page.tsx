@@ -14,9 +14,9 @@ const SheetPage: React.FC = () => {
     <div className="w-screen h-screen">
       <div className="min-w-full overflow-auto">
         <table className="table-fixed bg-white">
-          <thead className="sticky top-20 z-30 bg-secondary-lightest">
+          <thead className="sticky top-20 z-30 bg-accent">
             <tr>
-              <th className="sticky left-0 bg-secondary-lightest" scope="col">
+              <th className="sticky left-0 bg-accent" scope="col">
                 corner
               </th>
               <th>heading 2</th>

@@ -11,7 +11,7 @@
         "description": "Bank account",
         "className": "AuBank",
         "value": 10000,
-        "assetOwners": ["Her", "Him"],
+        "assetOwners": ["HER", "HIM"],
         "incomeBucket": true,
         "canDrawdown": true,
         "drawdown": {
@@ -29,7 +29,7 @@
         "income": {
           "incomeAmt": 20000
         },
-        "assetOwners": ["Her"],
+        "assetOwners": ["HER"],
         "percOfEarningsTaxable": 0,
         "canDrawdown": false,
         "incomeBucket": false,
@@ -44,7 +44,7 @@
         "income": {
           "incomeAmt": 10000
         },
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "canDrawdown": false,
         "incomeBucket": false,
         "id": "bb42a45b-acee-46b4-81f0-431ba2ff6a33",
@@ -58,7 +58,7 @@
         "income": {
           "incomeAmt": 80000
         },
-        "assetOwners": ["Her"],
+        "assetOwners": ["HER"],
         "canDrawdown": false,
         "incomeBucket": false,
         "id": "f80a9e54-8d70-4c7f-bdcb-4dd43b8244ae",
@@ -68,7 +68,10 @@
     "context": {
       "taxResident": "AU",
       "currency": "AU",
-      "owners": ["Him", "Her"],
+      "owners": [
+        { "identifier": "HIM", "ownerName": "Him" },
+        { "identifier": "HER", "ownerName": "Her" }
+      ],
       "auBank": {
         "interestRate": 0.005
       },

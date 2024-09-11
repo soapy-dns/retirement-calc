@@ -37,8 +37,6 @@ export const Toggle: React.FC<Props> = ({
 
         const selected = value === optionValue
 
-        // first:rounded-l-md last:rounded-r-md
-
         return (
           <div
             key={`${optionValue}`}

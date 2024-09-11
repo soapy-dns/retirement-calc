@@ -12,7 +12,7 @@
         "country": "AU",
         "className": "AuBank",
         "value": 100000,
-        "assetOwners": ["Her", "Him"],
+        "assetOwners": ["HER", "HIM"],
         "incomeBucket": true,
         "canDrawdown": true,
         "drawdown": {
@@ -25,7 +25,7 @@
         "description": "Banks non variant",
         "country": "AU",
         "className": "AuBank",
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "value": 10000,
         "canDrawdown": false,
         "incomeBucket": false,
@@ -36,7 +36,7 @@
         "description": "Bank variant",
         "country": "AU",
         "className": "AuBank",
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "rateVariation": 1,
         "value": 10000,
         "canDrawdown": false,
@@ -53,14 +53,14 @@
         "income": {
           "incomeAmt": 10000
         },
-        "assetOwners": ["Him"]
+        "assetOwners": ["HIM"]
       },
       {
         "name": "Defined Benefits variant",
         "description": "Defined Benefits variant",
         "country": "AU",
         "className": "AuDefinedBenefits",
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "rateVariation": 1,
         "isStatePension": false,
         "income": {
@@ -75,7 +75,7 @@
         "className": "AuProperty",
         "country": "AU",
         "value": 1000000,
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "property": {
           "isRented": false,
           "rentalStartYear": 2024,
@@ -89,7 +89,7 @@
         "description": "Property with rate variance",
         "country": "AU",
         "className": "AuProperty",
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "rateVariation": 1,
         "value": 1000000,
         "property": {
@@ -104,7 +104,7 @@
         "country": "AU",
         "className": "AuShares",
         "value": 10000,
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "canDrawdown": false,
         "drawdown": {
           "drawdownOrder": 50
@@ -117,7 +117,7 @@
         "country": "AU",
         "className": "AuSuper",
         "value": 100000,
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "canDrawdown": false,
         "drawdown": {
           "drawdownFrom": 2026,
@@ -129,7 +129,7 @@
         "description": "Defined contribution variable -5",
         "country": "AU",
         "className": "AuSuper",
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "value": 100000,
         "canDrawdown": false,
         "id": "5a55a22e-52db-4c4f-8269-b67757f92fd4",
@@ -140,7 +140,7 @@
         "description": "Salary",
         "country": "AU",
         "className": "Salary",
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "income": {
           "incomeAmt": 100000
         },
@@ -151,7 +151,7 @@
         "description": "Salary variant",
         "country": "AU",
         "className": "Salary",
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "rateVariation": 1,
         "income": {
           "incomeAmt": 100000
@@ -162,7 +162,10 @@
     "context": {
       "taxResident": "AU",
       "currency": "AU",
-      "owners": ["Him", "Her"],
+      "owners": [
+        { "identifier": "HIM", "ownerName": "Him" },
+        { "identifier": "HER", "ownerName": "Her" }
+      ],
       "auBank": {
         "interestRate": 0.005
       },

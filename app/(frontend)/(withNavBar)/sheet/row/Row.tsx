@@ -11,10 +11,10 @@ interface IRow {
 // check for row is a hack
 export const Row = ({ rowIdentifier, row, bold = false }: IRow) => {
   return (
-    <tr className="hover:bg-secondary-lightest bg-white group">
+    <tr className="hover:bg-accent bg-white group">
       <th
         scope="row"
-        className={`text-left whitespace-nowrap py-2 px-6 group-hover:bg-secondary-lightest md:sticky left-0 bg-white text-primary-foreground`}
+        className={`text-left whitespace-nowrap py-2 px-6 group-hover:bg-accent md:sticky left-0 bg-white text-primary-foreground`}
       >
         <p className="font-semibold">{rowIdentifier}</p>
       </th>

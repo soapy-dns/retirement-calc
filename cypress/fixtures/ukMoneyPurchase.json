@@ -12,7 +12,7 @@
         "country": "SC",
         "className": "AuSuper",
         "value": 100000,
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "canDrawdown": true,
         "drawdown": {
           "drawdownOrder": 50
@@ -25,7 +25,7 @@
         "country": "SC",
         "className": "AuBank",
         "value": 0,
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "incomeBucket": true,
         "canDrawdown": true,
         "drawdown": {
@@ -37,7 +37,7 @@
       "taxResident": "SC",
       "au2ukExchangeRate": 0.52,
       "currency": "AU",
-      "owners": ["Him"],
+      "owners": [{ "identifier": "HIM", "ownerName": "Him" }],
       "auBank": {
         "interestRate": 0.005
       },

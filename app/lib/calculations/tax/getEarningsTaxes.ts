@@ -1,6 +1,5 @@
 import { isEarnedIncomeAsset } from "@/app/ui/utils"
 import { Asset } from "../assets/Asset"
-import { YearData } from "../types"
 import { BandedTaxCalc } from "./taxCalcs/BandedTaxCalc"
 import { EarningsTax } from "../assets/types"
 
@@ -22,7 +21,7 @@ export const calculateEarningsTaxes = (
 
       const earningValue = assetYearData?.income || 0
 
-      const owner: string = asset.assetOwners[0]
+      const owner: string = asset.ownerIds[0]
       accum[owner] = accum[owner] ? accum[owner] + earningValue : earningValue
 
       return accum
@@ -31,9 +30,9 @@ export const calculateEarningsTaxes = (
   )
 
   // update earning tax
-  Object.entries(accumulatedEarnings).forEach(([owner, earningAmt]) => {
+  Object.entries(accumulatedEarnings).forEach(([ownerId, earningAmt]) => {
     const earningsTaxAmt = taxCalculator.getTax(earningAmt, year)
-    const ownersEarningTaxes = earningsTaxes.find((it) => it.owner === owner)
+    const ownersEarningTaxes = earningsTaxes.find((it) => it.ownerId === ownerId)
     const yearData = ownersEarningTaxes?.history.find((it) => it.year === year)
     if (yearData) {
       yearData.value = earningsTaxAmt

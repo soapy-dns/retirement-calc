@@ -12,7 +12,7 @@
         "country": "AU",
         "className": "AuBank",
         "value": 10000,
-        "assetOwners": ["Her", "Him"],
+        "assetOwners": ["HER", "HIM"],
         "incomeBucket": true,
         "canDrawdown": true,
         "drawdown": {
@@ -25,7 +25,7 @@
         "description": "Salary",
         "country": "AU",
         "className": "Salary",
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "income": {
           "incomeAmt": 100000,
           "incomeEndYear": 2030
@@ -36,7 +36,10 @@
     "context": {
       "taxResident": "SC",
       "currency": "AU",
-      "owners": ["Him", "Her"],
+      "owners": [
+        { "identifier": "HIM", "ownerName": "Him" },
+        { "identifier": "HER", "ownerName": "Her" }
+      ],
       "auBank": {
         "interestRate": 0.005
       },

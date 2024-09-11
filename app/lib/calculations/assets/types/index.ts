@@ -1,3 +1,4 @@
+import { OwnerType } from "@/app/lib/data/schema/config"
 import { AutomatedDrawdown } from "../../autoDrawdowns/types"
 // import { IScenario, IAsset } from "../../../data/schema/config"
 
@@ -34,7 +35,7 @@ export interface AssetIncome {
   id: string
   name: string
   description?: string
-  owner: string
+  ownerId: string // owner id
   income?: number
   percOfIncomeTaxable: number
   proportion: number
@@ -52,12 +53,12 @@ export interface Income {
 }
 
 export interface Tax {
-  owner: string
+  ownerId: string
   history: YearsTaxData[]
 }
 
 export interface EarningsTax {
-  owner: string
+  ownerId: string
   history: BasicYearData[]
 }
 

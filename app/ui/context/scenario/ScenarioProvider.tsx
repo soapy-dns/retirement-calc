@@ -64,7 +64,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
         // server actions will return a 200 error for validation messages.  This may change in future
       } else if (!success) {
         if ("errors" in calculationResults) {
-          console.log("calculationResults", calculationResults)
+          console.log("calculationResults- errors", calculationResults)
           const { errors } = calculationResults
           if (errors) {
             displayErrorAlert(
@@ -132,6 +132,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
   }
 
   const updateScenario = async (updatedScenario: IScenario): Promise<{ success: boolean }> => {
+    console.log("--updateScenario---updatedScenario", updatedScenario)
     const { success } = await doCalculations(updatedScenario)
 
     // irrespective of whether the calculation works or not we update the scenario.  The customer can change it.
@@ -209,6 +210,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
   // Need to store.  This is remounted because the <Route> is remounted (I think)
   useEffect(() => {
     const scenariosString = sessionStorage.getItem("scenarios")
+    console.log("scenariosString exists:", !!scenariosString)
     const scenarios = scenariosString ? JSON.parse(scenariosString) : defaultScenarios
     setScenarios(scenarios)
 
@@ -228,7 +230,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
     sessionStorage.setItem("selectedScenario", JSON.stringify(selectedScenario))
 
-    // FIXME: remounts with react v18 and strict mode
+    console.log("do calulation on mount with selectedScenario", selectedScenario)
     doCalculations(selectedScenario)
   }, [])
 

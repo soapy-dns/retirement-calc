@@ -11,7 +11,7 @@
         "description": "Australian bank accounts",
         "className": "AuBank",
         "value": 50000,
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "incomeBucket": true,
         "canDrawdown": true,
         "drawdown": {
@@ -27,7 +27,7 @@
         "description": "Australian super - defined contributions",
         "className": "AuSuper",
         "value": 1000000,
-        "assetOwners": ["Him"],
+        "assetOwners": ["HIM"],
         "canDrawdown": true,
         "drawdown": {
           "drawdownOrder": 20
@@ -40,7 +40,10 @@
     "context": {
       "taxResident": "AU",
       "currency": "AU",
-      "owners": ["Him", "Her"],
+      "owners": [
+        { "identifier": "HIM", "ownerName": "Him" },
+        { "identifier": "HER", "ownerName": "Her" }
+      ],
       "auBank": {
         "interestRate": 0.01
       },

@@ -14,7 +14,7 @@ import { transferConstants } from "./transferConstants"
 import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { scrollFieldIntoView } from "@/app/ui/utils/scrollUtils"
-import { configNavBarId } from "../ConfigNavBar"
+import { configNavBarId } from "../../../../../ui/navbar/ConfigNavBar"
 
 interface Props {
   transfers: Transfer[]

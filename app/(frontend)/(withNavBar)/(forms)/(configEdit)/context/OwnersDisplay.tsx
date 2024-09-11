@@ -1,18 +1,25 @@
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
-import { Card } from "@/app/ui/components/Card"
-import { Button, ButtonType } from "@/app/ui/components/common/Button"
-import { EditButton } from "@/app/ui/components/common/EditButton"
+
 import { DisplayCardWithEdit } from "@/app/ui/components/form/DisplayCardWithEdit"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
+import { AppPath } from "@/app/ui/types"
 import { useContext } from "react"
+import { useNavigation } from "@/app/ui/hooks/useNavigation"
+import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
+import { FullOwnerContext } from "@/app/ui/context/LifeExpectancyProvider"
+
+const UNKNOWN = "Unknown"
 
 export const OwnersDisplay: React.FC = () => {
   const { selectedScenario } = useContext(ScenarioContext)
-  const { context, asAtYear } = selectedScenario
-  const { owners } = context
+  const { fullOwnerDetails } = useContext(FullOwnerContext)
+
+  const navigation = useNavigation()
+
+  const { asAtYear } = selectedScenario
 
   const handleEdit = () => {
-    alert("To be implemented")
+    navigation.goTo(AppPath.contextOwnersEdit)
   }
 
   const handleEditFn = asAtYear >= getCurrentYear() ? handleEdit : undefined
@@ -21,11 +28,18 @@ export const OwnersDisplay: React.FC = () => {
 
   return (
     <DisplayCardWithEdit heading={heading} handleEdit={handleEditFn}>
-      <ul className="mx-8">
-        {owners?.map((it) => (
-          <li className="list-disc" key={it}>
-            {it}
-          </li>
+      <ul className="mx-8 divide-y ">
+        {fullOwnerDetails?.map((it, index) => (
+          <div key={it.identifier} className="mb-4 ">
+            <TextDisplayField label="Name" value={it.ownerName || `Person #${index + 1}`} />
+            {it.yearsLeft && (
+              <TextDisplayField
+                label="Possible number of years to cover"
+                helpText="Calculated using UK life expectancy data"
+                value={`${it.yearsLeft} - i.e. until ${it.deathYear}`}
+              />
+            )}
+          </div>
         ))}
       </ul>
     </DisplayCardWithEdit>

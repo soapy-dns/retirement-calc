@@ -12,7 +12,7 @@
         "country": "SC",
         "className": "AuBank",
         "value": 1000000,
-        "assetOwners": ["Her", "Him"],
+        "assetOwners": ["HER", "HIM"],
         "incomeBucket": true,
         "canDrawdown": true,
         "drawdown": {
@@ -27,7 +27,7 @@
         "className": "AuProperty",
         "country": "SC",
         "value": 500000,
-        "assetOwners": ["Her", "Him"],
+        "assetOwners": ["HER", "HIM"],
         "property": {
           "isRented": true,
           "rentalIncomePerMonth": 1000,
@@ -38,7 +38,10 @@
     "context": {
       "taxResident": "AU",
       "currency": "AU",
-      "owners": ["Him", "Her"],
+      "owners": [
+        { "identifier": "HIM", "ownerName": "Him" },
+        { "identifier": "HER", "ownerName": "Her" }
+      ],
       "auBank": {
         "interestRate": 0.01
       },
