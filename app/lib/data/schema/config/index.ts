@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { validateIncomeBucket } from "./validation"
+import { assetsVsOwners, validateIncomeBucket } from "./validation"
 import { AssetSchema } from "./asset"
 import { CountryEnum, IsValidYear, YesNoSchema } from "./schemaUtils"
 import { numberFormatter } from "@/app/ui/utils/formatter"
@@ -84,7 +84,7 @@ export const TransferSchema = z
     })
   )
 
-const contextSchema = z.object({
+const ContextSchema = z.object({
   taxResident: CountryEnum,
   au2ukExchangeRate: z.number().optional(),
   currency: CountryEnum,
@@ -116,15 +116,18 @@ export const ScenarioSchema = z
     description: z.string().optional(),
     asAtYear: z.number(),
     assets: z.array(AssetSchema),
-    context: contextSchema,
+    context: ContextSchema,
     transfers: z.array(TransferSchema).optional()
   })
   .refine(({ assets }) => validateIncomeBucket(assets), {
     message: "Please mark 1 and only 1 asset for accumulating any income."
   })
+  .refine(({ assets, context }) => assetsVsOwners(assets, context), {
+    message: "An asset has no owners."
+  })
 
 export type IScenario = z.infer<typeof ScenarioSchema>
-export type ContextConfig = z.infer<typeof contextSchema>
+export type ContextConfig = z.infer<typeof ContextSchema>
 export type LivingExpensesRecord = z.infer<typeof LivingExpensesSchema>
 export type InflationRecord = z.infer<typeof InflationSchema>
 export type CashContext = z.infer<typeof cashContextSchema>

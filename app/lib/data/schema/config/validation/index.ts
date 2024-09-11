@@ -1,4 +1,4 @@
-import { AssetClass, CashAsset, IAsset, IncomeAsset, LiquidAsset, PropertyAsset } from ".."
+import { AssetClass, CashAsset, ContextConfig, IAsset, IncomeAsset, LiquidAsset, PropertyAsset } from ".."
 import { isCashAsset, isLiquidAsset } from "@/app/ui/utils"
 
 // VALIDATE CONTEXT
@@ -27,12 +27,19 @@ export const validateIncomeBucket = (assets: IAsset[]) => {
   return incomeBucketAssets.length === 1
 }
 
-// VALIDATE TRANSFERS
-// export const yearNotPassed = (year: number) => {
-//   const nowYear = getStartingYear()
+export const assetsVsOwners = (assets: IAsset[], context: ContextConfig) => {
+  const { owners } = context
+  const ownerIdentifiers = owners.map((it) => it.identifier)
 
-//   return nowYear <= year
-// }
+  const notFound = assets.some((it) => {
+    const firstOwnerFound = ownerIdentifiers.includes(it.assetOwners[0])
+    const secondOwnerFoundOrNoSecondOwner = !it.assetOwners[1] || ownerIdentifiers.includes(it.assetOwners[1])
+
+    return !firstOwnerFound || !secondOwnerFoundOrNoSecondOwner
+  })
+
+  return !notFound
+}
 
 // The next validations related to assets. Perhaps this could be separated out.
 export const incomeValidator = {
