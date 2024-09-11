@@ -1,4 +1,4 @@
-import { OwnerContext } from "@/app/lib/data/schema/config"
+import { OwnerType } from "@/app/lib/data/schema/config"
 import { AutomatedDrawdown } from "../../autoDrawdowns/types"
 // import { IScenario, IAsset } from "../../../data/schema/config"
 

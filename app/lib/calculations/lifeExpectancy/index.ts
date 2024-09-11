@@ -1,10 +1,8 @@
 import data from "@/app/lib/data/lifeExpectancy.json"
 import { getCurrentYear } from "../utils/getCurrentYear"
+import { LifeExpectancyDetails } from "./types"
 
-export const getExpectedDeathDetails = (
-  birthYear: number,
-  gender: "M" | "F"
-): { age: number; year: number; yearsLeft: number } | undefined => {
+export const getExpectedDeathDetails = (birthYear: number, gender: "M" | "F"): LifeExpectancyDetails | undefined => {
   const thisYear = getCurrentYear()
   const roughAge = thisYear - birthYear
 
@@ -16,7 +14,7 @@ export const getExpectedDeathDetails = (
     const expectedDeathAge = roughAge + lifeExpectancy
     const expectedDeathYear = thisYear + lifeExpectancy
     const yearsLeft = expectedDeathYear - thisYear
-    return { age: expectedDeathAge, year: expectedDeathYear, yearsLeft }
+    return { deathAge: expectedDeathAge, deathYear: expectedDeathYear, yearsLeft }
   }
   return
 }

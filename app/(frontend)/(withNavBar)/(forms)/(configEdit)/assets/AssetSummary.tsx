@@ -1,4 +1,4 @@
-import type { IAsset, OwnerContext } from "@/app/lib/data/schema/config"
+import type { IAsset, OwnerType } from "@/app/lib/data/schema/config"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { Card } from "@/app/ui/components/Card"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
@@ -18,7 +18,7 @@ import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 interface IAssetItemDisplay {
   removeAllowed: boolean
   asset: IAsset
-  owners: OwnerContext[]
+  owners: OwnerType[]
 }
 
 export const AssetSummary = ({ asset, removeAllowed }: IAssetItemDisplay) => {

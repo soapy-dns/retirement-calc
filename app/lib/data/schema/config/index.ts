@@ -27,9 +27,9 @@ const OwnerSchema = z.object({
 
 const OwnersSchema = z.array(OwnerSchema).min(1).max(2)
 
-export type OwnerContext = z.infer<typeof OwnerSchema>
+export type OwnerType = z.infer<typeof OwnerSchema>
 
-export type OwnersContext = z.infer<typeof OwnersSchema>
+export type OwnersType = z.infer<typeof OwnersSchema>
 
 const sharesContextSchema = z.object({
   growthInterestRate: z.number(),

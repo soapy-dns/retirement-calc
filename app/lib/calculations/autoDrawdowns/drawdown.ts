@@ -1,6 +1,6 @@
 import { Asset } from "../assets/Asset"
 import { DrawdownYearData, AssetIncome, ExpenseYearData, Tax, EarningsTax } from "../assets/types"
-import { IScenario, OwnersContext } from "../../data/schema/config"
+import { IScenario, OwnersType } from "../../data/schema/config"
 import { getDrawdownAmt } from "../income/getDrawdowns"
 import { getTaxAmtForYear } from "../tax/getTaxAmt"
 import { BandedTaxCalc } from "../tax/taxCalcs/BandedTaxCalc"
@@ -18,7 +18,7 @@ interface IDrawdownContext {
   automatedDrawdownMap: Record<number, AutomatedDrawdown[]>
   taxes: Tax[]
   incomeTaxCalculator: BandedTaxCalc
-  owners: OwnersContext
+  owners: OwnersType
   incomeFromAssets: AssetIncome[]
   livingExpenses: BasicYearData[]
   earningsTaxes: EarningsTax[]

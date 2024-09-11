@@ -20,7 +20,7 @@ import {
   isLiquidAsset,
   isPropertyAsset
 } from "@/app/ui/utils"
-import { AssetClass, OwnerContext, OwnersContext } from "@/app/lib/data/schema/config"
+import { AssetClass, OwnerType, OwnersType } from "@/app/lib/data/schema/config"
 import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { CountrySelector } from "@/app/ui/components/form/CountrySelector"
 
@@ -30,7 +30,7 @@ interface Props {
   assetType: AssetClass
   drawdownSet: string
   isRentedFormValue: YesNo
-  owners: OwnersContext
+  owners: OwnersType
 }
 
 export const AssetEditForm: FunctionComponent<Props> = ({

@@ -60,8 +60,12 @@ export const getOptions = ({ legendContainerId, redLines = [] }: GetOptionsProps
         type: "line",
         xMin: it,
         xMax: it,
-        borderColor: "rgb(255, 99, 132)",
+        borderColor: "rgb(255, 0, 0)",
         borderWidth: 2
+        // label: {
+        //   content: "hi there",
+        //   display: true
+        // }
       }
       accum[key] = annotation
       return accum

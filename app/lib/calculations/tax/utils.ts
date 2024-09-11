@@ -1,6 +1,6 @@
 import { AssetIncome, EarningsTax, Tax } from "../assets/types"
 import { BandedTaxCalc } from "./taxCalcs/BandedTaxCalc"
-import { Transfer, Country, OwnerContext, OwnersContext } from "../../data/schema/config"
+import { Transfer, Country, OwnerType, OwnersType } from "../../data/schema/config"
 import { Asset } from "../assets/Asset"
 import { AssetGroup, BasicYearData, InflationContext, YearsTaxData } from "../types"
 import { removeUnusedHistoryFromTaxes } from "./removeUnusedHistoryFromTaxes"
@@ -51,7 +51,7 @@ export const getTaxableDrawdownAmt = (transfersForYear: Transfer[], ownerId: str
   return Math.round(taxableDrawdownAmt)
 }
 
-export const initTaxes = (yearRange: number[], owners: OwnersContext): Tax[] => {
+export const initTaxes = (yearRange: number[], owners: OwnersType): Tax[] => {
   const taxes = owners.map((owner) => ({
     ownerId: owner.identifier,
     history: []
@@ -89,7 +89,7 @@ export const getTaxesRows = (
   )
 }
 
-export const initEarningsTaxes = (yearRange: number[], owners: OwnersContext): EarningsTax[] => {
+export const initEarningsTaxes = (yearRange: number[], owners: OwnersType): EarningsTax[] => {
   const earningsTaxes = owners.map((owner) => ({
     ownerId: owner.identifier,
     history: []
@@ -111,12 +111,12 @@ export const calculateTaxes = (
   taxes: Tax[], // TODO: maybe we create and return?
   year: number,
   assets: Asset[],
-  owners: OwnersContext,
+  owners: OwnersType,
   incomeTaxCalculator: BandedTaxCalc,
   incomeFromAssets: AssetIncome[],
   manualTransfersForYear: Transfer[]
 ) => {
-  owners.forEach((owner: OwnerContext) => {
+  owners.forEach((owner: OwnerType) => {
     const tax = taxes.find((it) => it.ownerId === owner.identifier)
     if (!tax) throw new Error(`tax object not foound for ${owner.identifier}`)
     const manualTaxableDrawdownAmt = getTaxableDrawdownAmt(manualTransfersForYear, owner.identifier, assets)

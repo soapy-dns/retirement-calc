@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -18,6 +18,7 @@ import { AssetData } from "@/app/lib/calculations/types"
 import { htmlLegendPlugin } from "./htmlLegendPlugin"
 import { LegendContainer } from "./LegendContainer"
 import { getOptions } from "./utils/getOptions"
+import { FullOwnerContext } from "@/app/ui/context/LifeExpectancyProvider"
 
 ChartJS.register(
   CategoryScale,
@@ -42,8 +43,16 @@ export const CalculatedAssetLineChart: React.FC<Props> = ({ yearRange, graphData
   const labels = yearRange
   const assetData = graphData
   const numColors = graphColors.length
+  const { fullOwnerDetails } = useContext(FullOwnerContext)
 
-  const options = getOptions({ legendContainerId })
+  const redLines = fullOwnerDetails?.reduce((accum, it) => {
+    if (it.yearsLeft && !accum.includes(it.yearsLeft)) {
+      accum.push(it.yearsLeft)
+    }
+    return accum
+  }, [] as number[])
+
+  const options = getOptions({ legendContainerId, redLines })
 
   const lineDatasets = Object.entries(assetData).map(([key, obj], index) => {
     const remainder = index % numColors
