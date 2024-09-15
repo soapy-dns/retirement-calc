@@ -29,15 +29,20 @@ export const OwnersDisplay: React.FC = () => {
   return (
     <DisplayCardWithEdit heading={heading} handleEdit={handleEditFn}>
       <ul className="mx-8 divide-y ">
-        {fullOwnerDetails?.map((it, index) => (
-          <div key={it.identifier} className="mb-4 ">
-            <TextDisplayField label="Name" value={it.ownerName || `Person #${index + 1}`} />
+        {fullOwnerDetails?.map((it) => (
+          <div key={it.identifier} className="my-4">
+            <p className="font-semibold"> {it.ownerName}</p>
             {it.yearsLeft && (
-              <TextDisplayField
-                label="Possible number of years to cover"
-                helpText="Calculated using UK life expectancy data"
-                value={`${it.yearsLeft} - i.e. until ${it.deathYear}`}
-              />
+              <>
+                <p>
+                  Based on your age, you may be expected to live, on average, to around{" "}
+                  <span className="font-semibold">{it.deathAge}</span>.
+                </p>
+                <p>
+                  This means you need to plan for at least the next{" "}
+                  <span className="font-semibold">{it.yearsLeft}</span> years.
+                </p>
+              </>
             )}
           </div>
         ))}

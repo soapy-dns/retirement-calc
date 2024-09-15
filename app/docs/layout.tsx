@@ -21,7 +21,7 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
       <div className="pt-36">
         <Container>
           <div className=" py-2 ">
-            <div className="flex flex-row gap-4 ">
+            <div className="flex flex-row gap-8 ">
               <div className="relative">
                 <div className="sticky top-48">
                   <DesktopSideMenu />
