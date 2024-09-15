@@ -4,10 +4,8 @@ const getOrCreateLegendList = (chart, id) => {
 
   if (!listContainer) {
     listContainer = document.createElement("ul")
-    listContainer.style.display = "flex"
-    listContainer.style.flexDirection = "column"
-    listContainer.style.marginLeft = "2rem"
-    listContainer.style.padding = 0
+    listContainer.className = "grid grid-cols-1 md:grid-cols-2  mt-4"
+    // listContainer.className = "grid grid-flow-col auto-cols-max"
 
     legendContainer.appendChild(listContainer)
   }
