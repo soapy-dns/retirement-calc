@@ -37,6 +37,7 @@ const AssetBaseSchema = z.object({
   id: z.string(),
   className: AssetClassEnum,
   name: z.string(),
+  disabled: z.boolean().optional(),
   description: z.string().optional(),
   assetOwners: z.string().array(), // assetOwners different for different classNames certainly diff validation
   // assetOwners: z.string().array().nonempty(),

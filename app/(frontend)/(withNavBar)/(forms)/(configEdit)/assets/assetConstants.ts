@@ -5,6 +5,11 @@ export const assetConstants = {
     LABEL: "Name",
     HELP_TEXT: "A short name for the asset to help you identify it throughout the application."
   },
+  DISABLED: {
+    LABEL: "Disabled",
+    HELP_TEXT:
+      "To disable, or temporarily remove an asset.  Helpful to do a quick check of the effects without removing the asset completely and permanently."
+  },
   COUNTRY: {
     LABEL: "Country of asset",
     HELP_TEXT: "The country the asset is in (defaults to Australia). This is used in tax calculations."

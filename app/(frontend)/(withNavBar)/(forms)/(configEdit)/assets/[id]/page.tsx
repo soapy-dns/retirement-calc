@@ -37,6 +37,7 @@ const getAssetConfigFromForm = (data: FormDataType): Omit<IAsset, "id"> => {
   const {
     name,
     description,
+    disabled,
     country,
     assetType,
     value,
@@ -62,6 +63,7 @@ const getAssetConfigFromForm = (data: FormDataType): Omit<IAsset, "id"> => {
   const assetConfig: Omit<BaseAsset, "id"> = {
     name,
     description,
+    disabled: disabled === "Y",
     country,
     className: assetType,
     assetOwners: owners,
@@ -144,7 +146,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
   const assetConfig = getAssetDetails(id)
   const owners = getOwners()
 
-  const { name, description, country = "AU", className, assetOwners = [], rateVariation } = assetConfig || {}
+  const { name, description, disabled, country = "AU", className, assetOwners = [], rateVariation } = assetConfig || {}
 
   let canDrawdown, drawdownFrom, drawdownOrder, preferredMinAmt, drawdown
   if (className && isLiquidAsset(className)) {
@@ -184,6 +186,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
 
   const canDrawdownValue = canDrawdown ? "Y" : "N"
   const isRentedString = isRented ? "Y" : "N"
+  const isDisabled = disabled ? "Y" : "N"
   const {
     handleSubmit,
     watch,
@@ -195,6 +198,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     defaultValues: {
       name,
       description: description,
+      disabled: isDisabled,
       country,
       assetType: className,
       value,

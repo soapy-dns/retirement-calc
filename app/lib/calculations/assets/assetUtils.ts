@@ -21,8 +21,10 @@ export const buildInitialAssets = (
 ): Asset[] => {
   const { assets: assetsData } = scenario
 
+  const activeAssetConfig = assetsData.filter((it) => !it.disabled)
+
   // TODO: don't need to pass startingYear down.  Probably shouldn't have to pass scenario
-  return assetsData.map((assetConfig: IAsset) => {
+  return activeAssetConfig.map((assetConfig: IAsset) => {
     const { className, ...options } = assetConfig
     switch (className) {
       case "AuBank":
