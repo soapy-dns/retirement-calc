@@ -20,7 +20,7 @@ import {
   isLiquidAsset,
   isPropertyAsset
 } from "@/app/ui/utils"
-import { AssetClass, OwnerType, OwnersType } from "@/app/lib/data/schema/config"
+import { AssetClass, OwnersType } from "@/app/lib/data/schema/config"
 import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { CountrySelector } from "@/app/ui/components/form/CountrySelector"
 
@@ -45,7 +45,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
   const currency = getCurrencySymbol()
   const showDrawdown = drawdownSet === "Y"
   const ownerOptions = owners.map((it) => ({ label: it.ownerName, value: it.identifier }))
-  console.log("ownerOptions", ownerOptions)
 
   // TODO: change to use common
   const showIncomeStartDate = [AssetType.AuDefinedBenefits, AssetType.Salary].includes(assetType)
@@ -73,6 +72,14 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         editable={true}
         helpText={assetConstants.CLASS.HELP_TEXT}
         summaryText={assetConstants.SUMMARY[assetType]}
+      />
+      <RadioButtonQuestion
+        id="disabled"
+        control={control}
+        label={assetConstants.DISABLED.LABEL}
+        values={yesNoOptions}
+        variant={RadioQuestionVariant.BLOCK}
+        helpText={assetConstants.DISABLED.HELP_TEXT}
       />
       <CountrySelector
         id="country"
