@@ -28,8 +28,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/(frontend)/(withNavBar)/charts/htmlLegendPlugin.js",
-    "app/docs/gettingStarted/page.mdx"
+    "app/(frontend)/(withNavBar)/charts/htmlLegendPlugin.js"
   ],
   "exclude": ["node_modules", "cypress", "./cypress.config.ts", "**/*.cy.tsx"]
 
