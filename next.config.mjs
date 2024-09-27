@@ -5,19 +5,19 @@ import createMDX from "@next/mdx"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
+  pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"]
   // experimental: { TODO: including this gave errors with Link component- commenting for now.
   //   typedRoutes: true
   // },
-  async redirects() {
-    return [
-      {
-        source: "/",
-        destination: "/docs/about",
-        permanent: true
-      }
-    ]
-  }
+  // async redirects() {
+  //   return [
+  //     {
+  //       source: "/",
+  //       destination: "/docs/splash",
+  //       permanent: true
+  //     }
+  //   ]
+  // }
 }
 
 const withMDX = createMDX({
