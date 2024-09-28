@@ -67,7 +67,7 @@ export default function SplashPage() {
             <SplashFeature>
               <>
                 <CloudOff className="text-primary-foreground w-6 h-6 mb-4" />
-                No data is stored.
+                No data is stored off your device.
               </>
             </SplashFeature>
 
@@ -75,12 +75,6 @@ export default function SplashPage() {
               <>
                 <ChartLine className="text-primary-foreground w-6 h-6 mb-4" />
                 Charts for easier visualisation.
-              </>
-            </SplashFeature>
-            <SplashFeature>
-              <>
-                <Calculator className="text-primary-foreground w-6 h-6 mb-4" />
-                <div className="text-center">Calculates taxes and asset drawdowns.</div>
               </>
             </SplashFeature>
 
@@ -93,8 +87,15 @@ export default function SplashPage() {
 
             <SplashFeature>
               <>
+                <Calculator className="text-primary-foreground w-6 h-6 mb-4" />
+                <div className="text-center">Calculates taxes and asset drawdowns.</div>
+              </>
+            </SplashFeature>
+
+            <SplashFeature>
+              <>
                 <Save className="text-primary-foreground w-6 h-6 mb-4" />
-                Save re-import scenarios locally.
+                <div className="text-center">Export / re-import scenarios locally.</div>
               </>
             </SplashFeature>
           </div>
