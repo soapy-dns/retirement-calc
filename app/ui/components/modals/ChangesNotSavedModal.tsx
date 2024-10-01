@@ -21,10 +21,10 @@ export const ChangesNotSavedModal: React.FC<Props> = ({ showModal, handleCancel,
       handleCancel={handleCancel}
       handleSubmit={continueAnyway}
     >
-      You&apos;re changes will not be saved.
+      Warning: Any changes will not be saved.
       <ButtonGroup>
         <Button onClick={continueAnyway} buttonType={ButtonType.primary}>
-          Confirm
+          Ignore changes
         </Button>
         <Button onClick={onCancel} buttonType={ButtonType.secondary}>
           Back to changes
