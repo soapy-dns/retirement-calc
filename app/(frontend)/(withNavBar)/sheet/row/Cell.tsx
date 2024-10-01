@@ -36,7 +36,7 @@ export const Cell = ({ cellData, bold = false }: ICell) => {
 
   return (
     <td
-      className={`px-6 text-sm font-medium ${colour} group-hover:bg-accent  whitespace-nowrap first:sticky first:left-0`}
+      className={`px-4 text-sm font-medium ${colour} group-hover:bg-accent  whitespace-nowrap first:sticky first:left-0`}
     >
       <button onClick={handleButtonClick}>
         <p className={bold ? "font-semibold " : "font-normal"}>{displayValue}</p>
