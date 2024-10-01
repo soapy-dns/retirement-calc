@@ -1,16 +1,14 @@
 "use client"
 
-import Image from "next/image"
 import { AppPath } from "@/app//ui/types"
 import { LinkButton, LinkType } from "./ui/components/common/LinkButton"
 import { AppBanner } from "@/app/ui/AppBanner"
 import "./styles.css"
 import { Features } from "@/app/ui/components/splash/features/Features"
 import { SpreadsheetExamplesCard } from "./ui/components/splash/SpreadsheetExampleCard"
+import { ChartsExampleCard } from "./ui/components/splash/ChartsExampleCard"
 
 export default function SplashPage() {
-  // min-height: 500px,
-
   return (
     <div>
       {/* <div
@@ -28,8 +26,16 @@ export default function SplashPage() {
           <h1 className="font-semibold text-4xl">Worried how you&apos;ll manage in retirement?</h1>
           <p>Work out how long your assets and income will last.</p>
         </div>
-        <div className="div flex justify-center my-8">
+        {/* <div className="sticky top-20 right-10 flex justify-center my-8 z-10">
           <div className="w-1/2 md:w-1/4">
+            <LinkButton href={AppPath.config} linkType={LinkType.primary}>
+              <div className="text-xl text-center">Start now!</div>
+            </LinkButton>
+          </div>
+        </div> */}
+
+        <div className="fixed bottom-4 right-4 flex z-10">
+          <div className="w-48">
             <LinkButton href={AppPath.config} linkType={LinkType.primary}>
               <div className="text-xl text-center">Start now!</div>
             </LinkButton>
@@ -39,6 +45,8 @@ export default function SplashPage() {
         <Features />
 
         <SpreadsheetExamplesCard />
+
+        <ChartsExampleCard />
       </div>
     </div>
   )
