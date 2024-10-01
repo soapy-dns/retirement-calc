@@ -28,8 +28,8 @@ export const getDefaultScenarios = (): IScenario[] => {
         },
         {
           id: "HER_AU_DEFINED_BENEFIT",
-          name: "Defined benefits",
-          description: "Defined benefits",
+          name: "Final salary pension",
+          description: "Final salary pension",
           country: "AU",
           className: "AuDefinedBenefits",
           isStatePension: false,
@@ -65,8 +65,8 @@ export const getDefaultScenarios = (): IScenario[] => {
         },
         {
           id: "HIS_AU_SUPER",
-          name: "Defined contributions",
-          description: "defined contributions",
+          name: "Pension Pot",
+          description: "Pension pot",
           country: "AU",
           className: "AuSuper",
           value: 500000,
@@ -159,8 +159,8 @@ export const getDefaultScenarios = (): IScenario[] => {
         },
         {
           id: "HER_AU_DEFINED_BENEFIT",
-          name: "Defined benefits",
-          description: "Defined benefits",
+          name: "Final salary pension",
+          description: "Final salary pension",
           country: "SC",
           className: "AuDefinedBenefits",
           isStatePension: false,
@@ -196,8 +196,8 @@ export const getDefaultScenarios = (): IScenario[] => {
         },
         {
           id: "HIS_AU_SUPER",
-          name: "Defined contributions",
-          description: "defined contributions",
+          name: "Pension pot",
+          description: "pension pot",
           country: "SC",
           className: "AuSuper",
           value: 500000,

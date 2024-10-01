@@ -28,7 +28,7 @@ export const GenericModal = (props: IGenericModalProps) => {
       aria-hidden="true"
       className={`${modalHiddenClass} h-modal fixed right-0 left-4 top-8 z-50 items-center justify-center overflow-y-auto overflow-x-hidden bg-blue-100 bg-opacity-75 md:inset-0 md:h-full`}
     >
-      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+      <div className="fixed inset-0 bg-muted0 bg-opacity-75 transition-opacity">
         <div className="flex items-center justify-center">
           <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg p-4">
             <h1 className="mx-2 text-primary-foreground flex justify-between items-center">

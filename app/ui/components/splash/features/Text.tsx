@@ -5,6 +5,5 @@ interface Props {
 }
 
 export const Text: React.FC<Props> = ({ children: text }) => {
-  return <div>Text</div>
   return <div className="text-center">{text}</div>
 }

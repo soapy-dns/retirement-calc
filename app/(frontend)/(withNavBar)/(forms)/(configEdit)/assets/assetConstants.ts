@@ -93,7 +93,7 @@ export const assetConstants = {
   INCOME_END_YEAR: {
     LABEL: "Year income ends if it doesn't continue indefinitely (optional)",
     HELP_TEXT:
-      "The year the income will end.  eg on retirement.  If there is no value, the income is assumed to continue indefinitely - eg a defined benefits pension."
+      "The year the income will end.  eg on retirement.  If there is no value, the income is assumed to continue indefinitely - eg a final salary pension."
   },
   RENTAL_START_YEAR: {
     LABEL: "Rental start year (optional)",

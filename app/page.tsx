@@ -1,10 +1,12 @@
 "use client"
 
-import { AppPath } from "./ui/types"
+import Image from "next/image"
+import { AppPath } from "@/app//ui/types"
 import { LinkButton, LinkType } from "./ui/components/common/LinkButton"
-import { AppBanner } from "./ui/AppBanner"
-import { Calculator, ChartLine, CloudOff, Flag, FlagIcon, Footprints, Save, ScrollText, Sheet } from "lucide-react"
-import { SplashFeature } from "./ui/components/splashFeature/SplashFeature"
+import { AppBanner } from "@/app/ui/AppBanner"
+import "./styles.css"
+import { Features } from "@/app/ui/components/splash/features/Features"
+import { SpreadsheetExamplesCard } from "./ui/components/splash/SpreadsheetExampleCard"
 
 export default function SplashPage() {
   // min-height: 500px,
@@ -33,55 +35,10 @@ export default function SplashPage() {
             </LinkButton>
           </div>
         </div>
-        <div className={`mb-8 border-2 border-gray-300 rounded-md bg-gray-50 p-6 shadow-lg z-1 mx-12`}>
-          <h2 className="text-center text-3xl font-semibold mb-8">Features</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            <SplashFeature.Root>
-              <h3 className="font-semibold text-primary-foreground">$0</h3>
-              <SplashFeature.Text>Free forever.</SplashFeature.Text>
-            </SplashFeature.Root>
 
-            <SplashFeature.Root>
-              <Footprints className="text-primary-foreground w-6 h-6 mb-4" />
-              <SplashFeature.Text>No tracking or ads.</SplashFeature.Text>
-            </SplashFeature.Root>
+        <Features />
 
-            <SplashFeature.Root>
-              <ScrollText className="text-primary-foreground w-6 h-6 mb-4" />
-              <SplashFeature.Text>Compare different scenarios.</SplashFeature.Text>
-            </SplashFeature.Root>
-
-            <SplashFeature.Root>
-              <Flag className="text-primary-foreground w-6 h-6 mb-4" />
-              <SplashFeature.Text>Works for AU / UK.</SplashFeature.Text>
-            </SplashFeature.Root>
-
-            <SplashFeature.Root>
-              <CloudOff className="text-primary-foreground w-6 h-6 mb-4" />
-              <SplashFeature.Text>No data is stored off your device.</SplashFeature.Text>
-            </SplashFeature.Root>
-
-            <SplashFeature.Root>
-              <ChartLine className="text-primary-foreground w-6 h-6 mb-4" />
-              <SplashFeature.Text>Charts for easier visualisation</SplashFeature.Text>
-            </SplashFeature.Root>
-
-            <SplashFeature.Root>
-              <Sheet className="text-primary-foreground w-6 h-6 mb-4" />
-              <SplashFeature.Text>Spreadsheet for in-depth analysis.</SplashFeature.Text>
-            </SplashFeature.Root>
-
-            <SplashFeature.Root>
-              <Calculator className="text-primary-foreground w-6 h-6 mb-4" />
-              <SplashFeature.Text>Calculates taxes and asset drawdowns.</SplashFeature.Text>
-            </SplashFeature.Root>
-
-            <SplashFeature.Root>
-              <Save className="text-primary-foreground w-6 h-6 mb-4" />
-              <SplashFeature.Text>Export / re-import scenarios locally</SplashFeature.Text>
-            </SplashFeature.Root>
-          </div>
-        </div>
+        <SpreadsheetExamplesCard />
       </div>
     </div>
   )
@@ -96,7 +53,7 @@ export default function SplashPage() {
 //   alt=""
 // />
 //     <div className="relative z-1 text-primary-foreground">
-//       <div className="m-8 font-semibold text-2xl text-gray-50">
+//       <div className="m-8 font-semibold text-2xl text-muted">
 //         <p>Ever wondered if, or when, you can afford to retire.</p>
 //         <p>Wonder no more!</p>
 //       </div>

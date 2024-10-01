@@ -24,7 +24,7 @@ export const Textarea: React.FC<ITextArea> = ({
   rows = 4,
   ...rest
 }) => {
-  const colorClasses = isError ? "border-error text-error border-2" : "border border-gray-500"
+  const colorClasses = isError ? "border-error text-error border-2" : "border border-muted0"
   return (
     <textarea
       {...rest}

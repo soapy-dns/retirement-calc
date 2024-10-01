@@ -21,7 +21,7 @@ export class AuDefinedBenefits extends Asset {
     // is income producing - it has to be - that is all it does
     super({ ...assetConfig, incomeProducing: true })
 
-    if (assetConfig.className !== "AuDefinedBenefits") throw new Error("Invalid config for Defined Benefits")
+    if (assetConfig.className !== "AuDefinedBenefits") throw new Error("Invalid config for final salary pension.")
 
     const {
       transfers,
