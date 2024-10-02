@@ -300,7 +300,9 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     // const expensesRowData = { ...incomeTaxRows, ...earningTaxRows, ...livingExpensesRows }
     const expensesRowData = { ...livingExpensesRows }
 
-    const surplusRowData = { "Surplus (if -ve is tax liability for next yr)": surplusYearData }
+    const surplusRowData = { Surplus: surplusYearData }
+
+    // const surplusRowData = { "Surplus (if -ve is tax liability for next yr)": surplusYearData }
 
     return {
       success: true,

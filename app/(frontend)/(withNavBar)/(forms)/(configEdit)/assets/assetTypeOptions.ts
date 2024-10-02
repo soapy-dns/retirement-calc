@@ -3,13 +3,13 @@ import { ISelectOption } from "@/app/lib/data/types"
 
 export const assetTypeOptions = [
   {
-    label: "Defined benefits pension",
+    label: "Final salary pension (Defined benefits)",
     value: "AuDefinedBenefits",
     assetClass: AssetGroup.income_defined_benefit
   },
   { label: "Salary", value: "Salary", income: true, property: false, assetClass: AssetGroup.income_salary },
   {
-    label: "Defined contributions pension",
+    label: "Pension pot (Defined contributions)",
     value: "AuSuper",
     assetClass: AssetGroup.super
   },

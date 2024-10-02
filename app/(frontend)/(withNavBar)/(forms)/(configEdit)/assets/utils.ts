@@ -16,9 +16,9 @@ export const getAssetDisplayDetails = (assetConfig: IAsset) => {
     case "AuBank":
       return { AssetClassIcon: BanknotesIcon, type: "CASH" }
     case "AuSuper":
-      return { AssetClassIcon: ArrowTrendingDownIcon, type: "DEFINED CONTRIBUTIONS" }
+      return { AssetClassIcon: ArrowTrendingDownIcon, type: "PENSION POT" }
     case "AuDefinedBenefits":
-      return { AssetClassIcon: CurrencyDollarIcon, type: "DEFINED BENEFITS" }
+      return { AssetClassIcon: CurrencyDollarIcon, type: "FINAL SALARY PENSION" }
     case "AuShares":
       return { AssetClassIcon: ArrowTrendingUpIcon, type: "SHARES" }
     case "AuProperty":

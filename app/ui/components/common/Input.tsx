@@ -32,7 +32,7 @@ export const Input: React.FC<IInput> = ({
 }) => {
   const colorClasses = isError
     ? "border-destructive-foreground text-destructive-foreground border-2 bg-destructive"
-    : "border border-gray-500"
+    : "border border-muted0"
 
   let roundedClasses
   if (!prefix && !suffix) {

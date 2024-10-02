@@ -5,7 +5,7 @@ import clsx from "clsx"
 
 interface CountryFlagProps {
   country: Country
-  selected?: boolean
+  // selected?: boolean
 }
 
 const flag = {
@@ -30,11 +30,11 @@ const text = {
 // DISPLAY ONLY!!!!!!
 
 // Flag svgs are 4 x 3
-export const CountryTile: React.FC<CountryFlagProps> = ({ country, selected = false }) => {
+export const CountryDislayTile: React.FC<CountryFlagProps> = ({ country }) => {
   return (
     <div
-      className={clsx("flex flex-col gap-2 border  justify-center items-center w-[100px] h-[100px]", {
-        "border-2 border-primary": selected
+      className={clsx("flex flex-col gap-2   justify-center items-center w-[100px] h-[100px]", {
+        // "border-2 border-primary": selected
       })}
     >
       <div className="border">

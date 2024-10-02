@@ -1,14 +1,14 @@
 "use client"
 
-import { AppPath } from "./ui/types"
+import { AppPath } from "@/app//ui/types"
 import { LinkButton, LinkType } from "./ui/components/common/LinkButton"
-import { AppBanner } from "./ui/AppBanner"
-import { Calculator, ChartLine, CloudOff, Flag, FlagIcon, Footprints, Save, ScrollText, Sheet } from "lucide-react"
-import { SplashFeature } from "./ui/components/SplashFeature"
+import { AppBanner } from "@/app/ui/AppBanner"
+import "./styles.css"
+import { Features } from "@/app/ui/components/splash/features/Features"
+import { SpreadsheetExamplesCard } from "./ui/components/splash/SpreadsheetExampleCard"
+import { ChartsExampleCard } from "./ui/components/splash/ChartsExampleCard"
 
 export default function SplashPage() {
-  // min-height: 500px,
-
   return (
     <div>
       {/* <div
@@ -26,80 +26,27 @@ export default function SplashPage() {
           <h1 className="font-semibold text-4xl">Worried how you&apos;ll manage in retirement?</h1>
           <p>Work out how long your assets and income will last.</p>
         </div>
-        <div className="div flex justify-center my-8">
+        {/* <div className="sticky top-20 right-10 flex justify-center my-8 z-10">
           <div className="w-1/2 md:w-1/4">
             <LinkButton href={AppPath.config} linkType={LinkType.primary}>
               <div className="text-xl text-center">Start now!</div>
             </LinkButton>
           </div>
-        </div>
-        <div className={`mb-8 border-2 border-gray-300 rounded-md bg-gray-50 p-6 shadow-lg z-1 mx-12`}>
-          <h2 className="text-center text-3xl font-semibold mb-8">Features</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            <SplashFeature>
-              <>
-                <h3 className="font-semibold text-primary-foreground">$0</h3>
-                Free forever
-              </>
-            </SplashFeature>
+        </div> */}
 
-            <SplashFeature>
-              <>
-                <Footprints className="text-primary-foreground w-6 h-6 mb-4" />
-                No tracking or ads
-              </>
-            </SplashFeature>
-
-            <SplashFeature>
-              <>
-                <ScrollText className="text-primary-foreground w-6 h-6 mb-4" />
-                Compare different scenarios.
-              </>
-            </SplashFeature>
-
-            <SplashFeature>
-              <>
-                <Flag className="text-primary-foreground w-6 h-6 mb-4" />
-                Works for AU / UK.
-              </>
-            </SplashFeature>
-
-            <SplashFeature>
-              <>
-                <CloudOff className="text-primary-foreground w-6 h-6 mb-4" />
-                No data is stored off your device.
-              </>
-            </SplashFeature>
-
-            <SplashFeature>
-              <>
-                <ChartLine className="text-primary-foreground w-6 h-6 mb-4" />
-                Charts for easier visualisation.
-              </>
-            </SplashFeature>
-
-            <SplashFeature>
-              <>
-                <Sheet className="text-primary-foreground w-6 h-6 mb-4" />
-                Spreadsheet for in-depth analysis.
-              </>
-            </SplashFeature>
-
-            <SplashFeature>
-              <>
-                <Calculator className="text-primary-foreground w-6 h-6 mb-4" />
-                <div className="text-center">Calculates taxes and asset drawdowns.</div>
-              </>
-            </SplashFeature>
-
-            <SplashFeature>
-              <>
-                <Save className="text-primary-foreground w-6 h-6 mb-4" />
-                <div className="text-center">Export / re-import scenarios locally.</div>
-              </>
-            </SplashFeature>
+        <div className="fixed bottom-4 right-4 flex z-10">
+          <div className="w-48">
+            <LinkButton href={AppPath.config} linkType={LinkType.primary}>
+              <div className="text-xl text-center">Start now!</div>
+            </LinkButton>
           </div>
         </div>
+
+        <Features />
+
+        <SpreadsheetExamplesCard />
+
+        <ChartsExampleCard />
       </div>
     </div>
   )
@@ -114,7 +61,7 @@ export default function SplashPage() {
 //   alt=""
 // />
 //     <div className="relative z-1 text-primary-foreground">
-//       <div className="m-8 font-semibold text-2xl text-gray-50">
+//       <div className="m-8 font-semibold text-2xl text-muted">
 //         <p>Ever wondered if, or when, you can afford to retire.</p>
 //         <p>Wonder no more!</p>
 //       </div>
