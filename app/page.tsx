@@ -26,13 +26,13 @@ export default function SplashPage() {
           <h1 className="font-semibold text-4xl">Worried how you&apos;ll manage in retirement?</h1>
           <p>Work out how long your assets and income will last.</p>
         </div>
-        {/* <div className="sticky top-20 right-10 flex justify-center my-8 z-10">
+        <div className="flex justify-center my-8 z-10">
           <div className="w-1/2 md:w-1/4">
             <LinkButton href={AppPath.config} linkType={LinkType.primary}>
               <div className="text-xl text-center">Start now!</div>
             </LinkButton>
           </div>
-        </div> */}
+        </div>
 
         <div className="fixed bottom-4 right-4 flex z-10">
           <div className="w-48">

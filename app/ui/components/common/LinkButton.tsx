@@ -16,7 +16,7 @@ export const LinkButton: React.FC<Props> = ({ linkType, href, children }) => {
   const getButtonClassName = () => {
     switch (linkType) {
       case LinkType.primary:
-        return "rounded-full bg-primary py-2 px-4 text-white  flex justify-center items-center"
+        return "rounded-full bg-primary py-2 px-4 text-white  flex justify-center items-center focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-opacity-75 focus:ring-primary shadow-md shadow-primary-darker/50 hover:shadow-primary-darker/25 hover:bg-primary-darker disabled:opacity-40 "
 
         return "my-4 rounded-full focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-opacity-75 focus:ring-primary bg-primary py-1 px-4 shadow-md shadow-primary-darker/50 hover:shadow-primary-darker/25 text-white hover:bg-primary-darker disabled:opacity-40 display-block w-full flex justify-center items-center"
 
