@@ -1,4 +1,5 @@
 import Link from "next/link"
+import React, { forwardRef, Ref } from "react"
 
 export enum LinkType {
   primary = "primary",
@@ -6,13 +7,16 @@ export enum LinkType {
   tertiary = "tertiary"
 }
 interface Props {
+  id?: string
   linkType?: LinkType
   href: string
   children: React.ReactNode
 }
 
 // TODO: extract common stuff out of this and Button
-export const LinkButton: React.FC<Props> = ({ linkType, href, children }) => {
+export const LinkButton = forwardRef<HTMLAnchorElement, Props>((props, ref: Ref<HTMLAnchorElement>) => {
+  const { id, linkType, href, children } = props
+
   const getButtonClassName = () => {
     switch (linkType) {
       case LinkType.primary:
@@ -29,8 +33,10 @@ export const LinkButton: React.FC<Props> = ({ linkType, href, children }) => {
   }
 
   return (
-    <Link href={href} className={getButtonClassName()}>
+    <Link ref={ref} id={id} href={href} className={getButtonClassName()}>
       {children}
     </Link>
   )
-}
+})
+
+LinkButton.displayName = "LinkButton"
