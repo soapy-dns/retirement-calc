@@ -15,9 +15,8 @@ export default function SplashPage() {
   const startNowRef = useRef<HTMLAnchorElement>(null)
 
   useEffect(() => {
-    console.log("startNowRef?.current", startNowRef?.current)
+    // NOTE: this might not really be a good idea for accessibility
     if (startNowRef?.current !== null) {
-      console.log("focus on button")
       startNowRef.current.focus()
     }
   }, [])
