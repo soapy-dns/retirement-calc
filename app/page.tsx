@@ -7,8 +7,20 @@ import "./styles.css"
 import { Features } from "@/app/ui/components/splash/features/Features"
 import { SpreadsheetExamplesCard } from "./ui/components/splash/SpreadsheetExampleCard"
 import { ChartsExampleCard } from "./ui/components/splash/ChartsExampleCard"
+import { useEffect, useRef } from "react"
 
+const mainText = "Worried how you'll manage in retirement?"
+const subText = "Work out how long your assets and income will last."
 export default function SplashPage() {
+  const startNowRef = useRef<HTMLAnchorElement>(null)
+
+  useEffect(() => {
+    // NOTE: this might not really be a good idea for accessibility
+    if (startNowRef?.current !== null) {
+      startNowRef.current.focus()
+    }
+  }, [])
+
   return (
     <div>
       {/* <div
@@ -23,16 +35,18 @@ export default function SplashPage() {
       </div>
       <div className="relative z-1 text-gray-700">
         <div className="px-12 pt-20 text-center">
-          <h1 className="font-semibold text-4xl">Worried how you&apos;ll manage in retirement?</h1>
-          <p>Work out how long your assets and income will last.</p>
+          <h1 className="font-semibold text-4xl">{mainText}</h1>
+          <p>{subText}</p>
         </div>
-        {/* <div className="sticky top-20 right-10 flex justify-center my-8 z-10">
+        <div className="flex justify-center my-8 z-10">
           <div className="w-1/2 md:w-1/4">
-            <LinkButton href={AppPath.config} linkType={LinkType.primary}>
-              <div className="text-xl text-center">Start now!</div>
+            <LinkButton ref={startNowRef} href={AppPath.config} linkType={LinkType.primary}>
+              <div className="text-xl text-center" aria-label={`$[mainText] ${subText}  Start now!`}>
+                Start now!
+              </div>
             </LinkButton>
           </div>
-        </div> */}
+        </div>
 
         <div className="fixed bottom-4 right-4 flex z-10">
           <div className="w-48">
