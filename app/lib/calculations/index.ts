@@ -325,7 +325,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       totalExpensesData: totalExpenses,
       incomeTaxesData: incomeTaxesYearData,
       earningsTaxesData: earningsTaxesYearData,
-      totalTaxesData: totalTaxesYearData
+      totalTaxesData: totalTaxesYearData,
+      // deathDetails
     }
   } catch (e) {
     if (e instanceof CalculationError) {
