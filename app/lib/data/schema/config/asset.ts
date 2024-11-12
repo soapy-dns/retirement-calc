@@ -33,7 +33,7 @@ const DrawdownDetailsSchema = z
   .optional()
 export type IncomeDetails = z.infer<typeof IncomeDetailsSchema>
 
-const AssetBaseSchema = z.object({
+export const AssetBaseSchema = z.object({
   id: z.string(),
   className: AssetClassEnum,
   name: z.string(),
