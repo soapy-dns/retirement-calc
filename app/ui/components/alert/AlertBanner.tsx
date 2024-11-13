@@ -14,7 +14,10 @@ interface Props {
 export const AlertBanner: React.FC<Props> = ({ onClose, variant, message, dismissible = true, maxSize = "full" }) => {
   const backgroundColor = getBackgroundColor(variant)
   return (
-    <div className={`border border-primary ${backgroundColor} w-screen ${maxSize === "half" ? "max-w-lg" : null} p-4`}>
+    <div
+      className={`border border-primary ${backgroundColor} w-screen ${maxSize === "half" ? "max-w-lg" : null} p-4`}
+      role="alert"
+    >
       <h2 className="text-primary-foreground">
         <div className="grid grid-cols-3">
           <div></div>

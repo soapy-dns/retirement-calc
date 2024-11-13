@@ -30,7 +30,7 @@ export const BankAuDisplay: React.FunctionComponent = (props) => {
     <DisplayCardWithEdit heading={heading} handleEdit={handleEditFn}>
       {hasValidationErrors(ContextType.cash) && (
         <div className="mb-4">
-          <Alert alertType={AlertType.error} heading="Has configuration errors" />
+          <Alert alertType={AlertType.ERROR} heading="Has configuration errors" />
         </div>
       )}
 

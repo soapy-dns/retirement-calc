@@ -264,7 +264,7 @@ export default function AssetEditPage({ params }: { params: { id: string } }) {
     >
       {debug && errors && <pre>{JSON.stringify(errors, null, 4)}</pre>}
       {assetConfig && hasTransfers(assetConfig) && (
-        <Alert alertType={AlertType.info} heading="Note:">
+        <Alert alertType={AlertType.INFO} heading="Note:">
           This asset has transfers. It is not possible to remove this asset, and altering its initial value may have
           unintended consequences.
         </Alert>

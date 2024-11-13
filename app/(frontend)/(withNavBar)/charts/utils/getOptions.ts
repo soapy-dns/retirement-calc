@@ -70,6 +70,7 @@ export const getOptions = ({ legendContainerId, redLines = [] }: GetOptionsProps
       accum[key] = annotation
       return accum
     },
+
     {} as Record<string, AnnotationProps>
   )
 

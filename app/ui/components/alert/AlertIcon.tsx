@@ -12,16 +12,16 @@ interface AlertIconProps {
 
 export const AlertIcon: React.FC<AlertIconProps> = ({ alertType }) => {
   switch (alertType) {
-    case AlertType.error:
+    case AlertType.ERROR:
       return <ExclamationCircleIcon className="h-6 w-6 text-error" />
 
-    case AlertType.warning:
+    case AlertType.WARNING:
       return <ExclamationTriangleIcon className="h-6 w-6 text-primary-foreground" />
 
-    case AlertType.success:
+    case AlertType.SUCCESS:
       return <CheckCircleIcon className="h-6 w-6 text-primary-foreground" />
 
-    case AlertType.info:
+    case AlertType.INFO:
       return <InformationCircleIcon className="h-6 w-6 text-primary-foreground" />
 
     default:
@@ -31,16 +31,16 @@ export const AlertIcon: React.FC<AlertIconProps> = ({ alertType }) => {
 
 export const AlertHeading: React.FC<AlertIconProps> = ({ alertType }) => {
   switch (alertType) {
-    case AlertType.error:
+    case AlertType.ERROR:
       return <div>Error</div>
 
-    case AlertType.warning:
+    case AlertType.WARNING:
       return <div>Warning</div>
 
-    case AlertType.success:
+    case AlertType.SUCCESS:
       return <div>Success</div>
 
-    case AlertType.info:
+    case AlertType.INFO:
       return <div>Info</div>
 
     default:

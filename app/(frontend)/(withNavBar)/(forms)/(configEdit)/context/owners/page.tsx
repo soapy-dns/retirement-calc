@@ -138,17 +138,13 @@ const OwnersPage: React.FC = () => {
       handleCancel={handleBack}
     >
       <div className="mb-4">
-        <Alert alertType={AlertType.info} heading="Note:">
+        <Alert alertType={AlertType.INFO} heading="Note:">
           <>
+            <p>Owners need to be added to correctly calculate taxes for each. There is a maximum of 2 owners.</p>
             <p>
-              There have to be owners, but it is not necessary to add anything other than a name / nickname, just
-              something to distinguish between owners on the spreadsheet.
+              Only a name is necessary for each. Other details can help make the calculations more accurate, and help
+              indicate if your assets are likely to match your expected lifespan, and improve tax calculations.
             </p>
-            <p>
-              Any other details can help make the calculations more accurate, and help indicate if your assets are
-              likely to match your expected lifespan, and improve tax calculations.
-            </p>
-            <p>There is a maximum of 2 owners.</p>
           </>
         </Alert>
       </div>
