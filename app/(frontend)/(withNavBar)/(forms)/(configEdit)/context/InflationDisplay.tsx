@@ -45,7 +45,7 @@ export const InflationDisplay: React.FC<Props> = ({ showInfo }) => {
       <div>
         {hasValidationErrors(ContextType.inflation) && (
           <div className="mb-4">
-            <Alert alertType={AlertType.error} heading="Has configuration errors" />
+            <Alert alertType={AlertType.ERROR} heading="Has configuration errors" />
           </div>
         )}
         <Table caption="Inflation configuration" headingData={headingData} rowData={rowData} border={false} />

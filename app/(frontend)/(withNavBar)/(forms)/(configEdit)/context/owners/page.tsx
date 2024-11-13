@@ -138,7 +138,7 @@ const OwnersPage: React.FC = () => {
       handleCancel={handleBack}
     >
       <div className="mb-4">
-        <Alert alertType={AlertType.info} heading="Note:">
+        <Alert alertType={AlertType.INFO} heading="Note:">
           <>
             <p>Owners need to be added to correctly calculate taxes for each. There is a maximum of 2 owners.</p>
             <p>

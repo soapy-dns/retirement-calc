@@ -75,14 +75,14 @@ export default function ScenarioPage({ params }: { params: { id: string } }) {
       handleCancel={handleBack}
     >
       {id === "add" && (
-        <Alert heading="Note" alertType={AlertType.info}>
+        <Alert heading="Note" alertType={AlertType.INFO}>
           The context, assets and transfers will be copied across from the existing scenario. They can then be changed
           by editing after saving.
         </Alert>
       )}
       {id === "add" && selectedScenario.asAtYear < getCurrentYear() && (
         <div className="my-4">
-          <Alert heading="Note" alertType={AlertType.info}>
+          <Alert heading="Note" alertType={AlertType.INFO}>
             As you are copying a historical scenario, and historical scenarios are locked for changes, some aspects may
             be updated e.g. the &apos;As at date&apos;. Asset details will remain unchanged and these must be updated
             manually.

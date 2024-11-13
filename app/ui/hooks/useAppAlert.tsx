@@ -29,7 +29,7 @@ const useAppAlert = () => {
     const id = toast.custom(
       (t: Toast) => (
         <AlertBanner
-          variant={AlertType.warning}
+          variant={AlertType.WARNING}
           // message={now.toDateString()}
           // message={toastOptions?.duration ? toastOptions.duration.toString() : "no duration"}
           message={message}
@@ -57,7 +57,7 @@ const useAppAlert = () => {
     const id = toast.custom(
       (t) => (
         <AlertBanner
-          variant={AlertType.info}
+          variant={AlertType.INFO}
           message={message}
           onClose={() => toast.remove(t.id)}
           maxSize="half"
@@ -79,7 +79,7 @@ const useAppAlert = () => {
     const id = toast.custom(
       (t) => (
         <AlertBanner
-          variant={AlertType.error}
+          variant={AlertType.ERROR}
           message={message}
           onClose={() => toast.remove(t.id)}
           maxSize="half"
@@ -100,7 +100,7 @@ const useAppAlert = () => {
     const id = toast.custom(
       (t) => (
         <AlertBanner
-          variant={AlertType.success}
+          variant={AlertType.SUCCESS}
           message={message}
           onClose={() => toast.remove(t.id)}
           maxSize="half"

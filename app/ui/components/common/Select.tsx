@@ -52,7 +52,7 @@ export const Select: React.FC<ISelect> = ({
 
       {/* Should probably pass in the heading too */}
       {summaryText && (
-        <Alert heading="Details" alertType={AlertType.info}>
+        <Alert heading="Details" alertType={AlertType.INFO}>
           {summaryText}
         </Alert>
       )}

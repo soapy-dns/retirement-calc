@@ -28,7 +28,7 @@ export const PropertyDisplay: React.FunctionComponent = (props) => {
     <DisplayCardWithEdit heading={heading} handleEdit={handleEditFn}>
       {hasValidationErrors(ContextType.property) && (
         <div className="mb-4">
-          <Alert alertType={AlertType.error} heading="Has configuration errors" />
+          <Alert alertType={AlertType.ERROR} heading="Has configuration errors" />
         </div>
       )}
       <TextDisplayField

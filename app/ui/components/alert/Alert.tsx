@@ -2,10 +2,10 @@ import { AlertIcon } from "./AlertIcon"
 import { getBackgroundColor } from "./utils"
 
 export enum AlertType {
-  success = "success",
-  error = "error",
-  warning = "warning",
-  info = "info"
+  SUCCESS = "success",
+  ERROR = "error",
+  WARNING = "warning",
+  INFO = "info"
 }
 
 interface IAlert {

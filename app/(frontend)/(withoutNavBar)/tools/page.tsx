@@ -91,7 +91,7 @@ export default function ToolsPage() {
 
       <Card>
         {tax && (
-          <Alert id={alertId} alertType={AlertType.success}>
+          <Alert id={alertId} alertType={AlertType.SUCCESS}>
             <div className="flex gap-2">
               <div className="font-bold">Calculated income tax (in selected currency) =</div>
               <div>{tax}</div>

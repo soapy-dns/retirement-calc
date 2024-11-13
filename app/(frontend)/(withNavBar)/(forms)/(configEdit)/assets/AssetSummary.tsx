@@ -68,12 +68,12 @@ export const AssetSummary = ({ asset, removeAllowed }: IAssetItemDisplay) => {
           <div>
             {hasValidationErrors(asset) && (
               <div className="mb-4">
-                <Alert alertType={AlertType.error} heading="Asset configuration has errors" />
+                <Alert alertType={AlertType.ERROR} heading="Asset configuration has errors" />
               </div>
             )}
             {hasTransfers(asset) && (
               <div className="mb-4">
-                <Alert alertType={AlertType.info} heading="Asset has transfers" />
+                <Alert alertType={AlertType.INFO} heading="Asset has transfers" />
               </div>
             )}
             <p className="flex gap-2">

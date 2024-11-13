@@ -63,7 +63,7 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
 
       {removeButtonDisabled && (
         <div className="my-4">
-          <Alert heading="Note" alertType={AlertType.info}>
+          <Alert heading="Note" alertType={AlertType.INFO}>
             There is only 1 scenario. Therefore this scanario can only be edited or duplicated but not removed.
           </Alert>
         </div>
@@ -71,7 +71,7 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
 
       {selectedScenario.asAtYear < getCurrentYear() && (
         <div className="my-4">
-          <Alert alertType={AlertType.info}>
+          <Alert alertType={AlertType.INFO}>
             <div className="grid grid-cols-12 gap-4 items-start">
               <div className="col-span-1">
                 <LockClosedIcon className="w-6 h-6 text-primary-foreground  min-w-6 min-h-6" />

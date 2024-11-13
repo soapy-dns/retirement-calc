@@ -3,16 +3,16 @@ import { AlertType } from "@/app/ui/components/alert/Alert"
 // TODO: these colors should be defined in tailwind.config.js
 export const getBackgroundColor = (alertType?: AlertType) => {
   switch (alertType) {
-    case AlertType.success:
+    case AlertType.SUCCESS:
       return "bg-success"
 
-    case AlertType.error:
+    case AlertType.ERROR:
       return "bg-error"
 
-    case AlertType.warning:
+    case AlertType.WARNING:
       return "bg-warning"
 
-    case AlertType.info:
+    case AlertType.INFO:
       return "bg-info"
 
     default:

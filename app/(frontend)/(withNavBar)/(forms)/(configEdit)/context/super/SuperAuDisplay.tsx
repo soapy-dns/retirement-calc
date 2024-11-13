@@ -27,7 +27,7 @@ export const SuperAuDisplay: React.FunctionComponent = (props) => {
     <DisplayCardWithEdit heading={heading} handleEdit={handleEditFn}>
       {hasValidationErrors(ContextType.super) && (
         <div className="mb-4">
-          <Alert alertType={AlertType.error} heading="Has configuration errors" />
+          <Alert alertType={AlertType.ERROR} heading="Has configuration errors" />
         </div>
       )}
       <TextDisplayField
