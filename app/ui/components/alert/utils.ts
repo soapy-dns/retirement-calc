@@ -19,3 +19,22 @@ export const getBackgroundColor = (alertType?: AlertType) => {
       return "bg-monochrome"
   }
 }
+
+export const getRole = (alertType?: AlertType) => {
+  switch (alertType) {
+    case AlertType.SUCCESS:
+      return "status"
+
+    case AlertType.ERROR:
+      return "alert"
+
+    case AlertType.WARNING:
+      return "alert"
+
+    case AlertType.INFO:
+      return "status"
+
+    default:
+      return "alert"
+  }
+}
