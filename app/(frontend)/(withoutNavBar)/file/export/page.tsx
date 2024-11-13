@@ -1,5 +1,7 @@
 "use client"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
 import { CheckboxQuestion } from "@/app/ui/components/form/CheckboxQuestion"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
@@ -9,25 +11,27 @@ import { useForm } from "react-hook-form"
 import EditPageLayout from "../../components/EditPageLayout"
 import { fileConstants } from "../filesConstants"
 
-interface ChangedFormData {
-  scenariosSelected: string[]
-  fileName: string
-}
+const FormSchema = z.object({
+  scenariosSelected: z.array(z.string()).min(1, "You must select at least one scenario"),
+  fileName: z.string({ required_error: "Please include a file name." })
+})
+export type FormDataType = z.infer<typeof FormSchema>
 
 export default function Export() {
   const { scenarios, scenarioOptions = [] } = useContext(ScenarioContext)
 
   const navigation = useNavigation()
 
-  const { handleSubmit, control, register } = useForm<ChangedFormData>({
-    defaultValues: {}
+  const { handleSubmit, control, register } = useForm<FormDataType>({
+    defaultValues: { scenariosSelected: [] },
+    resolver: zodResolver(FormSchema)
   })
 
   const handleBack = () => {
     navigation.goBack()
   }
 
-  const saveFile = (data: ChangedFormData) => {
+  const saveFile = (data: FormDataType) => {
     const { scenariosSelected, fileName } = data
 
     const filteredScenarios = scenarios?.filter((it) => scenariosSelected.includes(it.id))
