@@ -72,14 +72,14 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
       {selectedScenario.asAtYear < getCurrentYear() && (
         <div className="my-4">
           <Alert alertType={AlertType.INFO}>
-            <div className="grid grid-cols-12 gap-4 items-start">
-              <div className="col-span-1">
-                <LockClosedIcon className="w-6 h-6 text-primary-foreground  min-w-6 min-h-6" />
+            <div className="grid grid-cols-12 gap-4 items-center">
+              <div className="col-span-1 ">
+                <LockClosedIcon className="w-8 h-8 sm:w-10 sm:h-10 text-primary-foreground" />
               </div>
-              <div className="col-span-11">
+              <p className="col-span-11 py-2">
                 This scenario has an &apos;As at year&apos; in the past. It is therefore locked to further changes. You
                 can still copy it to a new scenario. (The &apos;As at year&apos; will be updated accordingly.)
-              </div>
+              </p>
             </div>
           </Alert>
         </div>

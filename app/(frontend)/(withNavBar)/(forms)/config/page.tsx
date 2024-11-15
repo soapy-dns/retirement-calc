@@ -21,7 +21,7 @@ const ConfigPage: React.FC = () => {
   const toggleHelpText = () => {
     onHelpModalToggle()
   }
-  const headingText = "Scenario configurations."
+  const headingText = "Scenario configuration."
 
   return (
     <>
