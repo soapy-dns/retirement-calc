@@ -52,10 +52,10 @@ export const FormSchema = z
   )
   .refine(
     ({ assetType, incomeAmt }) => {
-      if (isIncomeAsset(assetType) && !incomeAmt) return false
+      if (isIncomeAsset(assetType) && (!incomeAmt || incomeAmt < 0)) return false
       return true
     },
-    { message: "The income amount must be entered for this type of asset", path: ["incomeAmt"] }
+    { message: "There must be an income amount > 0 for this asset.", path: ["incomeAmt"] }
   )
   .refine(
     ({ incomeStartYear, incomeEndYear }) => {
