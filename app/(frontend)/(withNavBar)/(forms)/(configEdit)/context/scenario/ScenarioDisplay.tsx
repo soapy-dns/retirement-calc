@@ -61,45 +61,51 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
         </ButtonGroup>
       </div>
 
-      {removeButtonDisabled && (
-        <div className="my-4">
-          <Alert heading="Note" alertType={AlertType.INFO}>
-            There is only 1 scenario. Therefore this scanario can only be edited or duplicated but not removed.
-          </Alert>
-        </div>
-      )}
+      <div className="px-4">
+        {removeButtonDisabled && (
+          <div className="my-4">
+            <Alert heading="Note" alertType={AlertType.INFO}>
+              There is only 1 scenario. Therefore this scanario can only be edited or duplicated but not removed.
+            </Alert>
+          </div>
+        )}
 
-      {selectedScenario.asAtYear < getCurrentYear() && (
-        <div className="my-4">
-          <Alert alertType={AlertType.INFO}>
-            <div className="grid grid-cols-12 gap-4 items-center">
-              <div className="col-span-1 ">
-                <LockClosedIcon className="w-8 h-8 sm:w-10 sm:h-10 text-primary-foreground" />
+        {selectedScenario.asAtYear < getCurrentYear() && (
+          <div className="my-4">
+            <Alert alertType={AlertType.INFO}>
+              <div className="grid grid-cols-12 gap-4 items-center">
+                <div className="col-span-1 ">
+                  <LockClosedIcon className="w-8 h-8 sm:w-10 sm:h-10 text-primary-foreground" />
+                </div>
+                <p className="col-span-11 py-2">
+                  This scenario has an &apos;As at year&apos; in the past. It is therefore locked to further changes.
+                  You can still copy it to a new scenario. (The &apos;As at year&apos; will be updated accordingly.)
+                </p>
               </div>
-              <p className="col-span-11 py-2">
-                This scenario has an &apos;As at year&apos; in the past. It is therefore locked to further changes. You
-                can still copy it to a new scenario. (The &apos;As at year&apos; will be updated accordingly.)
-              </p>
-            </div>
-          </Alert>
-        </div>
-      )}
+            </Alert>
+          </div>
+        )}
 
-      <TextDisplayField label={scenarioConstants.NAME.LABEL} helpText={scenarioConstants.NAME.HELP_TEXT} value={name} />
-      {asAtYear === getCurrentYear() && <EditButton />}
+        <TextDisplayField
+          label={scenarioConstants.NAME.LABEL}
+          helpText={scenarioConstants.NAME.HELP_TEXT}
+          value={name}
+        />
+        {asAtYear === getCurrentYear() && <EditButton />}
 
-      <TextDisplayField
-        label={scenarioConstants.DESCRIPTION.LABEL}
-        helpText={scenarioConstants.DESCRIPTION.HELP_TEXT}
-        value={description || "n/a"}
-      />
-      {asAtYear === getCurrentYear() && <EditButton />}
+        <TextDisplayField
+          label={scenarioConstants.DESCRIPTION.LABEL}
+          helpText={scenarioConstants.DESCRIPTION.HELP_TEXT}
+          value={description || "n/a"}
+        />
+        {asAtYear === getCurrentYear() && <EditButton />}
 
-      <TextDisplayField
-        label={scenarioConstants.AS_AT_YEAR.LABEL}
-        helpText={scenarioConstants.AS_AT_YEAR.HELP_TEXT}
-        value={asAtYear}
-      />
+        <TextDisplayField
+          label={scenarioConstants.AS_AT_YEAR.LABEL}
+          helpText={scenarioConstants.AS_AT_YEAR.HELP_TEXT}
+          value={asAtYear}
+        />
+      </div>
     </>
   )
 }
