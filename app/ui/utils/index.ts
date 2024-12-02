@@ -10,6 +10,9 @@ const propertyAssetClassNames = ["AuProperty"]
 const liquidAssetClassNames = ["AuShares", "AuBank", "AuSuper"]
 const cashAssetClassNames = ["AuBank"]
 const definedBenefitsClassNames = ["AuDefinedBenefits"]
+const superAssetClassNames = ["AuSuper"]
+
+// TODO: can we not use instanceof here?
 
 export const isEarnedIncomeAsset = (className: AssetClass) => earnedIncomeAssetClassNames.includes(className)
 
@@ -26,3 +29,5 @@ export const isCashAsset = (className: AssetClass) => cashAssetClassNames.includ
 export const isIncomeProducingAsset = (asset: Asset) => asset.incomeProducing
 
 export const isDefinedBenefitAsset = (className: AssetClass) => definedBenefitsClassNames.includes(className)
+
+export const isSuperAsset = (className: AssetClass) => superAssetClassNames.includes(className)

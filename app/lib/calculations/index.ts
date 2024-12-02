@@ -29,6 +29,7 @@ import { withData } from "./utils/withData"
 import { CalculationError } from "@/app/lib/utils/CalculationError"
 import { isCapitalAsset } from "@/app/ui/utils"
 import { accumToBasicYearData } from "./utils/accumToBasicYearData"
+import { getMandatedDrawdowns } from "./autoDrawdowns/getMandatedDrawdowns"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -147,6 +148,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       if (!historyItem) throw new Error(`No data found for income asset ${assetToReceiveIncome.name}`)
       historyItem.value = historyItem.value + totalIncomeFromAssetsAmt
       historyItem.incomeFromAssets = totalIncomeFromAssetsAmt
+
+      const mandatedDrawdowns = getMandatedDrawdowns({ assets, owners, year })
 
       // RE-CALCULATE TAXES.  This is a bit of a hack because of Automatic drawdowns.
       // sutomatic drawdown pull money out of an asset for that year,
@@ -325,7 +328,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       totalExpensesData: totalExpenses,
       incomeTaxesData: incomeTaxesYearData,
       earningsTaxesData: earningsTaxesYearData,
-      totalTaxesData: totalTaxesYearData,
+      totalTaxesData: totalTaxesYearData
       // deathDetails
     }
   } catch (e) {

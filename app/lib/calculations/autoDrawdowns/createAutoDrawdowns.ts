@@ -28,7 +28,7 @@ const getSortedByAmtAvailable = (assets: Asset[], year: number): Asset[] => {
 /**
  * There are a bunch of expenses which need to come from somewhere
  * (and go out the system eg living expenses and taxes)
- * They need to come from somewhere, so we do automated drawdown.
+ * They need to come from somewhere, so we automate drawdowns of assets
  * Automated drawdowns are just transfers but going to DRAWDOWN.
  *
  * This function does the drawdowns, and returns the details
