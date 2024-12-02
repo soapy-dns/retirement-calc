@@ -4,6 +4,19 @@ import { OwnersType } from "../../../data/schema/config"
 import { AutomatedDrawdown } from "../types"
 import { Constants } from "../../constants"
 
+// jest.mock("../getSuperAssetsRelevantForDrawdown", () => ({
+//   getSuperAssetsRelevantForDrawdown: jest.fn().mockReturnValue([
+//     {
+//       id: "asset1",
+//       name: "Super Fund",
+//       country: "AU",
+//       className: "AuSuper",
+//       ownerIds: ["owner1"],
+//       history: [{ year: 2023, value: 100000 }]
+//     }
+//   ])
+// }))
+
 jest.mock("../../../utils/getRandomKey", () => ({
   getRandomKey: jest.fn().mockReturnValue("randomKey")
 }))

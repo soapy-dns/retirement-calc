@@ -1,17 +1,11 @@
 import { isSuperAsset } from "@/app/ui/utils"
 import { Country, OwnersType } from "../../data/schema/config"
 import { Asset } from "../assets/Asset"
-import { AutomatedDrawdown } from "./types"
+import { AutomatedDrawdown, MandatoryDrawdownPercentages } from "./types"
 import config from "@/app/lib/config.json"
 import { getRandomKey } from "../../utils/getRandomKey"
 import { Constants } from "../constants"
-
-// type MandatoryDrawdownPercentageByYear = Record<number, number>
-interface MandatoryDrawdownPercentageForYear {
-  ageTo: number
-  percentage: number
-}
-type MandatoryDrawdownPercentages = Partial<Record<Country, MandatoryDrawdownPercentageForYear[]>>
+import { getSuperAssetsRelevantForDrawdown } from "./getSuperAssetsRelevantForDrawdown"
 
 const { mandatoryDrawdownPercentages }: { mandatoryDrawdownPercentages: MandatoryDrawdownPercentages } = config
 
@@ -23,10 +17,7 @@ interface Props {
 
 // Some assets need to have a certain % drawn down each year eg au super is 4% a year
 export const getMandatedDrawdowns = ({ assets, owners, year }: Props): AutomatedDrawdown[] => {
-  const filteredAssets = assets.filter((asset) => {
-    const { country, className } = asset
-    if (mandatoryDrawdownPercentages[country] && isSuperAsset(className)) return true
-  })
+  const filteredAssets = getSuperAssetsRelevantForDrawdown({ assets, year, mandatoryDrawdownPercentages })
 
   const results = filteredAssets.map((asset) => {
     const { ownerIds, country } = asset

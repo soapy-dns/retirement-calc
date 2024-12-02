@@ -150,6 +150,10 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       historyItem.incomeFromAssets = totalIncomeFromAssetsAmt
 
       const mandatedDrawdowns = getMandatedDrawdowns({ assets, owners, year })
+      // if (year === 2024) {
+      //   console.log("--mandatedDrawdowns--", year, mandatedDrawdowns)
+      // }
+      automatedDrawdownMap[year] = mandatedDrawdowns
 
       // RE-CALCULATE TAXES.  This is a bit of a hack because of Automatic drawdowns.
       // sutomatic drawdown pull money out of an asset for that year,

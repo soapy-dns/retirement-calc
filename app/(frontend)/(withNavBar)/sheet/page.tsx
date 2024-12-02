@@ -127,20 +127,6 @@ const SheetPage: React.FC = () => {
 
             <EmptyLine />
 
-            {/* expenses */}
-            <HeadingRow text="Expenses" onToggle={() => setInfoModal(InfoType.EXPENSES)} />
-            {expensesRowData &&
-              Object.entries(expensesRowData).map(([rowIdentifier, expensesData], index) => {
-                return <Row key={index} rowIdentifier={rowIdentifier} row={expensesData} onToggle={onHelpModalToggle} />
-              })}
-            <Row rowIdentifier="Income Taxes" bold={true} row={incomeTaxesData} onToggle={onHelpModalToggle} />
-
-            <Row rowIdentifier="Total Taxes" bold={true} row={totalTaxesData} onToggle={onHelpModalToggle} />
-
-            <Row rowIdentifier="Total Expenses" bold={true} row={totalExpensesData} onToggle={onHelpModalToggle} />
-
-            <EmptyLine />
-
             <HeadingRow text="Drawdowns" onToggle={() => setInfoModal(InfoType.DRAWDOWN)} />
             {drawdownRowData &&
               Object.entries(drawdownRowData).map(([rowIdentifier, rowData], index) => {
@@ -152,6 +138,20 @@ const SheetPage: React.FC = () => {
               bold={true}
               onToggle={onHelpModalToggle}
             />
+
+            <EmptyLine />
+
+            {/* expenses */}
+            <HeadingRow text="Expenses" onToggle={() => setInfoModal(InfoType.EXPENSES)} />
+            {expensesRowData &&
+              Object.entries(expensesRowData).map(([rowIdentifier, expensesData], index) => {
+                return <Row key={index} rowIdentifier={rowIdentifier} row={expensesData} onToggle={onHelpModalToggle} />
+              })}
+            <Row rowIdentifier="Income Taxes" bold={true} row={incomeTaxesData} onToggle={onHelpModalToggle} />
+
+            <Row rowIdentifier="Total Taxes" bold={true} row={totalTaxesData} onToggle={onHelpModalToggle} />
+
+            <Row rowIdentifier="Total Expenses" bold={true} row={totalExpensesData} onToggle={onHelpModalToggle} />
 
             <EmptyLine />
 
