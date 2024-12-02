@@ -24,35 +24,35 @@ describe("tests without currency conversion", () => {
   it("should be no tax below threshold 1", () => {
     const incomeAsAtTheYear = 18199 * inflationFactor
 
-    const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
+    const { taxAmt } = taxCalc.getTax(incomeAsAtTheYear, year)
     expect(taxAmt).toEqual(0)
   })
 
   it("should start taxing above 1st threshold", () => {
     const incomeAsAtTheYear = 18300 * inflationFactor
 
-    const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
+    const { taxAmt } = taxCalc.getTax(incomeAsAtTheYear, year)
     expect(taxAmt).toEqual(Math.round(19 * inflationFactor))
   })
 
   it("should be ok above 2nd threshold", () => {
     const incomeAsAtTheYear = 50000 * inflationFactor
 
-    const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
+    const { taxAmt } = taxCalc.getTax(incomeAsAtTheYear, year)
     expect(taxAmt).toEqual(Math.round(8531))
   })
 
   it("should be correct after 3rd threshold", () => {
     const incomeAsAtTheYear = 125000 * inflationFactor
 
-    const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
+    const { taxAmt } = taxCalc.getTax(incomeAsAtTheYear, year)
     expect(taxAmt).toEqual(39773)
   })
 
   it("should be correct after 4th threshold", () => {
     const incomeAsAtTheYear = 200000 * inflationFactor
 
-    const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
+    const { taxAmt } = taxCalc.getTax(incomeAsAtTheYear, year)
     expect(taxAmt).toEqual(77047)
   })
 })
@@ -63,14 +63,14 @@ describe("test with currency conversion", () => {
   it("should do with currency conversion ok", () => {
     const incomeAsAtTheYear = 50000 * inflationFactor
 
-    const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
+    const { taxAmt } = taxCalc.getTax(incomeAsAtTheYear, year)
     expect(taxAmt).toEqual(14584)
   })
 
   it("should do with currency conversion ok", () => {
     const incomeAsAtTheYear = 100000 * inflationFactor
 
-    const taxAmt = taxCalc.getTax(incomeAsAtTheYear, year)
+    const { taxAmt } = taxCalc.getTax(incomeAsAtTheYear, year)
     expect(taxAmt).toEqual(38524) // This is in the non australian currency as is the input
   })
 })

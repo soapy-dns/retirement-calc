@@ -125,7 +125,7 @@ export const calculateTaxes = (
 
     const ownersTotalTaxableAmt = ownersTaxableIncomeAmt + manualTaxableDrawdownAmt
 
-    const ownersTaxAmt = incomeTaxCalculator.getTax(ownersTotalTaxableAmt, year)
+    const {taxAmt: ownersTaxAmt} = incomeTaxCalculator.getTax(ownersTotalTaxableAmt, year)
 
     const taxHistory = tax.history.find((it) => it.year === year)
     if (!taxHistory) throw new Error(`No history found for ${owner.identifier} in ${year}`)

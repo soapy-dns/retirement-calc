@@ -12,6 +12,10 @@ interface AdditionalTaxRecord extends TaxRecord {
 interface TaxToRecord extends AdditionalTaxRecord {
   taxToTop: number
 }
+interface TaxResult {
+  taxAmt: number
+}
+
 export class BandedTaxCalc {
   protected currencyConversionFactor = 1
   protected inflationContext
@@ -48,7 +52,7 @@ export class BandedTaxCalc {
     return taxToConfig
   }
 
-  getTax(income: number, year: number): number {
+  getTax(income: number, year: number): TaxResult {
     const { incomeInTodaysMoney, inflationFactor } = getIncomeInTodaysMoney(
       income,
       year,
@@ -75,6 +79,6 @@ export class BandedTaxCalc {
     const taxAmtInYearsMoneyAndOriginalCurrency =
       (taxAmtInTodaysMoney * inflationFactor) / this.currencyConversionFactor
 
-    return Math.round(taxAmtInYearsMoneyAndOriginalCurrency)
+    return { taxAmt: Math.round(taxAmtInYearsMoneyAndOriginalCurrency) }
   }
 }
