@@ -1,8 +1,8 @@
 import { OwnerType } from "../../data/schema/config"
 import { Asset } from "../assets/Asset"
 import { Tax } from "../assets/types"
+import { getTaxableDrawdownAmt } from "../tax/getTaxableDrawdownAmt"
 import { BandedTaxCalc } from "../tax/taxCalcs/BandedTaxCalc"
-import { getTaxableDrawdownAmt } from "../tax/utils"
 import { AutomatedDrawdown } from "./types"
 
 interface Props {
@@ -14,7 +14,15 @@ interface Props {
   automatedDrawdownsForYear: AutomatedDrawdown[]
 }
 
-export const updateTaxesForDrawdowns = ({
+const getTaxHistory = (taxes: Tax[], ownerId: string, year: number) => {
+  const taxForOwner = taxes.find((it) => it.ownerId === ownerId)
+  if (!taxForOwner) throw new Error("No tax for owner")
+  const taxHistory = taxForOwner.history.find((it) => it.year === year)
+  if (!taxHistory) throw new Error("No tax history")
+  return taxHistory
+}
+
+export const updateTaxesForAutoDrawdowns = ({
   owners,
   taxes,
   year,
@@ -23,16 +31,14 @@ export const updateTaxesForDrawdowns = ({
   incomeTaxCalculator
 }: Props) => {
   owners.forEach((owner) => {
-    const taxForOwner = taxes.find((it) => it.ownerId === owner.identifier)
-    if (!taxForOwner) throw new Error("No tax for owner")
-    const taxHistory = taxForOwner.history.find((it) => it.year === year)
-    if (!taxHistory) throw new Error("No tax history")
+    const taxHistory = getTaxHistory(taxes, owner.identifier, year)
 
     const taxableAutomatedDrawdownAmt = getTaxableDrawdownAmt(automatedDrawdownsForYear, owner.identifier, assets)
 
     // This isn't right.  We are doubling. TODO:
-    const newTotalTaxableAmt =
-      taxHistory.taxableIncomeAmt + taxHistory.taxableDrawdownsAmt + taxableAutomatedDrawdownAmt
+    // const newTotalTaxableAmt =
+    //   taxHistory.taxableIncomeAmt + taxHistory.taxableDrawdownsAmt + taxableAutomatedDrawdownAmt
+    const newTotalTaxableAmt = taxHistory.taxableIncomeAmt + taxableAutomatedDrawdownAmt
 
     const { taxAmt: ownersTaxAmt } = incomeTaxCalculator.getTax(newTotalTaxableAmt, year)
 

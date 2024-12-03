@@ -31,6 +31,7 @@ import { isCapitalAsset } from "@/app/ui/utils"
 import { accumToBasicYearData } from "./utils/accumToBasicYearData"
 import { getMandatedDrawdowns } from "./autoDrawdowns/getMandatedDrawdowns"
 import { applyMandatedDrawdowns } from "./autoDrawdowns/applyMandatedDrawdowns"
+import { updateTaxesForAutoDrawdowns } from "./autoDrawdowns/updateTaxesForDrawdowns"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -43,7 +44,6 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
   await sleep(1)
   // console.log("--calculate data--", JSON.stringify(data, null, 4))
   // console.log("--data.context--", data.context);
-  // if (data.context)
 
   const result = ScenarioSchema.safeParse(data)
 
@@ -99,7 +99,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     // SET UP ASSETS
     const assets = buildInitialAssets(startingYear, scenario, inflationContext)
 
-    // if we are 90% in AU and 10% in hrow, does that mean we have 2 different tax calculators?
+    // Can only deal with 100% UK or 100% AU residency
     const incomeTaxCalculator = getIncomeTaxCalculator({
       taxResident,
       currency,
@@ -153,9 +153,19 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       // const mandatedDrawdowns = getMandatedDrawdowns({ assets, owners, year }) // TODO: reinstate
       const mandatedDrawdowns: AutomatedDrawdown[] = []
       applyMandatedDrawdowns({ drawdowns: mandatedDrawdowns, assets })
+
+      updateTaxesForAutoDrawdowns({
+        owners,
+        taxes,
+        year,
+        assets,
+        automatedDrawdownsForYear: mandatedDrawdowns,
+        incomeTaxCalculator
+      })
       // if (year === 2024) {
       //   console.log("--mandatedDrawdowns--", year, mandatedDrawdowns)
       // }
+
       automatedDrawdownMap[year] = mandatedDrawdowns
 
       // RE-CALCULATE TAXES.  This is a bit of a hack because of Automatic drawdowns.
