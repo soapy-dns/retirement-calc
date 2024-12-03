@@ -10,6 +10,7 @@ import { createAutoDrawdowns } from "./createAutoDrawdowns"
 import { AutomatedDrawdown } from "./types"
 import { BasicYearData } from "../types"
 import { mergeAutoDrawdowns } from "./mergeAutoDrawdowns"
+import { updateTaxesForDrawdowns } from "./updateTaxesForDrawdowns"
 
 interface IDrawdownContext {
   year: number
@@ -28,7 +29,7 @@ interface IDrawdownContext {
 }
 
 const drawdownIteration = (
-  { scenario, year, automatedDrawdownMap, taxes, incomeTaxCalculator, owners, groupedAssets }: IDrawdownContext,
+  { scenario, year, automatedDrawdownMap, taxes, incomeTaxCalculator, owners, groupedAssets, assets }: IDrawdownContext,
   remainingAmtToDrawdown: number
 ) => {
   const existingAutoDrawdowns = automatedDrawdownMap[year] || []
@@ -37,31 +38,40 @@ const drawdownIteration = (
 
   const automatedDrawdownsForYear = mergeAutoDrawdowns(existingAutoDrawdowns, newAutoDrawdownsForYear)
 
+  // update map
   automatedDrawdownMap[year] = automatedDrawdownsForYear
 
-  owners.forEach((owner) => {
-    const taxForOwner = taxes.find((it) => it.ownerId === owner.identifier)
-    if (!taxForOwner) throw new Error("No tax for owner")
-    const taxHistory = taxForOwner.history.find((it) => it.year === year)
-    if (!taxHistory) throw new Error("No tax history")
-
-    const taxableAutomatedDrawdownAmt = getTaxableDrawdownAmt(
-      automatedDrawdownsForYear,
-      owner.identifier,
-      groupedAssets.flat()
-    )
-
-    // This isn't right.  We are doubling. TODO:
-    const newTotalTaxableAmt =
-      taxHistory.taxableIncomeAmt + taxHistory.taxableDrawdownsAmt + taxableAutomatedDrawdownAmt
-
-    const { taxAmt: ownersTaxAmt } = incomeTaxCalculator.getTax(newTotalTaxableAmt, year)
-
-    // UPDATE TAX DETAILS
-    taxHistory.totalTaxableAmt = Math.round(newTotalTaxableAmt)
-    taxHistory.taxableAutomatedDrawdownAmt = Math.round(taxableAutomatedDrawdownAmt)
-    taxHistory.value = Math.round(ownersTaxAmt)
+  updateTaxesForDrawdowns({
+    owners,
+    taxes,
+    year,
+    assets,
+    automatedDrawdownsForYear,
+    incomeTaxCalculator
   })
+  // owners.forEach((owner) => {
+  //   const taxForOwner = taxes.find((it) => it.ownerId === owner.identifier)
+  //   if (!taxForOwner) throw new Error("No tax for owner")
+  //   const taxHistory = taxForOwner.history.find((it) => it.year === year)
+  //   if (!taxHistory) throw new Error("No tax history")
+
+  //   const taxableAutomatedDrawdownAmt = getTaxableDrawdownAmt(
+  //     automatedDrawdownsForYear,
+  //     owner.identifier,
+  //     groupedAssets.flat()
+  //   )
+
+  //   // This isn't right.  We are doubling. TODO:
+  //   const newTotalTaxableAmt =
+  //     taxHistory.taxableIncomeAmt + taxHistory.taxableDrawdownsAmt + taxableAutomatedDrawdownAmt
+
+  //   const { taxAmt: ownersTaxAmt } = incomeTaxCalculator.getTax(newTotalTaxableAmt, year)
+
+  //   // UPDATE TAX DETAILS
+  //   taxHistory.totalTaxableAmt = Math.round(newTotalTaxableAmt)
+  //   taxHistory.taxableAutomatedDrawdownAmt = Math.round(taxableAutomatedDrawdownAmt)
+  //   taxHistory.value = Math.round(ownersTaxAmt)
+  // })
 }
 
 /**
@@ -78,14 +88,14 @@ export const applyAutoDrawdowns = (drawdownContext: IDrawdownContext): number =>
 
   let totalIncomeTaxesAmt = 0
   let totalExpensesAmt = 0
-  let automatedDrawdownsAmt = 0
+  let automatedDrawdownsAmt = getDrawdownAmt(automatedDrawdownMap[year])
 
   // TOTAL EXPENSES FOR THIS YEAR - taxes plus living expenses
   totalIncomeTaxesAmt = getTaxAmtForYear(taxes, year) //all owners
   const totalEarningsTaxesAmt = getTaxAmtForYear(earningsTaxes, year)
   totalExpensesAmt = livingExpenseForYearAmt + totalIncomeTaxesAmt + totalEarningsTaxesAmt
 
-  let remainingAmtToDrawdown = totalExpensesAmt
+  let remainingAmtToDrawdown = Math.round(totalExpensesAmt - automatedDrawdownsAmt)
 
   let i = 0
   while (remainingAmtToDrawdown > 100 && i < 100) {

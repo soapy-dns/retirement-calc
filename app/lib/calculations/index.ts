@@ -30,6 +30,7 @@ import { CalculationError } from "@/app/lib/utils/CalculationError"
 import { isCapitalAsset } from "@/app/ui/utils"
 import { accumToBasicYearData } from "./utils/accumToBasicYearData"
 import { getMandatedDrawdowns } from "./autoDrawdowns/getMandatedDrawdowns"
+import { applyMandatedDrawdowns } from "./autoDrawdowns/applyMandatedDrawdowns"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -149,7 +150,9 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       historyItem.value = historyItem.value + totalIncomeFromAssetsAmt
       historyItem.incomeFromAssets = totalIncomeFromAssetsAmt
 
-      const mandatedDrawdowns = getMandatedDrawdowns({ assets, owners, year })
+      // const mandatedDrawdowns = getMandatedDrawdowns({ assets, owners, year }) // TODO: reinstate
+      const mandatedDrawdowns: AutomatedDrawdown[] = []
+      applyMandatedDrawdowns({ drawdowns: mandatedDrawdowns, assets })
       // if (year === 2024) {
       //   console.log("--mandatedDrawdowns--", year, mandatedDrawdowns)
       // }

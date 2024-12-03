@@ -5,6 +5,7 @@ import { AutomatedDrawdown } from "./types"
 
 const getYearData = (asset: Asset, year: number) => asset.history.find((it) => it.year === year + 1) // next history - for manipulating it
 
+// TODO: change the name
 const getSortedByAmtAvailable = (assets: Asset[], year: number): Asset[] => {
   const mappedAssets = assets.map((asset) => {
     const yearData = getYearData(asset, year)
