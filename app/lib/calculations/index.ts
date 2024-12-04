@@ -8,14 +8,14 @@ import {
   getGroupedDrawdownableAssets,
   buildInitialAssets
 } from "./assets/assetUtils"
-import { calculateTaxes, getTaxesRows, initEarningsTaxes, initTaxes } from "./tax/utils"
+import { calculateTaxes, initEarningsTaxes, initTaxes } from "./tax/utils"
 import { DrawdownYearData, AssetIncome, ExpenseYearData, Tax } from "./assets/types"
 import { getLivingExpenses } from "./utils/livingExpensesUtils"
 import { initialiseIncomeFromAssets } from "./utils/initialiseIncomeFromAssets"
 import { AutomatedDrawdown } from "./autoDrawdowns/types"
 import { applyAutoDrawdowns } from "./autoDrawdowns/drawdown"
 import { getInflationContext } from "./utils/getInflationContext"
-import { calculateTotalAssetIncome } from "./assetIncome/utils"
+import { calculateTotalAssetIncomeAmt } from "./assetIncome/utils"
 import { getYearRange } from "./utils/yearRange"
 import { getEarningsTaxCalculator, getEarningsTaxName, getIncomeTaxCalculator } from "./tax/taxCalcs/getTaxCalculator"
 import { AssetData, AssetSplitItem, BasicYearData, CalculationResults, SurplusYearData, YearData } from "./types"
@@ -25,13 +25,14 @@ import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData
 import { IScenario, ScenarioSchema } from "../data/schema/config"
 import { calculateEarningsTaxes } from "./tax/getEarningsTaxes"
 import { getScenarioTransfersForYear } from "./transfers/transferUtils"
-import { withData } from "./utils/withData"
 import { CalculationError } from "@/app/lib/utils/CalculationError"
 import { isCapitalAsset } from "@/app/ui/utils"
 import { accumToBasicYearData } from "./utils/accumToBasicYearData"
 import { getMandatedDrawdowns } from "./autoDrawdowns/getMandatedDrawdowns"
 import { applyMandatedDrawdowns } from "./autoDrawdowns/applyMandatedDrawdowns"
 import { updateTaxesForAutoDrawdowns } from "./autoDrawdowns/updateTaxesForDrawdowns"
+import { getIncomeByOwner } from "./utils/getIncomeByOwner"
+import { getTaxDetailsByOwner } from "./utils/getTaxDetailsByOwner"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -132,11 +133,19 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
       const manualTransfersForYear = getScenarioTransfersForYear(scenario, year)
       calculateTaxes(taxes, year, assets, owners, incomeTaxCalculator, incomeFromAssets, manualTransfersForYear)
+      // if (year === 2024) {
+      //   const taxDetailsByOwner1 = getTaxDetailsByOwner({ owners, taxes })
+      //   console.log("Tax for Neil 2024 after manualTransfers-->", { ...taxDetailsByOwner1.Neil[0] })
+      // }
 
       calculateEarningsTaxes(earningsTaxes, assets, year, earningsTaxCalculator)
 
       // TOTAL INCOME FOR THIS YEAR -will be moved to the 'incomeBucket' asset
-      const totalIncomeFromAssetsAmt = calculateTotalAssetIncome(year, incomeFromAssets, totalAssetIncome)
+      const totalIncomeFromAssetsAmt = calculateTotalAssetIncomeAmt(year, incomeFromAssets)
+      totalAssetIncome.push({
+        year,
+        value: Math.round(totalIncomeFromAssetsAmt)
+      })
 
       // MOVE INCOME FROM ASSETS *AND* PSS INCOME TO THE 'INCOME BUCKET' ASSET
       const assetToReceiveIncome = assets.find((it) => it.incomeBucket === true)
@@ -150,8 +159,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       historyItem.value = historyItem.value + totalIncomeFromAssetsAmt
       historyItem.incomeFromAssets = totalIncomeFromAssetsAmt
 
-      // const mandatedDrawdowns = getMandatedDrawdowns({ assets, owners, year }) // TODO: reinstate
-      const mandatedDrawdowns: AutomatedDrawdown[] = []
+      const mandatedDrawdowns = getMandatedDrawdowns({ assets, owners, year })
+      // const mandatedDrawdowns: AutomatedDrawdown[] = []
       applyMandatedDrawdowns({ drawdowns: mandatedDrawdowns, assets })
 
       updateTaxesForAutoDrawdowns({
@@ -163,7 +172,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
         incomeTaxCalculator
       })
       // if (year === 2024) {
-      //   console.log("--mandatedDrawdowns--", year, mandatedDrawdowns)
+      //   const taxDetailsByOwner2 = getTaxDetailsByOwner({ owners, taxes })
+      //   console.log("Tax for Neil 2024 after autoDrawdowns for mandatory drawdowns", taxDetailsByOwner2.Neil[0])
       // }
 
       automatedDrawdownMap[year] = mandatedDrawdowns
@@ -293,6 +303,12 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       return accum
     }, {})
 
+    const incomeByOwner = getIncomeByOwner({ owners, incomeFromAssets })
+
+    const taxDetailsByOwner = getTaxDetailsByOwner({ owners, taxes })
+    // console.log("--taxDetailsByOwner--", taxDetailsByOwner)
+    // console.log("Tax for Neil 2024", taxDetailsByOwner.Neil[0])
+
     const graphIncomeNpvData = getGraphIncomeNpvData(incomeFromAssets, inflationContext)
 
     const drawdownData = getAutoDrawdownCellData(totalDrawdowns, calcYearRangeIncome)
@@ -311,7 +327,12 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       "Living expenses": projectedLivingExpensesToDisplay
     }
 
-    // console.log("--taxes--", taxes)
+    const incomeTaxesByOwner = owners.reduce((accum, owner) => {
+      const ownerTaxes = taxes.filter((it) => it.ownerId === owner.identifier)
+      accum[owner.ownerName] = accumToBasicYearData(ownerTaxes.map((it) => it.history).flat() || 0)
+      return accum
+    }, {} as AssetData)
+
     const incomeTaxesYearData = accumToBasicYearData(taxes.map((it) => it.history).flat())
     const earningsTaxesYearData = accumToBasicYearData(earningsTaxes.map((it) => it.history).flat())
 
@@ -345,7 +366,9 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       totalExpensesData: totalExpenses,
       incomeTaxesData: incomeTaxesYearData,
       earningsTaxesData: earningsTaxesYearData,
-      totalTaxesData: totalTaxesYearData
+      totalTaxesData: totalTaxesYearData,
+      incomeTaxesByOwner,
+      incomeByOwner
       // deathDetails
     }
   } catch (e) {

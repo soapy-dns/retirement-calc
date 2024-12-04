@@ -1,5 +1,4 @@
 import { BandedTaxCalc } from "../BandedTaxCalc"
-import config from "@/app/lib/config.json"
 
 const inflationFactor = 1.27
 const year = 2030

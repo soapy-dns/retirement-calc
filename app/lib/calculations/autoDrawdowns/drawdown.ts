@@ -10,6 +10,7 @@ import { AutomatedDrawdown } from "./types"
 import { BasicYearData } from "../types"
 import { mergeAutoDrawdowns } from "./mergeAutoDrawdowns"
 import { updateTaxesForAutoDrawdowns } from "./updateTaxesForDrawdowns"
+import { getTaxDetailsByOwner } from "../utils/getTaxDetailsByOwner"
 
 interface IDrawdownContext {
   year: number
@@ -48,6 +49,10 @@ const drawdownIteration = (
     automatedDrawdownsForYear,
     incomeTaxCalculator
   })
+  // if (year === 2024) {
+  //   const taxDetailsByOwner3 = getTaxDetailsByOwner({ owners, taxes })
+  //   console.log("Tax for Neil 2024 after updating for autodrawdowns in iteration", taxDetailsByOwner3.Neil[0])
+  // }
 }
 
 /**
@@ -71,10 +76,7 @@ export const applyAutoDrawdowns = (drawdownContext: IDrawdownContext): number =>
   const totalEarningsTaxesAmt = getTaxAmtForYear(earningsTaxes, year)
   totalExpensesAmt = livingExpenseForYearAmt + totalIncomeTaxesAmt + totalEarningsTaxesAmt
   // if (year === 2024) {
-  //   console.log("totalExpensesAmt", totalExpensesAmt)
-  //   console.log("totalIncomeTaxesAmt", totalIncomeTaxesAmt)
-  //   console.log("livingExpenseForYearAmt", livingExpenseForYearAmt)
-  //   console.log("totalEarningsTaxesAmt", totalEarningsTaxesAmt)
+  //   console.log("--totalIncomeTaxesAmt #1  --", totalIncomeTaxesAmt)
   // }
 
   let remainingAmtToDrawdown = Math.round(totalExpensesAmt - automatedDrawdownsAmt)

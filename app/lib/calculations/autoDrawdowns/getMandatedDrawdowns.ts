@@ -38,7 +38,7 @@ export const getMandatedDrawdowns = ({ assets, owners, year }: Props): Automated
       from: asset.id,
       fromName: asset.name,
       to: Constants.DRAWDOWN,
-      value: amountToDrawdown,
+      value: Math.round(amountToDrawdown),
       migrateAll: false
     } as AutomatedDrawdown // without this, it infers migrateAll as boolean
     return automatedDrawdown

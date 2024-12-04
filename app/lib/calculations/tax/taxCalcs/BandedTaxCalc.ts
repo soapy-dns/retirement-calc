@@ -60,6 +60,18 @@ export class BandedTaxCalc {
       this.inflationContext
     )
 
+    // if (year === 2024) {
+    //   const taxParams = {
+    //     income,
+    //     year,
+    //     currencyConversionFactor: this.currencyConversionFactor,
+    //     // inflationContext: this.inflationContext,
+    //     incomeInTodaysMoney,
+    //     inflationFactor
+    //   }
+    //   console.log("--taxParams--", taxParams)
+    // }
+
     const lastIndex = this.taxToConfig.findIndex((it) => incomeInTodaysMoney < it.bandTop)
 
     let taxAmtInTodaysMoney
@@ -79,6 +91,10 @@ export class BandedTaxCalc {
     const taxAmtInYearsMoneyAndOriginalCurrency =
       (taxAmtInTodaysMoney * inflationFactor) / this.currencyConversionFactor
 
+    // if (year === 2024) {
+    //   const x = { incomeInTodaysMoney, taxAmtInTodaysMoney, taxAmtInYearsMoneyAndOriginalCurrency }
+    //   console.log("--x--", x)
+    // }
     return { taxAmt: Math.round(taxAmtInYearsMoneyAndOriginalCurrency) }
   }
 }

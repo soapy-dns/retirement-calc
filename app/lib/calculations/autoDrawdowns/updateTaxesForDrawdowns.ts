@@ -36,9 +36,9 @@ export const updateTaxesForAutoDrawdowns = ({
     const taxableAutomatedDrawdownAmt = getTaxableDrawdownAmt(automatedDrawdownsForYear, owner.identifier, assets)
 
     // This isn't right.  We are doubling. TODO:
-    // const newTotalTaxableAmt =
-    //   taxHistory.taxableIncomeAmt + taxHistory.taxableDrawdownsAmt + taxableAutomatedDrawdownAmt
-    const newTotalTaxableAmt = taxHistory.taxableIncomeAmt + taxableAutomatedDrawdownAmt
+    const newTotalTaxableAmt =
+      taxHistory.taxableIncomeAmt + taxHistory.taxableDrawdownsAmt + taxableAutomatedDrawdownAmt
+    // const newTotalTaxableAmt = taxHistory.taxableIncomeAmt + taxableAutomatedDrawdownAmt
 
     const { taxAmt: ownersTaxAmt } = incomeTaxCalculator.getTax(newTotalTaxableAmt, year)
 

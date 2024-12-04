@@ -1,8 +1,8 @@
-import { AssetIncome, EarningsTax, Tax } from "../assets/types"
+import { AssetIncome, EarningsTax, Tax, YearsTaxData } from "../assets/types"
 import { BandedTaxCalc } from "./taxCalcs/BandedTaxCalc"
 import { Transfer, Country, OwnerType, OwnersType } from "../../data/schema/config"
 import { Asset } from "../assets/Asset"
-import { AssetGroup, BasicYearData, InflationContext, YearsTaxData } from "../types"
+import { AssetGroup, BasicYearData, InflationContext } from "../types"
 import { removeUnusedHistoryFromTaxes } from "./removeUnusedHistoryFromTaxes"
 import { getTaxableDrawdownAmt } from "./getTaxableDrawdownAmt"
 
@@ -88,6 +88,9 @@ export const calculateTaxes = (
   owners.forEach((owner: OwnerType) => {
     const tax = taxes.find((it) => it.ownerId === owner.identifier)
     if (!tax) throw new Error(`tax object not foound for ${owner.identifier}`)
+    const taxHistory = tax.history.find((it) => it.year === year)
+    if (!taxHistory) throw new Error(`No history found for ${owner.identifier} in ${year}`)
+
     const manualTaxableDrawdownAmt = getTaxableDrawdownAmt(manualTransfersForYear, owner.identifier, assets)
 
     const ownersTaxableIncomeAmt = getOwnersTaxableIncomeAmt(incomeFromAssets, owner.identifier, year)
@@ -96,9 +99,10 @@ export const calculateTaxes = (
 
     const { taxAmt: ownersTaxAmt } = incomeTaxCalculator.getTax(ownersTotalTaxableAmt, year)
 
-    const taxHistory = tax.history.find((it) => it.year === year)
-    if (!taxHistory) throw new Error(`No history found for ${owner.identifier} in ${year}`)
-
+    // if (year === 2024 && owner.ownerName === "Neil") {
+    //   const taxDetails = { ownersTotalTaxableAmt, ownersTaxableIncomeAmt, manualTaxableDrawdownAmt, ownersTaxAmt }
+    //   console.log("--taxDetails - Neil 2024--", taxDetails)
+    // }
     taxHistory.totalTaxableAmt = Math.round(ownersTotalTaxableAmt)
     taxHistory.taxableIncomeAmt = Math.round(ownersTaxableIncomeAmt)
     taxHistory.taxableDrawdownsAmt = Math.round(manualTaxableDrawdownAmt)
@@ -147,7 +151,10 @@ export const getIncomeInTodaysMoney = (
 ) => {
   const incomeCorrectedByCurrencyConversion = income * currencyConversionFactor
 
+  // TODO: swap this back to year - 1.
   const inflationFactor = inflationContext && inflationContext[year] ? inflationContext[year].factor : 1
+
+  // const inflationFactor = inflationContext && inflationContext[year - 1] ? inflationContext[year - 1].factor : 1
 
   return { incomeInTodaysMoney: incomeCorrectedByCurrencyConversion / inflationFactor, inflationFactor }
 }
