@@ -140,5 +140,16 @@
     "NI": {
       "superIncomeTaxPercent": 0
     }
+  },
+  "mandatoryDrawdownPercentages": {
+    "AU": [
+      { "ageTo": 65, "percentage": 4 },
+      { "ageTo": 74, "percentage": 5 },
+      { "ageTo": 79, "percentage": 6 },
+      { "ageTo": 84, "percentage": 7 },
+      { "ageTo": 89, "percentage": 9 },
+      { "ageTo": 94, "percentage": 11 },
+      { "ageTo": 900, "percentage": 14 }
+    ]
   }
 }

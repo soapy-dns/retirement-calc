@@ -31,7 +31,7 @@ export const calculateEarningsTaxes = (
 
   // update earning tax
   Object.entries(accumulatedEarnings).forEach(([ownerId, earningAmt]) => {
-    const earningsTaxAmt = taxCalculator.getTax(earningAmt, year)
+    const { taxAmt: earningsTaxAmt } = taxCalculator.getTax(earningAmt, year)
     const ownersEarningTaxes = earningsTaxes.find((it) => it.ownerId === ownerId)
     const yearData = ownersEarningTaxes?.history.find((it) => it.year === year)
     if (yearData) {

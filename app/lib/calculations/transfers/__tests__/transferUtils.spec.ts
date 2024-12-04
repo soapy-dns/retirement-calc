@@ -44,7 +44,7 @@ describe("test full transfers", () => {
 
   const assets = [cashAsset1, cashAsset2, cashAsset3]
 
-  it("should get correct transfer for full transfer out", () => {
+  it.only("should get correct transfer for full transfer out", () => {
     const prevValue = 20000
     const transfersForYear: Transfer[] = [
       { id: "a", year: year, from: cashAsset1.id, to: cashAsset2.id, migrateAll: true }

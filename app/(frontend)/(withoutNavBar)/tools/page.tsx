@@ -71,8 +71,8 @@ export default function ToolsPage() {
       inflationContext: undefined,
       au2ukExchangeRate
     })
-    const ownersTaxAmt = incomeTaxCalculator.getTax(income, Date.now())
-    setTax(ownersTaxAmt)
+    const { taxAmt } = incomeTaxCalculator.getTax(income, Date.now())
+    setTax(taxAmt)
     // setFocus("id")
     scrollFieldIntoView(alertId)
   }
@@ -142,6 +142,7 @@ export default function ToolsPage() {
         <Button onClick={handleSubmit(handleOnClick)} buttonType={ButtonType.primary}>
           Calculate
         </Button>
+        {tax && <div>Income tax calculated</div>}
       </Card>
       {debug && (
         <Card>

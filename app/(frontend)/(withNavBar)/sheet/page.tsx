@@ -77,7 +77,9 @@ const SheetPage: React.FC = () => {
     expensesRowData,
     incomeTaxesData,
     totalTaxesData,
-    surplusRowData
+    surplusRowData,
+    incomeTaxesByOwner,
+    incomeByOwner
   } = calculationResults
 
   // @ts-ignore
@@ -123,21 +125,11 @@ const SheetPage: React.FC = () => {
               Object.entries(assetIncomeRowData).map(([rowIdentifier, incomeData], index) => {
                 return <Row key={index} rowIdentifier={rowIdentifier} row={incomeData} onToggle={onHelpModalToggle} />
               })}
-            <Row rowIdentifier="Total Income" bold={true} row={totalAssetIncome} onToggle={onHelpModalToggle} />
-
-            <EmptyLine />
-
-            {/* expenses */}
-            <HeadingRow text="Expenses" onToggle={() => setInfoModal(InfoType.EXPENSES)} />
-            {expensesRowData &&
-              Object.entries(expensesRowData).map(([rowIdentifier, expensesData], index) => {
-                return <Row key={index} rowIdentifier={rowIdentifier} row={expensesData} onToggle={onHelpModalToggle} />
+            {incomeByOwner &&
+              Object.entries(incomeByOwner).map(([owner, data], index) => {
+                return <Row key={owner} rowIdentifier={`${owner}'s income`} row={data} onToggle={onHelpModalToggle} />
               })}
-            <Row rowIdentifier="Income Taxes" bold={true} row={incomeTaxesData} onToggle={onHelpModalToggle} />
-
-            <Row rowIdentifier="Total Taxes" bold={true} row={totalTaxesData} onToggle={onHelpModalToggle} />
-
-            <Row rowIdentifier="Total Expenses" bold={true} row={totalExpensesData} onToggle={onHelpModalToggle} />
+            <Row rowIdentifier="Total Income" bold={true} row={totalAssetIncome} onToggle={onHelpModalToggle} />
 
             <EmptyLine />
 
@@ -152,6 +144,27 @@ const SheetPage: React.FC = () => {
               bold={true}
               onToggle={onHelpModalToggle}
             />
+
+            <EmptyLine />
+
+            {/* expenses */}
+            <HeadingRow text="Expenses" onToggle={() => setInfoModal(InfoType.EXPENSES)} />
+            {expensesRowData &&
+              Object.entries(expensesRowData).map(([rowIdentifier, expensesData], index) => {
+                return <Row key={index} rowIdentifier={rowIdentifier} row={expensesData} onToggle={onHelpModalToggle} />
+              })}
+            <Row rowIdentifier="Income Taxes" bold={true} row={incomeTaxesData} onToggle={onHelpModalToggle} />
+
+            {incomeTaxesByOwner &&
+              Object.entries(incomeTaxesByOwner).map(([owner, data], index) => {
+                return (
+                  <Row key={owner} rowIdentifier={`${owner}'s income tax`} row={data} onToggle={onHelpModalToggle} />
+                )
+              })}
+
+            <Row rowIdentifier="Total Taxes" bold={true} row={totalTaxesData} onToggle={onHelpModalToggle} />
+
+            <Row rowIdentifier="Total Expenses" bold={true} row={totalExpensesData} onToggle={onHelpModalToggle} />
 
             <EmptyLine />
 

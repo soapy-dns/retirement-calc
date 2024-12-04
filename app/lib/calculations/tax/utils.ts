@@ -1,9 +1,10 @@
-import { AssetIncome, EarningsTax, Tax } from "../assets/types"
+import { AssetIncome, EarningsTax, Tax, YearsTaxData } from "../assets/types"
 import { BandedTaxCalc } from "./taxCalcs/BandedTaxCalc"
 import { Transfer, Country, OwnerType, OwnersType } from "../../data/schema/config"
 import { Asset } from "../assets/Asset"
-import { AssetGroup, BasicYearData, InflationContext, YearsTaxData } from "../types"
+import { AssetGroup, BasicYearData, InflationContext } from "../types"
 import { removeUnusedHistoryFromTaxes } from "./removeUnusedHistoryFromTaxes"
+import { getTaxableDrawdownAmt } from "./getTaxableDrawdownAmt"
 
 export const getOwnersTaxableIncomeAmt = (incomeFromAssets: AssetIncome[], ownerId: string, year: number) => {
   const ownersTaxableIncomeFromAssets = incomeFromAssets.filter(
@@ -17,38 +18,6 @@ export const getOwnersTaxableIncomeAmt = (incomeFromAssets: AssetIncome[], owner
   }, 0)
 
   return ownersTaxableIncomeFromAssetsAmt
-}
-
-/**
- * Note drawdowns are really just transfers
- * transfers for year can be drawdowns
- *
- * TODO, rather than passing the scenario for the asset config, maybe add relevant info to the asset object?
- */
-export const getTaxableDrawdownAmt = (transfersForYear: Transfer[], ownerId: string, assets: Asset[]): number => {
-  // console.log("--transfersForYear--", transfersForYear)
-  if (!transfersForYear) return 0
-
-  const taxableDrawdownAmt = transfersForYear?.reduce((accum, transfer) => {
-    const { from, value = 0 } = transfer
-
-    const matchingAsset = assets.find((asset) => {
-      return asset.id === from
-    })
-
-    if (!matchingAsset) return accum
-
-    //  drawdowns are not taxed unless in a different country
-    const { ownerIds } = matchingAsset || {}
-
-    if (ownerIds.includes(ownerId)) {
-      const increment = (value * matchingAsset.percOfDrawdownTaxable) / 100 / ownerIds.length
-      return accum + increment
-    }
-    return accum
-  }, 0)
-
-  return Math.round(taxableDrawdownAmt)
 }
 
 export const initTaxes = (yearRange: number[], owners: OwnersType): Tax[] => {
@@ -119,17 +88,21 @@ export const calculateTaxes = (
   owners.forEach((owner: OwnerType) => {
     const tax = taxes.find((it) => it.ownerId === owner.identifier)
     if (!tax) throw new Error(`tax object not foound for ${owner.identifier}`)
+    const taxHistory = tax.history.find((it) => it.year === year)
+    if (!taxHistory) throw new Error(`No history found for ${owner.identifier} in ${year}`)
+
     const manualTaxableDrawdownAmt = getTaxableDrawdownAmt(manualTransfersForYear, owner.identifier, assets)
 
     const ownersTaxableIncomeAmt = getOwnersTaxableIncomeAmt(incomeFromAssets, owner.identifier, year)
 
     const ownersTotalTaxableAmt = ownersTaxableIncomeAmt + manualTaxableDrawdownAmt
 
-    const ownersTaxAmt = incomeTaxCalculator.getTax(ownersTotalTaxableAmt, year)
+    const { taxAmt: ownersTaxAmt } = incomeTaxCalculator.getTax(ownersTotalTaxableAmt, year)
 
-    const taxHistory = tax.history.find((it) => it.year === year)
-    if (!taxHistory) throw new Error(`No history found for ${owner.identifier} in ${year}`)
-
+    // if (year === 2024 && owner.ownerName === "Neil") {
+    //   const taxDetails = { ownersTotalTaxableAmt, ownersTaxableIncomeAmt, manualTaxableDrawdownAmt, ownersTaxAmt }
+    //   console.log("--taxDetails - Neil 2024--", taxDetails)
+    // }
     taxHistory.totalTaxableAmt = Math.round(ownersTotalTaxableAmt)
     taxHistory.taxableIncomeAmt = Math.round(ownersTaxableIncomeAmt)
     taxHistory.taxableDrawdownsAmt = Math.round(manualTaxableDrawdownAmt)
@@ -139,6 +112,7 @@ export const calculateTaxes = (
 }
 
 // TODO: this function to Asset?
+// TODO: I think this isn't quite right.  It should also be based on config if possible.
 export const getPercDrawdownTaxable = (taxResident: Country, assetCountry: Country = "AU", assetClass: AssetGroup) => {
   if (taxResident === "SC" && assetCountry === "SC" && assetClass === AssetGroup.super) {
     return 75
@@ -177,7 +151,9 @@ export const getIncomeInTodaysMoney = (
 ) => {
   const incomeCorrectedByCurrencyConversion = income * currencyConversionFactor
 
-  const inflationFactor = inflationContext && inflationContext[year] ? inflationContext[year].factor : 1
+  // const inflationFactor = inflationContext && inflationContext[year] ? inflationContext[year].factor : 1
+
+  const inflationFactor = inflationContext && inflationContext[year - 1] ? inflationContext[year - 1].factor : 1
 
   return { incomeInTodaysMoney: incomeCorrectedByCurrencyConversion / inflationFactor, inflationFactor }
 }

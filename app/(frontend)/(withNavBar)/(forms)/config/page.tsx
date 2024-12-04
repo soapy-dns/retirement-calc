@@ -21,11 +21,11 @@ const ConfigPage: React.FC = () => {
   const toggleHelpText = () => {
     onHelpModalToggle()
   }
-  const headingText = "Scenario configurations."
+  const headingText = "Scenario configuration."
 
   return (
     <>
-      <div className="flex content-center text-primary-foreground">
+      <div className="flex content-center text-primary-foreground justify-center">
         <h1 className="flex items-center gap-2">
           {headingText}
           <InfoButton showInfo={toggleHelpText} />

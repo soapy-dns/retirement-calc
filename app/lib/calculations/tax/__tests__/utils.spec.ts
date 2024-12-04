@@ -1,4 +1,4 @@
-import { getPercDrawdownTaxable, getTaxableDrawdownAmt } from "../utils"
+import { getPercDrawdownTaxable } from "../utils"
 import * as assetUtilsService from "../../assets/assetUtils"
 import { AssetGroup } from "../../types"
 
@@ -28,5 +28,3 @@ describe("", () => {
     expect(result).toBe(0)
   })
 })
-
-describe("getTaxableDrawdownAmt", () => {})

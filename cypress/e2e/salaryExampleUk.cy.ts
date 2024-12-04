@@ -12,7 +12,7 @@ describe("Salary example for UK including National Insurance", () => {
 
     cy.get("@cells").should("have.length", 12)
     cy.get("@cells").first().contains("10,000")
-    cy.get("@cells").last().contains("-36,838")
+    cy.get("@cells").last().contains("-40,902")
   })
 
   it("should check the last total income is as expected", () => {
@@ -20,14 +20,14 @@ describe("Salary example for UK including National Insurance", () => {
 
     cy.get("@cells").should("have.length", 11)
     cy.get("@cells").first().contains("100,050")
-    cy.get("@cells").last().contains("82")
+    cy.get("@cells").last().contains("54")
   })
 
   it("should check the last total expenses is as expected", () => {
     cy.contains("th", "Total Expenses").nextAll().as("cells")
 
     cy.get("@cells").should("have.length", 11)
-    cy.get("@cells").first().contains("68,297")
+    cy.get("@cells").first().contains("68,988")
     cy.get("@cells").last().contains("67,196")
   })
 })

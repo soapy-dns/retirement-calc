@@ -88,6 +88,7 @@ export type CashAsset = z.infer<typeof CashSchema>
 export const SuperSchema = LiquidAssetSchema.extend({
   className: z.literal("AuSuper")
 })
+export type SuperAsset = z.infer<typeof SuperSchema>
 
 export const SharesSchema = LiquidAssetSchema.extend({
   className: z.literal("AuShares")

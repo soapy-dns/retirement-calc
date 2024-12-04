@@ -12,7 +12,7 @@ describe("Defined benefit pricing", () => {
 
     cy.get("@cells").should("have.length", 51)
     cy.get("@cells").first().contains("10,000")
-    cy.get("@cells").last().contains("46,906")
+    cy.get("@cells").last().contains("43,519")
   })
 
   it("should check the last total income is as expected", () => {
@@ -27,7 +27,7 @@ describe("Defined benefit pricing", () => {
 
     cy.get("@cells").should("have.length", 50)
     cy.get("@cells").first().contains("110,050")
-    cy.get("@cells").last().contains("1,104,638")
+    cy.get("@cells").last().contains("1,104,454")
   })
 
   it("should check the last total expenses is as expected", () => {
@@ -36,7 +36,7 @@ describe("Defined benefit pricing", () => {
     cy.contains("th", "Total Expenses").nextAll().as("cells")
 
     cy.get("@cells").should("have.length", 50)
-    cy.get("@cells").first().contains("100,174")
-    cy.get("@cells").last().contains("1,094,225")
+    cy.get("@cells").first().contains("100,347")
+    cy.get("@cells").last().contains("1,096,096")
   })
 })

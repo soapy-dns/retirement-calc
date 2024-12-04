@@ -12,6 +12,10 @@ interface AdditionalTaxRecord extends TaxRecord {
 interface TaxToRecord extends AdditionalTaxRecord {
   taxToTop: number
 }
+interface TaxResult {
+  taxAmt: number
+}
+
 export class BandedTaxCalc {
   protected currencyConversionFactor = 1
   protected inflationContext
@@ -48,13 +52,26 @@ export class BandedTaxCalc {
     return taxToConfig
   }
 
-  getTax(income: number, year: number): number {
+  getTax(income: number, year: number): TaxResult {
     const { incomeInTodaysMoney, inflationFactor } = getIncomeInTodaysMoney(
       income,
       year,
       this.currencyConversionFactor,
       this.inflationContext
     )
+
+    // if (year === 2024) {
+    // const taxParams = {
+    //   income,
+    //   year,
+    //   currencyConversionFactor: this.currencyConversionFactor,
+    //   // inflationContext: this.inflationContext,
+    //   incomeInTodaysMoney,
+    //   inflationFactor,
+    //   taxConfig: this.taxToConfig
+    // }
+    // console.log("--taxParams--", taxParams)
+    // }
 
     const lastIndex = this.taxToConfig.findIndex((it) => incomeInTodaysMoney < it.bandTop)
 
@@ -75,6 +92,10 @@ export class BandedTaxCalc {
     const taxAmtInYearsMoneyAndOriginalCurrency =
       (taxAmtInTodaysMoney * inflationFactor) / this.currencyConversionFactor
 
-    return Math.round(taxAmtInYearsMoneyAndOriginalCurrency)
+    // if (year === 2024) {
+    //   const x = { incomeInTodaysMoney, taxAmtInTodaysMoney, taxAmtInYearsMoneyAndOriginalCurrency }
+    //   console.log("--x--", x)
+    // }
+    return { taxAmt: Math.round(taxAmtInYearsMoneyAndOriginalCurrency) }
   }
 }

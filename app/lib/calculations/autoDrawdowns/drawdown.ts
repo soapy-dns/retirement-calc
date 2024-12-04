@@ -4,12 +4,13 @@ import { IScenario, OwnersType } from "../../data/schema/config"
 import { getDrawdownAmt } from "../income/getDrawdowns"
 import { getTaxAmtForYear } from "../tax/getTaxAmt"
 import { BandedTaxCalc } from "../tax/taxCalcs/BandedTaxCalc"
-import { getTaxableDrawdownAmt } from "../tax/utils"
 import { getLivingExpensesAmtForYear } from "../utils/livingExpensesUtils"
 import { createAutoDrawdowns } from "./createAutoDrawdowns"
 import { AutomatedDrawdown } from "./types"
 import { BasicYearData } from "../types"
 import { mergeAutoDrawdowns } from "./mergeAutoDrawdowns"
+import { updateTaxesForAutoDrawdowns } from "./updateTaxesForDrawdowns"
+import { getTaxDetailsByOwner } from "../utils/getTaxDetailsByOwner"
 
 interface IDrawdownContext {
   year: number
@@ -28,7 +29,7 @@ interface IDrawdownContext {
 }
 
 const drawdownIteration = (
-  { scenario, year, automatedDrawdownMap, taxes, incomeTaxCalculator, owners, groupedAssets }: IDrawdownContext,
+  { scenario, year, automatedDrawdownMap, taxes, incomeTaxCalculator, owners, groupedAssets, assets }: IDrawdownContext,
   remainingAmtToDrawdown: number
 ) => {
   const existingAutoDrawdowns = automatedDrawdownMap[year] || []
@@ -37,31 +38,21 @@ const drawdownIteration = (
 
   const automatedDrawdownsForYear = mergeAutoDrawdowns(existingAutoDrawdowns, newAutoDrawdownsForYear)
 
+  // update map
   automatedDrawdownMap[year] = automatedDrawdownsForYear
 
-  owners.forEach((owner) => {
-    const taxForOwner = taxes.find((it) => it.ownerId === owner.identifier)
-    if (!taxForOwner) throw new Error("No tax for owner")
-    const taxHistory = taxForOwner.history.find((it) => it.year === year)
-    if (!taxHistory) throw new Error("No tax history")
-
-    const taxableAutomatedDrawdownAmt = getTaxableDrawdownAmt(
-      automatedDrawdownsForYear,
-      owner.identifier,
-      groupedAssets.flat()
-    )
-
-    // This isn't right.  We are doubling. TODO:
-    const newTotalTaxableAmt =
-      taxHistory.taxableIncomeAmt + taxHistory.taxableDrawdownsAmt + taxableAutomatedDrawdownAmt
-
-    const ownersTaxAmt = incomeTaxCalculator.getTax(newTotalTaxableAmt, year)
-
-    // UPDATE TAX DETAILS
-    taxHistory.totalTaxableAmt = Math.round(newTotalTaxableAmt)
-    taxHistory.taxableAutomatedDrawdownAmt = Math.round(taxableAutomatedDrawdownAmt)
-    taxHistory.value = Math.round(ownersTaxAmt)
+  updateTaxesForAutoDrawdowns({
+    owners,
+    taxes,
+    year,
+    assets,
+    automatedDrawdownsForYear,
+    incomeTaxCalculator
   })
+  // if (year === 2024) {
+  //   const taxDetailsByOwner3 = getTaxDetailsByOwner({ owners, taxes })
+  //   console.log("Tax for Neil 2024 after updating for autodrawdowns in iteration", taxDetailsByOwner3.Neil[0])
+  // }
 }
 
 /**
@@ -78,14 +69,17 @@ export const applyAutoDrawdowns = (drawdownContext: IDrawdownContext): number =>
 
   let totalIncomeTaxesAmt = 0
   let totalExpensesAmt = 0
-  let automatedDrawdownsAmt = 0
+  let automatedDrawdownsAmt = getDrawdownAmt(automatedDrawdownMap[year])
 
   // TOTAL EXPENSES FOR THIS YEAR - taxes plus living expenses
   totalIncomeTaxesAmt = getTaxAmtForYear(taxes, year) //all owners
   const totalEarningsTaxesAmt = getTaxAmtForYear(earningsTaxes, year)
   totalExpensesAmt = livingExpenseForYearAmt + totalIncomeTaxesAmt + totalEarningsTaxesAmt
+  // if (year === 2024) {
+  //   console.log("--totalIncomeTaxesAmt #1  --", totalIncomeTaxesAmt)
+  // }
 
-  let remainingAmtToDrawdown = totalExpensesAmt
+  let remainingAmtToDrawdown = Math.round(totalExpensesAmt - automatedDrawdownsAmt)
 
   let i = 0
   while (remainingAmtToDrawdown > 100 && i < 100) {

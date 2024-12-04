@@ -5,6 +5,7 @@ import { AutomatedDrawdown } from "./types"
 
 const getYearData = (asset: Asset, year: number) => asset.history.find((it) => it.year === year + 1) // next history - for manipulating it
 
+// TODO: change the name
 const getSortedByAmtAvailable = (assets: Asset[], year: number): Asset[] => {
   const mappedAssets = assets.map((asset) => {
     const yearData = getYearData(asset, year)
@@ -28,7 +29,7 @@ const getSortedByAmtAvailable = (assets: Asset[], year: number): Asset[] => {
 /**
  * There are a bunch of expenses which need to come from somewhere
  * (and go out the system eg living expenses and taxes)
- * They need to come from somewhere, so we do automated drawdown.
+ * They need to come from somewhere, so we automate drawdowns of assets
  * Automated drawdowns are just transfers but going to DRAWDOWN.
  *
  * This function does the drawdowns, and returns the details

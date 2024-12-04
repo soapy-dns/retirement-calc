@@ -1,18 +1,9 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# The Retirement Project
 
-## Getting Started
+## Glossary
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Income Can come from salary, interest, dividends etc
+- Earnings Comes from salary only. In UK, earnings are subject to National Insurance
 
 ## Application Documentation
 
