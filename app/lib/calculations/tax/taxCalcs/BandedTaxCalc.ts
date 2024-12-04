@@ -61,15 +61,16 @@ export class BandedTaxCalc {
     )
 
     // if (year === 2024) {
-    //   const taxParams = {
-    //     income,
-    //     year,
-    //     currencyConversionFactor: this.currencyConversionFactor,
-    //     // inflationContext: this.inflationContext,
-    //     incomeInTodaysMoney,
-    //     inflationFactor
-    //   }
-    //   console.log("--taxParams--", taxParams)
+    // const taxParams = {
+    //   income,
+    //   year,
+    //   currencyConversionFactor: this.currencyConversionFactor,
+    //   // inflationContext: this.inflationContext,
+    //   incomeInTodaysMoney,
+    //   inflationFactor,
+    //   taxConfig: this.taxToConfig
+    // }
+    // console.log("--taxParams--", taxParams)
     // }
 
     const lastIndex = this.taxToConfig.findIndex((it) => incomeInTodaysMoney < it.bandTop)

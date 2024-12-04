@@ -151,10 +151,9 @@ export const getIncomeInTodaysMoney = (
 ) => {
   const incomeCorrectedByCurrencyConversion = income * currencyConversionFactor
 
-  // TODO: swap this back to year - 1.
-  const inflationFactor = inflationContext && inflationContext[year] ? inflationContext[year].factor : 1
+  // const inflationFactor = inflationContext && inflationContext[year] ? inflationContext[year].factor : 1
 
-  // const inflationFactor = inflationContext && inflationContext[year - 1] ? inflationContext[year - 1].factor : 1
+  const inflationFactor = inflationContext && inflationContext[year - 1] ? inflationContext[year - 1].factor : 1
 
   return { incomeInTodaysMoney: incomeCorrectedByCurrencyConversion / inflationFactor, inflationFactor }
 }

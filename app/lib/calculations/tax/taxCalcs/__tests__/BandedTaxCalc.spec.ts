@@ -3,7 +3,7 @@ import { BandedTaxCalc } from "../BandedTaxCalc"
 const inflationFactor = 1.27
 const year = 2030
 const inflationContext = {
-  [year]: {
+  [year - 1]: {
     inflation: 0.03,
     factor: inflationFactor
   }
