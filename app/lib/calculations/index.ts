@@ -160,9 +160,9 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       historyItem.incomeFromAssets = totalIncomeFromAssetsAmt
 
       const mandatedDrawdowns = getMandatedDrawdowns({ assets, owners, year })
-      // const mandatedDrawdowns: AutomatedDrawdown[] = []
-      applyMandatedDrawdowns({ drawdowns: mandatedDrawdowns, assets })
+      automatedDrawdownMap[year] = mandatedDrawdowns
 
+      applyMandatedDrawdowns({ drawdowns: mandatedDrawdowns, assets })
       updateTaxesForAutoDrawdowns({
         owners,
         taxes,
@@ -175,8 +175,6 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       //   const taxDetailsByOwner2 = getTaxDetailsByOwner({ owners, taxes })
       //   console.log("Tax for Neil 2024 after autoDrawdowns for mandatory drawdowns", taxDetailsByOwner2.Neil[0])
       // }
-
-      automatedDrawdownMap[year] = mandatedDrawdowns
 
       // RE-CALCULATE TAXES.  This is a bit of a hack because of Automatic drawdowns.
       // sutomatic drawdown pull money out of an asset for that year,
@@ -303,11 +301,16 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       return accum
     }, {})
 
-    const incomeByOwner = getIncomeByOwner({ owners, incomeFromAssets })
+    const incomeByOwner: AssetData = getIncomeByOwner({ owners, incomeFromAssets })
 
     const taxDetailsByOwner = getTaxDetailsByOwner({ owners, taxes })
-    // console.log("--taxDetailsByOwner--", taxDetailsByOwner)
-    // console.log("Tax for Neil 2024", taxDetailsByOwner.Neil[0])
+    const totalTaxableAmtDataByOwner = Object.entries(taxDetailsByOwner).reduce((accum, [ownerName, taxDetails]) => {
+      const yearData = taxDetails.map((it) => {
+        return { year: it.year, value: it.totalTaxableAmt }
+      })
+      accum[ownerName] = yearData
+      return accum
+    }, {} as AssetData)
 
     const graphIncomeNpvData = getGraphIncomeNpvData(incomeFromAssets, inflationContext)
 
@@ -368,7 +371,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       earningsTaxesData: earningsTaxesYearData,
       totalTaxesData: totalTaxesYearData,
       incomeTaxesByOwner,
-      incomeByOwner
+      incomeByOwner,
+      totalTaxableAmtDataByOwner
       // deathDetails
     }
   } catch (e) {

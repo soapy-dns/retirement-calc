@@ -144,6 +144,7 @@ interface CalculationResultsSuccess {
   graphIncomeNpvData: AssetData
   incomeTaxesByOwner: AssetData
   incomeByOwner: AssetData
+  totalTaxableAmtDataByOwner: AssetData
 }
 
 export type CalculationResults = CalculationResultsSuccess | CalculationResultsFail

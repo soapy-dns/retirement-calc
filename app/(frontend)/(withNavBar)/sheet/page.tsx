@@ -79,7 +79,8 @@ const SheetPage: React.FC = () => {
     totalTaxesData,
     surplusRowData,
     incomeTaxesByOwner,
-    incomeByOwner
+    incomeByOwner,
+    totalTaxableAmtDataByOwner
   } = calculationResults
 
   // @ts-ignore
@@ -116,9 +117,7 @@ const SheetPage: React.FC = () => {
               })}
             <Row rowIdentifier="Total Assets" bold={true} row={totalAssetsData} onToggle={onHelpModalToggle} />
             <Row rowIdentifier="Present value" bold={true} row={netPresentValue} onToggle={onHelpModalToggle} />
-
             <EmptyLine />
-
             {/* income from assets */}
             <HeadingRow text="Income" onToggle={() => setInfoModal(InfoType.INCOME)} />
             {assetIncomeRowData &&
@@ -130,9 +129,7 @@ const SheetPage: React.FC = () => {
                 return <Row key={owner} rowIdentifier={`${owner}'s income`} row={data} onToggle={onHelpModalToggle} />
               })}
             <Row rowIdentifier="Total Income" bold={true} row={totalAssetIncome} onToggle={onHelpModalToggle} />
-
             <EmptyLine />
-
             <HeadingRow text="Drawdowns" onToggle={() => setInfoModal(InfoType.DRAWDOWN)} />
             {drawdownRowData &&
               Object.entries(drawdownRowData).map(([rowIdentifier, rowData], index) => {
@@ -146,6 +143,30 @@ const SheetPage: React.FC = () => {
             />
 
             <EmptyLine />
+            {/* expenses */}
+            <HeadingRow text="Taxes" />
+            {totalTaxableAmtDataByOwner &&
+              Object.entries(totalTaxableAmtDataByOwner).map(([owner, data]) => {
+                return (
+                  <Row
+                    key={owner}
+                    rowIdentifier={`${owner}'s taxable income`}
+                    row={data}
+                    onToggle={onHelpModalToggle}
+                  />
+                )
+              })}
+            {incomeTaxesByOwner &&
+              Object.entries(incomeTaxesByOwner).map(([owner, data]) => {
+                return (
+                  <Row key={owner} rowIdentifier={`${owner}'s income tax`} row={data} onToggle={onHelpModalToggle} />
+                )
+              })}
+            <Row rowIdentifier="Income Taxes" bold={true} row={incomeTaxesData} onToggle={onHelpModalToggle} />
+
+            <Row rowIdentifier="Total Taxes" bold={true} row={totalTaxesData} onToggle={onHelpModalToggle} />
+
+            <EmptyLine />
 
             {/* expenses */}
             <HeadingRow text="Expenses" onToggle={() => setInfoModal(InfoType.EXPENSES)} />
@@ -153,21 +174,10 @@ const SheetPage: React.FC = () => {
               Object.entries(expensesRowData).map(([rowIdentifier, expensesData], index) => {
                 return <Row key={index} rowIdentifier={rowIdentifier} row={expensesData} onToggle={onHelpModalToggle} />
               })}
-            <Row rowIdentifier="Income Taxes" bold={true} row={incomeTaxesData} onToggle={onHelpModalToggle} />
-
-            {incomeTaxesByOwner &&
-              Object.entries(incomeTaxesByOwner).map(([owner, data], index) => {
-                return (
-                  <Row key={owner} rowIdentifier={`${owner}'s income tax`} row={data} onToggle={onHelpModalToggle} />
-                )
-              })}
 
             <Row rowIdentifier="Total Taxes" bold={true} row={totalTaxesData} onToggle={onHelpModalToggle} />
-
             <Row rowIdentifier="Total Expenses" bold={true} row={totalExpensesData} onToggle={onHelpModalToggle} />
-
             <EmptyLine />
-
             {/* calculated values */}
             <HeadingRow text="Calculated values" />
             {/* surplus */}
@@ -176,7 +186,6 @@ const SheetPage: React.FC = () => {
                 return <Row key={index} rowIdentifier={rowIdentifier} row={surplusData} onToggle={onHelpModalToggle} />
               })}
             {/* drawdowns */}
-
             {/* <Row rowIdentifier="Inflation percentage" row={inflationRateData} onToggle={onHelpModalToggle} />
               <Row rowIdentifier="Inflation factor" row={inflationFactorData} onToggle={onHelpModalToggle} /> */}
           </tbody>
