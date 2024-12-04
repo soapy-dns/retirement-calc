@@ -80,7 +80,9 @@ const SheetPage: React.FC = () => {
     surplusRowData,
     incomeTaxesByOwner,
     incomeByOwner,
-    totalTaxableAmtDataByOwner
+    totalTaxableAmtDataByOwner,
+    accumulatedTaxData,
+    accumulatedNpvTaxData
   } = calculationResults
 
   // @ts-ignore
@@ -141,9 +143,8 @@ const SheetPage: React.FC = () => {
               bold={true}
               onToggle={onHelpModalToggle}
             />
-
             <EmptyLine />
-            {/* expenses */}
+            {/* TAXES */}
             <HeadingRow text="Taxes" />
             {totalTaxableAmtDataByOwner &&
               Object.entries(totalTaxableAmtDataByOwner).map(([owner, data]) => {
@@ -163,18 +164,22 @@ const SheetPage: React.FC = () => {
                 )
               })}
             <Row rowIdentifier="Income Taxes" bold={true} row={incomeTaxesData} onToggle={onHelpModalToggle} />
-
             <Row rowIdentifier="Total Taxes" bold={true} row={totalTaxesData} onToggle={onHelpModalToggle} />
+            <Row rowIdentifier="Accumulated Taxes" bold={true} row={accumulatedTaxData} onToggle={onHelpModalToggle} />
 
+            <Row
+              rowIdentifier="Accumulated Taxes NPV"
+              bold={true}
+              row={accumulatedNpvTaxData}
+              onToggle={onHelpModalToggle}
+            />
             <EmptyLine />
-
             {/* expenses */}
             <HeadingRow text="Expenses" onToggle={() => setInfoModal(InfoType.EXPENSES)} />
             {expensesRowData &&
               Object.entries(expensesRowData).map(([rowIdentifier, expensesData], index) => {
                 return <Row key={index} rowIdentifier={rowIdentifier} row={expensesData} onToggle={onHelpModalToggle} />
               })}
-
             <Row rowIdentifier="Total Taxes" bold={true} row={totalTaxesData} onToggle={onHelpModalToggle} />
             <Row rowIdentifier="Total Expenses" bold={true} row={totalExpensesData} onToggle={onHelpModalToggle} />
             <EmptyLine />
