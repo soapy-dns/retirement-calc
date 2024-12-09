@@ -28,6 +28,7 @@ type RadioProps = {
   //   radioBlockCols?: 2 | 3 | 4 | 5 | 6 | undefined
   variant?: RadioQuestionVariant
   helpText?: string
+  helpAriaLabel?: string
 }
 
 export const RadioButtonQuestion: FunctionComponent<RadioProps> = ({
@@ -45,7 +46,8 @@ export const RadioButtonQuestion: FunctionComponent<RadioProps> = ({
   //   radioBlockCols,
   //   OnRadioButtonChange = undefined
   variant,
-  helpText
+  helpText,
+  helpAriaLabel
 }) => {
   const nameOfEl = name ?? id
   const errorMsg = useError(control, nameOfEl)
@@ -60,6 +62,7 @@ export const RadioButtonQuestion: FunctionComponent<RadioProps> = ({
       // role="radiogroup"
       errorMsg={errorMsg}
       helpText={helpText}
+      helpAriaLabel={helpAriaLabel}
     >
       <Controller
         name={nameOfEl}

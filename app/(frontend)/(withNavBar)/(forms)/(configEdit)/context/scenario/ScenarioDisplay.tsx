@@ -86,25 +86,13 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
           </div>
         )}
 
-        <TextDisplayField
-          label={scenarioConstants.NAME.LABEL}
-          helpText={scenarioConstants.NAME.HELP_TEXT}
-          value={name}
-        />
+        <TextDisplayField label={scenarioConstants.NAME.LABEL} value={name} />
         {asAtYear === getCurrentYear() && <EditButton />}
 
-        <TextDisplayField
-          label={scenarioConstants.DESCRIPTION.LABEL}
-          helpText={scenarioConstants.DESCRIPTION.HELP_TEXT}
-          value={description || "n/a"}
-        />
+        <TextDisplayField label={scenarioConstants.DESCRIPTION.LABEL} value={description || "n/a"} />
         {asAtYear === getCurrentYear() && <EditButton />}
 
-        <TextDisplayField
-          label={scenarioConstants.AS_AT_YEAR.LABEL}
-          helpText={scenarioConstants.AS_AT_YEAR.HELP_TEXT}
-          value={asAtYear}
-        />
+        <TextDisplayField label={scenarioConstants.AS_AT_YEAR.LABEL} value={asAtYear} />
       </div>
     </>
   )

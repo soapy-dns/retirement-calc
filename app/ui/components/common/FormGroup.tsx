@@ -8,10 +8,11 @@ interface IFormGroup {
   id: string
   label: string
   helpText?: string
+  helpAriaLabel?: string
   errorMsg?: string
   children: React.ReactNode
 }
-export const FormGroup: React.FC<IFormGroup> = ({ id, label, helpText, errorMsg, children }) => {
+export const FormGroup: React.FC<IFormGroup> = ({ id, label, helpText, helpAriaLabel, errorMsg, children }) => {
   const [showHelpText, setShowHelpText] = useState<boolean>(false)
 
   const toggleHelpText = (e: SyntheticEvent) => {
@@ -25,7 +26,11 @@ export const FormGroup: React.FC<IFormGroup> = ({ id, label, helpText, errorMsg,
       <div className="ml-2 flex gap-2">
         <Label htmlFor={id}>{label}</Label>
         {helpText && (
-          <button onClick={toggleHelpText} className="focus:outline focus:outline-2 focus:outline-primary">
+          <button
+            onClick={toggleHelpText}
+            className="focus:outline focus:outline-2 focus:outline-primary"
+            aria-label={helpAriaLabel || "Help"}
+          >
             <QuestionMarkCircleIcon className="h-5 w-5 text-primary-foreground" />
           </button>
         )}

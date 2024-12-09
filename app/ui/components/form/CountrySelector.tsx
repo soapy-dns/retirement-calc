@@ -19,6 +19,7 @@ type SelectProps = {
   disabled?: boolean
   editable?: boolean
   helpText?: string
+  helpAriaLabel?: string
   options?: ISelectOption[]
   selectedValue?: string | number // this is the code
   summaryText?: string
@@ -35,6 +36,7 @@ export const CountrySelector = ({
   validationRules,
   defaultValue,
   helpText, // errorMsg
+  helpAriaLabel,
   summaryText
 }: SelectProps) => {
   const nameOfEl = name ?? id
@@ -43,7 +45,13 @@ export const CountrySelector = ({
 
   // TODO: fix isError
   return (
-    <FormGroup label={label} id={`formGroup-${id}`} errorMsg={errorMsg} helpText={helpText}>
+    <FormGroup
+      label={label}
+      id={`formGroup-${id}`}
+      errorMsg={errorMsg}
+      helpText={helpText}
+      helpAriaLabel={helpAriaLabel}
+    >
       <Controller
         name={nameOfEl}
         control={control}

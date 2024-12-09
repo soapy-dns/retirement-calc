@@ -144,6 +144,9 @@ interface CalculationResultsSuccess {
   graphIncomeNpvData: AssetData
   incomeTaxesByOwner: AssetData
   incomeByOwner: AssetData
+  totalTaxableAmtDataByOwner: AssetData
+  accumulatedTaxData: BasicYearData[]
+  accumulatedNpvTaxData: BasicYearData[]
 }
 
 export type CalculationResults = CalculationResultsSuccess | CalculationResultsFail

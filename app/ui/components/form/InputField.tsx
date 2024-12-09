@@ -68,17 +68,6 @@ export const InputField: React.FC<InputProps> = ({
   const { errors } = useFormState({ control })
 
   const handleOnChange = (value: string, onChange: Function) => {
-    // const {
-    //   target: { value }
-    // } = event
-    // console.log(
-    //   "--restrictedCharSet, value, value.match(restrictedCharSet)--",
-    //   restrictedCharSet,
-    //   "-",
-    //   value,
-    //   "-",
-    //   value.match(restrictedCharSet || "")
-    // )
     // Assumes empty input is always valid
     const validInput = !value || (restrictedCharSet && value.match(restrictedCharSet)) || !restrictedCharSet
     if (validInput) {

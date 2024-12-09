@@ -8,6 +8,7 @@ type TextAreaQuestionProps = {
   label: string
   id: string
   helpText?: string
+  helpAriaLabel?: string
   placeholder?: string
   name?: string
   control: Control<any, object>
@@ -27,13 +28,12 @@ export const TextAreaQuestion: FunctionComponent<TextAreaQuestionProps> = ({
   control,
   defaultValue,
   helpText = "",
+  helpAriaLabel,
   placeholder,
   className,
   validationRules,
   otherContainerProps = {}
 }) => {
-  //   const helpTextId = getUniqueNumString()
-
   const nameOfEl = name ?? id
   const errorMsg = useError(control, nameOfEl)
 
@@ -42,12 +42,10 @@ export const TextAreaQuestion: FunctionComponent<TextAreaQuestionProps> = ({
       <FormGroup
         label={label}
         id={id}
-        // className={className}
-
         helpText={helpText}
+        helpAriaLabel={helpAriaLabel}
         {...otherContainerProps}
         errorMsg={errorMsg}
-        // labelVariant={LabelVariant.bodyBold}
       >
         <Controller
           name={`${name ?? id}` as const}
@@ -55,7 +53,6 @@ export const TextAreaQuestion: FunctionComponent<TextAreaQuestionProps> = ({
           rules={validationRules}
           defaultValue={defaultValue}
           render={({ field: { value, onChange, name: renderName, onBlur, ref }, formState: { isSubmitted } }) => (
-            // <InputWrapper>
             <Textarea
               id={id}
               data-testid={id}
@@ -70,9 +67,7 @@ export const TextAreaQuestion: FunctionComponent<TextAreaQuestionProps> = ({
               isError={false} // TODO:
               //   valid={!errorMsg}
               //   isSubmitted={isSubmitted}
-              //   {...(helpText && { "aria-describedby": helpTextId })}
             />
-            // </InputWrapper>
           )}
         />
       </FormGroup>

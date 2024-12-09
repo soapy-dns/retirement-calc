@@ -32,13 +32,11 @@ export const SharesDisplay: React.FunctionComponent = (props) => {
       )}
       <TextDisplayField
         label={contextConstants.SHARES_GROWTH.LABEL}
-        helpText={contextConstants.SHARES_GROWTH.HELP_TEXT}
         value={sharesAu ? (sharesAu.growthInterestRate * 100).toFixed(2) : "-"}
         suffix="%"
       />
       <TextDisplayField
         label={contextConstants.SHARES_INCOME.LABEL}
-        helpText={contextConstants.SHARES_INCOME.HELP_TEXT}
         value={sharesAu ? (sharesAu.dividendInterestRate * 100).toFixed(2) : "-"}
         suffix="%"
       />

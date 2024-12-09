@@ -33,6 +33,10 @@ import { applyMandatedDrawdowns } from "./autoDrawdowns/applyMandatedDrawdowns"
 import { updateTaxesForAutoDrawdowns } from "./autoDrawdowns/updateTaxesForDrawdowns"
 import { getIncomeByOwner } from "./utils/getIncomeByOwner"
 import { getTaxDetailsByOwner } from "./utils/getTaxDetailsByOwner"
+import { getAccumulatedData, getAccumulatedNPVData } from "./tax/getAccumulatedTaxData"
+import { getInflationFactor } from "./utils/getInflationFactor"
+import { removeUnusedHistoryFromTaxes } from "./tax/removeUnusedHistoryFromTaxes"
+import { removeUnusedHistory } from "./utils/removeUnusedHistory"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -160,9 +164,9 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       historyItem.incomeFromAssets = totalIncomeFromAssetsAmt
 
       const mandatedDrawdowns = getMandatedDrawdowns({ assets, owners, year })
-      // const mandatedDrawdowns: AutomatedDrawdown[] = []
-      applyMandatedDrawdowns({ drawdowns: mandatedDrawdowns, assets })
+      automatedDrawdownMap[year] = mandatedDrawdowns
 
+      applyMandatedDrawdowns({ drawdowns: mandatedDrawdowns, assets })
       updateTaxesForAutoDrawdowns({
         owners,
         taxes,
@@ -175,8 +179,6 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       //   const taxDetailsByOwner2 = getTaxDetailsByOwner({ owners, taxes })
       //   console.log("Tax for Neil 2024 after autoDrawdowns for mandatory drawdowns", taxDetailsByOwner2.Neil[0])
       // }
-
-      automatedDrawdownMap[year] = mandatedDrawdowns
 
       // RE-CALCULATE TAXES.  This is a bit of a hack because of Automatic drawdowns.
       // sutomatic drawdown pull money out of an asset for that year,
@@ -281,7 +283,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     })
 
     const netPresentValue = totalAssetsData.map((it) => {
-      const factor = inflationContext[it.year - 1] ? inflationContext[it.year - 1].factor : 1
+      const factor = getInflationFactor(it.year, inflationContext)
+
       return { year: it.year, value: Math.round(it.value / factor) }
     })
 
@@ -303,11 +306,16 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       return accum
     }, {})
 
-    const incomeByOwner = getIncomeByOwner({ owners, incomeFromAssets })
+    const incomeByOwner: AssetData = getIncomeByOwner({ owners, incomeFromAssets })
 
     const taxDetailsByOwner = getTaxDetailsByOwner({ owners, taxes })
-    // console.log("--taxDetailsByOwner--", taxDetailsByOwner)
-    // console.log("Tax for Neil 2024", taxDetailsByOwner.Neil[0])
+    const totalTaxableAmtDataByOwner = Object.entries(taxDetailsByOwner).reduce((accum, [ownerName, taxDetails]) => {
+      const yearData = taxDetails.map((it) => {
+        return { year: it.year, value: it.totalTaxableAmt }
+      })
+      accum[ownerName] = yearData
+      return accum
+    }, {} as AssetData)
 
     const graphIncomeNpvData = getGraphIncomeNpvData(incomeFromAssets, inflationContext)
 
@@ -316,6 +324,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const projectedLivingExpensesToDisplay = projectedLivingExpenses.splice(0, numOfCalculatedYears)
     const livingExpensesTodaysMoneyToDisplay = livingExpensesTodaysMoney.splice(0, numOfCalculatedYears)
 
+    // TODO: MIGHT WANT TO REINSTATE THIS
     // const earningsTaxName = getEarningsTaxName(taxResident)
 
     // const incomeTaxRows = withData(getTaxesRows(taxes, finalYear, "Income Tax"))
@@ -337,6 +346,15 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const earningsTaxesYearData = accumToBasicYearData(earningsTaxes.map((it) => it.history).flat())
 
     const totalTaxesYearData = accumToBasicYearData(incomeTaxesYearData.concat(earningsTaxesYearData))
+
+    const accumulatedTaxData = removeUnusedHistory(getAccumulatedData(totalTaxesYearData), finalYear)
+    const accumulatedNpvTaxData = removeUnusedHistory(
+      getAccumulatedNPVData({
+        yearData: totalTaxesYearData,
+        inflationContext
+      }),
+      finalYear
+    )
 
     // const expensesRowData = { ...incomeTaxRows, ...earningTaxRows, ...livingExpensesRows }
     const expensesRowData = { ...livingExpensesRows }
@@ -368,8 +386,10 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       earningsTaxesData: earningsTaxesYearData,
       totalTaxesData: totalTaxesYearData,
       incomeTaxesByOwner,
-      incomeByOwner
-      // deathDetails
+      incomeByOwner,
+      totalTaxableAmtDataByOwner,
+      accumulatedTaxData,
+      accumulatedNpvTaxData
     }
   } catch (e) {
     if (e instanceof CalculationError) {

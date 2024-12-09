@@ -33,7 +33,6 @@ export const PropertyDisplay: React.FunctionComponent = (props) => {
       )}
       <TextDisplayField
         label={contextConstants.PROPERTY_GROWTH_RATE.LABEL}
-        helpText={contextConstants.PROPERTY_GROWTH_RATE.HELP_TEXT}
         value={(property.growthInterestRate * 100).toFixed(2)}
         suffix="%"
       />

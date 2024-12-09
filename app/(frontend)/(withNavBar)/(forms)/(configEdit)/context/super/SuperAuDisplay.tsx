@@ -32,7 +32,6 @@ export const SuperAuDisplay: React.FunctionComponent = (props) => {
       )}
       <TextDisplayField
         label={contextConstants.SUPER_INVESTMENT_RETURN.LABEL}
-        helpText={contextConstants.SUPER_INVESTMENT_RETURN.HELP_TEXT}
         value={superAu ? (superAu?.investmentReturn * 100).toFixed(2) : "-"}
         suffix="%"
       />

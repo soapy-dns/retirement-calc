@@ -41,25 +41,17 @@ export const GeneralContextDisplay: React.FC<Props> = ({ showInfo }) => {
 
   return (
     <DisplayCardWithEdit heading={heading} handleEdit={handleEditFn}>
-      <FormGroup
-        label={contextConstants.TAX_RESIDENCY.LABEL}
-        id="taxResidency"
-        helpText={contextConstants.TAX_RESIDENCY.HELP_TEXT}
-      >
+      <FormGroup label={contextConstants.TAX_RESIDENCY.LABEL} id="taxResidency">
         <CountryDislayTile country={taxResident} />
       </FormGroup>
 
-      <FormGroup label={contextConstants.CURRENCY.LABEL} id="currency" helpText={contextConstants.CURRENCY.HELP_TEXT}>
+      <FormGroup label={contextConstants.CURRENCY.LABEL} id="currency">
         <CountryDislayTile country={currency} />
       </FormGroup>
 
       {/* TODO: GBP / AUD? */}
       {taxResident !== currency && (
-        <TextDisplayField
-          label={contextConstants.AU_2_UK_EXCHANGE_RATE.LABEL}
-          helpText={contextConstants.AU_2_UK_EXCHANGE_RATE.HELP_TEXT}
-          value={au2ukExchangeRate || "-"}
-        />
+        <TextDisplayField label={contextConstants.AU_2_UK_EXCHANGE_RATE.LABEL} value={au2ukExchangeRate || "-"} />
       )}
     </DisplayCardWithEdit>
   )
