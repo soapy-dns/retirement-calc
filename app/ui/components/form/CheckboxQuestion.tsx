@@ -12,9 +12,10 @@ type CheckboxProps = {
   options: Array<{ label: string; value: string; disabled?: boolean }>
   className?: string
   otherContainerProps?: object
-  validationRules?: object
+  // validationRules?: object
   onChange: Function
   helpText?: string
+  helpAriaLabel?: string
 }
 
 export const CheckboxQuestion = React.forwardRef<HTMLInputElement, CheckboxProps>((props, forwardedRef) => {
@@ -25,8 +26,9 @@ export const CheckboxQuestion = React.forwardRef<HTMLInputElement, CheckboxProps
     options,
     control,
     otherContainerProps = {},
-    validationRules,
+    // validationRules,
     helpText,
+    helpAriaLabel,
     onChange // from ...register
   } = props
   const nameOfEl = name ?? id
@@ -38,7 +40,14 @@ export const CheckboxQuestion = React.forwardRef<HTMLInputElement, CheckboxProps
   }
 
   return (
-    <FormGroup label={label} id={id} helpText={helpText} {...otherContainerProps} errorMsg={errorMsg}>
+    <FormGroup
+      label={label}
+      id={id}
+      helpText={helpText}
+      helpAriaLabel={helpAriaLabel}
+      {...otherContainerProps}
+      errorMsg={errorMsg}
+    >
       {options.map((option, index) => {
         const ind_id = `${id}_${index}`
         const { label, value: checkboxValue } = option

@@ -44,7 +44,7 @@ export const CountryTiles: React.FC<CountryTilesProps> = ({ id, name, value, onC
         return (
           <div
             key={`${option}`}
-            className={clsx("flex flex-col border gap-2 justify-center items-center min-w-[100px] h-[100px]  ", {
+            className={clsx("flex flex-col border gap-2 justify-center items-center min-w-[100px] h-[100px] mt-2 ", {
               "border-2 border-primary": selected
               // border: !selected
             })}

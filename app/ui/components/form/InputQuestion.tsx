@@ -30,6 +30,7 @@ type InputProps = {
   disabled?: boolean
   editable?: boolean // TODO: remove this?
   helpText?: string
+  ariaHelpLabel?: string
 }
 
 export const InputQuestion: React.FC<InputProps> = ({
@@ -38,6 +39,7 @@ export const InputQuestion: React.FC<InputProps> = ({
   name,
   defaultValue,
   helpText,
+  ariaHelpLabel,
   // editable = false,
   type,
   control,
@@ -67,7 +69,13 @@ export const InputQuestion: React.FC<InputProps> = ({
   }
 
   return (
-    <FormGroup label={label} id={`formGroup-${id}`} errorMsg={errorMsg} helpText={helpText}>
+    <FormGroup
+      label={label}
+      id={`formGroup-${id}`}
+      errorMsg={errorMsg}
+      helpText={helpText}
+      helpAriaLabel={ariaHelpLabel}
+    >
       <Controller
         name={nameOfEl}
         control={control}

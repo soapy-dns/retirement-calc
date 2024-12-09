@@ -36,7 +36,6 @@ export const BankAuDisplay: React.FunctionComponent = (props) => {
 
       <TextDisplayField
         label={contextConstants.CASH_INTEREST_RATE.LABEL}
-        helpText={contextConstants.CASH_INTEREST_RATE.HELP_TEXT}
         value={(auBank.interestRate * 100).toFixed(2)}
         suffix="%"
       />

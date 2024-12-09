@@ -30,7 +30,7 @@ export const OwnersDisplay: React.FC = () => {
     <DisplayCardWithEdit heading={heading} handleEdit={handleEditFn}>
       <ul className="mx-8 divide-y ">
         {fullOwnerDetails?.map((it) => (
-          <div key={it.identifier} className="my-4">
+          <li key={it.identifier} className="my-4">
             <p className="font-semibold"> {it.ownerName}</p>
             {it.yearsLeft && (
               <>
@@ -44,7 +44,7 @@ export const OwnersDisplay: React.FC = () => {
                 </p>
               </>
             )}
-          </div>
+          </li>
         ))}
       </ul>
     </DisplayCardWithEdit>
