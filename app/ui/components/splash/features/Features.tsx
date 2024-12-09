@@ -4,7 +4,7 @@ import { SplashFeature } from "./SplashFeature"
 
 export const Features: React.FC = () => {
   return (
-    <div className={`mb-8 border-2 border-gray-300 rounded-md bg-muted p-6 shadow-lg z-1 mx-12`}>
+    <div className={`mb-8 border-2 border-gray-300 rounded-md bg-muted p-6 shadow-lg z-1 mx-24`}>
       <h2 className="text-center text-3xl font-semibold mb-8">Features</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         <SplashFeature.Root>

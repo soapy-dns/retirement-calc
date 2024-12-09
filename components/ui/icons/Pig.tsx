@@ -8,7 +8,6 @@ export function Pig({ size, foregroundColor, stroke }: Props) {
   const height = size ? `h-${size}` : "h-8"
   const foreground = foregroundColor || "text-primary-foreground"
   const strokeSize = `stroke-${stroke}` || "stroke-2"
-  console.log("width, height", width, height)
 
   return (
     <svg viewBox="0 0 512.001 512.001" className={`${width} ${height} ${foreground} ${strokeSize} fill-current `}>
