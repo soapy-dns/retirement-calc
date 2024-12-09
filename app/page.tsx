@@ -7,19 +7,32 @@ import "./styles.css"
 import { Features } from "@/app/ui/components/splash/features/Features"
 import { SpreadsheetExamplesCard } from "./ui/components/splash/SpreadsheetExampleCard"
 import { ChartsExampleCard } from "./ui/components/splash/ChartsExampleCard"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const mainText = "Worried how you'll manage in retirement?"
 const subText = "Work out how long your assets and income will last."
 export default function SplashPage() {
   const startNowRef = useRef<HTMLAnchorElement>(null)
+  const [offset, setOffset] = useState(0)
 
   useEffect(() => {
     // NOTE: this might not really be a good idea for accessibility
     if (startNowRef?.current !== null) {
       startNowRef.current.focus()
     }
+
+    // when the window is scrolled a certain amount, show the start now button at the bottom.
+    // TODO: maybe need to check the original button in off the screen.
+    const onScroll = () => {
+      setOffset(window.scrollY)
+    }
+    // clean up code
+    window.removeEventListener("scroll", onScroll)
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
+
+  const displayClass = offset > 100 ? "block" : "hidden"
 
   return (
     <div>
@@ -33,7 +46,7 @@ export default function SplashPage() {
       <div className="fixed top-0 left-0 z-50 mb-4 inline-block min-w-full">
         <AppBanner />
       </div>
-      <div className="relative z-1 text-gray-700">
+      <div className="relative z-1 text-gray-700 ">
         <div className="px-12 pt-20 text-center">
           <h1 className="font-semibold text-4xl">{mainText}</h1>
           <p>{subText}</p>
@@ -48,7 +61,7 @@ export default function SplashPage() {
           </div>
         </div>
 
-        <div className="fixed bottom-4 right-4 flex z-10">
+        <div className={`fixed bottom-4 right-4 flex z-10 ${displayClass}`}>
           <div className="w-48">
             <LinkButton href={AppPath.config} linkType={LinkType.primary}>
               <div className="text-xl text-center">Start now!</div>
