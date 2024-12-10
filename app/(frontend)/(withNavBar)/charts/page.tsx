@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react"
 import { Select } from "@/app/ui/components/common/Select"
 import ChartDisplay from "./ChartDisplay"
 import { ChartType } from "./types"
+import { Label } from "@/app/ui/components/common/Label"
 
 const ChartPage = () => {
   const [selectedChart, setSelectedChart] = useState<ChartType>(ChartType.capitalAssets)
@@ -54,16 +55,21 @@ const ChartPage = () => {
   return (
     <div className="my-24">
       <div className="mx-auto h-1/2 w-3/4">
-        <div className="flex justify-center text-primary-foreground">
-          <Select
-            id="selectChart"
-            name="selectChart"
-            onChange={onChange}
-            isError={false}
-            value={selectedChart}
-            options={options}
-            allowsNull={false}
-          />
+        <div className="flex justify-center items-center text-primary-foreground ">
+          <div>
+            <Label className="mr-4" htmlFor="selectChart">
+              Select a chart
+            </Label>
+            <Select
+              id="selectChart"
+              name="selectChart"
+              onChange={onChange}
+              isError={false}
+              value={selectedChart}
+              options={options}
+              allowsNull={false}
+            />
+          </div>
         </div>
       </div>
 
