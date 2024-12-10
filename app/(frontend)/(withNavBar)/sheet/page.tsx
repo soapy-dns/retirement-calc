@@ -99,7 +99,7 @@ const SheetPage: React.FC = () => {
           <thead className="sticky top-0 z-30 bg-muted ">
             <tr>
               <th
-                key="name"
+                scope="col"
                 className="z-30 bg-muted italic text-primary-foreground md:first:sticky md:first:left-0 max-w-48 "
               >
                 {selectedScenario.name}

@@ -14,13 +14,14 @@
     --primary: 221 83% 53%;
     --primary-foreground: 221 83% 53%;
     --primary-darker: 221 83% 43%;
-    --secondary: 251 100% 94%;
+    --secondary: 251 100% 94%; /* purpley blue */
     --secondaryOld: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-    --tertiary: 217.2 32.6% 17.5%;
-    --tertiary-foreground: 210 40% 98%;
-    --muted: 220, 33%, 98%;
-    --muted-foreground: 214, 100%, 97%; /* not used yet */
+    /* --tertiary: 217.2 32.6% 17.5%; /* very light-blue */
+    /* --tertiary-foreground: 210 40% 98%; */
+    --mutedX: 360 91% 95%; /* very light-blue */
+    --muted: 217 91% 99%; /* very light-blue */
+    --muted-foreground: 214, 100%, 92%; /* not used yet */
     /* --muted: 221 55% 90%;
     --muted-foreground: 215.4 16.3% 46.9%; */
     --accent: 210 40% 96.1%;
