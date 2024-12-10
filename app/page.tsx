@@ -54,9 +54,7 @@ export default function SplashPage() {
         <div className="flex justify-center my-8 z-10">
           <div className="w-1/2 md:w-1/4">
             <LinkButton ref={startNowRef} href={AppPath.config} linkType={LinkType.primary}>
-              <div className="text-xl text-center" aria-label={`$[mainText] ${subText}  Start now!`}>
-                Start now!
-              </div>
+              <div className="text-xl text-center">Start now!</div>
             </LinkButton>
           </div>
         </div>
