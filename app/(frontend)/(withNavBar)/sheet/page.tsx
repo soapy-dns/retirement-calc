@@ -93,13 +93,13 @@ const SheetPage: React.FC = () => {
   if (!selectedScenario) return <div>Select a scenario</div>
 
   return (
-    <div className="flex flex-col h-screen pb-20">
+    <main className="flex flex-col h-screen pb-20">
       <div className="overflow-auto">
         <table className="relative min-w-full table-fixed divide-y divide-gray-200 py-4">
           <thead className="sticky top-0 z-30 bg-muted ">
             <tr>
               <th
-                key="name"
+                scope="col"
                 className="z-30 bg-muted italic text-primary-foreground md:first:sticky md:first:left-0 max-w-48 "
               >
                 {selectedScenario.name}
@@ -232,7 +232,7 @@ const SheetPage: React.FC = () => {
       >
         <ExpensesInfo />
       </GenericModal>
-    </div>
+    </main>
   )
 }
 
