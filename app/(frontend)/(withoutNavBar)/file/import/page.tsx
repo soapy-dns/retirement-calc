@@ -1,6 +1,7 @@
 "use client"
 import { IScenario } from "@/app/lib/data/schema/config"
 import { Button, ButtonType } from "@/app/ui/components/common/Button"
+import { Label } from "@/app/ui/components/common/Label"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
@@ -65,10 +66,13 @@ export default function ImportPage() {
       <h1 className="text-primary-foreground">Import a scenario file</h1>
       <form>
         <div className="flex flex-col justify-center">
+          <Label className="mb-2" htmlFor="file">
+            Select a local file to import
+          </Label>
           <input
             id="file"
             accept="application/json"
-            className="border-2 file:bg-primary file:border-0 file:text-white"
+            className="border-2 file:bg-primary file:border-0 file:text-white ml-4"
             name="scenarioFile"
             type="file"
             onChange={changeHandler}
