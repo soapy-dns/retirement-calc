@@ -34,7 +34,7 @@ export const AppNavBarMobile = () => {
     <div className=" flex h-10 flex-row justify-center border-0 bg-primary py-1 pl-3 text-white">
       <ScenarioMenu />
       <Menu as="div" className="relative flex justify-center">
-        <Menu.Button className=" border-x hover:bg-primary-darker">
+        <Menu.Button className=" border-x hover:bg-primary-darker" aria-label="More options">
           <div className="mx-4 flex flex-row">
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </div>
