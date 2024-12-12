@@ -37,6 +37,7 @@ import { getAccumulatedData, getAccumulatedNPVData } from "./tax/getAccumulatedT
 import { getInflationFactor } from "./utils/getInflationFactor"
 import { removeUnusedHistoryFromTaxes } from "./tax/removeUnusedHistoryFromTaxes"
 import { removeUnusedHistory } from "./utils/removeUnusedHistory"
+import { log } from "console"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
