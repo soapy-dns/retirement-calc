@@ -53,7 +53,7 @@ const ChartPage = () => {
   }
 
   return (
-    <div className="my-24">
+    <main className="my-24">
       <div className="mx-auto h-1/2 w-3/4">
         <div className="flex justify-center items-center text-primary-foreground ">
           <div>
@@ -74,7 +74,7 @@ const ChartPage = () => {
       </div>
 
       <ChartDisplay chartType={selectedChart} />
-    </div>
+    </main>
   )
 }
 

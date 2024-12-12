@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from "react"
 
 import { Cell as HeadingCell } from "./heading/Cell"
 import { Row } from "./row/Row"
-import { HeadingRow } from "./row/HeadingRow"
+import { SectionHeading } from "./row/SectionHeading"
 import { NoActionModal } from "@/app/ui/components/NoActionModal"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
@@ -112,7 +112,7 @@ const SheetPage: React.FC = () => {
 
           {/* assets */}
           <tbody className="divide-y divide-gray-200">
-            <HeadingRow text="Capital Assets" />
+            <SectionHeading text="Capital Assets" />
             {assetRowData &&
               Object.entries(assetRowData).map(([rowIdentifier, rowData], index) => {
                 return <Row key={index} rowIdentifier={rowIdentifier} row={rowData} onToggle={onHelpModalToggle} />
@@ -121,7 +121,7 @@ const SheetPage: React.FC = () => {
             <Row rowIdentifier="Present value" bold={true} row={netPresentValue} onToggle={onHelpModalToggle} />
             <EmptyLine />
             {/* income from assets */}
-            <HeadingRow text="Income" onToggle={() => setInfoModal(InfoType.INCOME)} />
+            <SectionHeading text="Income" onToggle={() => setInfoModal(InfoType.INCOME)} />
             {assetIncomeRowData &&
               Object.entries(assetIncomeRowData).map(([rowIdentifier, incomeData], index) => {
                 return <Row key={index} rowIdentifier={rowIdentifier} row={incomeData} onToggle={onHelpModalToggle} />
@@ -132,7 +132,7 @@ const SheetPage: React.FC = () => {
               })}
             <Row rowIdentifier="Total Income" bold={true} row={totalAssetIncome} onToggle={onHelpModalToggle} />
             <EmptyLine />
-            <HeadingRow text="Drawdowns" onToggle={() => setInfoModal(InfoType.DRAWDOWN)} />
+            <SectionHeading text="Drawdowns" onToggle={() => setInfoModal(InfoType.DRAWDOWN)} />
             {drawdownRowData &&
               Object.entries(drawdownRowData).map(([rowIdentifier, rowData], index) => {
                 return <Row key={index} rowIdentifier={rowIdentifier} row={rowData} onToggle={onHelpModalToggle} />
@@ -145,7 +145,7 @@ const SheetPage: React.FC = () => {
             />
             <EmptyLine />
             {/* TAXES */}
-            <HeadingRow text="Taxes" />
+            <SectionHeading text="Taxes" />
             {totalTaxableAmtDataByOwner &&
               Object.entries(totalTaxableAmtDataByOwner).map(([owner, data]) => {
                 return (
@@ -175,7 +175,7 @@ const SheetPage: React.FC = () => {
             />
             <EmptyLine />
             {/* expenses */}
-            <HeadingRow text="Expenses" onToggle={() => setInfoModal(InfoType.EXPENSES)} />
+            <SectionHeading text="Expenses" onToggle={() => setInfoModal(InfoType.EXPENSES)} />
             {expensesRowData &&
               Object.entries(expensesRowData).map(([rowIdentifier, expensesData], index) => {
                 return <Row key={index} rowIdentifier={rowIdentifier} row={expensesData} onToggle={onHelpModalToggle} />
@@ -184,7 +184,7 @@ const SheetPage: React.FC = () => {
             <Row rowIdentifier="Total Expenses" bold={true} row={totalExpensesData} onToggle={onHelpModalToggle} />
             <EmptyLine />
             {/* calculated values */}
-            <HeadingRow text="Calculated values" />
+            <SectionHeading text="Calculated values" />
             {/* surplus */}
             {surplusRowData &&
               Object.entries(surplusRowData).map(([rowIdentifier, surplusData], index) => {

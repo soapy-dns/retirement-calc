@@ -24,7 +24,7 @@ const ConfigPage: React.FC = () => {
   const headingText = "Scenario configuration."
 
   return (
-    <>
+    <main>
       <div className="flex content-center text-primary-foreground justify-center">
         <h1 className="flex items-center gap-2">
           {headingText}
@@ -45,7 +45,7 @@ const ConfigPage: React.FC = () => {
       <NoActionModal showModal={showModal} heading={headingText} onToggle={onHelpModalToggle}>
         <Scenarios />
       </NoActionModal>
-    </>
+    </main>
   )
 }
 
