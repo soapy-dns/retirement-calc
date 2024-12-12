@@ -302,7 +302,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     const assetIncomeRowData = incomeFromAssets.reduce((accum: AssetData, assetIncome: AssetIncome) => {
       const ownerName = owners.find((owner) => owner.identifier === assetIncome.ownerId)?.ownerName || "Unknown"
-      accum[`${assetIncome.name} (${ownerName})`] = assetIncome.history
+      accum[`${assetIncome.name} - ${ownerName}`] = assetIncome.history
       return accum
     }, {})
 

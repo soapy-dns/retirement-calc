@@ -128,7 +128,9 @@ const SheetPage: React.FC = () => {
               })}
             {incomeByOwner &&
               Object.entries(incomeByOwner).map(([owner, data], index) => {
-                return <Row key={owner} rowIdentifier={`${owner}'s income`} row={data} onToggle={onHelpModalToggle} />
+                return (
+                  <Row key={owner} rowIdentifier={`Total income - ${owner}`} row={data} onToggle={onHelpModalToggle} />
+                )
               })}
             <Row rowIdentifier="Total Income" bold={true} row={totalAssetIncome} onToggle={onHelpModalToggle} />
             <EmptyLine />
@@ -151,7 +153,7 @@ const SheetPage: React.FC = () => {
                 return (
                   <Row
                     key={owner}
-                    rowIdentifier={`${owner}'s taxable income`}
+                    rowIdentifier={`Taxable income - ${owner}`}
                     row={data}
                     onToggle={onHelpModalToggle}
                   />
@@ -160,7 +162,7 @@ const SheetPage: React.FC = () => {
             {incomeTaxesByOwner &&
               Object.entries(incomeTaxesByOwner).map(([owner, data]) => {
                 return (
-                  <Row key={owner} rowIdentifier={`${owner}'s income tax`} row={data} onToggle={onHelpModalToggle} />
+                  <Row key={owner} rowIdentifier={`Income tax - ${owner}`} row={data} onToggle={onHelpModalToggle} />
                 )
               })}
             <Row rowIdentifier="Income Taxes" bold={true} row={incomeTaxesData} onToggle={onHelpModalToggle} />
