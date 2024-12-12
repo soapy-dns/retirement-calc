@@ -56,7 +56,7 @@ export default function ImportPage() {
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <main className="flex flex-col items-center">
       <Button onClick={handleBack} buttonType={ButtonType.tertiary}>
         <div className="flex items-center gap-2 text-primary-foreground">
           <ChevronDoubleLeftIcon className="h-6 w-6" />
@@ -89,6 +89,6 @@ export default function ImportPage() {
           </Button>
         </div>
       </form>
-    </div>
+    </main>
   )
 }

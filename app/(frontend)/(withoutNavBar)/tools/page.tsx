@@ -78,78 +78,80 @@ export default function ToolsPage() {
   }
 
   return (
-    <Container>
-      <div className="flex flex-col items-center text-primary-foreground">
-        <Button onClick={handleBack} buttonType={ButtonType.tertiary}>
-          <div className="flex items-center gap-2">
-            <ChevronDoubleLeftIcon className="h-6 w-6" />
-            <div>Back</div>
-          </div>
-        </Button>
-        <h1>Income tax calculator</h1>
-      </div>
-
-      <Card>
-        {tax && (
-          <Alert id={alertId} alertType={AlertType.SUCCESS}>
-            <div className="flex gap-2">
-              <div className="font-bold">Calculated income tax (in selected currency) =</div>
-              <div>{tax}</div>
+    <main>
+      <Container>
+        <div className="flex flex-col items-center text-primary-foreground">
+          <Button onClick={handleBack} buttonType={ButtonType.tertiary}>
+            <div className="flex items-center gap-2">
+              <ChevronDoubleLeftIcon className="h-6 w-6" />
+              <div>Back</div>
             </div>
-          </Alert>
-        )}
+          </Button>
+          <h1>Income tax calculator</h1>
+        </div>
 
-        {/* @ts-ignore */}
-        <SelectQuestion
-          id="taxResident"
-          control={control}
-          label={contextConstants.TAX_RESIDENCY.LABEL}
-          // defaultValue=""
-          editable={true}
-          options={taxResidentOptions}
-        />
-        <SelectQuestion
-          id="currency"
-          control={control}
-          label={contextConstants.CURRENCY.LABEL}
-          // defaultValue=""
-          editable={true}
-          helpText={contextConstants.CURRENCY.HELP_TEXT}
-          options={[
-            { value: "AU", label: "AUD" },
-            { value: "SC", label: "GBP" }
-          ]}
-        />
-        <InputQuestion
-          id="au2ukExchangeRate"
-          control={control}
-          label={contextConstants.AU_2_UK_EXCHANGE_RATE.LABEL}
-          // defaultValue=""
-          editable={true}
-          // validationRules={changeDetailsValidation}
-          restrictedCharSet={DECIMALS_ONLY}
-          helpText={contextConstants.AU_2_UK_EXCHANGE_RATE.HELP_TEXT}
-        />
-        <InputQuestion
-          id="income"
-          control={control}
-          label="Income amount"
-          // defaultValue=""
-          editable={true}
-          // validationRules={changeDetailsValidation}
-          restrictedCharSet={INTEGERS_ONLY}
-        />
-        <Button onClick={handleSubmit(handleOnClick)} buttonType={ButtonType.primary}>
-          Calculate
-        </Button>
-        {tax && <div>Income tax calculated</div>}
-      </Card>
-      {debug && (
         <Card>
-          <h2 className="text-primary-foreground">Selected scenario config</h2>
-          <pre>{JSON.stringify(selectedScenario, null, 4)}</pre>
+          {tax && (
+            <Alert id={alertId} alertType={AlertType.SUCCESS}>
+              <div className="flex gap-2">
+                <div className="font-bold">Calculated income tax (in selected currency) =</div>
+                <div>{tax}</div>
+              </div>
+            </Alert>
+          )}
+
+          {/* @ts-ignore */}
+          <SelectQuestion
+            id="taxResident"
+            control={control}
+            label={contextConstants.TAX_RESIDENCY.LABEL}
+            // defaultValue=""
+            editable={true}
+            options={taxResidentOptions}
+          />
+          <SelectQuestion
+            id="currency"
+            control={control}
+            label={contextConstants.CURRENCY.LABEL}
+            // defaultValue=""
+            editable={true}
+            helpText={contextConstants.CURRENCY.HELP_TEXT}
+            options={[
+              { value: "AU", label: "AUD" },
+              { value: "SC", label: "GBP" }
+            ]}
+          />
+          <InputQuestion
+            id="au2ukExchangeRate"
+            control={control}
+            label={contextConstants.AU_2_UK_EXCHANGE_RATE.LABEL}
+            // defaultValue=""
+            editable={true}
+            // validationRules={changeDetailsValidation}
+            restrictedCharSet={DECIMALS_ONLY}
+            helpText={contextConstants.AU_2_UK_EXCHANGE_RATE.HELP_TEXT}
+          />
+          <InputQuestion
+            id="income"
+            control={control}
+            label="Income amount"
+            // defaultValue=""
+            editable={true}
+            // validationRules={changeDetailsValidation}
+            restrictedCharSet={INTEGERS_ONLY}
+          />
+          <Button onClick={handleSubmit(handleOnClick)} buttonType={ButtonType.primary}>
+            Calculate
+          </Button>
+          {tax && <div>Income tax calculated</div>}
         </Card>
-      )}
-    </Container>
+        {debug && (
+          <Card>
+            <h2 className="text-primary-foreground">Selected scenario config</h2>
+            <pre>{JSON.stringify(selectedScenario, null, 4)}</pre>
+          </Card>
+        )}
+      </Container>
+    </main>
   )
 }

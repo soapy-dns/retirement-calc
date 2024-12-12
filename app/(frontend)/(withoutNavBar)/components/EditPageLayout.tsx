@@ -27,7 +27,7 @@ export const EditPageLayout: React.FC<EditPageLayoutProps> = ({
 }) => {
   // TODO: can this be refactored to include the ChangesNotSavedModal
   return (
-    <>
+    <main>
       <Container>
         <div className="flex flex-col items-center text-primary-foreground ">
           <Button onClick={handleBack} buttonType={ButtonType.tertiary}>
@@ -50,7 +50,7 @@ export const EditPageLayout: React.FC<EditPageLayoutProps> = ({
           </Button>
         </ButtonGroup>
       </Container>
-    </>
+    </main>
   )
 }
 

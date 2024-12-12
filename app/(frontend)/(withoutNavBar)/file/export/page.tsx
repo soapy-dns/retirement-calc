@@ -49,33 +49,33 @@ export default function Export() {
   }
 
   return (
-    <EditPageLayout
-      heading={"Export your configured scenarios"}
-      backText="Back"
-      cancelText="Cancel"
-      saveText="Save scenarios"
-      handleSubmit={handleSubmit(saveFile)}
-      handleBack={handleBack}
-      handleCancel={handleBack}
-    >
-      <form>
-        {/*  @ts-ignore  */}
-        <CheckboxQuestion
-          id="scenarios"
-          control={control}
-          label={fileConstants.SCENARIOS.LABEL}
-          helpText={fileConstants.SCENARIOS.HELP_TEXT}
-          options={scenarioOptions}
-          {...register("scenariosSelected")}
-        />
-        <InputQuestion
-          id="fileName"
-          control={control}
-          label={fileConstants.FILE_NAME.LABEL}
-          helpText={fileConstants.FILE_NAME.HELP_TEXT}
-          // {...register("scenariosSelected")}
-        />
-      </form>
-    </EditPageLayout>
+      <EditPageLayout
+        heading={"Export your configured scenarios"}
+        backText="Back"
+        cancelText="Cancel"
+        saveText="Save scenarios"
+        handleSubmit={handleSubmit(saveFile)}
+        handleBack={handleBack}
+        handleCancel={handleBack}
+      >
+        <form>
+          {/*  @ts-ignore  */}
+          <CheckboxQuestion
+            id="scenarios"
+            control={control}
+            label={fileConstants.SCENARIOS.LABEL}
+            helpText={fileConstants.SCENARIOS.HELP_TEXT}
+            options={scenarioOptions}
+            {...register("scenariosSelected")}
+          />
+          <InputQuestion
+            id="fileName"
+            control={control}
+            label={fileConstants.FILE_NAME.LABEL}
+            helpText={fileConstants.FILE_NAME.HELP_TEXT}
+            // {...register("scenariosSelected")}
+          />
+        </form>
+      </EditPageLayout>
   )
 }
