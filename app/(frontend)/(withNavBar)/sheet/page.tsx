@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation"
 import React, { useContext, useEffect, useState } from "react"
 
-import { Cell as HeadingCell } from "./heading/Cell"
+import { HeadingCell as HeadingCell } from "./heading/Cell"
 import { Row } from "./row/Row"
 import { SectionHeading } from "./row/SectionHeading"
 import { NoActionModal } from "@/app/ui/components/NoActionModal"
@@ -16,6 +16,12 @@ import { GenericModal } from "@/app/ui/components/modals/GenericModal"
 import IncomeInfo from "@/docs/info/IncomeInfo.mdx"
 import DrawdownInfo from "@/docs/info/DrawdownInfo.mdx"
 import ExpensesInfo from "@/docs/info/ExpensesInfo.mdx"
+import { AssetIncomeRows } from "./AssetIncomeRows"
+import { CalculatedValueRows } from "./CalculatedValuesRows"
+import { IndividualTaxRows } from "./IndividualTaxRows"
+import { IndividualIncomeRows } from "./IndividualIncomeRows"
+import { DisplayYearProvider } from "./context/DisplayYearProvider"
+import { HeadingRow } from "./HeadingRow"
 
 const EmptyLine = () => {
   return (
@@ -85,154 +91,152 @@ const SheetPage: React.FC = () => {
     accumulatedNpvTaxData
   } = calculationResults
 
-  // @ts-ignore
-  const headingRow = yearRange
+  const verbose = true
 
   const { showModal: showHelpModal, onToggle: onHelpModalToggle, modalData: helpModalData = {} } = helpModalContext
 
   if (!selectedScenario) return <div>Select a scenario</div>
 
   return (
-    <main className="flex flex-col h-screen pb-20">
-      <div className="overflow-auto">
-        <table className="relative min-w-full table-fixed divide-y divide-gray-200 py-4">
-          <thead className="sticky top-0 z-30 bg-muted ">
-            <tr>
-              <th
-                scope="col"
-                className="z-30 bg-muted italic text-primary-foreground md:first:sticky md:first:left-0 max-w-48 "
-              >
-                {selectedScenario.name}
-              </th>
-              {headingRow.map((year, index) => {
-                return <HeadingCell key={index} year={year} yearIndex={index} />
-              })}
-            </tr>
-          </thead>
+    <DisplayYearProvider yearRange={yearRange} verbose={verbose}>
+      <main className="flex flex-col h-screen pb-20">
+        <div className="overflow-auto">
+          <table className="relative min-w-full table-fixed divide-y divide-gray-200 py-4">
+            <thead className="sticky top-0 z-30 bg-muted ">
+              <tr>
+                <th
+                  scope="col"
+                  className="z-30 bg-muted italic text-primary-foreground md:first:sticky md:first:left-0 max-w-48 "
+                >
+                  {selectedScenario.name}
+                </th>
+                <HeadingRow />
+              </tr>
+            </thead>
 
-          {/* assets */}
-          <tbody className="divide-y divide-gray-200">
-            <SectionHeading text="Capital Assets" />
-            {assetRowData &&
-              Object.entries(assetRowData).map(([rowIdentifier, rowData], index) => {
-                return <Row key={index} rowIdentifier={rowIdentifier} row={rowData} onToggle={onHelpModalToggle} />
-              })}
-            <Row rowIdentifier="Total Assets" bold={true} row={totalAssetsData} onToggle={onHelpModalToggle} />
-            <Row rowIdentifier="Present value" bold={true} row={netPresentValue} onToggle={onHelpModalToggle} />
-            <EmptyLine />
-            {/* income from assets */}
-            <SectionHeading text="Income" onToggle={() => setInfoModal(InfoType.INCOME)} />
-            {assetIncomeRowData &&
-              Object.entries(assetIncomeRowData).map(([rowIdentifier, incomeData], index) => {
-                return <Row key={index} rowIdentifier={rowIdentifier} row={incomeData} onToggle={onHelpModalToggle} />
-              })}
-            {incomeByOwner &&
-              Object.entries(incomeByOwner).map(([owner, data], index) => {
-                return <Row key={owner} rowIdentifier={`${owner}'s income`} row={data} onToggle={onHelpModalToggle} />
-              })}
-            <Row rowIdentifier="Total Income" bold={true} row={totalAssetIncome} onToggle={onHelpModalToggle} />
-            <EmptyLine />
-            <SectionHeading text="Drawdowns" onToggle={() => setInfoModal(InfoType.DRAWDOWN)} />
-            {drawdownRowData &&
-              Object.entries(drawdownRowData).map(([rowIdentifier, rowData], index) => {
-                return <Row key={index} rowIdentifier={rowIdentifier} row={rowData} onToggle={onHelpModalToggle} />
-              })}
-            <Row
-              rowIdentifier="Total asset drawdowns"
-              row={totalDrawdownData}
-              bold={true}
-              onToggle={onHelpModalToggle}
-            />
-            <EmptyLine />
-            {/* TAXES */}
-            <SectionHeading text="Taxes" />
-            {totalTaxableAmtDataByOwner &&
-              Object.entries(totalTaxableAmtDataByOwner).map(([owner, data]) => {
-                return (
-                  <Row
-                    key={owner}
-                    rowIdentifier={`${owner}'s taxable income`}
-                    row={data}
-                    onToggle={onHelpModalToggle}
-                  />
-                )
-              })}
-            {incomeTaxesByOwner &&
-              Object.entries(incomeTaxesByOwner).map(([owner, data]) => {
-                return (
-                  <Row key={owner} rowIdentifier={`${owner}'s income tax`} row={data} onToggle={onHelpModalToggle} />
-                )
-              })}
-            <Row rowIdentifier="Income Taxes" bold={true} row={incomeTaxesData} onToggle={onHelpModalToggle} />
-            <Row rowIdentifier="Total Taxes" bold={true} row={totalTaxesData} onToggle={onHelpModalToggle} />
-            <Row rowIdentifier="Accumulated Taxes" bold={true} row={accumulatedTaxData} onToggle={onHelpModalToggle} />
+            {/* assets */}
+            <tbody className="divide-y divide-gray-200">
+              <SectionHeading text="Capital Assets" />
+              {assetRowData &&
+                Object.entries(assetRowData).map(([rowIdentifier, rowData], index) => {
+                  return <Row key={index} rowIdentifier={rowIdentifier} cells={rowData} onToggle={onHelpModalToggle} />
+                })}
+              <Row rowIdentifier="Total Assets" bold={true} cells={totalAssetsData} onToggle={onHelpModalToggle} />
+              <Row rowIdentifier="Present value" bold={true} cells={netPresentValue} onToggle={onHelpModalToggle} />
+              <EmptyLine />
 
-            <Row
-              rowIdentifier="Accumulated Taxes NPV"
-              bold={true}
-              row={accumulatedNpvTaxData}
-              onToggle={onHelpModalToggle}
-            />
-            <EmptyLine />
-            {/* expenses */}
-            <SectionHeading text="Expenses" onToggle={() => setInfoModal(InfoType.EXPENSES)} />
-            {expensesRowData &&
-              Object.entries(expensesRowData).map(([rowIdentifier, expensesData], index) => {
-                return <Row key={index} rowIdentifier={rowIdentifier} row={expensesData} onToggle={onHelpModalToggle} />
-              })}
-            <Row rowIdentifier="Total Taxes" bold={true} row={totalTaxesData} onToggle={onHelpModalToggle} />
-            <Row rowIdentifier="Total Expenses" bold={true} row={totalExpensesData} onToggle={onHelpModalToggle} />
-            <EmptyLine />
-            {/* calculated values */}
-            <SectionHeading text="Calculated values" />
-            {/* surplus */}
-            {surplusRowData &&
-              Object.entries(surplusRowData).map(([rowIdentifier, surplusData], index) => {
-                return <Row key={index} rowIdentifier={rowIdentifier} row={surplusData} onToggle={onHelpModalToggle} />
-              })}
-            {/* drawdowns */}
-            {/* <Row rowIdentifier="Inflation percentage" row={inflationRateData} onToggle={onHelpModalToggle} />
+              {/* income from assets */}
+              <SectionHeading text="Income" onToggle={() => setInfoModal(InfoType.INCOME)} />
+
+              {assetIncomeRowData && verbose && <AssetIncomeRows data={assetIncomeRowData} />}
+
+              {incomeByOwner && <IndividualIncomeRows data={incomeByOwner} />}
+
+              <Row rowIdentifier="Total Income" bold={true} cells={totalAssetIncome} onToggle={onHelpModalToggle} />
+              <EmptyLine />
+
+              <SectionHeading text="Drawdowns" onToggle={() => setInfoModal(InfoType.DRAWDOWN)} />
+              {drawdownRowData &&
+                Object.entries(drawdownRowData).map(([rowIdentifier, rowData], index) => {
+                  return <Row key={index} rowIdentifier={rowIdentifier} cells={rowData} onToggle={onHelpModalToggle} />
+                })}
+              <Row
+                rowIdentifier="Total asset drawdowns"
+                cells={totalDrawdownData}
+                bold={true}
+                onToggle={onHelpModalToggle}
+              />
+              <EmptyLine />
+
+              {/* TAXES */}
+              <SectionHeading text="Taxes" />
+              {totalTaxableAmtDataByOwner &&
+                Object.entries(totalTaxableAmtDataByOwner).map(([owner, data]) => {
+                  return (
+                    <Row
+                      key={owner}
+                      rowIdentifier={`Taxable income - ${owner}`}
+                      cells={data}
+                      onToggle={onHelpModalToggle}
+                    />
+                  )
+                })}
+
+              {incomeTaxesByOwner && <IndividualTaxRows data={incomeTaxesByOwner} />}
+
+              <Row rowIdentifier="Income Taxes" bold={true} cells={incomeTaxesData} onToggle={onHelpModalToggle} />
+              <Row rowIdentifier="Total Taxes" bold={true} cells={totalTaxesData} onToggle={onHelpModalToggle} />
+              <Row
+                rowIdentifier="Accumulated Taxes"
+                bold={true}
+                cells={accumulatedTaxData}
+                onToggle={onHelpModalToggle}
+              />
+
+              <Row
+                rowIdentifier="Accumulated Taxes NPV"
+                bold={true}
+                cells={accumulatedNpvTaxData}
+                onToggle={onHelpModalToggle}
+              />
+              <EmptyLine />
+
+              {/* expenses */}
+              <SectionHeading text="Expenses" onToggle={() => setInfoModal(InfoType.EXPENSES)} />
+              {expensesRowData &&
+                Object.entries(expensesRowData).map(([rowIdentifier, expensesData], index) => {
+                  return (
+                    <Row key={index} rowIdentifier={rowIdentifier} cells={expensesData} onToggle={onHelpModalToggle} />
+                  )
+                })}
+              <Row rowIdentifier="Total Taxes" bold={true} cells={totalTaxesData} onToggle={onHelpModalToggle} />
+              <Row rowIdentifier="Total Expenses" bold={true} cells={totalExpensesData} onToggle={onHelpModalToggle} />
+              <EmptyLine />
+
+              {verbose && CalculatedValueRows({ data: surplusRowData })}
+              {/* <Row rowIdentifier="Inflation percentage" row={inflationRateData} onToggle={onHelpModalToggle} />
               <Row rowIdentifier="Inflation factor" row={inflationFactorData} onToggle={onHelpModalToggle} /> */}
-          </tbody>
-        </table>
-      </div>
-      {debug && (
-        <NoActionModal
-          showModal={showHelpModal}
-          heading="Cell Data"
-          // content={HelpModalContent}
-          onToggle={onHelpModalToggle}
-        >
-          <HelpContent modalData={helpModalData} />
-        </NoActionModal>
-      )}
+            </tbody>
+          </table>
+        </div>
+        {debug && (
+          <NoActionModal
+            showModal={showHelpModal}
+            heading="Cell Data"
+            // content={HelpModalContent}
+            onToggle={onHelpModalToggle}
+          >
+            <HelpContent modalData={helpModalData} />
+          </NoActionModal>
+        )}
 
-      {infoModal === InfoType.INCOME && (
+        {infoModal === InfoType.INCOME && (
+          <GenericModal
+            heading="Income"
+            showModal={infoModal === InfoType.INCOME}
+            handleCancel={() => setInfoModal(InfoType.NONE)}
+          >
+            <IncomeInfo />
+          </GenericModal>
+        )}
+
         <GenericModal
-          heading="Income"
-          showModal={infoModal === InfoType.INCOME}
+          heading="Drawdown"
+          showModal={infoModal === InfoType.DRAWDOWN}
           handleCancel={() => setInfoModal(InfoType.NONE)}
         >
-          <IncomeInfo />
+          <DrawdownInfo />
         </GenericModal>
-      )}
 
-      <GenericModal
-        heading="Drawdown"
-        showModal={infoModal === InfoType.DRAWDOWN}
-        handleCancel={() => setInfoModal(InfoType.NONE)}
-      >
-        <DrawdownInfo />
-      </GenericModal>
-
-      <GenericModal
-        heading="Expenses"
-        showModal={infoModal === InfoType.EXPENSES}
-        handleCancel={() => setInfoModal(InfoType.NONE)}
-      >
-        <ExpensesInfo />
-      </GenericModal>
-    </main>
+        <GenericModal
+          heading="Expenses"
+          showModal={infoModal === InfoType.EXPENSES}
+          handleCancel={() => setInfoModal(InfoType.NONE)}
+        >
+          <ExpensesInfo />
+        </GenericModal>
+      </main>
+    </DisplayYearProvider>
   )
 }
 

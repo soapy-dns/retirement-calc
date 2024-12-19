@@ -12,7 +12,7 @@ export const AppNavBarDesktop = () => {
   const selectedTabClassNames = "border-b-4 bg-primary-darker"
 
   return (
-    <div className=" flex h-10 flex-row justify-center border-0 bg-primary py-1 pl-3 text-white">
+    <nav className=" flex h-10 flex-row justify-center border-0 bg-primary py-1 pl-3 text-white" aria-label="menu">
       <ScenarioMenu />
 
       <Link
@@ -51,6 +51,6 @@ export const AppNavBarDesktop = () => {
       </Link>
 
       <MoreMenu />
-    </div>
+    </nav>
   )
 }

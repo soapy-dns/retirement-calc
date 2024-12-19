@@ -50,7 +50,7 @@ export const getTaxesRows = (
   const cleanedTaxes = removeUnusedHistoryFromTaxes(taxes, finalYear)
   return cleanedTaxes.reduce(
     (accum, tax: Tax | EarningsTax) => {
-      const key: string = `${taxName} (${tax.ownerId})`
+      const key: string = `${taxName} - ${tax.ownerId}`
       accum[key] = tax.history
       return accum
     },

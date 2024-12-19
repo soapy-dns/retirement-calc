@@ -6,6 +6,7 @@ interface Props {
   assets: Asset[]
 }
 
+// no need to take of taxes.  Taxes will be calculated after.
 export const applyMandatedDrawdowns = ({ drawdowns, assets }: Props) => {
   return drawdowns.map((drawdown) => {
     const { year, from, value } = drawdown
@@ -17,8 +18,6 @@ export const applyMandatedDrawdowns = ({ drawdowns, assets }: Props) => {
     if (!nextHistory) throw new Error(`history cannot be found ${asset.name}, ${year}`)
 
     nextHistory.value = nextHistory.value - value
-
-    // need to update taxes?  TODO:
 
     //  TODO: and do we just take off the value? - no divide by 2 or anything?
   })

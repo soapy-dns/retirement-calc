@@ -37,6 +37,7 @@ import { getAccumulatedData, getAccumulatedNPVData } from "./tax/getAccumulatedT
 import { getInflationFactor } from "./utils/getInflationFactor"
 import { removeUnusedHistoryFromTaxes } from "./tax/removeUnusedHistoryFromTaxes"
 import { removeUnusedHistory } from "./utils/removeUnusedHistory"
+import { log } from "console"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -302,7 +303,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     const assetIncomeRowData = incomeFromAssets.reduce((accum: AssetData, assetIncome: AssetIncome) => {
       const ownerName = owners.find((owner) => owner.identifier === assetIncome.ownerId)?.ownerName || "Unknown"
-      accum[`${assetIncome.name} (${ownerName})`] = assetIncome.history
+      accum[`${assetIncome.name} - ${ownerName}`] = assetIncome.history
       return accum
     }, {})
 

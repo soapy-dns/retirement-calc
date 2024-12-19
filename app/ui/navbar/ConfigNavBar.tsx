@@ -31,7 +31,7 @@ export const ConfigNavBar = () => {
   const selectedTabClassNames = "border-b-4  bg-secondary border-b-primary-foreground "
 
   return (
-    <div id={configNavBarId} className=" mb-4 grid grid-cols-3 bg-muted  divide-x-2">
+    <nav id={configNavBarId} className=" mb-4 grid grid-cols-3 bg-muted  divide-x-2" aria-label="sub menu">
       <button
         onClick={handleContextClick}
         className={`${tabColors} flex justify-center gap-2 p-2 ${
@@ -63,6 +63,6 @@ export const ConfigNavBar = () => {
         <ArrowPathRoundedSquareIcon className="h-6 w-6 hidden sm:inline" />
         {/* </div> */}
       </button>
-    </div>
+    </nav>
   )
 }

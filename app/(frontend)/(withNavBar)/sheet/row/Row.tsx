@@ -1,15 +1,20 @@
+import { useContext } from "react"
+import { DisplayYearContext } from "../context/DisplayYearProvider"
 import { Cell } from "./Cell"
 import { CellData } from "./types"
 
 interface IRow {
   rowIdentifier: string
-  row: CellData[]
+  cells: CellData[]
   bold?: boolean
   onToggle?: (data?: object) => void
 }
 
 // check for row is a hack
-export const Row = ({ rowIdentifier, row, bold = false }: IRow) => {
+export const Row = ({ rowIdentifier, cells, bold = false }: IRow) => {
+  const { shouldDisplayYear } = useContext(DisplayYearContext)
+  const filteredCells = cells.filter((cell) => shouldDisplayYear(cell.year))
+
   return (
     <tr className="hover:bg-muted bg-white group">
       <th
@@ -19,8 +24,8 @@ export const Row = ({ rowIdentifier, row, bold = false }: IRow) => {
         <p className="font-semibold">{rowIdentifier}</p>
       </th>
 
-      {row &&
-        row.map((cellData: CellData, index) => {
+      {filteredCells &&
+        filteredCells.map((cellData: CellData, index) => {
           return <Cell key={index} cellData={cellData} bold={bold} />
         })}
     </tr>

@@ -24,14 +24,18 @@ If expenses are bigger than income, then it will be necessary to drawdown on ass
 e.g. take money from your pension pot, or sell some shares.
 
 We can automate this (to some extent), by the simple strategy of marking the order in which assets can be drawn down.
+Note that some assets eg Australian super have rules ensuring a certain percentage is drawn down each year based on the owners age.
+This is calculated automatically, but if the owner's age is not entered, it will be assumed to be 65 at the start of the simulation meaning
+the calculations may not be as accurate.
 
 For example we might want to drawdown on cash first (it is possible to set a minimum level for the asset),
 then super, then shares. Some assets may not be draw downable until a certain year - eg super assets.
 
-It is possible that some assets while drawdownable will have the drawdownable amount taxed. This is true for UK pensions.
+It is possible that some assets while drawdownable will have the drawdownable amount taxed. This is true for pensions
+in the UK, whether or not they are UK or AU pensions. eg 25% will be tax free.
+
 This means there will be more expenses so more drawdowns will be required.  
-This could almost go on forever, but will stop if less than a certain amount (eg 100),
-and this will be noted as a negative surplus.
+This could almost go on forever, but will stop if less than a certain amount (eg 100), and this will be noted as a negative surplus.
 
 It is not possible to automatically drawdown on properties.
 

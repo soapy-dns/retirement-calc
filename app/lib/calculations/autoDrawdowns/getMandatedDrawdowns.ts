@@ -9,6 +9,8 @@ import { getSuperAssetsRelevantForDrawdown } from "./getSuperAssetsRelevantForDr
 
 const { mandatoryDrawdownPercentages }: { mandatoryDrawdownPercentages: MandatoryDrawdownPercentages } = config
 
+const DEFAULT_AGE = 65
+
 interface Props {
   assets: Asset[]
   year: number
@@ -23,7 +25,7 @@ export const getMandatedDrawdowns = ({ assets, owners, year }: Props): Automated
     const { ownerIds, country } = asset
 
     const assetOwner = owners.find((it) => it.identifier === ownerIds[0]) // only one owner for super
-    const birthYear = assetOwner?.birthYear || 0
+    const birthYear = assetOwner?.birthYear || year - DEFAULT_AGE
     const roughAge = year - birthYear
 
     const drawdownPercent = mandatoryDrawdownPercentages[country]?.find((it) => roughAge < it.ageTo)?.percentage || 0
