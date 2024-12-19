@@ -31,7 +31,7 @@ export const AppNavBarMobile = () => {
   const selectedTabClassNames = "border-b-4"
 
   return (
-    <div className=" flex h-10 flex-row justify-center border-0 bg-primary py-1 pl-3 text-white">
+    <nav className=" flex h-10 flex-row justify-center border-0 bg-primary py-1 pl-3 text-white" aria-label="menu">
       <ScenarioMenu />
       <Menu as="div" className="relative flex justify-center">
         <Menu.Button className=" border-x hover:bg-primary-darker" aria-label="More options">
@@ -199,6 +199,6 @@ export const AppNavBarMobile = () => {
           </Menu.Items>
         </Transition>
       </Menu>{" "}
-    </div>
+    </nav>
   )
 }
