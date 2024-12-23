@@ -34,6 +34,10 @@ const ChartPage = () => {
     {
       value: "tax",
       label: "Total Taxes"
+    },
+    {
+      value: "accumTaxNPV",
+      label: "Accumulated Tax (today's money)"
     }
   ]
 
