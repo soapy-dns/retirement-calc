@@ -12,30 +12,22 @@ export const DisplayYearContext = createContext<ContextProps>({
 interface DisplayYearProviderProps {
   children: ReactNode
   yearRange: number[]
-  verbose: boolean
+  allCols: boolean
 }
-export const DisplayYearProvider = ({ yearRange, children, verbose }: DisplayYearProviderProps) => {
+export const DisplayYearProvider = ({ yearRange, children, allCols }: DisplayYearProviderProps) => {
   const [displayYears, setDisplayYears] = useState<number[]>([])
 
   useEffect(() => {
     const yearsToDisplay = yearRange.filter((year, index) => {
-      if (verbose) return true
+      if (allCols) return true
       if (index < 5) return true
       if (year % 5 === 0) return true
-      if (index === yearRange.length - 1) return true
+      if (index > yearRange.length - 3) return true // always show the last 2 years
       return false
     })
 
     setDisplayYears(yearsToDisplay)
-  }, [yearRange, verbose])
-
-  // const yearsToDisplay = yearRange.filter((year, index) => {
-  //   if (verbose) return true
-  //   if (index < 5) return true
-  //   if (year % 5 === 0) return true
-  //   if (index === yearRange.length - 1) return true
-  //   return false
-  // })
+  }, [yearRange, allCols])
 
   const shouldDisplayYear = (year: number) => {
     return displayYears.includes(year)

@@ -3,7 +3,6 @@
 import { useSearchParams } from "next/navigation"
 import React, { useContext, useEffect, useState } from "react"
 
-import { HeadingCell as HeadingCell } from "./heading/Cell"
 import { Row } from "./row/Row"
 import { SectionHeading } from "./row/SectionHeading"
 import { NoActionModal } from "@/app/ui/components/NoActionModal"
@@ -22,6 +21,7 @@ import { IndividualTaxRows } from "./IndividualTaxRows"
 import { IndividualIncomeRows } from "./IndividualIncomeRows"
 import { DisplayYearProvider } from "./context/DisplayYearProvider"
 import { HeadingRow } from "./HeadingRow"
+import { Switch } from "@/app/ui/components/common/switch/Switch"
 
 const EmptyLine = () => {
   return (
@@ -45,7 +45,17 @@ const HelpContent = ({ modalData }: { modalData: unknown }) => (
 const SheetPage: React.FC = () => {
   const helpModalContext = useContext(HelpModalContext)
   const scenarioContext = useContext(ScenarioContext)
+  const [allRows, setAllRows] = useState<boolean>(false)
+  const [allCols, setAllCols] = useState<boolean>(false)
   const [infoModal, setInfoModal] = useState<InfoType>(InfoType.NONE)
+
+  const toggleAllRows = () => {
+    setAllRows(!allRows)
+  }
+
+  const toggleAllCols = () => {
+    setAllCols(!allCols)
+  }
 
   const searchParams = useSearchParams()
   useEffect(() => {
@@ -91,14 +101,12 @@ const SheetPage: React.FC = () => {
     accumulatedNpvTaxData
   } = calculationResults
 
-  const verbose = true
-
   const { showModal: showHelpModal, onToggle: onHelpModalToggle, modalData: helpModalData = {} } = helpModalContext
 
   if (!selectedScenario) return <div>Select a scenario</div>
 
   return (
-    <DisplayYearProvider yearRange={yearRange} verbose={verbose}>
+    <DisplayYearProvider yearRange={yearRange} allCols={allCols}>
       <main className="flex flex-col h-screen pb-20">
         <div className="overflow-auto">
           <table className="relative min-w-full table-fixed divide-y divide-gray-200 py-4">
@@ -108,7 +116,10 @@ const SheetPage: React.FC = () => {
                   scope="col"
                   className="z-30 bg-muted italic text-primary-foreground md:first:sticky md:first:left-0 max-w-48 "
                 >
-                  {selectedScenario.name}
+                  <div className="flex gap-2">
+                    <Switch id="allRows" label="All rows" onChange={toggleAllRows} />
+                    <Switch id="allcols" label="All years" onChange={toggleAllCols} />
+                  </div>
                 </th>
                 <HeadingRow />
               </tr>
@@ -128,7 +139,7 @@ const SheetPage: React.FC = () => {
               {/* income from assets */}
               <SectionHeading text="Income" onToggle={() => setInfoModal(InfoType.INCOME)} />
 
-              {assetIncomeRowData && verbose && <AssetIncomeRows data={assetIncomeRowData} />}
+              {assetIncomeRowData && allRows && <AssetIncomeRows data={assetIncomeRowData} />}
 
               {incomeByOwner && <IndividualIncomeRows data={incomeByOwner} />}
 
@@ -193,7 +204,7 @@ const SheetPage: React.FC = () => {
               <Row rowIdentifier="Total Expenses" bold={true} cells={totalExpensesData} onToggle={onHelpModalToggle} />
               <EmptyLine />
 
-              {verbose && CalculatedValueRows({ data: surplusRowData })}
+              {allRows && CalculatedValueRows({ data: surplusRowData })}
               {/* <Row rowIdentifier="Inflation percentage" row={inflationRateData} onToggle={onHelpModalToggle} />
               <Row rowIdentifier="Inflation factor" row={inflationFactorData} onToggle={onHelpModalToggle} /> */}
             </tbody>

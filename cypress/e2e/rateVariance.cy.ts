@@ -10,8 +10,8 @@ describe("Rate variance pricing", () => {
   it("should have correct values for rate variance on assets example", () => {
     cy.contains("th", "Present value").nextAll().as("cells")
 
-    cy.get("@cells").should("have.length", 51)
+    cy.get("@cells").should("have.length", 16)
     cy.get("@cells").first().contains("2,330,000")
-    cy.get("@cells").last().contains("7,505,211")
+    cy.get("@cells").last().contains("7,327,780")
   })
 })
