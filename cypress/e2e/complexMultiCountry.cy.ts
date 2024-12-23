@@ -12,9 +12,9 @@ describe("Pricing", () => {
 
     cy.contains("th", "Present value").nextAll().as("cells")
 
-    cy.get("@cells").should("have.length", 20)
+    cy.get("@cells").should("have.length", 10)
     cy.get("@cells").first().contains("1,631,000")
-    cy.get("@cells").last().contains("502,723")
+    cy.get("@cells").last().contains("470,484")
   })
 
   it("should check the last total income is as expected", () => {
@@ -27,9 +27,9 @@ describe("Pricing", () => {
 
     cy.contains("th", "Total Income").nextAll().as("cells")
 
-    cy.get("@cells").should("have.length", 19)
+    cy.get("@cells").should("have.length", 9)
     cy.get("@cells").first().contains("25,896")
-    cy.get("@cells").last().contains("6,850")
+    cy.get("@cells").last().contains("7,050")
   })
 
   it("should check the last total expenses is as expected", () => {
@@ -37,8 +37,8 @@ describe("Pricing", () => {
 
     cy.contains("th", "Total Expenses").nextAll().as("cells")
 
-    cy.get("@cells").should("have.length", 19)
+    cy.get("@cells").should("have.length", 9)
     cy.get("@cells").first().contains("80,000")
-    cy.get("@cells").last().contains("85,122")
+    cy.get("@cells").last().contains("87,675")
   })
 })

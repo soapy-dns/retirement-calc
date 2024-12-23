@@ -5,5 +5,6 @@ export enum ChartType {
   assetSplit = "assetSplit",
   drawdown = "drawdown",
   rechart = "rechart",
-  tax = "tax"
+  tax = "tax",
+  accumTaxNPV = "accumTaxNPV"
 }

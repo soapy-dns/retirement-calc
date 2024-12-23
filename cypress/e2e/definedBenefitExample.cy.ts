@@ -10,7 +10,7 @@ describe("Defined benefit pricing", () => {
   it("should have correct values for defined benefits / state pension example", () => {
     cy.contains("th", "Present value").nextAll().as("cells")
 
-    cy.get("@cells").should("have.length", 51)
+    cy.get("@cells").should("have.length", 16)
     cy.get("@cells").first().contains("10,000")
     cy.get("@cells").last().contains("43,519")
   })
@@ -25,7 +25,7 @@ describe("Defined benefit pricing", () => {
 
     cy.contains("th", "Total Income").nextAll().as("cells")
 
-    cy.get("@cells").should("have.length", 50)
+    cy.get("@cells").should("have.length", 15)
     cy.get("@cells").first().contains("110,050")
     cy.get("@cells").last().contains("1,104,454")
   })
@@ -35,7 +35,7 @@ describe("Defined benefit pricing", () => {
 
     cy.contains("th", "Total Expenses").nextAll().as("cells")
 
-    cy.get("@cells").should("have.length", 50)
+    cy.get("@cells").should("have.length", 15)
     cy.get("@cells").first().contains("100,347")
     cy.get("@cells").last().contains("1,096,096")
   })

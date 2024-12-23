@@ -1,6 +1,5 @@
 interface IHeaderCell {
   year: number
-  // yearIndex: number
 }
 export const HeadingCell = ({ year }: IHeaderCell) => {
   return (
