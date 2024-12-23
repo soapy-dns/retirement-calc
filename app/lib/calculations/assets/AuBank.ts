@@ -1,9 +1,10 @@
 import { Asset } from "./Asset"
 import { YearData } from "../assets/types"
 import { AssetGroup } from "@/app/lib/calculations/types"
-import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
+import { getPercIncomeTaxable } from "../tax/utils"
 import { CashContext, IAsset, IScenario, Transfer } from "../../data/schema/config"
 import { getNetTransferAmt } from "../transfers/getNetTransferAmt"
+import { getPercentageOfDrawdownTaxable } from "../tax/getPercentageOfDrawdownTaxable"
 
 export class AuBank extends Asset {
   capitalAsset: boolean
@@ -28,7 +29,7 @@ export class AuBank extends Asset {
     this.capitalAsset = true
     this.assetGroup = AssetGroup.cash
     this.percOfIncomeTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
-    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfDrawdownTaxable = getPercentageOfDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
 
     this.history.push({ value: assetConfig.value, year: startingYear, income: 0, transferAmt: 0 })
   }

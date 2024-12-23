@@ -1,8 +1,9 @@
 import { Asset } from "./Asset"
 import { AssetGroup, InflationContext } from "@/app/lib/calculations/types"
-import { getPercDrawdownTaxable, getPercIncomeTaxable, isIndexedDefinedBenefit } from "../tax/utils"
+import { getPercIncomeTaxable, isIndexedDefinedBenefit } from "../tax/utils"
 import { DefinedBenefitsContext, IAsset, IScenario, Transfer } from "../../data/schema/config"
 import { YearData } from "./types"
+import { getPercentageOfDrawdownTaxable } from "../tax/getPercentageOfDrawdownTaxable"
 
 export class AuDefinedBenefits extends Asset {
   capitalAsset: boolean
@@ -31,7 +32,7 @@ export class AuDefinedBenefits extends Asset {
     this.capitalAsset = false
     this.assetGroup = AssetGroup.income_defined_benefit
     this.percOfIncomeTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
-    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfDrawdownTaxable = getPercentageOfDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
     this.isIndexed = isIndexedDefinedBenefit(taxResident, assetConfig.country, assetConfig.isStatePension)
     this.definedBenefitsContext = definedBenefitsAu
 

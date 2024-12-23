@@ -2,8 +2,9 @@ import { Asset } from "./Asset"
 import { AssetGroup, InflationContext } from "@/app/lib/calculations/types"
 import { YearData } from "./types"
 
-import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
+import { getPercIncomeTaxable } from "../tax/utils"
 import { DefinedBenefitsContext, IAsset, IScenario, Transfer } from "../../data/schema/config"
+import { getPercentageOfDrawdownTaxable } from "../tax/getPercentageOfDrawdownTaxable"
 
 export class Salary extends Asset {
   capitalAsset: boolean
@@ -31,7 +32,7 @@ export class Salary extends Asset {
       context: { taxResident, definedBenefitsAu }
     } = scenario
     this.percOfIncomeTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
-    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfDrawdownTaxable = getPercentageOfDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
 
     const { income } = assetConfig
     const { incomeAmt: incomeAmount, incomeStartYear, incomeEndYear } = income
