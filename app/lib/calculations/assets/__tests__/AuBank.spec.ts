@@ -4,11 +4,12 @@ import { AuBank } from "../AuBank"
 // import { AuSuper } from "../AuSuper"
 // import { AuShares } from "../AuShares"
 // import { getGroupedDrawdownableAssets } from "../assetUtils"
-import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../../tax/utils"
+import { getPercIncomeTaxable } from "../../tax/utils"
+import { getPercentageOfDrawdownTaxable } from "../../tax/getPercentageOfDrawdownTaxable"
 
 jest.mock("../../tax/utils", () => ({
   getPercIncomeTaxable: () => 100,
-  getPercDrawdownTaxable: () => 0
+  getPercentageOfDrawdownTaxable: () => 0
 }))
 
 describe("Cash calculate the next year's values", () => {

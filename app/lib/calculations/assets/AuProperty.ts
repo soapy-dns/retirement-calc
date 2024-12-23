@@ -2,10 +2,11 @@ import { Asset } from "./Asset"
 import { AssetGroup, InflationContext } from "@/app/lib/calculations/types"
 
 import { YearData } from "./types"
-import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
+import { getPercIncomeTaxable } from "../tax/utils"
 import { IAsset, IScenario, PropertyContext, Transfer } from "../../data/schema/config"
 import { getNetTransferAmt } from "../transfers/getNetTransferAmt"
 import { validForRentalIncome } from "./validForRentalIncome"
+import { getPercentageOfDrawdownTaxable } from "../tax/getPercentageOfDrawdownTaxable"
 
 export class AuProperty extends Asset {
   capitalAsset: boolean // if all assets have this, shouldn't it be in the Asset class
@@ -40,7 +41,7 @@ export class AuProperty extends Asset {
     this.capitalAsset = true
     this.assetGroup = AssetGroup.property
     this.percOfIncomeTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
-    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfDrawdownTaxable = getPercentageOfDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
     this.inflationContext = inflationContext
 
     this.rentalStartYear = rentalStartYear

@@ -63,7 +63,7 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ chartType }) => {
       return <CalculatedAssetLineChart yearRange={yearRange} graphData={graphData} />
 
     case ChartType.accumTaxNPV:
-      const accumulatedNpvTaxDataAndLabel = { "Accum Tax NPV": accumulatedNpvTaxData }
+      const accumulatedNpvTaxDataAndLabel = { "Accumulated Tax (Today's money)": accumulatedNpvTaxData }
       return <CalculatedAssetLineChart yearRange={yearRange} graphData={accumulatedNpvTaxDataAndLabel} />
     default:
       return <div>Chart does not exist</div>

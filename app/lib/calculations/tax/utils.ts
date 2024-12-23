@@ -111,16 +111,16 @@ export const calculateTaxes = (
   }) // END OF TAX CALCS
 }
 
-// TODO: this function to Asset?
-// TODO: I think this isn't quite right.  It should also be based on config if possible.
-export const getPercDrawdownTaxable = (taxResident: Country, assetCountry: Country = "AU", assetClass: AssetGroup) => {
-  if (taxResident === "SC" && assetCountry === "SC" && assetClass === AssetGroup.super) {
-    return 75
-  } else if (taxResident === assetCountry || assetClass !== AssetGroup.super) {
-    return 0
-  }
-  return 100
-}
+// // TODO: this function to Asset?
+// // TODO: I think this isn't quite right.  It should also be based on config if possible.
+// export const getPercentageOfDrawdownTaxable = (taxResident: Country, assetCountry: Country = "AU", assetClass: AssetGroup) => {
+//   if (taxResident === "SC" && assetCountry === "SC" && assetClass === AssetGroup.super) {
+//     return 75
+//   } else if (taxResident === assetCountry || assetClass !== AssetGroup.super) {
+//     return 0
+//   }
+//   return 100
+// }
 
 export const isIndexedDefinedBenefit = (
   taxResident: Country,

@@ -1,10 +1,11 @@
 import { Asset } from "./Asset"
 import { AssetGroup } from "@/app/lib/calculations/types"
 import { YearData } from "./types"
-import { getPercDrawdownTaxable, getPercIncomeTaxable } from "../tax/utils"
+import { getPercIncomeTaxable } from "../tax/utils"
 import { IAsset, IScenario, SuperContext, Transfer } from "../../data/schema/config"
 import { getNetTransferAmt } from "../transfers/getNetTransferAmt"
 import { getInvestmentTax } from "../tax/taxCalcs/SuperTaxCalc"
+import { getPercentageOfDrawdownTaxable } from "../tax/getPercentageOfDrawdownTaxable"
 
 export class AuSuper extends Asset {
   capitalAsset: boolean
@@ -29,7 +30,7 @@ export class AuSuper extends Asset {
       context: { taxResident, superAu }
     } = scenario
     this.percOfIncomeTaxable = getPercIncomeTaxable(taxResident, assetConfig.country, this.assetGroup)
-    this.percOfDrawdownTaxable = getPercDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
+    this.percOfDrawdownTaxable = getPercentageOfDrawdownTaxable(taxResident, assetConfig.country, this.assetGroup)
 
     this.transfers = transfers
     this.superContext = superAu
