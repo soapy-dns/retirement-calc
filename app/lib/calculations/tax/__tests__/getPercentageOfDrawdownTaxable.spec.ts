@@ -3,34 +3,28 @@ import { Country } from "../../../data/schema/config"
 import { AssetGroup } from "../../types"
 
 describe("getPercentageOfDrawdownTaxable", () => {
-  it("should return 0 for AU tax resident with AU super asset", () => {
+  it("should return 75 when asset class is super and tax resident is in UK", () => {
+    const result = getPercentageOfDrawdownTaxable("EN" as Country, "AU" as Country, AssetGroup.super)
+    expect(result).toBe(75)
+  })
+
+  it("should return 0 when asset class is not super", () => {
+    const result = getPercentageOfDrawdownTaxable("EN" as Country, "AU" as Country, AssetGroup.other)
+    expect(result).toBe(0)
+  })
+
+  it("should return 0 when tax resident is not in UK", () => {
     const result = getPercentageOfDrawdownTaxable("AU" as Country, "AU" as Country, AssetGroup.super)
     expect(result).toBe(0)
   })
 
-  it("should return 75 for UK tax resident with super asset", () => {
-    const ukCountries: Country[] = ["SC", "NI", "EN", "WA"]
-    ukCountries.forEach((country) => {
-      const result = getPercentageOfDrawdownTaxable(country, "AU" as Country, AssetGroup.super)
-      expect(result).toBe(75)
-    })
+  it("should return 0 when asset class is super and tax resident is not in UK", () => {
+    const result = getPercentageOfDrawdownTaxable("US" as Country, "AU" as Country, AssetGroup.super)
+    expect(result).toBe(0)
   })
 
-  it("should return 100 for non-AU tax resident with non-super asset", () => {
-    const result = getPercentageOfDrawdownTaxable("US" as Country, "AU" as Country, AssetGroup.other)
-    expect(result).toBe(100)
-  })
-
-  it("should return 100 for AU tax resident with non-super asset", () => {
-    const result = getPercentageOfDrawdownTaxable("AU" as Country, "AU" as Country, AssetGroup.other)
-    expect(result).toBe(100)
-  })
-
-  it("should return 100 for UK tax resident with non-super asset", () => {
-    const ukCountries: Country[] = ["SC", "NI", "EN", "WA"]
-    ukCountries.forEach((country) => {
-      const result = getPercentageOfDrawdownTaxable(country, "AU" as Country, AssetGroup.other)
-      expect(result).toBe(100)
-    })
+  it("should return 0 when asset class is super and tax resident is in UK but asset country is not AU", () => {
+    const result = getPercentageOfDrawdownTaxable("EN" as Country, "US" as Country, AssetGroup.super)
+    expect(result).toBe(75)
   })
 })
