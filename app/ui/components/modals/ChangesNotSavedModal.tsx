@@ -24,7 +24,7 @@ export const ChangesNotSavedModal: React.FC<Props> = ({ showModal, handleCancel,
       <span className="font-semibold">Warning:&nbsp;</span>Any changes will not be saved.
       <ButtonGroup>
         <Button onClick={continueAnyway} buttonType={ButtonType.primary}>
-          Ignore changes
+          Discard changes
         </Button>
         <Button onClick={onCancel} buttonType={ButtonType.secondary}>
           Back to changes

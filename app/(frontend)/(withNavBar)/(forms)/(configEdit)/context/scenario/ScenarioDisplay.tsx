@@ -72,7 +72,7 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
 
         {selectedScenario.asAtYear < getCurrentYear() && (
           <div className="my-4">
-            <Alert alertType={AlertType.INFO}>
+            <Alert alertType={AlertType.WARNING}>
               <div className="grid grid-cols-12 gap-4 items-center">
                 <div className="col-span-1 ">
                   <LockClosedIcon className="w-8 h-8 sm:w-10 sm:h-10 text-primary-foreground" />

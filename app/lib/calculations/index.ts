@@ -332,6 +332,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     // console.log("--incomeTaxRows--", incomeTaxRows)
     // console.log("--taxes--", taxes)
     // const earningTaxRows = withData(getTaxesRows(earningsTaxes, finalYear, earningsTaxName))
+
+    // TODO: warning - if change this other things may break.  should be a key
     const livingExpensesRows = {
       "Living expenses (today's money)": livingExpensesTodaysMoneyToDisplay,
       "Living expenses": projectedLivingExpensesToDisplay

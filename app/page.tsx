@@ -8,6 +8,7 @@ import { Features } from "@/app/ui/components/splash/features/Features"
 import { SpreadsheetExamplesCard } from "./ui/components/splash/SpreadsheetExampleCard"
 import { ChartsExampleCard } from "./ui/components/splash/ChartsExampleCard"
 import { useEffect, useRef, useState } from "react"
+import clsx from "clsx"
 
 const mainText = "Worried how you'll manage in retirement?"
 const subText = "Work out how long your assets and income will last."
@@ -32,7 +33,13 @@ export default function SplashPage() {
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  const displayClass = offset > 100 ? "block" : "hidden"
+  // const displayClass = offset > 100 ? "block" : "hidden"
+
+  const displayClass = clsx({
+    "transition-all duration-1000 fixed ": true,
+    "right-10": offset > 150,
+    "-right-52": offset <= 150
+  })
 
   return (
     <div>
@@ -46,65 +53,35 @@ export default function SplashPage() {
       <div className="fixed top-0 left-0 z-50 mb-4 inline-block min-w-full">
         <AppBanner />
       </div>
-      <div className="relative z-1 text-gray-700 ">
-        <div className="px-12 pt-20 text-center">
-          <h1 className="font-semibold text-4xl">{mainText}</h1>
-          <p>{subText}</p>
-        </div>
-        <div className="flex justify-center my-8 z-10">
-          <div className="w-1/2 md:w-1/4">
-            <LinkButton ref={startNowRef} href={AppPath.config} linkType={LinkType.primary}>
-              <div className="text-xl text-center">Start now!</div>
-            </LinkButton>
+      <div className="mx-4 md:mx-48">
+        <div className="relative z-1 text-gray-700 ">
+          <div className="px-12 pt-20 text-center">
+            <h1 className="font-semibold text-4xl">{mainText}</h1>
+            <p>{subText}</p>
           </div>
-        </div>
-
-        <div className={`fixed bottom-4 right-4 flex z-10 ${displayClass}`}>
-          <div className="w-48">
-            <LinkButton href={AppPath.config} linkType={LinkType.primary}>
-              <div className="text-xl text-center">Start now!</div>
-            </LinkButton>
+          <div className="flex justify-center my-8 z-10">
+            <div className="w-1/2 md:w-1/4">
+              <LinkButton ref={startNowRef} href={AppPath.config} linkType={LinkType.primary}>
+                <div className="text-xl text-center">Start now!</div>
+              </LinkButton>
+            </div>
           </div>
+
+          <div className={`fixed bottom-4  flex z-10 ${displayClass}`}>
+            <div className="w-48">
+              <LinkButton href={AppPath.config} linkType={LinkType.primary}>
+                <div className="text-xl text-center">Start now!</div>
+              </LinkButton>
+            </div>
+          </div>
+
+          <Features />
+
+          <SpreadsheetExamplesCard />
+
+          <ChartsExampleCard />
         </div>
-
-        <Features />
-
-        <SpreadsheetExamplesCard />
-
-        <ChartsExampleCard />
       </div>
     </div>
   )
 }
-
-// return (
-//   <div className="fixed top-10  h-full w-full -z-1">
-// <Image
-//   fill={true}
-//   className="object-center object-cover pointer-events-none"
-//   src="/images/deckchairsLarge.jpg"
-//   alt=""
-// />
-//     <div className="relative z-1 text-primary-foreground">
-//       <div className="m-8 font-semibold text-2xl text-muted">
-//         <p>Ever wondered if, or when, you can afford to retire.</p>
-//         <p>Wonder no more!</p>
-//       </div>
-
-//       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 m-4 justify-items-center">
-//         <SplashCard>
-//           Works for residents of Australia and the UK with assets / income in either or both countries.
-//         </SplashCard>
-//         <SplashCard>Allows different scenarios to be created and compared.</SplashCard>
-
-//         <SplashCard>Shows results in graph or spreadsheet form.</SplashCard>
-//         <SplashCard>Automatically calculates taxes.</SplashCard>
-//         <SplashCard>Automatically calculates asset drawdown.</SplashCard>
-//         <SplashCard>Scenarios can be exported and re-imported</SplashCard>
-//         <SplashCard>No tracking and no adds</SplashCard>
-
-//         <SplashCard>No identifiable data is captured, and no data is stored remotely.</SplashCard>
-//       </div>
-//     </div>
-//   </div>
-// )
