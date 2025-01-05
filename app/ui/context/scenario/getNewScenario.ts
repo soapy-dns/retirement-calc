@@ -4,6 +4,7 @@ import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { IScenario, Transfer, InflationRecord, LivingExpensesRecord } from "@/app/lib/data/schema/config"
 import { getRandomKey } from "@/app/lib/utils/getRandomKey"
 import cloneDeep from "lodash/cloneDeep"
+import { getUpdatedLivingExpenses } from "./getUpdatedLivingExpenses"
 
 export const getNewScenario = async (scenario: IScenario, name: string, description: string): Promise<IScenario> => {
   const thisYear = getCurrentYear()
@@ -52,20 +53,9 @@ export const getNewScenario = async (scenario: IScenario, name: string, descript
     // living expenses - the first record should always be this asAtYear
     const { livingExpenses } = scenario.context
 
-    const newYearsConfig = livingExpenses.reduce(
-      (accum, inflationRow) => {
-        if (inflationRow.fromYear <= thisYear) return accum
-        accum.push(inflationRow.fromYear)
-        return accum
-      },
-      [thisYear] as number[]
-    )
-    const expensesData = calculationResults.expensesRowData["Living expenses"] // This should use a better key TODO:
-    const newLivingExpenses = newYearsConfig.map((year) => {
-      const livingExpensesForYear = expensesData?.find((it) => it.year === year)
-      if (!livingExpensesForYear) throw Error(`Living expenses not calculated for ${year}`)
-      return { fromYear: year, amountInTodaysTerms: livingExpensesForYear.value }
-    })
+    const expensesData = calculationResults.expensesRowData["Living expenses (today's money)"] // This should use a better key TODO:
+
+    const newLivingExpenses = getUpdatedLivingExpenses(livingExpenses, thisYear, expensesData)
 
     newScenario.context.livingExpenses = newLivingExpenses
 
@@ -73,6 +63,5 @@ export const getNewScenario = async (scenario: IScenario, name: string, descript
     // update income in line with inflation.
   }
 
-  console.log("--newScenario--", newScenario)
   return newScenario
 }
