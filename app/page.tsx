@@ -31,8 +31,6 @@ export default function SplashPage() {
     // TODO: this has got to be super inefficient.
     const onScroll = () => {
       debounceUpdateOffset()
-
-      // setOffset(window.scrollY)
     }
     // clean up code
     window.removeEventListener("scroll", onScroll)
