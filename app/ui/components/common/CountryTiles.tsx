@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-import { MouseEvent, MouseEventHandler } from "react"
+import { MouseEventHandler } from "react"
 import { Country } from "@/app/lib/data/schema/config"
 import clsx from "clsx"
 
@@ -57,6 +57,7 @@ export const CountryTiles: React.FC<CountryTilesProps> = ({ id, name, value, onC
               value={option}
               onClick={onChange}
               className="hidden"
+              readOnly={true}
             />
             <label htmlFor={`${id}-${option}`}>
               <div className="flex justify-center">

@@ -1,4 +1,6 @@
 "use client"
+
+import { use } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -31,7 +33,10 @@ const marshall = (data: FormDataType, transfer: Transfer): Transfer => {
   }
 }
 
-export default function TransferEditPage({ params }: { params: { id: string } }) {
+type Params = Promise<{ id: string }>
+
+export default function TransferEditPage(props: { params: Params }) {
+  const params = use(props.params)
   let { id } = params
   const navigation = useNavigation()
   const { selectedScenario } = useContext(ScenarioContext)
