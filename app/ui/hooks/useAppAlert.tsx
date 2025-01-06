@@ -1,4 +1,4 @@
-import React from "react"
+import React, { JSX } from "react"
 import toast, { Toast, ToastOptions, ToastPosition } from "react-hot-toast"
 import { AlertType } from "../components/alert/Alert"
 import { AlertBanner } from "../components/alert/AlertBanner"
@@ -55,7 +55,7 @@ const useAppAlert = () => {
     const { dismissible = true } = toastOptions || {}
 
     const id = toast.custom(
-      (t) => (
+      (t: Toast) => (
         <AlertBanner
           variant={AlertType.INFO}
           message={message}
@@ -77,7 +77,7 @@ const useAppAlert = () => {
     toast.remove()
     const { dismissible = true } = toastOptions || {}
     const id = toast.custom(
-      (t) => (
+      (t: Toast) => (
         <AlertBanner
           variant={AlertType.ERROR}
           message={message}
@@ -98,7 +98,7 @@ const useAppAlert = () => {
     const { dismissible = true } = toastOptions || {}
 
     const id = toast.custom(
-      (t) => (
+      (t: Toast) => (
         <AlertBanner
           variant={AlertType.SUCCESS}
           message={message}
