@@ -7,7 +7,7 @@ describe("Alert Component", () => {
     render(<Alert />)
     const alertElement = screen.getByRole("alert")
     expect(alertElement).toBeInTheDocument()
-    expect(alertElement).toHaveClass("p-2 border border-primary-foreground")
+    expect(alertElement).toHaveClass("p-2 border")
   })
 
   it("should render with a heading", () => {

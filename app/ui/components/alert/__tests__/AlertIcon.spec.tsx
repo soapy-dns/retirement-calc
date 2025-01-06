@@ -7,22 +7,22 @@ describe("AlertIcon", () => {
   // TODO: better tests
   it("renders the correct icon for ERROR type", () => {
     const { container } = render(<AlertIcon alertType={AlertType.ERROR} />)
-    expect(container.querySelector(".text-error")).toBeInTheDocument()
+    expect(container.querySelector(".text-error-foreground")).toBeInTheDocument()
   })
 
   it("renders the correct icon for WARNING type", () => {
     const { container } = render(<AlertIcon alertType={AlertType.WARNING} />)
-    expect(container.querySelector(".text-primary-foreground")).toBeInTheDocument()
+    expect(container.querySelector(".text-warning-foreground")).toBeInTheDocument()
   })
 
   it("renders the correct icon for SUCCESS type", () => {
     const { container } = render(<AlertIcon alertType={AlertType.SUCCESS} />)
-    expect(container.querySelector(".text-primary-foreground")).toBeInTheDocument()
+    expect(container.querySelector(".text-success-foreground")).toBeInTheDocument()
   })
 
   it("renders the correct icon for INFO type", () => {
     const { container } = render(<AlertIcon alertType={AlertType.INFO} />)
-    expect(container.querySelector(".text-primary-foreground")).toBeInTheDocument()
+    expect(container.querySelector(".text-info-foreground")).toBeInTheDocument()
   })
 
   it("renders nothing for undefined type", () => {

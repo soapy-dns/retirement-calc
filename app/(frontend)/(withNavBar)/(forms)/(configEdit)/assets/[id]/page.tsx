@@ -1,5 +1,6 @@
 "use client"
 
+import { use } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -132,7 +133,11 @@ const marshall = (data: FormDataType, assetConfig: IAsset): IAsset => {
   } as IAsset
 }
 
-export default function AssetEditPage({ params }: { params: { id: string } }) {
+type Params = Promise<{ id: string }>
+
+export default function AssetEditPage(props: { params: Params }) {
+  const params = use(props.params)
+
   let { id } = params
   const navigation = useNavigation()
   const searchParams = useSearchParams()

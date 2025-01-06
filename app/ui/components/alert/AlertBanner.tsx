@@ -1,7 +1,8 @@
+import { JSX } from "react"
 import { XMarkIcon } from "@heroicons/react/24/outline"
 import { AlertType } from "./Alert"
 import { AlertHeading, AlertIcon } from "./AlertIcon"
-import { getBackgroundColor } from "./utils"
+import { getBackgroundColor, getForegroundColor } from "./utils"
 
 interface Props {
   variant: AlertType
@@ -13,12 +14,11 @@ interface Props {
 
 export const AlertBanner: React.FC<Props> = ({ onClose, variant, message, dismissible = true, maxSize = "full" }) => {
   const backgroundColor = getBackgroundColor(variant)
+  const foregroundColor = getForegroundColor(variant)
+
   return (
-    <div
-      className={`border border-primary ${backgroundColor} w-screen ${maxSize === "half" ? "max-w-lg" : null} p-4`}
-      role="alert"
-    >
-      <h2 className="text-primary-foreground">
+    <div className={`border  ${backgroundColor} w-screen ${maxSize === "half" ? "max-w-lg" : null} p-4`} role="alert">
+      <h2 className={`text-${foregroundColor}`}>
         <div className="grid grid-cols-3">
           <div></div>
           <div className="flex items-center justify-center gap-2">

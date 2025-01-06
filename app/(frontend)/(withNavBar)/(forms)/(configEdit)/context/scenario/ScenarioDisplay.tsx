@@ -75,7 +75,7 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
             <Alert alertType={AlertType.WARNING}>
               <div className="grid grid-cols-12 gap-4 items-center">
                 <div className="col-span-1 ">
-                  <LockClosedIcon className="w-8 h-8 sm:w-10 sm:h-10 text-primary-foreground" />
+                  <LockClosedIcon className="w-8 h-8 sm:w-10 sm:h-10 text-warning-foreground" />
                 </div>
                 <p className="col-span-11 py-2">
                   This scenario has an &apos;As at year&apos; in the past. It is therefore locked to further changes.

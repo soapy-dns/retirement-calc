@@ -76,20 +76,20 @@ export const AssetSummary = ({ asset, removeAllowed }: IAssetItemDisplay) => {
                 <Alert alertType={AlertType.INFO} heading="Asset has transfers" />
               </div>
             )}
-            <p className="flex gap-2">
+            <div className="flex gap-2">
               <b>Description:</b>
               <div className="break-words">{description}</div>
-            </p>
+            </div>
             {asset.className === "Salary" || asset.className === "AuDefinedBenefits" ? (
-              <p className="flex gap-2">
+              <div className="flex gap-2">
                 <b>Initial income:</b>
                 <span>{currencyFormatter.format(asset.income.incomeAmt)}</span>
-              </p>
+              </div>
             ) : (
-              <p className="flex gap-2">
+              <div className="flex gap-2">
                 <b>Initial value:</b>
                 <span>{currencyFormatter.format(asset.value)}</span>
-              </p>
+              </div>
             )}
 
             {selectedScenario.asAtYear >= getCurrentYear() && (

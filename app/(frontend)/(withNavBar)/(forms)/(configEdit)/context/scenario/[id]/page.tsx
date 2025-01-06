@@ -1,7 +1,7 @@
 "use client"
 
 import { useForm } from "react-hook-form"
-import { useContext } from "react"
+import { useContext, use } from "react"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -27,7 +27,11 @@ const FormSchema = z.object({
 
 export type FormDataType = z.infer<typeof FormSchema>
 
-export default function ScenarioPage({ params }: { params: { id: string } }) {
+type Params = Promise<{ id: string }>
+
+export default function ScenarioPage(props: { params: Params }) {
+  const params = use(props.params)
+
   const { id } = params
   const navigation = useNavigation()
   const { selectedScenario, updateScenario, addScenario } = useContext(ScenarioContext)

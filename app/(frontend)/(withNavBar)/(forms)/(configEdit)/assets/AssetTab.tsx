@@ -24,9 +24,9 @@ export const AssetTab = () => {
 
   return (
     <div className="">
-      <p className="mx-4">
+      <div className="mx-4">
         Resources <span className="text-primary-foreground">(assets)</span> used to hold or create economic value.
-      </p>
+      </div>
 
       {asAtYear >= getCurrentYear() && (
         <div className="mx-auto my-6 w-3/4">

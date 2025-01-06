@@ -38,9 +38,11 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --error: 351 100% 96%;
+    --error-foreground: 0, 72%, 51%;
     --warning: 33 100% 96%;
-    --success: 205 87% 94%;
+    --warning-foreground: 33 100% 57%;
     --info: 231 44% 94%;
+    --info-foreground: 221 83% 53%;
   }
 
   .dark {
