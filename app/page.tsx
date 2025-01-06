@@ -9,12 +9,16 @@ import { SpreadsheetExamplesCard } from "./ui/components/splash/SpreadsheetExamp
 import { ChartsExampleCard } from "./ui/components/splash/ChartsExampleCard"
 import { useEffect, useRef, useState } from "react"
 import clsx from "clsx"
+import { useDebouncedCallback } from "use-debounce"
 
 const mainText = "Worried how you'll manage in retirement?"
 const subText = "Work out how long your assets and income will last."
 export default function SplashPage() {
   const startNowRef = useRef<HTMLAnchorElement>(null)
   const [offset, setOffset] = useState(0)
+
+  // limit the amount of state updates
+  const debounceUpdateOffset = useDebouncedCallback(() => setOffset(window.scrollY), 250)
 
   useEffect(() => {
     // NOTE: this might not really be a good idea for accessibility
@@ -24,8 +28,11 @@ export default function SplashPage() {
 
     // when the window is scrolled a certain amount, show the start now button at the bottom.
     // TODO: maybe need to check the original button in off the screen.
+    // TODO: this has got to be super inefficient.
     const onScroll = () => {
-      setOffset(window.scrollY)
+      debounceUpdateOffset()
+
+      // setOffset(window.scrollY)
     }
     // clean up code
     window.removeEventListener("scroll", onScroll)
