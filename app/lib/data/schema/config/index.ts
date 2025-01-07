@@ -4,6 +4,9 @@ import { assetsVsOwners, validateIncomeBucket } from "./validation"
 import { AssetSchema } from "./asset"
 import { CountryEnum, IsValidYear, YesNoSchema } from "./schemaUtils"
 import { numberFormatter } from "@/app/ui/utils/formatter"
+import { stressTestOptions } from "../../options"
+
+// console.log("SCHEMA STUFF---------------------------------")
 
 const cashContextSchema = z.object({
   interestRate: z.number()
@@ -107,6 +110,11 @@ const ContextSchema = z.object({
 //     }
 //   }
 // )
+const stressTestValues = stressTestOptions.map((it) => {
+  return it.value
+}) as [string, ...string[]] // needs to have one value - weird zod shit
+
+const StressTestSchema = z.enum([...stressTestValues]).optional()
 
 export const ScenarioSchema = z
   .object({
@@ -115,6 +123,8 @@ export const ScenarioSchema = z
     name: z.string(),
     description: z.string().optional(),
     asAtYear: z.number(),
+    stressTest: StressTestSchema.optional(),
+    // stressTest: z.enum(["LOW_RETURN", "MARKET_CRASH", "CARE_REQUIRED"]).optional(),
     assets: z.array(AssetSchema),
     context: ContextSchema,
     transfers: z.array(TransferSchema).optional()

@@ -38,6 +38,7 @@ import { getInflationFactor } from "./utils/getInflationFactor"
 import { removeUnusedHistoryFromTaxes } from "./tax/removeUnusedHistoryFromTaxes"
 import { removeUnusedHistory } from "./utils/removeUnusedHistory"
 import { log } from "console"
+import { stressTestOptions } from "../data/options"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -50,6 +51,9 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
   await sleep(1)
   // console.log("--calculate data--", JSON.stringify(data, null, 4))
   // console.log("--data.context--", data.context);
+  const stressTestValues = stressTestOptions.map((it) => {
+    return it.value
+  })
 
   const result = ScenarioSchema.safeParse(data)
 

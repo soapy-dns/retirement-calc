@@ -32,7 +32,7 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
     }
   }
 
-  const { name, description, asAtYear } = selectedScenario
+  const { name, description, asAtYear, stressTest } = selectedScenario
 
   const removeButtonDisabled = scenarios?.length === 1
 
@@ -91,6 +91,8 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
             </Alert>
           </div>
         )}
+
+        {/* <TextDisplayField label="Stress test" value={stressTest || "NONE"} /> */}
 
         <TextDisplayField label={scenarioConstants.DESCRIPTION.LABEL} value={description || "n/a"} />
 
