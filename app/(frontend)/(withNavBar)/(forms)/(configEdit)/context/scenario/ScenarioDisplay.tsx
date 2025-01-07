@@ -10,6 +10,9 @@ import { LockClosedIcon, PencilSquareIcon, PlusCircleIcon, TrashIcon } from "@he
 import { scenarioConstants } from "./scenarioConstants"
 import { ButtonGroup } from "@/app/ui/components/common/ButtonGroup"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
+import { Card } from "@/app/ui/components/Card"
+import { DisplayCardWithEdit } from "@/app/ui/components/form/DisplayCardWithEdit"
+import { ButtonGroupEditRemove } from "@/app/ui/components/common/ButtonGroupEditRemove"
 
 export const ScenarioDisplay: React.FunctionComponent = (props) => {
   const navigation = useNavigation()
@@ -34,16 +37,19 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
   const removeButtonDisabled = scenarios?.length === 1
 
   const EditButton = () => (
-    <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
-      <div className="flex items-center justify-center gap-2">
-        <PencilSquareIcon className="h-6 w-6" />
-        <div>Edit</div>
-      </div>
-    </Button>
+    <div className="mx-auto my-6 w-3/4">
+      <Button buttonType={ButtonType.primary} onClick={handleEdit}>
+        <div className="flex items-center gap-2">
+          <PencilSquareIcon className="h-6 w-6" />
+          <div>Edit</div>
+        </div>
+      </Button>
+    </div>
   )
 
   return (
-    <>
+    <Card>
+      <h2 className="text-primary flex justify-center">{name}</h2>
       <div className="mb-8">
         <ButtonGroup>
           <Button buttonType={ButtonType.tertiary} onClick={handleAdd}>
@@ -86,14 +92,12 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
           </div>
         )}
 
-        <TextDisplayField label={scenarioConstants.NAME.LABEL} value={name} />
-        {asAtYear === getCurrentYear() && <EditButton />}
-
         <TextDisplayField label={scenarioConstants.DESCRIPTION.LABEL} value={description || "n/a"} />
-        {asAtYear === getCurrentYear() && <EditButton />}
 
         <TextDisplayField label={scenarioConstants.AS_AT_YEAR.LABEL} value={asAtYear} />
       </div>
-    </>
+
+      {asAtYear === getCurrentYear() && <EditButton />}
+    </Card>
   )
 }
