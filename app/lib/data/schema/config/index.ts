@@ -2,9 +2,10 @@ import { z } from "zod"
 
 import { assetsVsOwners, validateIncomeBucket } from "./validation"
 import { AssetSchema } from "./asset"
-import { CountryEnum, IsValidYear, YesNoSchema } from "./schemaUtils"
+import { CountryEnum, isValidYearBetween, YesNoSchema } from "./schemaUtils"
 import { numberFormatter } from "@/app/ui/utils/formatter"
 import { stressTestOptions } from "../../options"
+import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 
 // console.log("SCHEMA STUFF---------------------------------")
 
@@ -43,20 +44,23 @@ const superContextSchema = z.object({
   investmentReturn: z.number() // net of fees but not taxation
   // taxationRate: z.number()
 })
-
+const currentYear = getCurrentYear()
 export const InflationSchema = z.object({
-  fromYear: IsValidYear,
+  fromYear: isValidYearBetween(currentYear, currentYear + 100),
+  // fromYear: IsValidYear,
   inflationRate: z.coerce.number()
 })
 
 export const LivingExpensesSchema = z.object({
-  fromYear: IsValidYear,
+  // fromYear: IsValidYear,
+  fromYear: isValidYearBetween(currentYear, currentYear + 100),
   amountInTodaysTerms: z.coerce.number().nonnegative()
 })
 
 const transferBaseSchema = z.object({
   id: z.string(),
-  year: IsValidYear,
+  // year: IsValidYear,
+  year: isValidYearBetween(currentYear, currentYear + 100),
   from: z.string(),
   to: z.string(),
   migrateAll: z.boolean(),

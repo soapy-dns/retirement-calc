@@ -51,9 +51,9 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
   await sleep(1)
   // console.log("--calculate data--", JSON.stringify(data, null, 4))
   // console.log("--data.context--", data.context);
-  const stressTestValues = stressTestOptions.map((it) => {
-    return it.value
-  })
+  // const stressTestValues = stressTestOptions.map((it) => {
+  //   return it.value
+  // })
 
   const result = ScenarioSchema.safeParse(data)
 

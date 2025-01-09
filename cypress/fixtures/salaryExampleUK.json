@@ -3,7 +3,7 @@
     "id": "57db4113-0d7b-4617-bc81-5ce6d3a55508",
     "name": "Salary example",
     "description": "Salary example",
-    "asAtYear": 2024,
+    "asAtYear": 2025,
     "assets": [
       {
         "id": "JOINT_AU_BANK",
@@ -28,7 +28,7 @@
         "assetOwners": ["HIM"],
         "income": {
           "incomeAmt": 100000,
-          "incomeEndYear": 2030
+          "incomeEndYear": 2031
         },
         "id": "7bf4c27d-9a73-49cd-9f5d-368269174f6a"
       }
@@ -58,13 +58,13 @@
       },
       "inflation": [
         {
-          "fromYear": 2024,
+          "fromYear": 2025,
           "inflationRate": 0.03
         }
       ],
       "livingExpenses": [
         {
-          "fromYear": 2024,
+          "fromYear": 2025,
           "amountInTodaysTerms": 50000
         }
       ],

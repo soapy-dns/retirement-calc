@@ -3,7 +3,7 @@
     "id": "c927be03-7b23-48f9-b75c-99ba63c8d70f",
     "name": "Bank example",
     "description": "Interest rate get applied to both, but the interest from 1 bank account gets accumulated in the other",
-    "asAtYear": 2024,
+    "asAtYear": 2025,
     "assets": [
       {
         "name": "UK Bank",
@@ -68,13 +68,13 @@
       },
       "inflation": [
         {
-          "fromYear": 2024,
+          "fromYear": 2025,
           "inflationRate": 0
         }
       ],
       "livingExpenses": [
         {
-          "fromYear": 2024,
+          "fromYear": 2025,
           "amountInTodaysTerms": 0
         }
       ],

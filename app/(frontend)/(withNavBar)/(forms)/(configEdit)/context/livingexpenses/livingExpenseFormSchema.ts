@@ -1,16 +1,23 @@
 import { z } from "zod"
 import { IScenario, LivingExpensesSchema } from "@/app/lib/data/schema/config"
-import { sortByFromDate } from "../utils"
+import { sortByFromDate } from "./utils"
 
 const FormSchema = z.object({
   items: z.array(LivingExpensesSchema)
 })
 
-export const getFormSchema = (scenario: IScenario) => {
+/*
+Get living expenses form schema, refinements to compare against the schema
+*/
+export const getLivingExpensesFormSchema = (scenario: IScenario) => {
   const { asAtYear } = scenario
   const refinedFormSchema = FormSchema.refine(
     ({ items }) => {
       sortByFromDate(items)
+      console.log("fromYear, asAtYear", items[0].fromYear, asAtYear)
+      if (items[0].fromYear === asAtYear) {
+        console.log("from dates equal")
+      }
       return items[0].fromYear === asAtYear
     },
     {

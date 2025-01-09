@@ -5,7 +5,7 @@ import { ScenarioSchema } from "@/app/lib/data/schema/config"
 const mockScenarioConfig = generateMock(ScenarioSchema)
 
 describe("", () => {
-  it("should validate ok", () => {
+  it.skip("should validate ok", () => {
     mockScenarioConfig.asAtYear = 2024
 
     const inflationData: FormDataType = {

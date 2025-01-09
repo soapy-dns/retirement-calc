@@ -17,7 +17,7 @@ import { YearValueForm } from "@/app/ui/components/YearValueForm"
 import { GenericModal } from "@/app/ui/components/modals/GenericModal"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
-import { FormDataType, getFormSchema } from "./types"
+import { FormDataType, getLivingExpensesFormSchema } from "./livingExpenseFormSchema"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
 
 const LivingExpensesPage: React.FC = () => {
@@ -36,7 +36,7 @@ const LivingExpensesPage: React.FC = () => {
     formState: { isDirty, errors }
   } = useForm<FormDataType>({
     defaultValues: { items: livingExpenses },
-    resolver: zodResolver(getFormSchema(selectedScenario)),
+    resolver: zodResolver(getLivingExpensesFormSchema(selectedScenario)),
     mode: "onBlur",
     reValidateMode: "onBlur"
   })

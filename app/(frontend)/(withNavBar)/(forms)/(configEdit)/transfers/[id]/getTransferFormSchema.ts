@@ -5,12 +5,13 @@ import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { IScenario } from "@/app/lib/data/schema/config"
 import { testForMultipleMigrateAllFrom, testForMultipleMigrateAllFromAndTo } from "./validation"
 
-export const getFormSchema = (scenario: IScenario, id: string) => {
+export const getTransferFormSchema = (scenario: IScenario, id: string) => {
   const { transfers } = scenario
+  const currentYear = getCurrentYear()
 
   const otherTransfers = transfers?.filter((it) => it.id !== id)
 
-  const refinedFormSchema = FormSchema.refine(
+  const refinedTransferFormSchema = BasicTransferFormSchema.refine(
     (formData) => {
       return testForMultipleMigrateAllFrom(formData, otherTransfers)
     },
@@ -30,14 +31,13 @@ export const getFormSchema = (scenario: IScenario, id: string) => {
     }
   )
 
-  return refinedFormSchema
+  return refinedTransferFormSchema
 }
-const currentYear = getCurrentYear()
 
-export const FormSchema = z
+export const BasicTransferFormSchema = z
   .object({
     // year: IsValidYear,
-    year: isValidYearBetween(currentYear, currentYear + 100),
+    year: isValidYearBetween(getCurrentYear(), getCurrentYear() + 100),
     from: z.string(),
     to: z.string(),
     migrateAll: YesNoSchema.optional(),
@@ -61,4 +61,4 @@ export const FormSchema = z
 //   { message: "Transfer year is in the past.", path: ["year"] }
 // )
 
-export type FormDataType = z.infer<typeof FormSchema>
+export type FormDataType = z.infer<typeof BasicTransferFormSchema>

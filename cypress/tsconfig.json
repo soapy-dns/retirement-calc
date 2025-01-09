@@ -3,9 +3,9 @@
   "files": ["**/*.ts", "../cypress.config.ts"],
   "compilerOptions": {
     "sourceMap": false,
-    "types": ["cypress"]
+    "types": ["cypress", "node"]
   },
 
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "cypress"],
   "exclude": ["node_modules"]
 }

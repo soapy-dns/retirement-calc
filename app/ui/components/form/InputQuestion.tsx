@@ -1,12 +1,9 @@
 // TODO: use InputField
 import React, { ChangeEvent } from "react"
-import { Controller, Control, useFormState } from "react-hook-form"
+import { Controller, Control } from "react-hook-form"
 import { useError } from "../../hooks/useError"
 import { FormGroup } from "../common/FormGroup"
 import { Input } from "../common/Input"
-// import { useError } from "../hooks/useError"
-// import { FormGroup } from "./form/FormGroup"
-// import { Input } from "./form/Input"
 
 type InputProps = {
   label: string
@@ -89,7 +86,8 @@ export const InputQuestion: React.FC<InputProps> = ({
               disabled={disabled}
               name={renderName}
               // type={type}
-              value={value}
+              // value={value}
+              value={value || ""} // "" to avoid uncontrolled input warning
               // onChange={() => console.log("handle change")}
               onChange={(event: ChangeEvent<HTMLInputElement>) => handleOnChange(event.target.value, onChange)}
               // onChange={(e: ChangeEvent<HTMLInputElement>) => handleOnChange(e, onChange)}

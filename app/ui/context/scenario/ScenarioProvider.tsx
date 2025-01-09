@@ -59,7 +59,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
       const { asAtYear } = selectedScenario
       if (success && calculationMessage) {
         if (asAtYear >= currentYear) {
-          displayWarningAlert(calculationMessage, { duration: 10000 })
+          displayWarningAlert(calculationMessage, { duration: 3000 })
         }
         // server actions will return a 200 error for validation messages.  This may change in future
       } else if (!success) {

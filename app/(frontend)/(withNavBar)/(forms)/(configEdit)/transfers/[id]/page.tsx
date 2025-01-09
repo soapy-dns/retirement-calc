@@ -9,7 +9,7 @@ import { type Transfer } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useTransfer } from "@/app/ui/hooks/useTransfer"
 import EditPageLayout from "@/app/(frontend)/(withoutNavBar)/components/EditPageLayout"
-import { FormDataType, FormSchema, getFormSchema } from "./FormSchema"
+import { FormDataType, getTransferFormSchema } from "./getTransferFormSchema"
 import { useContext } from "react"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 
@@ -49,7 +49,7 @@ export default function TransferEditPage(props: { params: Params }) {
 
   const { handleSubmit, watch, control } = useForm<FormDataType>({
     defaultValues: { from, to, value, year, migrateAll: migrateAllFormVal, costOfTransfer },
-    resolver: zodResolver(getFormSchema(selectedScenario, id))
+    resolver: zodResolver(getTransferFormSchema(selectedScenario, id))
   })
 
   const onSubmit = async (data: FormDataType) => {
