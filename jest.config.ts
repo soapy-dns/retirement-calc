@@ -15,10 +15,10 @@ const config: Config = {
   // moduleNameMapper: { "@(/.*)$": "<rootDir>/app/$1" }
   coverageThreshold: {
     global: {
-      branches: 79,
-      functions: 63,
-      lines: 80,
-      statements: 70
+      branches: 80,
+      functions: 69,
+      lines: 87,
+      statements: 87
     }
   }
 }

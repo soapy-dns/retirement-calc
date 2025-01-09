@@ -1,11 +1,23 @@
 import { generateMock } from "@anatine/zod-mock"
-import { FormDataType, getFormSchema } from ".."
+import { FormDataType, getFormSchema } from "../inflationFormSchema"
 import { ScenarioSchema } from "@/app/lib/data/schema/config"
 
 const mockScenarioConfig = generateMock(ScenarioSchema)
+const asAtYear = 2024
 
 describe("", () => {
-  it.skip("should validate ok", () => {
+  beforeEach(() => {
+    jest.useFakeTimers()
+    jest.setSystemTime(new Date(asAtYear, 1, 1))
+  })
+
+  // Running all pending timers and switching to real timers using Jest
+  afterEach(() => {
+    jest.runOnlyPendingTimers()
+    jest.useRealTimers()
+  })
+
+  it("should validate ok", () => {
     mockScenarioConfig.asAtYear = 2024
 
     const inflationData: FormDataType = {

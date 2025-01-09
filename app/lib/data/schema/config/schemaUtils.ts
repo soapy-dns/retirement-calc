@@ -23,16 +23,17 @@ export const IsFormNumber = z.preprocess((val) => castEmptyStringToUndefined(val
 const validStartYear = 2020
 const validEndYear = 2100
 
-export const isValidYearBetween = (from: number, to: number) => {
+export const isValidYearBetween = () => {
   // return z.union([z.string(), z.number()]).refine(
-  const currentYear = getCurrentYear()
-  console.log("--currentYear--", currentYear)
-  const fromX = currentYear
-  const toX = currentYear + 100
 
+  // we are lucky that although coerce "" -> 0, zero is still outside the year range
   return z.coerce.number().refine(
     (val) => {
-      console.log("--val, from, to - --", val, fromX, toX)
+      // current year has to be calculated at the time of validation
+
+      const currentYear = getCurrentYear()
+      const fromX = currentYear
+      const toX = currentYear + 100
       // true means its valid
       if (Number.isNaN(val)) return false
 
@@ -42,9 +43,14 @@ export const isValidYearBetween = (from: number, to: number) => {
 
       return false
     },
-    (val) => ({
-      message: `The year ${val} is mandatory, and should be between ${fromX}, and ${toX}`
-    })
+    (val) => {
+      const currentYear = getCurrentYear()
+      const fromX = currentYear
+      const toX = currentYear + 100
+      return {
+        message: `The year is mandatory, and should be between ${fromX}, and ${toX}`
+      }
+    }
   )
   // return z.custom<number>((val) => {
   //   if (Number.isNaN(val)) return false

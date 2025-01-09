@@ -1,16 +1,16 @@
-import { z } from "zod"
+import { number, z } from "zod"
 
 import { IsFormNumberOpt, isValidYearBetween, YesNoSchema } from "@/app/lib/data/schema/config/schemaUtils"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { IScenario } from "@/app/lib/data/schema/config"
 import { testForMultipleMigrateAllFrom, testForMultipleMigrateAllFromAndTo } from "./validation"
 
-export const getFormSchema = (scenario: IScenario, id: string) => {
+export const getTransferFormSchema = (scenario: IScenario, id: string) => {
   const { transfers } = scenario
 
   const otherTransfers = transfers?.filter((it) => it.id !== id)
 
-  const refinedFormSchema = FormSchema.refine(
+  const refinedTransferFormSchema = BasicTransferFormSchema.refine(
     (formData) => {
       return testForMultipleMigrateAllFrom(formData, otherTransfers)
     },
@@ -30,14 +30,15 @@ export const getFormSchema = (scenario: IScenario, id: string) => {
     }
   )
 
-  return refinedFormSchema
+  return refinedTransferFormSchema
 }
 const currentYear = getCurrentYear()
 
-export const FormSchema = z
+export const BasicTransferFormSchema = z
   .object({
     // year: IsValidYear,
-    year: isValidYearBetween(currentYear, currentYear + 100),
+    // year: z.number,
+    year: isValidYearBetween(),
     from: z.string(),
     to: z.string(),
     migrateAll: YesNoSchema.optional(),
@@ -51,14 +52,14 @@ export const FormSchema = z
     },
     { message: "The 'From' asset is the same as the 'To' asset.", path: ["from"] }
   )
-// .refine(
-//   ({ year }) => {
-//     const currentYear = getCurrentYear()
+  .refine(
+    ({ year }) => {
+      const currentYear = getCurrentYear()
 
-//     if (year < currentYear) return false
-//     return true
-//   },
-//   { message: "Transfer year is in the past.", path: ["year"] }
-// )
+      if (year < currentYear) return false
+      return true
+    },
+    { message: "Transfer year is in the past.", path: ["year"] }
+  )
 
-export type FormDataType = z.infer<typeof FormSchema>
+export type FormDataType = z.infer<typeof BasicTransferFormSchema>

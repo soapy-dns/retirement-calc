@@ -7,8 +7,6 @@ import { numberFormatter } from "@/app/ui/utils/formatter"
 import { stressTestOptions } from "../../options"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 
-// console.log("SCHEMA STUFF---------------------------------")
-
 const cashContextSchema = z.object({
   interestRate: z.number()
 })
@@ -46,21 +44,21 @@ const superContextSchema = z.object({
 })
 const currentYear = getCurrentYear()
 export const InflationSchema = z.object({
-  fromYear: isValidYearBetween(currentYear, currentYear + 100),
+  fromYear: isValidYearBetween(),
   // fromYear: IsValidYear,
   inflationRate: z.coerce.number()
 })
 
 export const LivingExpensesSchema = z.object({
   // fromYear: IsValidYear,
-  fromYear: isValidYearBetween(currentYear, currentYear + 100),
+  fromYear: isValidYearBetween(),
   amountInTodaysTerms: z.coerce.number().nonnegative()
 })
 
 const transferBaseSchema = z.object({
   id: z.string(),
   // year: IsValidYear,
-  year: isValidYearBetween(currentYear, currentYear + 100),
+  year: isValidYearBetween(),
   from: z.string(),
   to: z.string(),
   migrateAll: z.boolean(),

@@ -37,7 +37,7 @@ export const getTransferFormSchema = (scenario: IScenario, id: string) => {
 export const BasicTransferFormSchema = z
   .object({
     // year: IsValidYear,
-    year: isValidYearBetween(getCurrentYear(), getCurrentYear() + 100),
+    year: isValidYearBetween(),
     from: z.string(),
     to: z.string(),
     migrateAll: YesNoSchema.optional(),

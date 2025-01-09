@@ -6,18 +6,14 @@ const asAtYear = 2024
 const mockScenarioConfig = generateMock(ScenarioSchema)
 mockScenarioConfig.asAtYear = asAtYear
 
-const FormSchema = getLivingExpensesFormSchema(mockScenarioConfig)
+const LivingExpensesSchema = getLivingExpensesFormSchema(mockScenarioConfig)
 
 describe("", () => {
   // Fake timers using Jest
   beforeEach(() => {
     jest.useFakeTimers()
     jest.setSystemTime(new Date(asAtYear, 1, 1))
-    const now = new Date()
-
-    console.log("now--->", now)
   })
-  // })
 
   // Running all pending timers and switching to real timers using Jest
   afterEach(() => {
@@ -25,8 +21,7 @@ describe("", () => {
     jest.useRealTimers()
   })
 
-  // TODO: Fix this test
-  it.skip("should validate ok", () => {
+  it("should validate ok", () => {
     const livingExpensesData: FormDataType = {
       items: [
         { fromYear: asAtYear, amountInTodaysTerms: 100000 },
@@ -36,8 +31,7 @@ describe("", () => {
       ]
     }
 
-    const result = FormSchema.parse(livingExpensesData)
-    console.log("--result--", result)
+    const result = LivingExpensesSchema.parse(livingExpensesData)
     expect(result).toEqual(livingExpensesData)
   })
 })

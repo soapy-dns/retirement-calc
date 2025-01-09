@@ -9,13 +9,13 @@ const sortByFromDate = (inflationRows: InflationRecord[]): InflationRecord[] => 
   })
 }
 
-const FormSchema = z.object({
+const InflationFormSchema = z.object({
   items: z.array(InflationSchema)
 })
 
 export const getFormSchema = (scenario: IScenario) => {
   const { asAtYear } = scenario
-  const refinedFormSchema = FormSchema
+  const refinedInflationFormSchema = InflationFormSchema
     // .refine(
     //   ({ items }) => {
     //     const unsortedItems = [...items]
@@ -74,7 +74,7 @@ export const getFormSchema = (scenario: IScenario) => {
       }
     )
 
-  return refinedFormSchema
+  return refinedInflationFormSchema
 }
 
-export type FormDataType = z.infer<typeof FormSchema>
+export type FormDataType = z.infer<typeof InflationFormSchema>
