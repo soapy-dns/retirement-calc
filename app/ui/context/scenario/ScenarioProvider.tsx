@@ -98,8 +98,6 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
 
     if (!defaultSelectedScenario) throw new Error("No scenario found in import file")
 
-    const { success, calculationResults } = await doCalculations(defaultSelectedScenario)
-
     const scenarioOptions = getScenarioOptions(scenarios)
     const selectedScenarioOption = scenarioOptions.find((it) => it.value === defaultSelectedScenario.id)
 
@@ -110,6 +108,12 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
 
     sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
     sessionStorage.setItem("selectedScenario", JSON.stringify(defaultSelectedScenario))
+
+    // const currentYear = getCurrentYear()
+    // if (defaultScenarios[0].asAtYear >= currentYear) {
+    // }
+
+    const { success, calculationResults } = await doCalculations(defaultSelectedScenario)
 
     return { success, calculationResults }
   }
