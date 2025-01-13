@@ -1,13 +1,11 @@
 import { z } from "zod"
 
-import { IsFormNumberOpt, isValidYearBetween, YesNoSchema } from "@/app/lib/data/schema/config/schemaUtils"
-import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
+import { IsFormNumberOpt, YesNoSchema } from "@/app/lib/data/schema/config/schemaUtils"
 import { IScenario } from "@/app/lib/data/schema/config"
 import { testForMultipleMigrateAllFrom, testForMultipleMigrateAllFromAndTo } from "./validation"
 
 export const getTransferFormSchema = (scenario: IScenario, id: string) => {
   const { transfers } = scenario
-  const currentYear = getCurrentYear()
 
   const otherTransfers = transfers?.filter((it) => it.id !== id)
 
@@ -20,16 +18,27 @@ export const getTransferFormSchema = (scenario: IScenario, id: string) => {
       message: `There is already a total transfer from this asset.`,
       path: ["from"]
     }
-  ).refine(
-    (formData) => {
-      return testForMultipleMigrateAllFromAndTo(formData, otherTransfers)
-    },
-
-    {
-      message: `There is already a total transfer from this asset.`,
-      path: ["to"]
-    }
   )
+    .refine(
+      (formData) => {
+        return testForMultipleMigrateAllFromAndTo(formData, otherTransfers)
+      },
+
+      {
+        message: `There is already a total transfer from this asset.`,
+        path: ["to"]
+      }
+    )
+    .refine(
+      ({ year }) => {
+        console.log("comparing year-->>>", year, "against asAtYear", scenario.asAtYear)
+        if (year < scenario.asAtYear) return false
+      },
+      {
+        message: `There year must be >= the scenario's asAtYear of ${scenario.asAtYear}`,
+        path: ["from"]
+      }
+    )
 
   return refinedTransferFormSchema
 }
@@ -37,7 +46,7 @@ export const getTransferFormSchema = (scenario: IScenario, id: string) => {
 export const BasicTransferFormSchema = z
   .object({
     // year: IsValidYear,
-    year: isValidYearBetween(),
+    year: z.coerce.number(),
     from: z.string(),
     to: z.string(),
     migrateAll: YesNoSchema.optional(),

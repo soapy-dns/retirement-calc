@@ -86,7 +86,8 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
                 </div>
                 <p className="col-span-11 py-2">
                   This scenario has an &apos;As at year&apos; in the past. It is therefore locked to further changes.
-                  You can still copy it to a new scenario. (The &apos;As at year&apos; will be updated accordingly.)
+                  You can still copy it to a new scenario. (Updates to the asAtDate will be made and context values
+                  updatesd as projected.)
                 </p>
               </div>
             </Alert>

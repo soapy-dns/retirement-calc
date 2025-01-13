@@ -23,43 +23,43 @@ export const IsFormNumber = z.preprocess((val) => castEmptyStringToUndefined(val
 const validStartYear = 2020
 const validEndYear = 2100
 
-export const isValidYearBetween = () => {
-  // return z.union([z.string(), z.number()]).refine(
+// export const isValidYearBetween = () => {
+//   // return z.union([z.string(), z.number()]).refine(
 
-  // we are lucky that although coerce "" -> 0, zero is still outside the year range
-  return z.coerce.number().refine(
-    (val) => {
-      // current year has to be calculated at the time of validation
+//   // we are lucky that although coerce "" -> 0, zero is still outside the year range
+//   return z.coerce.number().refine(
+//     (val) => {
+//       // current year has to be calculated at the time of validation
 
-      const currentYear = getCurrentYear() // this is incorrect.  It should be using the scenarios asAtYear
-      const fromX = currentYear
-      const toX = currentYear + 100
-      // true means its valid
-      if (Number.isNaN(val)) return false
+//       const currentYear = getCurrentYear() // this is incorrect.  It should be using the scenarios asAtYear
+//       const fromX = currentYear
+//       const toX = currentYear + 100
+//       // true means its valid
+//       if (Number.isNaN(val)) return false
 
-      const value = Number(val)
+//       const value = Number(val)
 
-      if (value >= fromX && value <= toX) return true
+//       if (value >= fromX && value <= toX) return true
 
-      return false
-    },
-    (val) => {
-      const currentYear = getCurrentYear()
-      const fromX = currentYear
-      const toX = currentYear + 100
-      return {
-        message: `The year is mandatory, and should be between ${fromX}, and ${toX}`
-      }
-    }
-  )
-  // return z.custom<number>((val) => {
-  //   if (Number.isNaN(val)) return false
+//       return false
+//     },
+//     (val) => {
+//       const currentYear = getCurrentYear()
+//       const fromX = currentYear
+//       const toX = currentYear + 100
+//       return {
+//         message: `The year is mandatory, and should be between ${fromX}, and ${toX}`
+//       }
+//     }
+//   )
+// return z.custom<number>((val) => {
+//   if (Number.isNaN(val)) return false
 
-  //   if (val >= from && val <= to) return true
+//   if (val >= from && val <= to) return true
 
-  //   return false
-  // })
-}
+//   return false
+// })
+// }
 
 // export const IsValidYear = z.union([z.string(), z.number()]).refine(
 //   (val) => {

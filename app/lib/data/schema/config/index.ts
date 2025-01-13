@@ -2,7 +2,7 @@ import { z } from "zod"
 
 import { assetsVsOwners, validateIncomeBucket } from "./validation"
 import { AssetSchema } from "./asset"
-import { CountryEnum, isValidYearBetween, YesNoSchema } from "./schemaUtils"
+import { CountryEnum, YesNoSchema } from "./schemaUtils"
 import { numberFormatter } from "@/app/ui/utils/formatter"
 import { stressTestOptions } from "../../options"
 import { sortByFromDate } from "@/app/lib/calculations/utils/sortObjectsByFromDate"
@@ -61,7 +61,7 @@ export const LivingExpensesSchema = z.object({
 const transferBaseSchema = z.object({
   id: z.string(),
   // year: IsValidYear,
-  year: isValidYearBetween(),
+  year: z.coerce.number(),
   from: z.string(),
   to: z.string(),
   migrateAll: z.boolean(),
@@ -201,6 +201,21 @@ export const ScenarioSchema = z
       return {
         message: `This row has the same year as the previous row.`,
         path: ["context.inflation", duplicateIndex, "fromYear"]
+      }
+    }
+  )
+  .refine(
+    ({ asAtYear, transfers }) => {
+      if (!transfers) return true
+
+      const invalidTransfer = transfers.find((transfer) => transfer.year < asAtYear)
+      if (invalidTransfer) return false
+      return true
+    },
+    ({ asAtYear }) => {
+      return {
+        message: `Transfer year must be >= 'As at year' of ${asAtYear}`,
+        path: ["transfers"]
       }
     }
   )

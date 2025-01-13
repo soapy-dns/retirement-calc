@@ -1,6 +1,6 @@
 import { number, z } from "zod"
 
-import { IsFormNumberOpt, isValidYearBetween, YesNoSchema } from "@/app/lib/data/schema/config/schemaUtils"
+import { IsFormNumberOpt, YesNoSchema } from "@/app/lib/data/schema/config/schemaUtils"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { IScenario } from "@/app/lib/data/schema/config"
 import { testForMultipleMigrateAllFrom, testForMultipleMigrateAllFromAndTo } from "./validation"
@@ -38,7 +38,7 @@ export const BasicTransferFormSchema = z
   .object({
     // year: IsValidYear,
     // year: z.number,
-    year: isValidYearBetween(),
+    year: z.coerce.number(),
     from: z.string(),
     to: z.string(),
     migrateAll: YesNoSchema.optional(),

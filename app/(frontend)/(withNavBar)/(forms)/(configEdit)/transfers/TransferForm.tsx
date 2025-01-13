@@ -8,7 +8,6 @@ import { FunctionComponent, useContext } from "react"
 import { Control } from "react-hook-form"
 import { transferConstants } from "./transferConstants"
 import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
-import { getCurrencyFormatter } from "@/app/ui/utils/formatter"
 
 interface Props {
   control: Control<any, object>
