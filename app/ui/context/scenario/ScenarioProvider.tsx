@@ -15,6 +15,8 @@ import { isIncomeAsset } from "../../utils"
 import { getNewScenario } from "../../../lib/scenario/getNewScenario"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 
+const WARNING_DURATION = 3000 // duration for warning messages
+
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
   const scenarioOptions = scenarios.map((scenario) => ({
     value: scenario.id,
@@ -59,7 +61,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
       const { asAtYear } = selectedScenario
       if (success && calculationMessage) {
         if (asAtYear >= currentYear) {
-          displayWarningAlert(calculationMessage, { duration: 3000 })
+          displayWarningAlert(calculationMessage, { duration: WARNING_DURATION })
         }
         // server actions will return a 200 error for validation messages.  This may change in future
       } else if (!success) {
