@@ -59,7 +59,6 @@ const yearRange = [2039, 2040, 2041, 2042]
 describe("test", () => {
   it("should get correctly formatted data", () => {
     const result = getAutoDrawdownCellData(totalDrawdowns, yearRange)
-    // console.log("--result--", result)
 
     const expectedResult = {
       "Joint Au bank accounts": [

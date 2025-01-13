@@ -38,7 +38,6 @@ describe("Cash calculate the next year's values", () => {
     const assets = [cashAsset]
 
     const result = cashAsset.calcNextYear(latestYearData, assets)
-    // console.log("--result--", result)
 
     expect(result.year).toBe(year + 1)
     expect(result.income).toBe(50000)
