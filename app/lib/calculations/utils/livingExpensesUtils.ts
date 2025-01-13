@@ -35,6 +35,7 @@ export const getLivingExpenses = (
 ) => {
   const livingExpensesTodaysMoney = getLivingExpensesInTodaysMoney(yearRange, livingExpenses)
 
+  // living expenses in the money of the future years
   const projectedLivingExpenses = livingExpensesTodaysMoney.map(({ year, value }) => {
     if (!inflationContext[year]) throw new Error(`No inflation configuration for year ${year}`)
     const factor = inflationContext[year].factor
@@ -50,11 +51,11 @@ export const getLivingExpenses = (
   const startYear = yearRange[0]
   const endYear = yearRange[yearRange.length - 1]
 
-  const filteredLivingExpensesTodaysMoney = livingExpensesTodaysMoney.filter((it) => {
+  const filteredLivingExpensesTodaysMoney: BasicYearData[] = livingExpensesTodaysMoney.filter((it) => {
     return it.year >= startYear && it.year <= endYear
   })
 
-  const filteredProjectedLivingExpenses = projectedLivingExpenses.filter((it) => {
+  const filteredProjectedLivingExpenses: BasicYearData[] = projectedLivingExpenses.filter((it) => {
     return it.year >= startYear && it.year <= endYear
   })
 

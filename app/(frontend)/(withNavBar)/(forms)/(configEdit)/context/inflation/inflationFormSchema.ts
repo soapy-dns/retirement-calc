@@ -1,13 +1,14 @@
 import { z } from "zod"
 import { IScenario, InflationRecord, InflationSchema } from "@/app/lib/data/schema/config"
+import { sortByFromDate } from "@/app/lib/calculations/utils/sortObjectsByFromDate"
 
-const sortByFromDate = (inflationRows: InflationRecord[]): InflationRecord[] => {
-  return inflationRows.sort((a, b) => {
-    if (a.fromYear > b.fromYear) return 1
-    if (a.fromYear < b.fromYear) return -1
-    return 0
-  })
-}
+// const sortByFromDate = (inflationRows: InflationRecord[]): InflationRecord[] => {
+//   return inflationRows.sort((a, b) => {
+//     if (a.fromYear > b.fromYear) return 1
+//     if (a.fromYear < b.fromYear) return -1
+//     return 0
+//   })
+// }
 
 const InflationFormSchema = z.object({
   items: z.array(InflationSchema)

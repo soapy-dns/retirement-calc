@@ -12,17 +12,20 @@ import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { TextAreaQuestion } from "@/app/ui/components/form/TextAreaQuestion"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
+import { StressTestSchema } from "@/app/lib/data/schema/config"
 
 import { scenarioConstants } from "../scenarioConstants"
 import { IsFormNumber } from "@/app/lib/data/schema/config/schemaUtils"
 import { useSearchParams } from "next/navigation"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
+import { StressTestEdit } from "../StressTestEdit"
+import { stressTestOptions } from "@/app/lib/data/options"
 
 // set years validation
 const FormSchema = z.object({
   name: z.string().min(3),
-  description: z.string().min(3)
-  // asAtYear: IsFormNumber
+  description: z.string().min(3),
+  stressTest: StressTestSchema
 })
 
 export type FormDataType = z.infer<typeof FormSchema>
@@ -39,10 +42,11 @@ export default function ScenarioPage(props: { params: Params }) {
 
   const debug = searchParams.get("debug")
 
-  const { name, description } = selectedScenario
-  const defaultValues = id === "add" ? {} : { name, description }
+  const { name, description, stressTest } = selectedScenario
+  const defaultValues = id === "add" ? {} : { name, description, stressTest }
   const {
     control,
+    watch,
     handleSubmit,
     formState: { errors, isDirty }
   } = useForm<FormDataType>({
@@ -55,13 +59,13 @@ export default function ScenarioPage(props: { params: Params }) {
   }
 
   const onSubmit = async (data: FormDataType) => {
-    const { name, description } = data
+    const { name, description, stressTest = "NONE" } = data
 
     if (id === "add") {
-      const { success } = await addScenario(name, description)
+      const { success } = await addScenario(name, description, stressTest)
       if (success) navigation.goBack()
     } else {
-      const updatedScenario = { ...selectedScenario, name, description }
+      const updatedScenario = { ...selectedScenario, name, description, stressTest }
 
       const { success } = await updateScenario(updatedScenario)
       if (success) navigation.goBack()
@@ -119,6 +123,7 @@ export default function ScenarioPage(props: { params: Params }) {
           helpText={scenarioConstants.AS_AT_YEAR.HELP_TEXT}
           disabled={true}
         /> */}
+        <StressTestEdit control={control} watch={watch} />
       </form>
     </EditPageLayout>
   )

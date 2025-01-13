@@ -1,5 +1,5 @@
+import { sortByFromDate } from "@/app/lib/calculations/utils/sortObjectsByFromDate"
 import { LivingExpensesRecord } from "@/app/lib/data/schema/config"
-import { sortByFromDate } from "../utils"
 
 describe("Living expenses sort", () => {
   it("should sort ok", () => {

@@ -37,7 +37,7 @@ export const getInflationContext = (yearRange: number[], inflationConfig: Inflat
       ...accum,
       [it.fromYear]: {
         inflation: it.inflationRate,
-        factor: previousYearConfig ? previousYearConfig.factor * addOnFactor : addOnFactor
+        factor: previousYearConfig ? previousYearConfig.factor * addOnFactor : addOnFactor // this is the factor to be appliedd at the END of the year
       }
     }
   }, {})

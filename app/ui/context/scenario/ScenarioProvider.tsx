@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 
 import { ScenarioContext } from "./ScenarioContext"
 import { ISelectOption } from "@/app/lib/data/types"
-import { IScenario } from "@/app/lib/data/schema/config"
+import { IScenario, StressTest } from "@/app/lib/data/schema/config"
 
 import { getDefaultScenarios } from "@/app/lib/data/scenarios"
 import { calculate } from "@/app/lib/calculations"
@@ -12,7 +12,7 @@ import { Spinner } from "../../components/common/Spinner"
 
 import { FormattedErrors } from "../../components/formattedErrors/FormattedErrors"
 import { isIncomeAsset } from "../../utils"
-import { getNewScenario } from "./getNewScenario"
+import { getNewScenario } from "../../../lib/scenario/getNewScenario"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
@@ -191,9 +191,15 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
   Note: although this is 'adding' a scenario, it is doing so by copying another. 
   If the as at date is in the past we will have to do some manipulations
   */
-  const addScenario = async (name: string, description: string): Promise<{ success: boolean }> => {
-    const newScenario = await getNewScenario(selectedScenario, name, description)
-    const { success } = await doCalculations(newScenario)
+  const addScenario = async (
+    name: string,
+    description: string,
+    stressTest: StressTest
+  ): Promise<{ success: boolean }> => {
+    const newScenario = await getNewScenario(selectedScenario, name, description, stressTest)
+
+    console.log("newScenario", newScenario)
+    const { success } = await doCalculations(newScenario) // this also updates the calculationResults in state.
 
     const mergedScenarios = scenarios.concat([newScenario])
 

@@ -13,6 +13,7 @@ import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { Card } from "@/app/ui/components/Card"
 import { DisplayCardWithEdit } from "@/app/ui/components/form/DisplayCardWithEdit"
 import { ButtonGroupEditRemove } from "@/app/ui/components/common/ButtonGroupEditRemove"
+import { StressTestDisplay } from "./StressTestDisplay"
 
 export const ScenarioDisplay: React.FunctionComponent = (props) => {
   const navigation = useNavigation()
@@ -92,11 +93,11 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
           </div>
         )}
 
-        {/* <TextDisplayField label="Stress test" value={stressTest || "NONE"} /> */}
-
         <TextDisplayField label={scenarioConstants.DESCRIPTION.LABEL} value={description || "n/a"} />
 
         <TextDisplayField label={scenarioConstants.AS_AT_YEAR.LABEL} value={asAtYear} />
+
+        <StressTestDisplay />
       </div>
 
       {asAtYear === getCurrentYear() && <EditButton />}

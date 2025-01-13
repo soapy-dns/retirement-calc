@@ -5,7 +5,7 @@ import { AssetSchema } from "./asset"
 import { CountryEnum, isValidYearBetween, YesNoSchema } from "./schemaUtils"
 import { numberFormatter } from "@/app/ui/utils/formatter"
 import { stressTestOptions } from "../../options"
-import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
+import { sortByFromDate } from "@/app/lib/calculations/utils/sortObjectsByFromDate"
 
 const cashContextSchema = z.object({
   interestRate: z.number()
@@ -42,16 +42,19 @@ const superContextSchema = z.object({
   investmentReturn: z.number() // net of fees but not taxation
   // taxationRate: z.number()
 })
-const currentYear = getCurrentYear()
+
+// will need to refine, but since this will require cross field validation, it will be done versus to scenario
 export const InflationSchema = z.object({
-  fromYear: isValidYearBetween(),
+  // fromYear: isValidYearBetween(),
+  fromYear: z.coerce.number(),
   // fromYear: IsValidYear,
   inflationRate: z.coerce.number()
 })
 
+// will need to refine, but since this will require cross field validation, it will be done versus to scenario
 export const LivingExpensesSchema = z.object({
-  // fromYear: IsValidYear,
-  fromYear: isValidYearBetween(),
+  // fromYear: isValidYearBetween(),
+  fromYear: z.coerce.number(),
   amountInTodaysTerms: z.coerce.number().nonnegative()
 })
 
@@ -116,7 +119,7 @@ const stressTestValues = stressTestOptions.map((it) => {
   return it.value
 }) as [string, ...string[]] // needs to have one value - weird zod shit
 
-const StressTestSchema = z.enum([...stressTestValues]).optional()
+export const StressTestSchema = z.enum([...stressTestValues]).optional()
 
 export const ScenarioSchema = z
   .object({
@@ -137,6 +140,70 @@ export const ScenarioSchema = z
   .refine(({ assets, context }) => assetsVsOwners(assets, context), {
     message: "An asset has no owners."
   })
+  .refine(
+    ({ asAtYear, context: { livingExpenses } }) => {
+      sortByFromDate(livingExpenses)
+      return livingExpenses[0].fromYear === asAtYear
+    },
+    ({ asAtYear }) => {
+      return {
+        message: `The first row should have a year matching the scenario's 'As at year' of ${asAtYear}`,
+        path: ["context.livingExpenses", 0, "fromYear"]
+      }
+    }
+  )
+  .refine(
+    ({ context: { livingExpenses } }) => {
+      sortByFromDate(livingExpenses)
+
+      // check for duplicates
+      const set = new Set(livingExpenses.map((it) => it.fromYear))
+      return set.size === livingExpenses.length
+    },
+    ({ context: { livingExpenses } }) => {
+      const duplicateIndex = livingExpenses.findIndex((item, index) => {
+        if (index === 0) return false
+        if (item.fromYear === livingExpenses[index - 1].fromYear) return true
+        return false
+      })
+      return {
+        message: `This row has the same year as the previous row.`,
+        path: ["context.livingExpenses", duplicateIndex, "fromYear"]
+      }
+    }
+  )
+  .refine(
+    ({ asAtYear, context: { inflation } }) => {
+      sortByFromDate(inflation)
+      return inflation[0].fromYear === asAtYear
+    },
+    ({ asAtYear }) => {
+      return {
+        message: `The first row should have a year matching the scenario's 'As at year' of ${asAtYear}`,
+        path: ["context.inflation", 0, "fromYear"]
+      }
+    }
+  )
+  .refine(
+    ({ context: { inflation } }) => {
+      sortByFromDate(inflation)
+
+      // check for duplicates
+      const set = new Set(inflation.map((it) => it.fromYear))
+      return set.size === inflation.length
+    },
+    ({ context: { inflation } }) => {
+      const duplicateIndex = inflation.findIndex((item, index) => {
+        if (index === 0) return false
+        if (item.fromYear === inflation[index - 1].fromYear) return true
+        return false
+      })
+      return {
+        message: `This row has the same year as the previous row.`,
+        path: ["context.inflation", duplicateIndex, "fromYear"]
+      }
+    }
+  )
 
 export type IScenario = z.infer<typeof ScenarioSchema>
 export type ContextConfig = z.infer<typeof ContextSchema>
@@ -147,6 +214,7 @@ export type DefinedBenefitsContext = z.infer<typeof definedBenefitsContextSchema
 export type PropertyContext = z.infer<typeof propertyContextSchema>
 export type SharesContext = z.infer<typeof sharesContextSchema>
 export type SuperContext = z.infer<typeof superContextSchema>
+export type StressTest = z.infer<typeof StressTestSchema>
 
 export * from "./asset"
 

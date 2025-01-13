@@ -31,7 +31,7 @@ export const isValidYearBetween = () => {
     (val) => {
       // current year has to be calculated at the time of validation
 
-      const currentYear = getCurrentYear()
+      const currentYear = getCurrentYear() // this is incorrect.  It should be using the scenarios asAtYear
       const fromX = currentYear
       const toX = currentYear + 100
       // true means its valid

@@ -3,7 +3,7 @@ import { IScenario, IAsset, ContextConfig } from "@/app/lib/data/schema/config"
 import { Asset } from "../../assets/Asset"
 import { buildInitialAssets } from "../../assets/assetUtils"
 import { getInflationContext } from "../../utils/getInflationContext"
-import { getYearRange } from "../../utils/yearRange"
+import { getYearRange } from "../../utils/getYearRange"
 
 export const simpleAuContext: ContextConfig = {
   taxResident: "AU",
