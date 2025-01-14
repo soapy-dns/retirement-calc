@@ -25,7 +25,7 @@ export const getNewScenario = async (
     asAtYear: thisYear
   }
 
-  if (!isYearUpdated) throw new Error("Year is not updated")
+  if (!isYearUpdated) return newScenario
 
   // remove historical transfers
   const newTransfers = !newScenario.transfers
