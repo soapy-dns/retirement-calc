@@ -123,7 +123,8 @@ const ContextSchema = z.object({
 // export const StressTestSchema = z.enum([...stressTestValues]).optional()
 
 // I tried to get this from stressTestOptions, but it didn't work well.  Maybe readOnly?
-export const StressTestEnum = z.enum(["NONE", "LOWER_RETURNS", "MARKET_CRASH", "CARE_REQUIRED", "EXCHANGE_RATE"])
+// export const StressTestEnum = z.enum(["NONE", "LOWER_RETURNS", "MARKET_CRASH", "CARE_REQUIRED", "EXCHANGE_RATE"])
+export const StressTestEnum = z.enum(["NONE", "LOWER_RETURNS", "MARKET_CRASH", "PROPERTY_CRASH"])
 
 export const ScenarioSchema = z
   .object({
