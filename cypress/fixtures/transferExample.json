@@ -4,6 +4,7 @@
     "name": "Transfer example",
     "description": "Transfer example - one bank account to another.",
     "asAtYear": 2025,
+    "stressTest": "NONE",
     "assets": [
       {
         "id": "1",

@@ -1,5 +1,6 @@
 import { useRouter } from "next/navigation"
 import { AppPath } from "../types"
+import { useAppAlert } from "./useAppAlert"
 
 export interface Option {
   // id: string
@@ -8,6 +9,7 @@ export interface Option {
 
 export const useNavigation = () => {
   const router = useRouter()
+  const { clearAlerts } = useAppAlert()
 
   const goBack = () => {
     router.back()
@@ -15,6 +17,8 @@ export const useNavigation = () => {
 
   // TODO: there may be a simpler way.  just trying to think of migration to nextjs
   const goTo = (appPath: AppPath, options?: Option) => {
+    clearAlerts()
+
     if (!options) return router.push(appPath)
     const path = Object.entries(options)?.reduce((accum: string, [key, value]: [string, string]) => {
       const regEx = new RegExp(`:${key}`)

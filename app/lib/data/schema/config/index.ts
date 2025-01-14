@@ -114,12 +114,16 @@ const ContextSchema = z.object({
 //       message: `Living expenses for ${livingExpenses[0].fromYear} has no matching inflation rate.`
 //     }
 //   }
-// )
-const stressTestValues = stressTestOptions.map((it) => {
-  return it.value
-}) as [string, ...string[]] // needs to have one value - weird zod shit
+// // )
+// const stressTestValues = stressTestOptions.map((it) => {
+//   return it.value
+// }) as [string, ...string[]] // needs to have one value - weird zod shit
+// // export const CountryEnum = z.enum(["AU", "SC", "EN", "WA", "NI"])
 
-export const StressTestSchema = z.enum([...stressTestValues]).optional()
+// export const StressTestSchema = z.enum([...stressTestValues]).optional()
+
+// I tried to get this from stressTestOptions, but it didn't work well.  Maybe readOnly?
+export const StressTestEnum = z.enum(["NONE", "LOW_RETURNS", "MARKET_CRASH", "CARE_REQUIRED", "EXCHANGE_RATE"])
 
 export const ScenarioSchema = z
   .object({
@@ -128,8 +132,7 @@ export const ScenarioSchema = z
     name: z.string(),
     description: z.string().optional(),
     asAtYear: z.number(),
-    stressTest: StressTestSchema.optional(),
-    // stressTest: z.enum(["LOW_RETURN", "MARKET_CRASH", "CARE_REQUIRED"]).optional(),
+    stressTest: StressTestEnum,
     assets: z.array(AssetSchema),
     context: ContextSchema,
     transfers: z.array(TransferSchema).optional()
@@ -212,10 +215,13 @@ export const ScenarioSchema = z
       if (invalidTransfer) return false
       return true
     },
-    ({ asAtYear }) => {
+
+    ({ asAtYear, transfers }) => {
+      const invalidTransferIndex = transfers?.findIndex((transfer) => transfer.year < asAtYear)
+
       return {
         message: `Transfer year must be >= 'As at year' of ${asAtYear}`,
-        path: ["transfers"]
+        path: ["transfers", invalidTransferIndex ?? ""]
       }
     }
   )
@@ -229,7 +235,7 @@ export type DefinedBenefitsContext = z.infer<typeof definedBenefitsContextSchema
 export type PropertyContext = z.infer<typeof propertyContextSchema>
 export type SharesContext = z.infer<typeof sharesContextSchema>
 export type SuperContext = z.infer<typeof superContextSchema>
-export type StressTest = z.infer<typeof StressTestSchema>
+export type StressTest = z.infer<typeof StressTestEnum>
 
 export * from "./asset"
 

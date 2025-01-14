@@ -198,7 +198,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     description: string,
     stressTest: StressTest
   ): Promise<{ success: boolean }> => {
-    const newScenario = await getNewScenario(selectedScenario, name, description, stressTest)
+    const newScenario = await getNewScenario(selectedScenario, name, description, (stressTest = "NONE"))
 
     console.log("newScenario", newScenario)
     const { success } = await doCalculations(newScenario) // this also updates the calculationResults in state.

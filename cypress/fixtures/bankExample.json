@@ -4,6 +4,7 @@
     "name": "Bank example",
     "description": "Interest rate get applied to both, but the interest from 1 bank account gets accumulated in the other",
     "asAtYear": 2025,
+    "stressTest": "NONE",
     "assets": [
       {
         "name": "UK Bank",

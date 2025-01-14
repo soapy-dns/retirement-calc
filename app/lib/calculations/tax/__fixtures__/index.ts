@@ -56,6 +56,8 @@ const simpleAuScenarioWithDefinedContributions: IScenario = {
   name: "AUDC",
   description: "scenario description",
   asAtYear: 2024,
+  stressTest: "NONE",
+
   context: simpleAuContext,
   assets: [definedContributionsAssetConfig]
 }

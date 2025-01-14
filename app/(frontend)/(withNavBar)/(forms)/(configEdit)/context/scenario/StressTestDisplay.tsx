@@ -14,7 +14,7 @@ export const StressTestDisplay: React.FunctionComponent = (props) => {
   const { summary, label } = option || {}
   return (
     <>
-      <TextDisplayField label={scenarioConstants.STRESS_TEST.LABEL} value={label || "NONE"} />{" "}
+      <TextDisplayField label={scenarioConstants.STRESS_TEST.LABEL} value={label || ""} />
       {summary && (
         <div className="ml-4">
           <Alert heading="Details" alertType={AlertType.INFO}>

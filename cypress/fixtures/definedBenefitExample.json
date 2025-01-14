@@ -4,6 +4,7 @@
     "name": "Defined benefits example",
     "description": "Defined benefits example",
     "asAtYear": 2025,
+    "stressTest": "NONE",
     "assets": [
       {
         "id": "JOINT_AU_BANK",

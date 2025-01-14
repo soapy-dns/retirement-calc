@@ -18,6 +18,10 @@ const useAppAlert = () => {
     }
   }
 
+  const clearAlerts = () => {
+    toast.remove()
+  }
+
   const displayWarningAlert = (
     message: string | JSX.Element,
     toastOptions?: CustomToastOptions,
@@ -120,7 +124,8 @@ const useAppAlert = () => {
     displayInfoAlert,
     displayWarningAlert,
     displayErrorAlert,
-    displaySuccessAlert
+    displaySuccessAlert,
+    clearAlerts
   }
 }
 

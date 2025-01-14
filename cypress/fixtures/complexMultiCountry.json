@@ -4,6 +4,7 @@
     "name": "Multi-country example",
     "description": "Complex example.",
     "asAtYear": 2025,
+    "stressTest": "NONE",
     "assets": [
       {
         "id": "HIS_AU_SUPER",

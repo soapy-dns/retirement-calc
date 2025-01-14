@@ -142,6 +142,7 @@ export const getDefaultScenarios = (): IScenario[] => {
       name: "Scottish example",
       description: "Scottish example",
       asAtYear: currentYear,
+      stressTest: "NONE",
       assets: [
         {
           id: "JOINT_AU_BANK",

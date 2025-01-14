@@ -4,6 +4,7 @@
     "name": "Property example",
     "description": "Property example",
     "asAtYear": 2025,
+    "stressTest": "NONE",
     "assets": [
       {
         "id": "JOINT_AU_BANK",

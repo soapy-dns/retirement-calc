@@ -50,11 +50,11 @@ export const TransferDisplay: FunctionComponent<Props> = ({ transfers }) => {
 
   return (
     <div className="ml-4">
-      {transfers.map((transfer) => {
+      {transfers.map((transfer, index) => {
         const { id, year, from, to, value, migrateAll, costOfTransfer } = transfer
 
         return (
-          <Card key={transfer.from}>
+          <Card key={index}>
             <TextDisplayField label={transferConstants.YEAR.LABEL} value={year} />
             <TextDisplayField label={transferConstants.FROM.LABEL} value={getDisplayValue(from)} />
             <TextDisplayField label={transferConstants.TO.LABEL} value={getDisplayValue(to)} />
