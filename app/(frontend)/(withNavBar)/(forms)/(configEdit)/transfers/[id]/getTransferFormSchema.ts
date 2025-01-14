@@ -31,7 +31,7 @@ export const getTransferFormSchema = (scenario: IScenario, id: string) => {
     )
     .refine(
       ({ year }) => {
-        return year > scenario.asAtYear
+        return year >= scenario.asAtYear
       },
       {
         message: `The year must be >= the scenario's 'As at year' of ${scenario.asAtYear}`,
