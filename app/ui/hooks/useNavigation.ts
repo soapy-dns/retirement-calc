@@ -12,6 +12,7 @@ export const useNavigation = () => {
   const { clearAlerts } = useAppAlert()
 
   const goBack = () => {
+    clearAlerts()
     router.back()
   }
 
