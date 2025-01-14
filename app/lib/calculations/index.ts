@@ -36,6 +36,7 @@ import { getTaxDetailsByOwner } from "./utils/getTaxDetailsByOwner"
 import { getAccumulatedData, getAccumulatedNPVData } from "./tax/getAccumulatedTaxData"
 import { getInflationFactor } from "./utils/getInflationFactor"
 import { removeUnusedHistory } from "./utils/removeUnusedHistory"
+import { applyStressTests } from "./stressTests/applyStressTests"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -67,7 +68,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     }
   }
 
-  const scenario = result.data as IScenario
+  const scenario = applyStressTests(result.data)
+  // const scenario = result.data as IScenario
   const { asAtYear } = scenario
 
   try {
