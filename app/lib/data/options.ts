@@ -6,8 +6,8 @@ export const stressTestOptions = [
     summary: "No stress test applied.  All calculations will be made in line with the defined context."
   },
   {
-    label: "Low Returns",
-    value: "LOW_RETURNS",
+    label: "Lower Returns",
+    value: "LOWER_RETURNS",
     summary: "Assuming 1% lower returns on equities."
   },
   {

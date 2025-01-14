@@ -1,4 +1,5 @@
 import { IScenario } from "../../data/schema/config"
+import { applyLowerReturns } from "./applyLowerReturns"
 import { applyMarketCrash } from "./applyMarketCrash"
 
 export const applyStressTests = (scenario: IScenario) => {
@@ -9,10 +10,10 @@ export const applyStressTests = (scenario: IScenario) => {
 
     case "MARKET_CRASH":
       return applyMarketCrash(scenario)
-    // case "Global Pandemic":
-    //   return applyGlobalPandemic(scenario)
-    // case "Recession":
-    //   return applyRecession(scenario)
+
+    case "LOWER_RETURNS":
+      return applyLowerReturns(scenario)
+
     default:
       return scenario
   }
