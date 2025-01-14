@@ -3,7 +3,8 @@
     "id": "e0fc55d7-c55a-45fe-90fb-b9dd63a70d50",
     "name": "Property example",
     "description": "Property example",
-    "asAtYear": 2024,
+    "asAtYear": 2025,
+    "stressTest": "NONE",
     "assets": [
       {
         "id": "JOINT_AU_BANK",
@@ -60,24 +61,24 @@
       },
       "inflation": [
         {
-          "fromYear": 2024,
+          "fromYear": 2025,
           "inflationRate": 0.04
         },
         {
-          "fromYear": 2025,
+          "fromYear": 2026,
           "inflationRate": 0.03
         }
       ],
       "livingExpenses": [
         {
-          "fromYear": 2024,
+          "fromYear": 2025,
           "amountInTodaysTerms": 50000
         }
       ]
     },
     "transfers": [
       {
-        "year": 2026,
+        "year": 2027,
         "from": "AU_PROPERTY",
         "to": "JOINT_AU_BANK",
         "migrateAll": true,

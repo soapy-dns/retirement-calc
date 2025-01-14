@@ -2,11 +2,12 @@
 
 import React, { useContext, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
+// import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
-import { ContextConfig } from "@/app/lib/data/schema/config"
+import { ContextConfig, LivingExpensesSchema } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { InputField } from "@/app/ui/components/form/InputField"
 import { DECIMALS_ONLY, INTEGERS_ONLY } from "@/app/ui/components/common/formRegExes"
@@ -17,8 +18,12 @@ import { YearValueForm } from "@/app/ui/components/YearValueForm"
 import { GenericModal } from "@/app/ui/components/modals/GenericModal"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
-import { FormDataType, getFormSchema } from "./types"
+import { FormDataType, getLivingExpensesFormSchema } from "./livingExpenseFormSchema"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
+
+// const LivingExpensesFormSchema = z.object({
+//   items: z.array(LivingExpensesSchema)
+// })
 
 const LivingExpensesPage: React.FC = () => {
   const navigation = useNavigation()
@@ -36,7 +41,7 @@ const LivingExpensesPage: React.FC = () => {
     formState: { isDirty, errors }
   } = useForm<FormDataType>({
     defaultValues: { items: livingExpenses },
-    resolver: zodResolver(getFormSchema(selectedScenario)),
+    resolver: zodResolver(getLivingExpensesFormSchema(selectedScenario)),
     mode: "onBlur",
     reValidateMode: "onBlur"
   })

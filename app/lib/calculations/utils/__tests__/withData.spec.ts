@@ -23,8 +23,6 @@ describe("withData test", () => {
     }
     const result = withData({ ...assetDataWith, ...assetDataWithout })
 
-    console.log("--result--", result)
-
     expect(result).toEqual(assetDataWith)
   })
 })

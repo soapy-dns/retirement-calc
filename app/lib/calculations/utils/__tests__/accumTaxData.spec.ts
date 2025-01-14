@@ -73,7 +73,6 @@ describe("accumTaxData", () => {
     ]
 
     const result = accumTaxData(input)
-    // console.log("--result--", result)
     expect(result).toEqual(expectedOutput)
   })
 

@@ -3,7 +3,8 @@
     "id": "K",
     "name": "Transfer example",
     "description": "Transfer example - one bank account to another.",
-    "asAtYear": 2024,
+    "asAtYear": 2025,
+    "stressTest": "NONE",
     "assets": [
       {
         "id": "1",
@@ -55,13 +56,13 @@
       "inflation": [
         {
           "$comment": "need to make from year configurable",
-          "fromYear": 2024,
+          "fromYear": 2025,
           "inflationRate": 0
         }
       ],
       "livingExpenses": [
         {
-          "fromYear": 2024,
+          "fromYear": 2025,
           "amountInTodaysTerms": 0
         }
       ]
@@ -69,7 +70,7 @@
     "transfers": [
       {
         "id": "1",
-        "year": 2024,
+        "year": 2025,
         "from": "1",
         "to": "2",
         "migrateAll": false,

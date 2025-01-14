@@ -12,6 +12,7 @@ import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { ConfigNavBar } from "../../../../ui/navbar/ConfigNavBar"
 import Scenarios from "@/docs/info/ScenarioInfo.mdx"
 import { InfoButton } from "@/app/ui/components/common/accordian/InfoButton"
+import { Divider } from "@/app/ui/components/common/Divider"
 
 const ConfigPage: React.FC = () => {
   const { activeTab } = useContext(ConfigTabContext)
@@ -35,6 +36,7 @@ const ConfigPage: React.FC = () => {
       <div className="mt-4 mb-12">
         <ScenarioDisplay />
       </div>
+      {/* <Divider /> */}
 
       <ConfigNavBar />
 

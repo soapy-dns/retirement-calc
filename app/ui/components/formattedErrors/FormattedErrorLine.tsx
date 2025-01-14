@@ -11,6 +11,8 @@ interface ComponentProps {
 export const FormattedErrorLine: React.FC<ComponentProps> = ({ error, assets, transfers }) => {
   let path, linkText
 
+  console.log("error", error)
+
   if (error.path[0] === "context") {
     console.log("error.path", error.path)
     path = `/context/${error.path[1]}`
@@ -61,7 +63,8 @@ export const FormattedErrorLine: React.FC<ComponentProps> = ({ error, assets, tr
           {error.message} */}
         </>
       )}
-      {!path && <div>{error.message}</div>}
+      {/* {!path && <div>{error.message}</div>} */}
+      {!path && <div>{`Invalid configuration. ${path}, ${linkText}`}</div>}
     </li>
   )
 }

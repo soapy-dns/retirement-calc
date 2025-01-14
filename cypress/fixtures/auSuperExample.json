@@ -3,7 +3,8 @@
     "id": "AU_SUPER",
     "name": "Australian super example",
     "description": "Australian super example",
-    "asAtYear": 2024,
+    "asAtYear": 2025,
+    "stressTest": "NONE",
     "assets": [
       {
         "id": "JOINT_AU_BANK",
@@ -63,13 +64,13 @@
       },
       "inflation": [
         {
-          "fromYear": 2024,
+          "fromYear": 2025,
           "inflationRate": 0.01
         }
       ],
       "livingExpenses": [
         {
-          "fromYear": 2024,
+          "fromYear": 2025,
           "amountInTodaysTerms": 50000
         }
       ]

@@ -10,5 +10,10 @@ export const scenarioConstants = {
   AS_AT_YEAR: {
     LABEL: "As at year",
     HELP_TEXT: "The year the scenario begins."
+  },
+  STRESS_TEST: {
+    LABEL: "Stress test",
+    HELP_TEXT:
+      "To see how robust the projections are, we can apply an unforseen event to the scenario which will have an impact on the result."
   }
 }

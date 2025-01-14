@@ -10,6 +10,10 @@ import { LockClosedIcon, PencilSquareIcon, PlusCircleIcon, TrashIcon } from "@he
 import { scenarioConstants } from "./scenarioConstants"
 import { ButtonGroup } from "@/app/ui/components/common/ButtonGroup"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
+import { Card } from "@/app/ui/components/Card"
+import { DisplayCardWithEdit } from "@/app/ui/components/form/DisplayCardWithEdit"
+import { ButtonGroupEditRemove } from "@/app/ui/components/common/ButtonGroupEditRemove"
+import { StressTestDisplay } from "./StressTestDisplay"
 
 export const ScenarioDisplay: React.FunctionComponent = (props) => {
   const navigation = useNavigation()
@@ -29,21 +33,24 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
     }
   }
 
-  const { name, description, asAtYear } = selectedScenario
+  const { name, description, asAtYear, stressTest } = selectedScenario
 
   const removeButtonDisabled = scenarios?.length === 1
 
   const EditButton = () => (
-    <Button buttonType={ButtonType.tertiary} onClick={handleEdit}>
-      <div className="flex items-center justify-center gap-2">
-        <PencilSquareIcon className="h-6 w-6" />
-        <div>Edit</div>
-      </div>
-    </Button>
+    <div className="mx-auto my-6 w-3/4">
+      <Button buttonType={ButtonType.primary} onClick={handleEdit}>
+        <div className="flex items-center gap-2">
+          <PencilSquareIcon className="h-6 w-6" />
+          <div>Edit</div>
+        </div>
+      </Button>
+    </div>
   )
 
   return (
-    <>
+    <Card>
+      <h2 className="text-primary flex justify-center">{name}</h2>
       <div className="mb-8">
         <ButtonGroup>
           <Button buttonType={ButtonType.tertiary} onClick={handleAdd}>
@@ -79,21 +86,21 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
                 </div>
                 <p className="col-span-11 py-2">
                   This scenario has an &apos;As at year&apos; in the past. It is therefore locked to further changes.
-                  You can still copy it to a new scenario. (The &apos;As at year&apos; will be updated accordingly.)
+                  You can still copy it (with necessary amendments) to a new scenario.
                 </p>
               </div>
             </Alert>
           </div>
         )}
 
-        <TextDisplayField label={scenarioConstants.NAME.LABEL} value={name} />
-        {asAtYear === getCurrentYear() && <EditButton />}
-
         <TextDisplayField label={scenarioConstants.DESCRIPTION.LABEL} value={description || "n/a"} />
-        {asAtYear === getCurrentYear() && <EditButton />}
 
         <TextDisplayField label={scenarioConstants.AS_AT_YEAR.LABEL} value={asAtYear} />
+
+        <StressTestDisplay />
       </div>
-    </>
+
+      {asAtYear === getCurrentYear() && <EditButton />}
+    </Card>
   )
 }

@@ -16,7 +16,7 @@ import { AutomatedDrawdown } from "./autoDrawdowns/types"
 import { applyAutoDrawdowns } from "./autoDrawdowns/drawdown"
 import { getInflationContext } from "./utils/getInflationContext"
 import { calculateTotalAssetIncomeAmt } from "./assetIncome/utils"
-import { getYearRange } from "./utils/yearRange"
+import { getYearRange } from "./utils/getYearRange"
 import { getEarningsTaxCalculator, getEarningsTaxName, getIncomeTaxCalculator } from "./tax/taxCalcs/getTaxCalculator"
 import { AssetData, AssetSplitItem, BasicYearData, CalculationResults, SurplusYearData, YearData } from "./types"
 import { getAssetSplitByYear } from "./assets/getAssetClasses"
@@ -35,9 +35,7 @@ import { getIncomeByOwner } from "./utils/getIncomeByOwner"
 import { getTaxDetailsByOwner } from "./utils/getTaxDetailsByOwner"
 import { getAccumulatedData, getAccumulatedNPVData } from "./tax/getAccumulatedTaxData"
 import { getInflationFactor } from "./utils/getInflationFactor"
-import { removeUnusedHistoryFromTaxes } from "./tax/removeUnusedHistoryFromTaxes"
 import { removeUnusedHistory } from "./utils/removeUnusedHistory"
-import { log } from "console"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -50,6 +48,9 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
   await sleep(1)
   // console.log("--calculate data--", JSON.stringify(data, null, 4))
   // console.log("--data.context--", data.context);
+  // const stressTestValues = stressTestOptions.map((it) => {
+  //   return it.value
+  // })
 
   const result = ScenarioSchema.safeParse(data)
 
@@ -83,7 +84,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const { context } = scenario
 
     const {
-      numOfYears = 50,
+      numOfYears,
       taxResident = "AU",
       inflation: inflationConfig,
       owners,
@@ -333,7 +334,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     // console.log("--taxes--", taxes)
     // const earningTaxRows = withData(getTaxesRows(earningsTaxes, finalYear, earningsTaxName))
 
-    // TODO: warning - if change this other things may break.  should be a key
+    // TODO: warning - if change this other things may break.  should be a key.
     const livingExpensesRows = {
       "Living expenses (today's money)": livingExpensesTodaysMoneyToDisplay,
       "Living expenses": projectedLivingExpensesToDisplay

@@ -1,21 +1,22 @@
 import { z } from "zod"
 import { IScenario, InflationRecord, InflationSchema } from "@/app/lib/data/schema/config"
+import { sortByFromDate } from "@/app/lib/calculations/utils/sortObjectsByFromDate"
 
-const sortByFromDate = (inflationRows: InflationRecord[]): InflationRecord[] => {
-  return inflationRows.sort((a, b) => {
-    if (a.fromYear > b.fromYear) return 1
-    if (a.fromYear < b.fromYear) return -1
-    return 0
-  })
-}
+// const sortByFromDate = (inflationRows: InflationRecord[]): InflationRecord[] => {
+//   return inflationRows.sort((a, b) => {
+//     if (a.fromYear > b.fromYear) return 1
+//     if (a.fromYear < b.fromYear) return -1
+//     return 0
+//   })
+// }
 
-const FormSchema = z.object({
+const InflationFormSchema = z.object({
   items: z.array(InflationSchema)
 })
 
 export const getFormSchema = (scenario: IScenario) => {
   const { asAtYear } = scenario
-  const refinedFormSchema = FormSchema
+  const refinedInflationFormSchema = InflationFormSchema
     // .refine(
     //   ({ items }) => {
     //     const unsortedItems = [...items]
@@ -74,7 +75,7 @@ export const getFormSchema = (scenario: IScenario) => {
       }
     )
 
-  return refinedFormSchema
+  return refinedInflationFormSchema
 }
 
-export type FormDataType = z.infer<typeof FormSchema>
+export type FormDataType = z.infer<typeof InflationFormSchema>

@@ -1,6 +1,8 @@
-import { LivingExpensesRecord } from "@/app/lib/data/schema/config"
+interface ObjectWithFromDate {
+  fromYear: number
+}
 
-export const sortByFromDate = (rows: LivingExpensesRecord[]) => {
+export const sortByFromDate = <T extends ObjectWithFromDate>(rows: T[]) => {
   rows.sort((a, b) => {
     if (a.fromYear > b.fromYear) return 1
     if (a.fromYear < b.fromYear) return -1

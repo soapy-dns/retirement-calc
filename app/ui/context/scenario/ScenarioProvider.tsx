@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 
 import { ScenarioContext } from "./ScenarioContext"
 import { ISelectOption } from "@/app/lib/data/types"
-import { IScenario } from "@/app/lib/data/schema/config"
+import { IScenario, StressTest } from "@/app/lib/data/schema/config"
 
 import { getDefaultScenarios } from "@/app/lib/data/scenarios"
 import { calculate } from "@/app/lib/calculations"
@@ -12,8 +12,10 @@ import { Spinner } from "../../components/common/Spinner"
 
 import { FormattedErrors } from "../../components/formattedErrors/FormattedErrors"
 import { isIncomeAsset } from "../../utils"
-import { getNewScenario } from "./getNewScenario"
+import { getNewScenario } from "../../../lib/scenario/getNewScenario"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
+
+const WARNING_DURATION = 3000 // duration for warning messages
 
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
   const scenarioOptions = scenarios.map((scenario) => ({
@@ -59,7 +61,7 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
       const { asAtYear } = selectedScenario
       if (success && calculationMessage) {
         if (asAtYear >= currentYear) {
-          displayWarningAlert(calculationMessage, { duration: 10000 })
+          displayWarningAlert(calculationMessage, { duration: WARNING_DURATION })
         }
         // server actions will return a 200 error for validation messages.  This may change in future
       } else if (!success) {
@@ -98,8 +100,6 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
 
     if (!defaultSelectedScenario) throw new Error("No scenario found in import file")
 
-    const { success, calculationResults } = await doCalculations(defaultSelectedScenario)
-
     const scenarioOptions = getScenarioOptions(scenarios)
     const selectedScenarioOption = scenarioOptions.find((it) => it.value === defaultSelectedScenario.id)
 
@@ -110,6 +110,12 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
 
     sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
     sessionStorage.setItem("selectedScenario", JSON.stringify(defaultSelectedScenario))
+
+    // const currentYear = getCurrentYear()
+    // if (defaultScenarios[0].asAtYear >= currentYear) {
+    // }
+
+    const { success, calculationResults } = await doCalculations(defaultSelectedScenario)
 
     return { success, calculationResults }
   }
@@ -187,9 +193,15 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
   Note: although this is 'adding' a scenario, it is doing so by copying another. 
   If the as at date is in the past we will have to do some manipulations
   */
-  const addScenario = async (name: string, description: string): Promise<{ success: boolean }> => {
-    const newScenario = await getNewScenario(selectedScenario, name, description)
-    const { success } = await doCalculations(newScenario)
+  const addScenario = async (
+    name: string,
+    description: string,
+    stressTest: StressTest
+  ): Promise<{ success: boolean }> => {
+    const newScenario = await getNewScenario(selectedScenario, name, description, (stressTest = "NONE"))
+
+    console.log("newScenario", newScenario)
+    const { success } = await doCalculations(newScenario) // this also updates the calculationResults in state.
 
     const mergedScenarios = scenarios.concat([newScenario])
 

@@ -3,7 +3,8 @@
     "id": "A",
     "name": "rate variation examples",
     "description": "rate variation examples",
-    "asAtYear": 2024,
+    "asAtYear": 2025,
+    "stressTest": "NONE",
     "assets": [
       {
         "id": "JOINT_AU_BANK",
@@ -78,8 +79,8 @@
         "assetOwners": ["HIM"],
         "property": {
           "isRented": false,
-          "rentalStartYear": 2024,
-          "rentalEndYear": 2026,
+          "rentalStartYear": 2025,
+          "rentalEndYear": 2027,
           "rentalIncomePerMonth": 2000,
           "rentalExpensesPerMonth": 500
         }
@@ -120,7 +121,7 @@
         "assetOwners": ["HIM"],
         "canDrawdown": false,
         "drawdown": {
-          "drawdownFrom": 2026,
+          "drawdownFrom": 2027,
           "drawdownOrder": 50
         }
       },
@@ -184,13 +185,13 @@
       },
       "inflation": [
         {
-          "fromYear": 2024,
+          "fromYear": 2025,
           "inflationRate": 0.03
         }
       ],
       "livingExpenses": [
         {
-          "fromYear": 2024,
+          "fromYear": 2025,
           "amountInTodaysTerms": 0
         }
       ]

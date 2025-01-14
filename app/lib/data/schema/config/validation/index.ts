@@ -69,6 +69,20 @@ export const incomeValidator = {
   }
 }
 
+// export const validYear = {
+//   // how would I pass validStartYear in?
+//   validator: (val: string) => {
+//     // true means its valid
+//     if (Number.isNaN(val)) return false
+
+//     const value = Number(val)
+
+//     if (value >= validStartYear && value <= validEndYear) return true
+
+//     return false
+//   }
+// }
+
 export const drawdownOrderValidator = {
   validator: (data: { className: AssetClass }): boolean => {
     const { className } = data

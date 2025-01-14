@@ -2,8 +2,10 @@ import { z } from "zod"
 
 import { assetsVsOwners, validateIncomeBucket } from "./validation"
 import { AssetSchema } from "./asset"
-import { CountryEnum, IsValidYear, YesNoSchema } from "./schemaUtils"
+import { CountryEnum, YesNoSchema } from "./schemaUtils"
 import { numberFormatter } from "@/app/ui/utils/formatter"
+import { stressTestOptions } from "../../options"
+import { sortByFromDate } from "@/app/lib/calculations/utils/sortObjectsByFromDate"
 
 const cashContextSchema = z.object({
   interestRate: z.number()
@@ -41,19 +43,25 @@ const superContextSchema = z.object({
   // taxationRate: z.number()
 })
 
+// will need to refine, but since this will require cross field validation, it will be done versus to scenario
 export const InflationSchema = z.object({
-  fromYear: IsValidYear,
+  // fromYear: isValidYearBetween(),
+  fromYear: z.coerce.number(),
+  // fromYear: IsValidYear,
   inflationRate: z.coerce.number()
 })
 
+// will need to refine, but since this will require cross field validation, it will be done versus to scenario
 export const LivingExpensesSchema = z.object({
-  fromYear: IsValidYear,
+  // fromYear: isValidYearBetween(),
+  fromYear: z.coerce.number(),
   amountInTodaysTerms: z.coerce.number().nonnegative()
 })
 
 const transferBaseSchema = z.object({
   id: z.string(),
-  year: IsValidYear,
+  // year: IsValidYear,
+  year: z.coerce.number(),
   from: z.string(),
   to: z.string(),
   migrateAll: z.boolean(),
@@ -106,7 +114,16 @@ const ContextSchema = z.object({
 //       message: `Living expenses for ${livingExpenses[0].fromYear} has no matching inflation rate.`
 //     }
 //   }
-// )
+// // )
+// const stressTestValues = stressTestOptions.map((it) => {
+//   return it.value
+// }) as [string, ...string[]] // needs to have one value - weird zod shit
+// // export const CountryEnum = z.enum(["AU", "SC", "EN", "WA", "NI"])
+
+// export const StressTestSchema = z.enum([...stressTestValues]).optional()
+
+// I tried to get this from stressTestOptions, but it didn't work well.  Maybe readOnly?
+export const StressTestEnum = z.enum(["NONE", "LOW_RETURNS", "MARKET_CRASH", "CARE_REQUIRED", "EXCHANGE_RATE"])
 
 export const ScenarioSchema = z
   .object({
@@ -115,6 +132,7 @@ export const ScenarioSchema = z
     name: z.string(),
     description: z.string().optional(),
     asAtYear: z.number(),
+    stressTest: StressTestEnum,
     assets: z.array(AssetSchema),
     context: ContextSchema,
     transfers: z.array(TransferSchema).optional()
@@ -125,6 +143,88 @@ export const ScenarioSchema = z
   .refine(({ assets, context }) => assetsVsOwners(assets, context), {
     message: "An asset has no owners."
   })
+  .refine(
+    ({ asAtYear, context: { livingExpenses } }) => {
+      sortByFromDate(livingExpenses)
+      return livingExpenses[0].fromYear === asAtYear
+    },
+    ({ asAtYear }) => {
+      return {
+        message: `The first row should have a year matching the scenario's 'As at year' of ${asAtYear}`,
+        path: ["context.livingExpenses", 0, "fromYear"]
+      }
+    }
+  )
+  .refine(
+    ({ context: { livingExpenses } }) => {
+      sortByFromDate(livingExpenses)
+
+      // check for duplicates
+      const set = new Set(livingExpenses.map((it) => it.fromYear))
+      return set.size === livingExpenses.length
+    },
+    ({ context: { livingExpenses } }) => {
+      const duplicateIndex = livingExpenses.findIndex((item, index) => {
+        if (index === 0) return false
+        if (item.fromYear === livingExpenses[index - 1].fromYear) return true
+        return false
+      })
+      return {
+        message: `This row has the same year as the previous row.`,
+        path: ["context.livingExpenses", duplicateIndex, "fromYear"]
+      }
+    }
+  )
+  .refine(
+    ({ asAtYear, context: { inflation } }) => {
+      sortByFromDate(inflation)
+      return inflation[0].fromYear === asAtYear
+    },
+    ({ asAtYear }) => {
+      return {
+        message: `The first row should have a year matching the scenario's 'As at year' of ${asAtYear}`,
+        path: ["context.inflation", 0, "fromYear"]
+      }
+    }
+  )
+  .refine(
+    ({ context: { inflation } }) => {
+      sortByFromDate(inflation)
+
+      // check for duplicates
+      const set = new Set(inflation.map((it) => it.fromYear))
+      return set.size === inflation.length
+    },
+    ({ context: { inflation } }) => {
+      const duplicateIndex = inflation.findIndex((item, index) => {
+        if (index === 0) return false
+        if (item.fromYear === inflation[index - 1].fromYear) return true
+        return false
+      })
+      return {
+        message: `This row has the same year as the previous row.`,
+        path: ["context.inflation", duplicateIndex, "fromYear"]
+      }
+    }
+  )
+  .refine(
+    ({ asAtYear, transfers }) => {
+      if (!transfers) return true
+
+      const invalidTransfer = transfers.find((transfer) => transfer.year < asAtYear)
+      if (invalidTransfer) return false
+      return true
+    },
+
+    ({ asAtYear, transfers }) => {
+      const invalidTransferIndex = transfers?.findIndex((transfer) => transfer.year < asAtYear)
+
+      return {
+        message: `Transfer year must be >= 'As at year' of ${asAtYear}`,
+        path: ["transfers", invalidTransferIndex ?? ""]
+      }
+    }
+  )
 
 export type IScenario = z.infer<typeof ScenarioSchema>
 export type ContextConfig = z.infer<typeof ContextSchema>
@@ -135,6 +235,7 @@ export type DefinedBenefitsContext = z.infer<typeof definedBenefitsContextSchema
 export type PropertyContext = z.infer<typeof propertyContextSchema>
 export type SharesContext = z.infer<typeof sharesContextSchema>
 export type SuperContext = z.infer<typeof superContextSchema>
+export type StressTest = z.infer<typeof StressTestEnum>
 
 export * from "./asset"
 

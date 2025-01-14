@@ -1,7 +1,6 @@
-import { number, z } from "zod"
+import { z } from "zod"
 
 import { IsFormNumberOpt, YesNoSchema } from "@/app/lib/data/schema/config/schemaUtils"
-import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { IScenario } from "@/app/lib/data/schema/config"
 import { testForMultipleMigrateAllFrom, testForMultipleMigrateAllFromAndTo } from "./validation"
 
@@ -19,25 +18,33 @@ export const getTransferFormSchema = (scenario: IScenario, id: string) => {
       message: `There is already a total transfer from this asset.`,
       path: ["from"]
     }
-  ).refine(
-    (formData) => {
-      return testForMultipleMigrateAllFromAndTo(formData, otherTransfers)
-    },
-
-    {
-      message: `There is already a total transfer from this asset.`,
-      path: ["to"]
-    }
   )
+    .refine(
+      (formData) => {
+        return testForMultipleMigrateAllFromAndTo(formData, otherTransfers)
+      },
+
+      {
+        message: `There is already a total transfer from this asset.`,
+        path: ["to"]
+      }
+    )
+    .refine(
+      ({ year }) => {
+        return year >= scenario.asAtYear
+      },
+      {
+        message: `The year must be >= the scenario's 'As at year' of ${scenario.asAtYear}`,
+        path: ["year"]
+      }
+    )
 
   return refinedTransferFormSchema
 }
-const currentYear = getCurrentYear()
 
 export const BasicTransferFormSchema = z
   .object({
     // year: IsValidYear,
-    // year: z.number,
     year: z.coerce.number(),
     from: z.string(),
     to: z.string(),
@@ -52,14 +59,14 @@ export const BasicTransferFormSchema = z
     },
     { message: "The 'From' asset is the same as the 'To' asset.", path: ["from"] }
   )
-  .refine(
-    ({ year }) => {
-      const currentYear = getCurrentYear()
+// .refine(
+//   ({ year }) => {
+//     const currentYear = getCurrentYear()
 
-      if (year < currentYear) return false
-      return true
-    },
-    { message: "Transfer year is in the past.", path: ["year"] }
-  )
+//     if (year < currentYear) return false
+//     return true
+//   },
+//   { message: "Transfer year is in the past.", path: ["year"] }
+// )
 
 export type FormDataType = z.infer<typeof BasicTransferFormSchema>

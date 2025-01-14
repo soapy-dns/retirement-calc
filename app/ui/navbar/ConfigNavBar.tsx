@@ -31,7 +31,11 @@ export const ConfigNavBar = () => {
   const selectedTabClassNames = "border-b-4  bg-secondary border-b-primary-foreground "
 
   return (
-    <nav id={configNavBarId} className=" mb-4 grid grid-cols-3 bg-muted  divide-x-2" aria-label="sub menu">
+    <nav
+      id={configNavBarId}
+      className=" mb-4 grid grid-cols-3 bg-muted  divide-x-2 border-b-2 border-b-primary-foreground"
+      aria-label="sub menu"
+    >
       <button
         onClick={handleContextClick}
         className={`${tabColors} flex justify-center gap-2 p-2 ${

@@ -14,6 +14,7 @@ import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { useContext } from "react"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
+import { ButtonGroupEditRemove } from "@/app/ui/components/common/ButtonGroupEditRemove"
 
 interface IAssetItemDisplay {
   removeAllowed: boolean
@@ -93,20 +94,21 @@ export const AssetSummary = ({ asset, removeAllowed }: IAssetItemDisplay) => {
             )}
 
             {selectedScenario.asAtYear >= getCurrentYear() && (
-              <ButtonGroup>
-                <Button buttonType={ButtonType.primary} onClick={handleEdit}>
-                  <div className="flex items-center gap-2">
-                    <PencilSquareIcon className="h-6 w-6" />
-                    <div>Edit</div>
-                  </div>
-                </Button>
-                <Button buttonType={ButtonType.secondary} onClick={handleRemove} disabled={disabled}>
-                  <div className="flex items-center gap-2">
-                    <TrashIcon className="h-6 w-6" />
-                    <div>Remove</div>
-                  </div>
-                </Button>
-              </ButtonGroup>
+              <ButtonGroupEditRemove handleEdit={handleEditFn} handleRemove={handleRemove} disableRemove={disabled} />
+              // <ButtonGroup>
+              //   <Button buttonType={ButtonType.primary} onClick={handleEdit}>
+              //     <div className="flex items-center gap-2">
+              //       <PencilSquareIcon className="h-6 w-6" />
+              //       <div>Edit</div>
+              //     </div>
+              //   </Button>
+              //   <Button buttonType={ButtonType.secondary} onClick={handleRemove} disabled={disabled}>
+              //     <div className="flex items-center gap-2">
+              //       <TrashIcon className="h-6 w-6" />
+              //       <div>Remove</div>
+              //     </div>
+              //   </Button>
+              // </ButtonGroup>
             )}
           </div>
         </div>

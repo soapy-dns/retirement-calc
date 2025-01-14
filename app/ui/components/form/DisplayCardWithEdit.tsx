@@ -4,7 +4,7 @@ import { Button, ButtonType } from "../common/Button"
 import { ReactNode } from "react"
 
 interface DisplayCardWithEditProps {
-  heading: string | ReactNode
+  heading?: string | ReactNode
   handleEdit?: React.MouseEventHandler<HTMLButtonElement>
 
   children: React.ReactNode
@@ -12,10 +12,10 @@ interface DisplayCardWithEditProps {
 export const DisplayCardWithEdit: React.FC<DisplayCardWithEditProps> = ({ heading, handleEdit, children }) => {
   return (
     <Card>
-      {typeof heading === "string" ? (
+      {heading && typeof heading === "string" ? (
         <h2 className="flex items-center justify-between text-primary-foreground">{heading}</h2>
       ) : (
-        heading
+        heading && heading
       )}
 
       {children}

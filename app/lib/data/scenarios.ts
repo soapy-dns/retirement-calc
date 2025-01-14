@@ -10,6 +10,7 @@ export const getDefaultScenarios = (): IScenario[] => {
       description: "Example with all Australian asset types",
 
       asAtYear: currentYear,
+      stressTest: "MARKET_CRASH",
       assets: [
         {
           id: "JOINT_AU_BANK",
@@ -141,6 +142,7 @@ export const getDefaultScenarios = (): IScenario[] => {
       name: "Scottish example",
       description: "Scottish example",
       asAtYear: currentYear,
+      stressTest: "NONE",
       assets: [
         {
           id: "JOINT_AU_BANK",

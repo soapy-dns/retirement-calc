@@ -3,7 +3,8 @@
     "id": "A",
     "name": "Multi-country example",
     "description": "Complex example.",
-    "asAtYear": 2024,
+    "asAtYear": 2025,
+    "stressTest": "NONE",
     "assets": [
       {
         "id": "HIS_AU_SUPER",
@@ -15,7 +16,7 @@
         "assetOwners": ["HIM"],
         "canDrawdown": true,
         "drawdown": {
-          "drawdownFrom": 2026,
+          "drawdownFrom": 2027,
           "drawdownOrder": 50
         }
       },
@@ -54,7 +55,7 @@
         "assetOwners": ["HIM"],
         "canDrawdown": true,
         "drawdown": {
-          "drawdownFrom": 2026,
+          "drawdownFrom": 2027,
           "drawdownOrder": 50
         }
       },
@@ -134,8 +135,8 @@
         "assetOwners": ["HER", "HIM"],
         "property": {
           "isRented": true,
-          "rentalStartYear": 2024,
-          "rentalEndYear": 2026,
+          "rentalStartYear": 2025,
+          "rentalEndYear": 2027,
           "rentalIncomePerMonth": 2000,
           "rentalExpensesPerMonth": 500
         }
@@ -166,17 +167,17 @@
       },
       "inflation": [
         {
-          "fromYear": 2024,
+          "fromYear": 2025,
           "inflationRate": 0.03
         }
       ],
       "livingExpenses": [
         {
-          "fromYear": 2024,
+          "fromYear": 2025,
           "amountInTodaysTerms": 80000
         },
         {
-          "fromYear": 2038,
+          "fromYear": 2039,
           "amountInTodaysTerms": 50000
         }
       ]
@@ -184,7 +185,7 @@
     "transfers": [
       {
         "id": "1",
-        "year": 2024,
+        "year": 2025,
         "from": "UK_PROPERTY",
         "to": "JOINT_SHARES",
         "migrateAll": true,

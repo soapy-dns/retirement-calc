@@ -3,7 +3,8 @@
     "id": "C",
     "name": "UK money purchase pension - one individual",
     "description": "Demonstration of UK pension for a single individual and the tax implications. The rate of return matches inflation to keep things simple.",
-    "asAtYear": 2024,
+    "asAtYear": 2025,
+    "stressTest": "NONE",
     "assets": [
       {
         "id": "1",
@@ -56,17 +57,17 @@
       },
       "inflation": [
         {
-          "fromYear": 2024,
+          "fromYear": 2025,
           "inflationRate": 0.03
         }
       ],
       "livingExpenses": [
         {
-          "fromYear": 2024,
+          "fromYear": 2025,
           "amountInTodaysTerms": 80000
         },
         {
-          "fromYear": 2039,
+          "fromYear": 2040,
           "amountInTodaysTerms": 50000
         }
       ]

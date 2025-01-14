@@ -1,5 +1,5 @@
 import { Transfer } from "@/app/lib/data/schema/config"
-import { FormDataType } from "../FormSchema"
+import { FormDataType } from "../getTransferFormSchema"
 import { testForMultipleMigrateAllFrom, testForMultipleMigrateAllFromAndTo } from "../validation"
 
 describe("testForMultipleMigrateAllFrom", () => {
