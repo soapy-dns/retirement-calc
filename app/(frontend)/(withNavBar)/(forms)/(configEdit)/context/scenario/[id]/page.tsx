@@ -1,7 +1,7 @@
 "use client"
 
 import { useForm } from "react-hook-form"
-import { useContext, use } from "react"
+import { useContext, use, useState } from "react"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -19,6 +19,7 @@ import { scenarioConstants } from "../scenarioConstants"
 import { useSearchParams } from "next/navigation"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { StressTestEdit } from "../StressTestEdit"
+import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
 
 // set years validation
 const FormSchema = z.object({
@@ -34,6 +35,7 @@ type Params = Promise<{ id: string }>
 
 export default function ScenarioPage(props: { params: Params }) {
   const params = use(props.params)
+  const [showChangesNotSavedModal, setShowChangesNotSavedModal] = useState<boolean>(false)
 
   const { id } = params
   const navigation = useNavigation()
@@ -57,7 +59,11 @@ export default function ScenarioPage(props: { params: Params }) {
   })
 
   const handleBack = () => {
-    navigation.goBack()
+    if (isDirty) {
+      setShowChangesNotSavedModal(true)
+    } else {
+      navigation.goBack()
+    }
   }
 
   const onSubmit = async (data: FormDataType) => {
@@ -127,6 +133,12 @@ export default function ScenarioPage(props: { params: Params }) {
         /> */}
         <StressTestEdit control={control} watch={watch} />
       </form>
+
+      <ChangesNotSavedModal
+        showModal={showChangesNotSavedModal}
+        handleCancel={() => setShowChangesNotSavedModal(false)}
+        continueAnyway={() => navigation.goBack()}
+      />
     </EditPageLayout>
   )
 }

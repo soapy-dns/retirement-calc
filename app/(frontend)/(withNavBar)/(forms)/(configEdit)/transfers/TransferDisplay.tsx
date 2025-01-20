@@ -15,6 +15,7 @@ import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { scrollFieldIntoView } from "@/app/ui/utils/scrollUtils"
 import { configNavBarId } from "../../../../../ui/navbar/ConfigNavBar"
+import { costOfTransferTypeOptions } from "./costOfTransferTypeOptions"
 
 interface Props {
   transfers: Transfer[]
@@ -51,23 +52,29 @@ export const TransferDisplay: FunctionComponent<Props> = ({ transfers }) => {
   return (
     <div className="ml-4">
       {transfers.map((transfer, index) => {
-        const { id, year, from, to, value, migrateAll, costOfTransfer } = transfer
+        const { id, year, from, to, transferPercent, transferCostValue = 0, transferCostType } = transfer
+        const costOfTransferTypeDisplay = costOfTransferTypeOptions.find((it) => it.value === transferCostType)?.label
 
         return (
           <Card key={index}>
             <TextDisplayField label={transferConstants.YEAR.LABEL} value={year} />
             <TextDisplayField label={transferConstants.FROM.LABEL} value={getDisplayValue(from)} />
             <TextDisplayField label={transferConstants.TO.LABEL} value={getDisplayValue(to)} />
-            <TextDisplayField label={transferConstants.MIGRATE_ALL.LABEL} value={migrateAll ? "Yes" : "No"} />
-            {!migrateAll && value && (
-              <>
-                <TextDisplayField label={transferConstants.VALUE.LABEL} value={currencyFormatter.format(value)} />
-              </>
-            )}
+            <TextDisplayField label={transferConstants.TRANSFER_PERCENT.LABEL} value={transferPercent} />
             <TextDisplayField
-              label={transferConstants.TRANSFER_COST.LABEL}
-              value={costOfTransfer ? currencyFormatter.format(costOfTransfer) : ""}
+              label={transferConstants.TRANSFER_COST_TYPE.LABEL}
+              value={costOfTransferTypeDisplay || "unknown"}
             />
+
+            {transferCostType === "TODAYS_MONEY" && (
+              <TextDisplayField label={transferConstants.TRANSFER_COST_TODAYS_MONEY.LABEL} value={transferCostValue} />
+            )}
+            {transferCostType === "FUTURE_MONEY" && (
+              <TextDisplayField label={transferConstants.TRANSFER_COST_FUTURE_MONEY.LABEL} value={transferCostValue} />
+            )}
+            {transferCostType === "PERCENTAGE" && (
+              <TextDisplayField label={transferConstants.TRANSFER_COST_PERCENT.LABEL} value={transferCostValue} />
+            )}
 
             {asAtYear >= getCurrentYear() && (
               <ButtonGroup>

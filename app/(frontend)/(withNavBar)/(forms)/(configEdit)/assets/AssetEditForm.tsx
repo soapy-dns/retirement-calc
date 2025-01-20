@@ -109,6 +109,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         })}
         helpText={assetConstants.OWNERS.HELP_TEXT}
       />
+      
       {isCapitalAsset(assetType) && (
         <>
           <InputQuestion

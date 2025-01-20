@@ -13,8 +13,6 @@ export const getUpdatedLivingExpensesConfig = (scenario: IScenario, newYear: num
 
   const indexOfYearBiggerThanNewYear = livingExpensesConfig.findIndex((it) => it.fromYear > newYear)
 
-  console.log("indexOfYearBiggerThanNewYear", indexOfYearBiggerThanNewYear)
-  console.log("livingExpensesConfig", livingExpensesConfig)
   // new year is bigger than the last year in the config
   if (indexOfYearBiggerThanNewYear === -1) {
     const amountAsAtNewYear =

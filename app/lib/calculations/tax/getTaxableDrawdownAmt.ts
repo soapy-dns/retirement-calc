@@ -1,14 +1,19 @@
 import { Transfer } from "../../data/schema/config"
 import { Asset } from "../assets/Asset"
+import { AutomatedDrawdown } from "../autoDrawdowns/types"
 
 /**
  * Get the amount of drawdowns that are taxable for a given owner.  If an asset is shared it is assumed to be 50:50
  */
-export const getTaxableDrawdownAmt = (transfersForYear: Transfer[], ownerId: string, assets: Asset[]): number => {
-  if (!transfersForYear) return 0
+export const getTaxableDrawdownAmt = (
+  automatedDrawdownsForYear: AutomatedDrawdown[],
+  ownerId: string,
+  assets: Asset[]
+): number => {
+  if (!automatedDrawdownsForYear) return 0
 
-  const taxableDrawdownAmt = transfersForYear?.reduce((accum, transfer) => {
-    const { from, value = 0 } = transfer
+  const taxableDrawdownAmt = automatedDrawdownsForYear?.reduce((accum, drawdown) => {
+    const { from, value } = drawdown
 
     const matchingAsset = assets.find((asset) => {
       return asset.id === from

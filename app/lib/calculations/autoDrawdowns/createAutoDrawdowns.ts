@@ -84,8 +84,8 @@ export const createAutoDrawdowns = (
               from: asset.id,
               fromName: asset.name,
               to: Constants.DRAWDOWN,
-              value: amountToRemove,
-              migrateAll: false
+              value: amountToRemove
+              // migrateAll: false
               // taxableDrawdownAmt: (amountToDrawdown * asset.percOfIncomeTaxable) / 100
             })
 

@@ -78,12 +78,13 @@
     },
     "transfers": [
       {
+        "id": "159e3ada-a37a-4f0e-a839-19509dd925f3",
         "year": 2027,
         "from": "AU_PROPERTY",
         "to": "JOINT_AU_BANK",
-        "migrateAll": true,
-        "costOfTransfer": 50000,
-        "id": "159e3ada-a37a-4f0e-a839-19509dd925f3"
+        "transferPercent": 100,
+        "transferCostType": "FUTURE_MONEY",
+        "transferCostValue": 50000
       }
     ]
   }

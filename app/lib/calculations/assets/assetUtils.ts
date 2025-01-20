@@ -76,17 +76,18 @@ export const canDrawdownAssets = (assets: Asset[], year: number) => {
 
 // for each asset calculate the next year minus any tax
 export const addAssetIncome = (year: number, assets: Asset[], incomeFromAssets: AssetIncome[]) => {
-  // console.log("--addAssetIncome")
   assets.forEach((asset) => {
-    // console.log("--asset.name--", asset.name)
     const yearData = asset.getYearData(year)
 
     const nextYearData = asset.calcNextYear(yearData, assets)
-    // console.log("--nextYearData--", nextYearData)
-    if (nextYearData.value < 0)
+
+    if (nextYearData.value < 0) {
+      // console.log("--nextYearData--", year, asset.name, nextYearData)
+
       throw new CalculationError(
         `Value of '${asset.name}' in ${nextYearData.year} is less than zero.  Check configured Transfers`
       )
+    }
 
     // GET INCOME FOR THIS ASSET - NOTE THERE COULD BE MULTIPLE AS THERE COULD BE MULTIPLE OWNERS OF THE ASSET
     // CALCULATE INCOME FROM ASSETS FOR THE YEAR AND MATCHING ASSET

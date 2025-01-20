@@ -3,23 +3,26 @@ import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { RadioButtonQuestion, RadioQuestionVariant } from "@/app/ui/components/form/RadioButtonQuestion"
 import { SelectQuestion } from "@/app/ui/components/form/SelectQuestion"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
-import { yesNoOptions } from "@/app/ui/utils/yesNoOptions"
 import { FunctionComponent, useContext } from "react"
 import { Control } from "react-hook-form"
 import { transferConstants } from "./transferConstants"
 import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
+import { costOfTransferTypeOptions } from "./costOfTransferTypeOptions"
 
 interface Props {
   control: Control<any, object>
-  showValue: boolean
+  watch: Function
 }
 
-export const TransferForm: FunctionComponent<Props> = ({ control, showValue }) => {
+export const TransferForm: FunctionComponent<Props> = ({ control, watch }) => {
   const { getSelectedScenarioAssetsOptions } = useContext(ScenarioContext)
   const { getCurrencySymbol } = useContextConfig()
   const currency = getCurrencySymbol()
 
   const transferableAssets = getSelectedScenarioAssetsOptions({ excludeIncome: true })
+
+  const currentCostOfTransferType = watch("transferCostType")
+
   return (
     <form>
       <InputQuestion
@@ -44,31 +47,52 @@ export const TransferForm: FunctionComponent<Props> = ({ control, showValue }) =
         options={transferableAssets}
       />
 
-      <RadioButtonQuestion
-        id="migrateAll"
+      <InputQuestion
+        id="transferPercent"
         control={control}
-        label={transferConstants.MIGRATE_ALL.LABEL}
-        values={yesNoOptions}
-        variant={RadioQuestionVariant.BLOCK}
-        helpText={transferConstants.MIGRATE_ALL.HELP_TEXT}
+        label={transferConstants.TRANSFER_PERCENT.LABEL}
+        suffix="%"
+        helpText={transferConstants.TRANSFER_PERCENT.HELP_TEXT}
       />
-      {showValue && (
+
+      <RadioButtonQuestion
+        id="transferCostType"
+        control={control}
+        label={transferConstants.TRANSFER_COST_TYPE.LABEL}
+        values={costOfTransferTypeOptions}
+        variant={RadioQuestionVariant.VERTICAL}
+        helpText={transferConstants.TRANSFER_COST_TYPE.HELP_TEXT}
+      />
+
+      {currentCostOfTransferType === "TODAYS_MONEY" && (
         <InputQuestion
-          id="value"
+          id="transferCostValue"
           control={control}
-          label={transferConstants.VALUE.LABEL}
+          label={transferConstants.TRANSFER_COST_TODAYS_MONEY.LABEL}
           prefix={currency}
-          helpText={transferConstants.VALUE.HELP_TEXT}
+          helpText={transferConstants.TRANSFER_COST_TODAYS_MONEY.HELP_TEXT}
         />
       )}
 
-      <InputQuestion
-        id="costOfTransfer"
-        control={control}
-        label={transferConstants.TRANSFER_COST.LABEL}
-        prefix={currency}
-        helpText={transferConstants.TRANSFER_COST.HELP_TEXT}
-      />
+      {currentCostOfTransferType === "FUTURE_MONEY" && (
+        <InputQuestion
+          id="transferCostValue"
+          control={control}
+          label={transferConstants.TRANSFER_COST_FUTURE_MONEY.LABEL}
+          prefix={currency}
+          helpText={transferConstants.TRANSFER_COST_FUTURE_MONEY.HELP_TEXT}
+        />
+      )}
+
+      {currentCostOfTransferType === "PERCENTAGE" && (
+        <InputQuestion
+          id="transferCostValue"
+          control={control}
+          label={transferConstants.TRANSFER_COST_PERCENT.LABEL}
+          suffix="%"
+          helpText={transferConstants.TRANSFER_COST_PERCENT.HELP_TEXT}
+        />
+      )}
     </form>
   )
 }

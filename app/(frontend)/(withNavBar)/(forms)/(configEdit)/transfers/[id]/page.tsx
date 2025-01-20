@@ -4,26 +4,28 @@ import { use } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { TransferForm } from "../TransferForm"
 import { type Transfer } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useTransfer } from "@/app/ui/hooks/useTransfer"
 import EditPageLayout from "@/app/(frontend)/(withoutNavBar)/components/EditPageLayout"
-import { FormDataType, getTransferFormSchema } from "./getTransferFormSchema"
+import { TransferFormData, getTransferFormSchema } from "../getTransferFormSchema"
 import { useContext } from "react"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
+import { TransferForm } from "../TransferForm"
+import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
+import { useSearchParams } from "next/navigation"
 
-const getTransferValuesFromForm = (data: FormDataType): Omit<Transfer, "id"> => {
+const getTransferValuesFromForm = (data: TransferFormData): Omit<Transfer, "id"> => {
   return {
     ...data,
     year: +data.year,
-    value: data.value ? +data.value : undefined,
-    migrateAll: data.migrateAll === "Y",
-    costOfTransfer: data.costOfTransfer ? +data.costOfTransfer : undefined
+    transferPercent: +data.transferPercent,
+    transferCostType: data.transferCostType,
+    transferCostValue: data.transferCostType ? data.transferCostValue : 0
   }
 }
 
-const marshall = (data: FormDataType, transfer: Transfer): Transfer => {
+const marshall = (data: TransferFormData, transfer: Transfer): Transfer => {
   const newFields = getTransferValuesFromForm(data)
 
   // @ts-ignore TODO:
@@ -37,22 +39,34 @@ type Params = Promise<{ id: string }>
 
 export default function TransferEditPage(props: { params: Params }) {
   const params = use(props.params)
-  let { id } = params
+  const searchParams = useSearchParams()
   const navigation = useNavigation()
   const { selectedScenario } = useContext(ScenarioContext)
-
   const { getTransferDetails, updateTransfer, addTransfer } = useTransfer()
+
+  let { id } = params
+  const debug = searchParams.get("debug")
   const transfer = getTransferDetails(id) // should I do something different for 'add'?
+  const { year, from, to, transferPercent, transferCostType } = transfer || {}
 
-  const { from, to, value, year, migrateAll = true, costOfTransfer } = transfer || {}
-  const migrateAllFormVal = migrateAll ? "Y" : "N"
-
-  const { handleSubmit, watch, control } = useForm<FormDataType>({
-    defaultValues: { from, to, value, year, migrateAll: migrateAllFormVal, costOfTransfer },
+  const {
+    handleSubmit,
+    watch,
+    control,
+    formState: { errors }
+  } = useForm<TransferFormData>({
+    defaultValues: {
+      from,
+      to,
+      year: year || getCurrentYear(),
+      transferPercent: transferPercent || 100,
+      transferCostType: transferCostType || "NO_COST",
+      transferCostValue: transfer?.transferCostValue || 0
+    },
     resolver: zodResolver(getTransferFormSchema(selectedScenario, id))
   })
 
-  const onSubmit = async (data: FormDataType) => {
+  const onSubmit = async (data: TransferFormData) => {
     if (transfer) {
       const newTransferConfig = marshall(data, transfer)
       const { success } = await updateTransfer(newTransferConfig)
@@ -67,9 +81,6 @@ export default function TransferEditPage(props: { params: Params }) {
     navigation.goBack()
   }
 
-  //   This is probably a really bad way to do it as we will re-render the entire form when one value changes - FIXME:
-  const migrateAllValue = watch("migrateAll")
-
   return (
     <EditPageLayout
       heading={id === "add" ? "Add a transfer" : "Edit a transfer"}
@@ -80,8 +91,8 @@ export default function TransferEditPage(props: { params: Params }) {
       handleBack={handleBack}
       handleCancel={handleBack}
     >
-      {/* @ts-ignore */}
-      <TransferForm control={control} showValue={migrateAllValue === "N"} />
+      <TransferForm control={control} watch={watch} />
+      {debug && <pre className="text-primary font-semibold">{JSON.stringify(errors, null, 4)}</pre>}
     </EditPageLayout>
   )
 }

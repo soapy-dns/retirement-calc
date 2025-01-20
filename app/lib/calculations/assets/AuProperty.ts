@@ -4,16 +4,17 @@ import { AssetGroup, InflationContext } from "@/app/lib/calculations/types"
 import { YearData } from "./types"
 import { getPercIncomeTaxable } from "../tax/utils"
 import { IAsset, IScenario, PropertyContext, Transfer } from "../../data/schema/config"
-import { getNetTransferAmt } from "../transfers/getNetTransferAmt"
+// import { getNetTransferAmt } from "../transfers/getNetTransferAmt"
 import { validForRentalIncome } from "./validForRentalIncome"
 import { getPercentageOfDrawdownTaxable } from "../tax/getPercentageOfDrawdownTaxable"
+import { getNetTransferAmtForYear } from "../transfers/getNetTransferAmtForYear"
 
 export class AuProperty extends Asset {
   capitalAsset: boolean // if all assets have this, shouldn't it be in the Asset class
   assetGroup: AssetGroup
   percOfIncomeTaxable: number
   percOfDrawdownTaxable: number
-  transfers?: Transfer[]
+  transfers: Transfer[]
   propertyContext: PropertyContext
   inflationContext: InflationContext
   // TODO: should I not have an 'isRented' flag here?
@@ -36,7 +37,7 @@ export class AuProperty extends Asset {
     const { rentalExpensesPerMonth, rentalIncomePerMonth, rentalStartYear, rentalEndYear } = assetProperty || {}
 
     this.propertyContext = property
-    this.transfers = transfers // TODO: there has to be a better way!
+    this.transfers = transfers || []
 
     this.capitalAsset = true
     this.assetGroup = AssetGroup.property
@@ -59,7 +60,9 @@ export class AuProperty extends Asset {
       ? this.propertyContext.growthInterestRate + this.rateVariation
       : this.propertyContext.growthInterestRate
 
-    const transferAmt = getNetTransferAmt(this.id, yearData, this.transfers, assets)
+    // const transferAmt = getNetTransferAmt(this.id, yearData, this.transfers, assets)
+    const transferAmt = getNetTransferAmtForYear(year, this.transfers, this.id, prevValue, assets)
+
     // console.log("property calc next year transferAmt", this.name, transferAmt)
 
     const inflationFactor = this.inflationContext[year].factor
