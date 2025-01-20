@@ -5,6 +5,7 @@ import { Asset } from "../assets/Asset"
 import { AssetGroup, BasicYearData, InflationContext } from "../types"
 import { removeUnusedHistoryFromTaxes } from "./removeUnusedHistoryFromTaxes"
 import { getTaxableDrawdownAmt } from "./getTaxableDrawdownAmt"
+import { getTaxableTransferAmt } from "./getTaxableTransferAmt"
 
 export const getOwnersTaxableIncomeAmt = (incomeFromAssets: AssetIncome[], ownerId: string, year: number) => {
   const ownersTaxableIncomeFromAssets = incomeFromAssets.filter(
@@ -91,7 +92,7 @@ export const calculateTaxes = (
     const taxHistory = tax.history.find((it) => it.year === year)
     if (!taxHistory) throw new Error(`No history found for ${owner.identifier} in ${year}`)
 
-    const manualTaxableDrawdownAmt = getTaxableDrawdownAmt(manualTransfersForYear, owner.identifier, assets)
+    const manualTaxableDrawdownAmt = getTaxableTransferAmt(manualTransfersForYear, owner.identifier, assets)
 
     const ownersTaxableIncomeAmt = getOwnersTaxableIncomeAmt(incomeFromAssets, owner.identifier, year)
 
@@ -99,10 +100,6 @@ export const calculateTaxes = (
 
     const { taxAmt: ownersTaxAmt } = incomeTaxCalculator.getTax(ownersTotalTaxableAmt, year)
 
-    // if (year === 2024 && owner.ownerName === "Neil") {
-    //   const taxDetails = { ownersTotalTaxableAmt, ownersTaxableIncomeAmt, manualTaxableDrawdownAmt, ownersTaxAmt }
-    //   console.log("--taxDetails - Neil 2024--", taxDetails)
-    // }
     taxHistory.totalTaxableAmt = Math.round(ownersTotalTaxableAmt)
     taxHistory.taxableIncomeAmt = Math.round(ownersTaxableIncomeAmt)
     taxHistory.taxableDrawdownsAmt = Math.round(manualTaxableDrawdownAmt)

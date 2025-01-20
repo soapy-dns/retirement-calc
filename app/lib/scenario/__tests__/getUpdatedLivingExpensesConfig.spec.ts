@@ -1,5 +1,5 @@
 import { getUpdatedLivingExpensesConfig } from "../getUpdatedLivingExpensesConfig"
-import { IScenario, LivingExpensesRecord } from "@/app/lib/data/schema/config"
+import { IScenario } from "@/app/lib/data/schema/config"
 import { getInflationFactorAtNewYear } from "../getInflationFactorAtNewYear"
 
 jest.mock("../getInflationFactorAtNewYear")

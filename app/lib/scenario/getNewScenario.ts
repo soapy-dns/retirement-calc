@@ -1,12 +1,10 @@
 "use server"
 
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
-import { IScenario, Transfer, InflationRecord, StressTest, StressTestEnum } from "@/app/lib/data/schema/config"
+import { IScenario, Transfer, InflationRecord, StressTest } from "@/app/lib/data/schema/config"
 import { getRandomKey } from "@/app/lib/utils/getRandomKey"
 import cloneDeep from "lodash/cloneDeep"
 import { getUpdatedLivingExpensesConfig } from "./getUpdatedLivingExpensesConfig"
-
-console.log("enum-------------------", StressTestEnum.enum)
 
 export const getNewScenario = async (
   scenario: IScenario,

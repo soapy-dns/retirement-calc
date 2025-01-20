@@ -36,6 +36,8 @@ const ConfigPage: React.FC = () => {
         <ScenarioDisplay />
       </div>
 
+      <p className="text-center text-primary">Use the tabs below to configure your scenario.</p>
+
       <ConfigNavBar />
 
       {activeTab === ConfigTab.context && <ContextTab />}

@@ -137,6 +137,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     let calculatedEndYear = startingYear
     while (year < to && canDrawdownAssets(assets, year)) {
       calculatedEndYear = year + 1
+      // console.log("addAssetIncome for year", year)
       addAssetIncome(year, assets, incomeFromAssets)
 
       const manualTransfersForYear = getScenarioTransfersForYear(scenario, year)
@@ -406,11 +407,14 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
         calculationMessage: errMsg
       }
     }
-    if (e instanceof Error) {
-      console.log("**SERVER ERROR**", e.message)
-    } else {
-      console.log("**SERVER ERROR**", e)
-    }
+    console.log("**SERVER ERROR**", e)
+
+    // if (e instanceof Error) {
+
+    //   console.log("**SERVER ERROR**", e.message)
+    // } else {
+    //   console.log("**SERVER ERROR**", e)
+    // }
     throw new Error("SERVER ERROR")
   }
 }

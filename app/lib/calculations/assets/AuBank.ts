@@ -3,8 +3,10 @@ import { YearData } from "../assets/types"
 import { AssetGroup } from "@/app/lib/calculations/types"
 import { getPercIncomeTaxable } from "../tax/utils"
 import { CashContext, IAsset, IScenario, Transfer } from "../../data/schema/config"
-import { getNetTransferAmt } from "../transfers/getNetTransferAmt"
+// import { getNetTransferAmt } from "../transfers/getNetTransferAmt"
 import { getPercentageOfDrawdownTaxable } from "../tax/getPercentageOfDrawdownTaxable"
+import { log } from "console"
+import { getNetTransferAmtForYear } from "../transfers/getNetTransferAmtForYear"
 
 export class AuBank extends Asset {
   capitalAsset: boolean
@@ -12,7 +14,7 @@ export class AuBank extends Asset {
   percOfIncomeTaxable: number
   percOfDrawdownTaxable: number
   cashContext: CashContext
-  transfers?: Transfer[]
+  transfers: Transfer[]
 
   constructor(assetConfig: IAsset, startingYear: number, scenario: IScenario) {
     if (assetConfig.className !== "AuBank") throw new Error("Invalid config for Cash")
@@ -24,7 +26,7 @@ export class AuBank extends Asset {
     } = scenario
 
     this.cashContext = auBank
-    this.transfers = transfers
+    this.transfers = transfers || []
 
     this.capitalAsset = true
     this.assetGroup = AssetGroup.cash
@@ -40,11 +42,13 @@ export class AuBank extends Asset {
   calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
     const { value: prevValue, year } = yearData
 
+    // const transferAmtOld = getNetTransferAmt(this.id, yearData, this.transfers, assets)
+    const transferAmt = getNetTransferAmtForYear(year, this.transfers, this.id, prevValue, assets)
+    // log(`-- ${this.name} transferAmtOld:  ${transferAmtOld}, transferAmt: ${transferAmt}`)
+
     const investmentReturn = this.rateVariation
       ? this.cashContext.interestRate + this.rateVariation
       : this.cashContext.interestRate
-
-    const transferAmt = getNetTransferAmt(this.id, yearData, this.transfers, assets)
 
     const income = (prevValue + transferAmt / 2) * investmentReturn
 

@@ -10,7 +10,6 @@ import { AutomatedDrawdown } from "./types"
 import { BasicYearData } from "../types"
 import { mergeAutoDrawdowns } from "./mergeAutoDrawdowns"
 import { updateTaxesForAutoDrawdowns } from "./updateTaxesForDrawdowns"
-import { getTaxDetailsByOwner } from "../utils/getTaxDetailsByOwner"
 
 interface IDrawdownContext {
   year: number
@@ -102,6 +101,7 @@ export const applyAutoDrawdowns = (drawdownContext: IDrawdownContext): number =>
     taxes: totalIncomeTaxesAmt
   })
 
+  // drawdowns are transfers which seem to be like yearData
   totalDrawdowns.push({
     year,
     value: Math.round(automatedDrawdownsAmt),

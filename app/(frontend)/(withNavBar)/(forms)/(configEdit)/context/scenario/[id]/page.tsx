@@ -59,7 +59,6 @@ export default function ScenarioPage(props: { params: Params }) {
   })
 
   const handleBack = () => {
-    console.log("---handleBack---", isDirty)
     if (isDirty) {
       setShowChangesNotSavedModal(true)
     } else {

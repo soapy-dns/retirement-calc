@@ -1,43 +1,10 @@
-import { number, z } from "zod"
+import { z } from "zod"
 
 import { IsFormNumberOpt, YesNoSchema } from "@/app/lib/data/schema/config/schemaUtils"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
-import { IScenario } from "@/app/lib/data/schema/config"
-import { testForMultipleMigrateAllFrom, testForMultipleMigrateAllFromAndTo } from "./validation"
-
-export const getTransferFormSchema = (scenario: IScenario, id: string) => {
-  const { transfers } = scenario
-
-  const otherTransfers = transfers?.filter((it) => it.id !== id)
-
-  const refinedTransferFormSchema = BasicTransferFormSchema.refine(
-    (formData) => {
-      return testForMultipleMigrateAllFrom(formData, otherTransfers)
-    },
-
-    {
-      message: `There is already a total transfer from this asset.`,
-      path: ["from"]
-    }
-  ).refine(
-    (formData) => {
-      return testForMultipleMigrateAllFromAndTo(formData, otherTransfers)
-    },
-
-    {
-      message: `There is already a total transfer from this asset.`,
-      path: ["to"]
-    }
-  )
-
-  return refinedTransferFormSchema
-}
-const currentYear = getCurrentYear()
 
 export const BasicTransferFormSchema = z
   .object({
-    // year: IsValidYear,
-    // year: z.number,
     year: z.coerce.number(),
     from: z.string(),
     to: z.string(),

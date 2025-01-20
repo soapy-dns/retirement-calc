@@ -1,11 +1,6 @@
-import { CashSchema, ScenarioSchema, SharesSchema, SuperSchema } from "@/app/lib/data/schema/config"
+import { CashSchema, ScenarioSchema } from "@/app/lib/data/schema/config"
 import { generateMock } from "@anatine/zod-mock"
 import { AuBank } from "../AuBank"
-// import { AuSuper } from "../AuSuper"
-// import { AuShares } from "../AuShares"
-// import { getGroupedDrawdownableAssets } from "../assetUtils"
-import { getPercIncomeTaxable } from "../../tax/utils"
-import { getPercentageOfDrawdownTaxable } from "../../tax/getPercentageOfDrawdownTaxable"
 
 jest.mock("../../tax/utils", () => ({
   getPercIncomeTaxable: () => 100,

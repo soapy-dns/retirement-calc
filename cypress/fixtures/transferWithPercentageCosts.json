@@ -74,8 +74,8 @@
         "from": "1",
         "to": "2",
         "transferPercent": 25,
-        "transferCostType": "FUTURE_MONEY",
-        "transferCostValue": 20000
+        "transferCostType": "PERCENTAGE",
+        "transferCostValue": 1
       }
     ]
   }

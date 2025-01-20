@@ -188,8 +188,9 @@
         "year": 2025,
         "from": "UK_PROPERTY",
         "to": "JOINT_SHARES",
-        "migrateAll": true,
-        "costOfTransfer": 20000
+        "transferPercent": 100,
+        "transferCostType": "FUTURE_MONEY",
+        "transferCostValue": 20000
       }
     ]
   }
