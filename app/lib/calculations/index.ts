@@ -83,7 +83,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     const startingYear = asAtYear
 
-    const { context } = scenario
+    const { context, transfers } = scenario
 
     const {
       numOfYears,
@@ -137,15 +137,12 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     let calculatedEndYear = startingYear
     while (year < to && canDrawdownAssets(assets, year)) {
       calculatedEndYear = year + 1
-      // console.log("addAssetIncome for year", year)
+
       addAssetIncome(year, assets, incomeFromAssets)
 
       const manualTransfersForYear = getScenarioTransfersForYear(scenario, year)
+
       calculateTaxes(taxes, year, assets, owners, incomeTaxCalculator, incomeFromAssets, manualTransfersForYear)
-      // if (year === 2024) {
-      //   const taxDetailsByOwner1 = getTaxDetailsByOwner({ owners, taxes })
-      //   console.log("Tax for Neil 2024 after manualTransfers-->", { ...taxDetailsByOwner1.Neil[0] })
-      // }
 
       calculateEarningsTaxes(earningsTaxes, assets, year, earningsTaxCalculator)
 
@@ -168,7 +165,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       historyItem.value = historyItem.value + totalIncomeFromAssetsAmt
       historyItem.incomeFromAssets = totalIncomeFromAssetsAmt
 
-      const mandatedDrawdowns = getMandatedDrawdowns({ assets, owners, year })
+      const mandatedDrawdowns = getMandatedDrawdowns({ assets, owners, year, transfers })
       automatedDrawdownMap[year] = mandatedDrawdowns
 
       applyMandatedDrawdowns({ drawdowns: mandatedDrawdowns, assets })
@@ -180,10 +177,6 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
         automatedDrawdownsForYear: mandatedDrawdowns,
         incomeTaxCalculator
       })
-      // if (year === 2024) {
-      //   const taxDetailsByOwner2 = getTaxDetailsByOwner({ owners, taxes })
-      //   console.log("Tax for Neil 2024 after autoDrawdowns for mandatory drawdowns", taxDetailsByOwner2.Neil[0])
-      // }
 
       // RE-CALCULATE TAXES.  This is a bit of a hack because of Automatic drawdowns.
       // sutomatic drawdown pull money out of an asset for that year,

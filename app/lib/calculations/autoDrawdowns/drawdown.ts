@@ -48,10 +48,6 @@ const drawdownIteration = (
     automatedDrawdownsForYear,
     incomeTaxCalculator
   })
-  // if (year === 2024) {
-  //   const taxDetailsByOwner3 = getTaxDetailsByOwner({ owners, taxes })
-  //   console.log("Tax for Neil 2024 after updating for autodrawdowns in iteration", taxDetailsByOwner3.Neil[0])
-  // }
 }
 
 /**
