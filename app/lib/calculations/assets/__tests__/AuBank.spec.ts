@@ -18,17 +18,8 @@ describe("Cash calculate the next year's values", () => {
     mockCashAssetConfig.rateVariation = 0
     mockScenarioConfig.context.auBank.interestRate = 0.05
 
-    // mockCashConfig.percOfIncomeTaxable = 100
-    // mockCashConfig.canDrawdown = true
-    // mockCashConfig.drawdown = { drawdownOrder: 20 }
-    // mockSuperConfig.canDrawdown = true
-    // mockSuperConfig.drawdown = { drawdownOrder: 50 }
-    // mockShareConfig.canDrawdown = true
-    // mockShareConfig.drawdown = { drawdownOrder: 20 }
     const cashAsset = new AuBank(mockCashAssetConfig, year, mockScenarioConfig)
     cashAsset.history.push(latestYearData)
-    // const superAsset = new AuSuper(mockSuperConfig, year, mockScenarioConfig)
-    // const shareAsset = new AuShares(mockShareConfig, year, mockScenarioConfig)
 
     const assets = [cashAsset]
 

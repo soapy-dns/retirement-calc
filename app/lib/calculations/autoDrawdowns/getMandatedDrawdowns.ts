@@ -25,29 +25,46 @@ interface Props {
  Some assets need to have a certain % drawn down each year eg au super is 4% a year, but only when taking an income stream,
  and only if not enough has been withdrawn 'manually' via configuring a transfer.
 */
-export const getMandatedDrawdowns = ({ assets, owners, year, transfers = [] }: Props): AutomatedDrawdown[] => {
+export const getMandatedDrawdowns = ({ assets, year, owners, transfers = [] }: Props): AutomatedDrawdown[] => {
   const filteredAssets = getSuperAssetsRelevantForDrawdown({ assets, year, mandatoryDrawdownPercentages })
+  // console.log(
+  //   "-filteredAssets----",
+  //   filteredAssets.map((it) => it.name)
+  // )
+
   const transfersForYear = transfers.filter((it) => it.year === year)
 
   // going to need to use reduce as some mandatory drawdowns may not be necessar
-  const results = filteredAssets.reduce((accum, asset) => {
+  const automatedDrawdowns = filteredAssets.reduce((accum, asset) => {
     const { ownerIds, country } = asset
 
     const assetOwner = owners.find((it) => it.identifier === ownerIds[0]) // only one owner for super
     const birthYear = assetOwner?.birthYear || year - DEFAULT_AGE
     const roughAge = year - birthYear
 
-    const drawdownPercent = mandatoryDrawdownPercentages[country]?.find((it) => roughAge < it.ageTo)?.percentage || 0
+    const mandatoryDrawdownPercent =
+      mandatoryDrawdownPercentages[country]?.find((it) => roughAge < it.ageTo)?.percentage || 0
 
     const percentageManuallyDrawnDown = getPercentageManuallyDrawnDown(asset.id, transfersForYear, assets)
-    // log(`percentageManuallyDrawnDown: ${year} ${percentageManuallyDrawnDown}`)
+    // if ([2025, 2026].includes(year)) {
+    //   console.log("asset name", asset.name)
+
+    //   log(`percentageManuallyDrawnDown: ${year} ${percentageManuallyDrawnDown} drawdownPercent: ${drawdownPercent}`)
+    // }
 
     // if have already got manual drawdowns / transfer% > the mandatory percentage, ignore this asset
-    if (percentageManuallyDrawnDown >= drawdownPercent) return accum
+    if (percentageManuallyDrawnDown >= mandatoryDrawdownPercent) return accum
+
+    const diff = percentageManuallyDrawnDown - mandatoryDrawdownPercent
+    const percentageToDrawdown = diff > 0 ? diff : mandatoryDrawdownPercent
 
     const valueOfAsset = asset.history.find((it) => it.year === year)?.value || 0
 
-    const amountToDrawdown = valueOfAsset * (drawdownPercent / 100)
+    const amountToDrawdown = valueOfAsset * (percentageToDrawdown / 100)
+    // if ([2025, 2026].includes(year)) {
+    //   log(`valueOfAsset: ${valueOfAsset}`)
+    //   log(`amountToDrawdown: ${asset.name} ${amountToDrawdown}`)
+    // }
 
     const automatedDrawdown = {
       id: getRandomKey(),
@@ -63,5 +80,5 @@ export const getMandatedDrawdowns = ({ assets, owners, year, transfers = [] }: P
     return accum
   }, [] as AutomatedDrawdown[])
 
-  return results
+  return automatedDrawdowns
 }
