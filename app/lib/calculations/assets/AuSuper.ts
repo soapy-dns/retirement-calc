@@ -47,24 +47,50 @@ export class AuSuper extends Asset {
       ? this.superContext.investmentReturn + this.rateVariation
       : this.superContext.investmentReturn
 
-    // const transferAmt = getNetTransferAmt(this.id, yearData, this.transfers, assets)
-    const transferAmt = getNetTransferAmtForYear(year, this.transfers, this.id, prevValue, assets)
+    const incomeFirstHalf = (prevValue * investmentReturn) / 2
+    const taxOnIncomeFirstHalf = getInvestmentTax(incomeFirstHalf, this.country)
+    const valueHalfWay = Math.round(prevValue + incomeFirstHalf - taxOnIncomeFirstHalf)
 
-    const income = (prevValue + transferAmt / 2) * investmentReturn
+    const transferAmt = getNetTransferAmtForYear(year, this.transfers, this.id, valueHalfWay, assets)
 
-    const taxOnIncome = getInvestmentTax(income, this.country)
+    const valueAfterTransfer = valueHalfWay + transferAmt
 
-    const value = prevValue + income + transferAmt - taxOnIncome
+    const incomeSecondHalf = (valueAfterTransfer * investmentReturn) / 2
+
+    const taxOnIncomeSecondHalf = getInvestmentTax(incomeSecondHalf, this.country)
+
+    const valueAtEnd = valueAfterTransfer + incomeSecondHalf - taxOnIncomeSecondHalf
+
+    const totalIncome = incomeFirstHalf + incomeSecondHalf
+
+    const totalTaxOnIncome = taxOnIncomeFirstHalf + taxOnIncomeSecondHalf
+
+    // const transferAmt = getNetTransferAmtForYear(year, this.transfers, this.id, prevValue, assets)
+
+    // const income = (prevValue + transferAmt / 2) * investmentReturn
+
+    // const taxOnIncome = getInvestmentTax(income, this.country)
+
+    // const value = prevValue + income + transferAmt - taxOnIncome
+
+    // if (year === 2026 && this.name === "Australian Retirement Trust - Neil") {
+    // console.log("************2026 super** income", this.name, income, transferAmt)
+    // console.log(`value = ${prevValue} + ${income} + ${transferAmt} - ${taxOnIncome} = ${value}`)
+    // }
 
     const nextYearData = {
       year: year + 1,
       transferAmt,
-      value: Math.round(value),
-      income: Math.round(income), //TODO: for fixed benefit test
-      taxOnIncome: Math.round(taxOnIncome) // Is tax always 15% irrespective?
+      value: Math.round(valueAtEnd),
+      income: Math.round(totalIncome), //TODO: for fixed benefit test
+      taxOnIncome: Math.round(totalTaxOnIncome) // Is tax always 15% irrespective?
     }
-    // if (year === 2024 && this.name === "Australian Retirement Trust") {
-    //   console.log("**2025 super** nextYearData", this.name, nextYearData)
+    // if (year === 2026 && this.name === "Australian Retirement Trust - Neil") {
+    // console.log(`incomeFirstHalf: ${incomeFirstHalf}, taxOnIncomeFirstHalf: ${taxOnIncomeFirstHalf}`)
+    // console.log(
+    //   `---- preValue ${prevValue}, investmentReturn: ${investmentReturn}, incomeFirstHalf: ${incomeFirstHalf}, valueHalfWay: ${valueHalfWay}, transferAmt: ${transferAmt}, valueAfterTransfer: ${valueAfterTransfer}`
+    // )
+    //   // console.log("**2025 super** nextYearData", this.name, nextYearData)
     // }
 
     this.history.push(nextYearData)

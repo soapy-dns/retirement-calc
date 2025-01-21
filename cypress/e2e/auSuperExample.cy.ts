@@ -12,7 +12,7 @@ describe("Au Super example", () => {
 
     cy.get("@cells").should("have.length", 13)
     cy.get("@cells").first().contains("1,050,000")
-    cy.get("@cells").last().contains("-34,513")
+    cy.get("@cells").last().contains("-14,081")
   })
 
   it("should check the last total income is as expected", () => {

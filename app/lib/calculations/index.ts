@@ -37,6 +37,7 @@ import { getAccumulatedData, getAccumulatedNPVData } from "./tax/getAccumulatedT
 import { getInflationFactor } from "./utils/getInflationFactor"
 import { removeUnusedHistory } from "./utils/removeUnusedHistory"
 import { applyStressTests } from "./stressTests/applyStressTests"
+import { log } from "console"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -73,7 +74,6 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
   const { asAtYear } = scenario
 
   try {
-    console.log("----DO CALCULATION ---")
     // setup
     let calculationMessage = ""
     const totalDrawdowns: DrawdownYearData[] = []
@@ -95,10 +95,9 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       au2ukExchangeRate
     } = context
 
+    // SET UP CONTEXT
     const { yearRange, to } = getYearRange(startingYear, numOfYears)
-
     const inflationContext = getInflationContext(yearRange, inflationConfig)
-
     const { livingExpensesTodaysMoney, projectedLivingExpenses } = getLivingExpenses(
       yearRange,
       livingExpenses,
@@ -165,10 +164,18 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       historyItem.value = historyItem.value + totalIncomeFromAssetsAmt
       historyItem.incomeFromAssets = totalIncomeFromAssetsAmt
 
-      const mandatedDrawdowns = getMandatedDrawdowns({ assets, owners, year, transfers })
+      const mandatedDrawdowns = getMandatedDrawdowns({ assets, year, owners, transfers })
       automatedDrawdownMap[year] = mandatedDrawdowns
 
       applyMandatedDrawdowns({ drawdowns: mandatedDrawdowns, assets })
+      if ([2025, 2026].includes(year)) {
+        log(`Year ${year} - Mandated drawdowns: ${JSON.stringify(mandatedDrawdowns, null, 4)}`)
+        const asset = assets.find((it) => it.id === "HIS_AU_SUPER")
+        const history = asset?.history.find((it) => it.year === year)
+
+        const historyPlus = asset?.history.find((it) => it.year === year + 1)
+        log(`HIS_AU_SUPER: ${history?.value}, ${historyPlus?.value}`)
+      }
       updateTaxesForAutoDrawdowns({
         owners,
         taxes,
