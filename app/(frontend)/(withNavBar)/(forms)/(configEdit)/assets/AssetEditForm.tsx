@@ -67,9 +67,8 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         <div className="mb-8">
           <Alert alertType={AlertType.INFO} heading="Note.">
             <>
-              <p> This is a necessary asset, and so cannot be removed or disabled.</p>
-              <p>It is a &apos;Cash&apos; asset. That cannot be changed.</p>
-              <p>Income from other assets is moved here.</p>
+              <p>Income from other assets is annually accumulated in this &apos;Cash&apos; asset.</p>
+              <p>It cannot be removed or disabled as it is integral to the calculation process.</p>
             </>
           </Alert>
         </div>

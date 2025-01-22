@@ -20,12 +20,12 @@ export const assetConstants = {
       "Income from other assets are accumulated here - perhaps this should be outside individual assets as only 1 can be active."
   },
   PREFERRED_MIN_AMT: {
-    LABEL: "Maintain minimum (optional)",
+    LABEL: "Minimum amount to maintain if possible. (optional)",
     HELP_TEXT:
       "The minimum amount to maintain in an asset if possible.  Defaults to 0. If there aren't enough total assets this value will be ignored.  This is useful for banks where you might want to keep some cash handy for rainy days."
   },
   CAN_DRAWDOWN: {
-    LABEL: "Can drawdown.",
+    LABEL: "Can be drawn down?",
     HELP_TEXT:
       "This defines whether or not we can drawdown the value of an asset. By drawing down on an asset we mean removing value from it to pay expenses. This allows the system automatically transfer to the 'Earning bucket' asset."
   },
@@ -81,7 +81,7 @@ export const assetConstants = {
   },
 
   DRAWDOWN_FROM: {
-    LABEL: "Drawdown start year if not immediately (optional)",
+    LABEL: "Drawdown start year.  Defaults to this year. (optional)",
     HELP_TEXT:
       "This value is optional and will default to the current year.  The year we can start drawing down on this asset.  For example we might not want to start drawing down on super until age 60 when the tax benefits kick in.  If this is not entered, it will be assumed that drawing down on the asset is fine from the start."
   },
