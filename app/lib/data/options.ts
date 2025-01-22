@@ -3,7 +3,7 @@ export const stressTestOptions = [
   {
     label: "None applied",
     value: "NONE",
-    summary: "No stress test applied.  All calculations will be made in line with the defined context."
+    summary: "No stress test applied to the scenario.  Only add stress tests once your scenario is complete."
   },
   {
     label: "Lower Returns",

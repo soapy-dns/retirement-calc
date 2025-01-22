@@ -7,6 +7,7 @@ import { useContext } from "react"
 
 import { AssetSummary } from "./AssetSummary"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
+import { sortAssetConfig } from "@/app/ui/utils/sortAssetConfig"
 
 export const AssetTab = () => {
   const navigation = useNavigation()
@@ -15,6 +16,8 @@ export const AssetTab = () => {
   if (!selectedScenario) return null
 
   const { assets, context, asAtYear } = selectedScenario
+
+  const sortedAssetConfig = sortAssetConfig(assets)
 
   const { owners } = context
 
@@ -39,15 +42,8 @@ export const AssetTab = () => {
         </div>
       )}
 
-      {assets.map((asset, index) => {
-        return (
-          <AssetSummary
-            asset={asset}
-            owners={owners}
-            key={asset.name}
-            removeAllowed={index === 0 && assets.length === 1}
-          />
-        )
+      {sortedAssetConfig.map((asset, index) => {
+        return <AssetSummary asset={asset} owners={owners} key={asset.name} removeAllowed={index !== 0} />
       })}
     </div>
   )

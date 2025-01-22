@@ -22,7 +22,7 @@ export const FormGroup: React.FC<IFormGroup> = ({ id, label, helpText, helpAriaL
   }
 
   return (
-    <div className="my-4">
+    <div className=" mb-8">
       <div className="ml-2 flex gap-2">
         <Label htmlFor={id}>{label}</Label>
         {helpText && (

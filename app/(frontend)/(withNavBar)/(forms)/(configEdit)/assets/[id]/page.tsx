@@ -281,6 +281,7 @@ export default function AssetEditPage(props: { params: Params }) {
         drawdownSet={drawdownSet}
         isRentedFormValue={isRentedFormValue}
         owners={owners}
+        isIncomeBucket={incomeAccumulated === "Y"}
         register={register}
       />
       <ChangesNotSavedModal
