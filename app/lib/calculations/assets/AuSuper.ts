@@ -3,7 +3,6 @@ import { AssetGroup } from "@/app/lib/calculations/types"
 import { YearData } from "./types"
 import { getPercIncomeTaxable } from "../tax/utils"
 import { IAsset, IScenario, SuperContext, Transfer } from "../../data/schema/config"
-// import { getNetTransferAmt } from "../transfers/getNetTransferAmt"
 import { getNetTransferAmtForYear } from "../transfers/getNetTransferAmtForYear"
 
 import { getInvestmentTax } from "../tax/taxCalcs/SuperTaxCalc"
@@ -65,19 +64,6 @@ export class AuSuper extends Asset {
 
     const totalTaxOnIncome = taxOnIncomeFirstHalf + taxOnIncomeSecondHalf
 
-    // const transferAmt = getNetTransferAmtForYear(year, this.transfers, this.id, prevValue, assets)
-
-    // const income = (prevValue + transferAmt / 2) * investmentReturn
-
-    // const taxOnIncome = getInvestmentTax(income, this.country)
-
-    // const value = prevValue + income + transferAmt - taxOnIncome
-
-    // if (year === 2026 && this.name === "Australian Retirement Trust - Neil") {
-    // console.log("************2026 super** income", this.name, income, transferAmt)
-    // console.log(`value = ${prevValue} + ${income} + ${transferAmt} - ${taxOnIncome} = ${value}`)
-    // }
-
     const nextYearData = {
       year: year + 1,
       transferAmt,
@@ -85,13 +71,6 @@ export class AuSuper extends Asset {
       income: Math.round(totalIncome), //TODO: for fixed benefit test
       taxOnIncome: Math.round(totalTaxOnIncome) // Is tax always 15% irrespective?
     }
-    // if (year === 2026 && this.name === "Australian Retirement Trust - Neil") {
-    // console.log(`incomeFirstHalf: ${incomeFirstHalf}, taxOnIncomeFirstHalf: ${taxOnIncomeFirstHalf}`)
-    // console.log(
-    //   `---- preValue ${prevValue}, investmentReturn: ${investmentReturn}, incomeFirstHalf: ${incomeFirstHalf}, valueHalfWay: ${valueHalfWay}, transferAmt: ${transferAmt}, valueAfterTransfer: ${valueAfterTransfer}`
-    // )
-    //   // console.log("**2025 super** nextYearData", this.name, nextYearData)
-    // }
 
     this.history.push(nextYearData)
     return nextYearData // TODO: do we need to return this?

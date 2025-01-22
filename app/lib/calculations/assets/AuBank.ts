@@ -3,9 +3,7 @@ import { YearData } from "../assets/types"
 import { AssetGroup } from "@/app/lib/calculations/types"
 import { getPercIncomeTaxable } from "../tax/utils"
 import { CashContext, IAsset, IScenario, Transfer } from "../../data/schema/config"
-// import { getNetTransferAmt } from "../transfers/getNetTransferAmt"
 import { getPercentageOfDrawdownTaxable } from "../tax/getPercentageOfDrawdownTaxable"
-import { log } from "console"
 import { getNetTransferAmtForYear } from "../transfers/getNetTransferAmtForYear"
 
 export class AuBank extends Asset {
@@ -42,9 +40,7 @@ export class AuBank extends Asset {
   calcNextYear = (yearData: YearData, assets: Asset[]): YearData => {
     const { value: prevValue, year } = yearData
 
-    // const transferAmtOld = getNetTransferAmt(this.id, yearData, this.transfers, assets)
     const transferAmt = getNetTransferAmtForYear(year, this.transfers, this.id, prevValue, assets)
-    // log(`-- ${this.name} transferAmtOld:  ${transferAmtOld}, transferAmt: ${transferAmt}`)
 
     const investmentReturn = this.rateVariation
       ? this.cashContext.interestRate + this.rateVariation

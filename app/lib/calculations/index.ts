@@ -168,14 +168,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       automatedDrawdownMap[year] = mandatedDrawdowns
 
       applyMandatedDrawdowns({ drawdowns: mandatedDrawdowns, assets })
-      if ([2025, 2026].includes(year)) {
-        log(`Year ${year} - Mandated drawdowns: ${JSON.stringify(mandatedDrawdowns, null, 4)}`)
-        const asset = assets.find((it) => it.id === "HIS_AU_SUPER")
-        const history = asset?.history.find((it) => it.year === year)
 
-        const historyPlus = asset?.history.find((it) => it.year === year + 1)
-        log(`HIS_AU_SUPER: ${history?.value}, ${historyPlus?.value}`)
-      }
       updateTaxesForAutoDrawdowns({
         owners,
         taxes,

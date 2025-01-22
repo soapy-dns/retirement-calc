@@ -23,6 +23,8 @@ import {
 import { AssetClass, OwnersType } from "@/app/lib/data/schema/config"
 import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { CountrySelector } from "@/app/ui/components/form/CountrySelector"
+import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
+import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 
 interface Props {
   control: Control<any, object>
@@ -30,6 +32,7 @@ interface Props {
   assetType: AssetClass
   drawdownSet: string
   isRentedFormValue: YesNo
+  isIncomeBucket: boolean
   owners: OwnersType
 }
 
@@ -38,6 +41,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
   assetType,
   drawdownSet,
   isRentedFormValue,
+  isIncomeBucket,
   owners,
   register
 }) => {
@@ -58,29 +62,51 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         restrictedCharSet={ALPHA_NUMERIC}
         helpText={assetConstants.NAME.HELP_TEXT}
       />
+
+      {isIncomeBucket && (
+        <div className="mb-8">
+          <Alert alertType={AlertType.INFO} heading="Note.">
+            <>
+              <p> This is a necessary asset, and so cannot be removed or disabled.</p>
+              <p>It is a &apos;Cash&apos; asset. That cannot be changed.</p>
+              <p>Income from other assets is moved here.</p>
+            </>
+          </Alert>
+        </div>
+      )}
+
       <TextAreaQuestion
         id="description"
         control={control}
         label={assetConstants.DESCRIPTION.LABEL}
         helpText={assetConstants.DESCRIPTION.HELP_TEXT}
       />
-      <SelectQuestion
-        id="assetType"
-        control={control}
-        label={assetConstants.CLASS.LABEL}
-        options={assetTypeOptions}
-        editable={true}
-        helpText={assetConstants.CLASS.HELP_TEXT}
-        summaryText={assetConstants.SUMMARY[assetType]}
-      />
-      <RadioButtonQuestion
-        id="disabled"
-        control={control}
-        label={assetConstants.DISABLED.LABEL}
-        values={yesNoOptions}
-        variant={RadioQuestionVariant.BLOCK}
-        helpText={assetConstants.DISABLED.HELP_TEXT}
-      />
+
+      {!isIncomeBucket ? (
+        <SelectQuestion
+          id="assetType"
+          control={control}
+          label={assetConstants.CLASS.LABEL}
+          options={assetTypeOptions}
+          editable={true}
+          helpText={assetConstants.CLASS.HELP_TEXT}
+          summaryText={assetConstants.SUMMARY[assetType]}
+        />
+      ) : (
+        <TextDisplayField label={assetConstants.CLASS.LABEL} value="Cash" />
+      )}
+
+      {!isIncomeBucket && (
+        <RadioButtonQuestion
+          id="disabled"
+          control={control}
+          label={assetConstants.DISABLED.LABEL}
+          values={yesNoOptions}
+          variant={RadioQuestionVariant.BLOCK}
+          helpText={assetConstants.DISABLED.HELP_TEXT}
+        />
+      )}
+
       <CountrySelector
         id="country"
         control={control}
@@ -109,7 +135,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         })}
         helpText={assetConstants.OWNERS.HELP_TEXT}
       />
-      
+
       {isCapitalAsset(assetType) && (
         <>
           <InputQuestion

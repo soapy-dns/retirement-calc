@@ -1,13 +1,10 @@
 import type { IAsset, OwnerType } from "@/app/lib/data/schema/config"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { Card } from "@/app/ui/components/Card"
-import { Button, ButtonType } from "@/app/ui/components/common/Button"
-import { ButtonGroup } from "@/app/ui/components/common/ButtonGroup"
 import { useAsset } from "@/app/ui/hooks/useAsset"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { AppPath } from "@/app/ui/types"
 import { getCurrencyFormatter } from "@/app/ui/utils/formatter"
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
 
 import { getAssetDisplayDetails } from "./utils"
 import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
@@ -42,8 +39,6 @@ export const AssetSummary = ({ asset, removeAllowed }: IAssetItemDisplay) => {
 
     const { id } = asset
     removeAsset(id)
-
-    // TODO: modal to confirm removal
   }
 
   const { AssetClassIcon, type } = getAssetDisplayDetails(asset)
@@ -52,7 +47,7 @@ export const AssetSummary = ({ asset, removeAllowed }: IAssetItemDisplay) => {
 
   const transfersExist = hasTransfers(asset)
 
-  const disabled = removeAllowed || transfersExist === true
+  const disabled = transfersExist === true
 
   return (
     <Card>
@@ -94,7 +89,11 @@ export const AssetSummary = ({ asset, removeAllowed }: IAssetItemDisplay) => {
             )}
 
             {selectedScenario.asAtYear >= getCurrentYear() && (
-              <ButtonGroupEditRemove handleEdit={handleEditFn} handleRemove={handleRemove} disableRemove={disabled} />
+              <ButtonGroupEditRemove
+                handleEdit={handleEditFn}
+                handleRemove={handleRemove}
+                disableRemove={!removeAllowed}
+              />
               // <ButtonGroup>
               //   <Button buttonType={ButtonType.primary} onClick={handleEdit}>
               //     <div className="flex items-center gap-2">

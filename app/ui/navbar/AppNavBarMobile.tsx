@@ -16,7 +16,7 @@ import {
 import Link from "next/link"
 import { AppPath } from "../types"
 import { usePathname } from "next/navigation"
-import { ScenarioMenu } from "../components/SelectMenu"
+import { ScenarioMenu } from "../components/menus/SelectMenu"
 import { Menu, Transition } from "@headlessui/react"
 import { Fragment } from "react"
 import { Chart } from "chart.js/dist"

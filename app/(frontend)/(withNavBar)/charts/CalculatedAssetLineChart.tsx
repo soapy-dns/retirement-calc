@@ -75,7 +75,7 @@ export const CalculatedAssetLineChart: React.FC<Props> = ({ yearRange, graphData
 
   return (
     <>
-      <div className="relative bg-white w-full h-screen max-h-[50vh]">
+      <div className="relative bg-white w-full h-screen max-h-[50vh] px-4">
         {/* @ts-ignore */}
         <Line options={options} data={data} plugins={[htmlLegendPlugin]} />
       </div>
