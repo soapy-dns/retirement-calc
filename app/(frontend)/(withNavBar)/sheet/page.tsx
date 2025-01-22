@@ -22,6 +22,7 @@ import { IndividualIncomeRows } from "./IndividualIncomeRows"
 import { DisplayYearProvider } from "./context/DisplayYearProvider"
 import { HeadingRow } from "./HeadingRow"
 import { Switch } from "@/app/ui/components/common/switch/Switch"
+import { DisplayOptionsMenu } from "@/app/ui/components/menus/DisplayOptionMenu"
 
 const EmptyLine = () => {
   return (
@@ -116,10 +117,7 @@ const SheetPage: React.FC = () => {
                   scope="col"
                   className="z-30 bg-muted italic text-primary-foreground md:first:sticky md:first:left-0 max-w-48 "
                 >
-                  <div className="flex gap-2">
-                    <Switch id="allRows" label="All rows" onChange={toggleAllRows} />
-                    <Switch id="allcols" label="All years" onChange={toggleAllCols} />
-                  </div>
+                  <DisplayOptionsMenu toggleAllCols={toggleAllCols} toggleAllRows={toggleAllRows} />
                 </th>
                 <HeadingRow />
               </tr>

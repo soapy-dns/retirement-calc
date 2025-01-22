@@ -3,8 +3,8 @@ import { Cog8ToothIcon, PresentationChartLineIcon, TableCellsIcon } from "@heroi
 import Link from "next/link"
 import { AppPath } from "../types"
 import { usePathname } from "next/navigation"
-import { MoreMenu } from "../MoreMenu"
-import { ScenarioMenu } from "../components/SelectMenu"
+import { MoreMenu } from "../components/menus/MoreMenu"
+import { ScenarioMenu } from "../components/menus/SelectMenu"
 
 export const AppNavBarDesktop = () => {
   const pathname = usePathname()

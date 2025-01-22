@@ -1,7 +1,7 @@
 import { Fragment, useContext } from "react"
-import { Menu, Transition } from "@headlessui/react"
+import { Menu, MenuItem, MenuItems, Transition } from "@headlessui/react"
 import { ChevronDownIcon } from "@heroicons/react/20/solid"
-import { ScenarioContext } from "../context/scenario/ScenarioContext"
+import { ScenarioContext } from "../../context/scenario/ScenarioContext"
 
 // focus:ring-1 focus:ring-white focus:ring-offset-1 ring-opacity-100
 
@@ -34,11 +34,11 @@ export const ScenarioMenu = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute left-0 z-50 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg border-primary border-2  focus:outline focus:outline-white">
+        <MenuItems className="absolute left-0 z-50 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg border-primary border-2  focus:outline focus:outline-white">
           <div className="py-1">
             {scenarioOptions?.map((option) => {
               return (
-                <Menu.Item key={option.value}>
+                <MenuItem key={option.value}>
                   {({ active }) => (
                     <button
                       onClick={() => handleSelect(option.value)}
@@ -50,11 +50,11 @@ export const ScenarioMenu = () => {
                       {option.label}
                     </button>
                   )}
-                </Menu.Item>
+                </MenuItem>
               )
             })}
           </div>
-        </Menu.Items>
+        </MenuItems>
       </Transition>
     </Menu>
   )

@@ -8,7 +8,7 @@ import {
   EllipsisVerticalIcon,
   WrenchScrewdriverIcon
 } from "@heroicons/react/24/outline"
-import { AppPath } from "./types"
+import { AppPath } from "../../types"
 import Link from "next/link"
 
 function classNames(...classes: string[]) {
