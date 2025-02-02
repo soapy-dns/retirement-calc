@@ -24,12 +24,13 @@ export const Alert: React.FC<IAlert> = ({ id = "alert", alertType, heading, chil
     <div id={id} className={`${bgColor} p-2 border`} role={`${role}`} tabIndex={-1}>
       <>
         {heading && (
-          <div className="flex gap-2 mb-4">
+          <div className="flex gap-2">
             <AlertIcon alertType={alertType} />
             {<div className={`font-semibold text-${foregroundColor}`}>{heading}</div>}
           </div>
         )}
-        {children && children}
+
+        {children && <div className="mt-4">{children}</div>}
       </>
     </div>
   )

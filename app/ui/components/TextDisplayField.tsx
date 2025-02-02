@@ -10,7 +10,7 @@ interface ITextDisplayFieldProps {
 export const TextDisplayField: React.FunctionComponent<ITextDisplayFieldProps> = ({ label, prefix, value, suffix }) => {
   return (
     <FormGroup label={label} id={label}>
-      <p className="mb-2">
+      <p className="mb-4">
         {prefix && prefix}
         {value || "-"}
         {suffix && suffix}
