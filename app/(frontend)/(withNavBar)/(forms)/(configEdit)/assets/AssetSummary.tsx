@@ -1,4 +1,4 @@
-import type { IAsset, OwnerType } from "@/app/lib/data/schema/config"
+import type { CashAsset, IAsset, OwnerType } from "@/app/lib/data/schema/config"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { Card } from "@/app/ui/components/Card"
 import { useAsset } from "@/app/ui/hooks/useAsset"
@@ -12,6 +12,7 @@ import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { useContext } from "react"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { ButtonGroupEditRemove } from "@/app/ui/components/common/ButtonGroupEditRemove"
+import { isCashAsset } from "@/app/ui/utils"
 
 interface IAssetItemDisplay {
   removeAllowed: boolean
@@ -43,7 +44,7 @@ export const AssetSummary = ({ asset, removeAllowed }: IAssetItemDisplay) => {
 
   const { AssetClassIcon, type } = getAssetDisplayDetails(asset)
 
-  const { name, description } = asset
+  const { name, description, className } = asset
 
   const transfersExist = hasTransfers(asset)
 
@@ -54,13 +55,21 @@ export const AssetSummary = ({ asset, removeAllowed }: IAssetItemDisplay) => {
       <div className="grid grid-cols-3 justify-items-auto ">
         <div className="sm:flex-col  border-r border-primary text-primary-foreground justify-center items-center text-center hidden sm:flex">
           <AssetClassIcon className="h-12 w-12" />
-          <div className="font-semibold">{type}</div>
+          <div className="font-semibold px-2">{type}</div>
         </div>
 
         <div className="col-span-3 sm:col-span-2 px-4">
           <div className="mb-4">
             <h2 className="my-auto text-primary-foreground">{name}</h2>
           </div>
+          {isCashAsset(className) && (asset as CashAsset).incomeBucket && (
+            <>
+              <div className="mb-4">
+                <Alert alertType={AlertType.INFO} heading="Income bucket."></Alert>
+              </div>
+            </>
+          )}
+
           <div>
             {hasValidationErrors(asset) && (
               <div className="mb-4">
