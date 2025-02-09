@@ -30,7 +30,7 @@ export const Toggle: React.FC<Props> = ({
   const unselectedClasses = " text-primary-foreground  "
 
   return (
-    <div className="grid w-1/3 grid-cols-2">
+    <div className="grid md:w-1/3 grid-cols-2">
       {options.map((option, index) => {
         const { label, value: optionValue } = option
         const id_ind = `${id}_${index}`
@@ -40,11 +40,11 @@ export const Toggle: React.FC<Props> = ({
         return (
           <div
             key={`${optionValue}`}
-            className={`flex justify-center border-primary border  py-1  first:rounded-l-md last:rounded-r-md focus:outline-none focus:ring-0 focus:border-green-500 focus:border-2 ${
+            className={`flex justify-center border-primary border  py-1  first:rounded-l-md last:rounded-r-md focus:outline-none focus:ring-0  focus:border-2  ${
               selected ? selectedClasses : unselectedClasses
             }`}
           >
-            <label htmlFor={id_ind} className="">
+            <label htmlFor={id_ind} className="px-1">
               {label}
             </label>
             <input
