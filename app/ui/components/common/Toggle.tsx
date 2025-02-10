@@ -40,7 +40,7 @@ export const Toggle: React.FC<Props> = ({
         return (
           <div
             key={`${optionValue}`}
-            className={`flex justify-center border-primary border  py-1  first:rounded-l-md last:rounded-r-md focus:outline-none focus:ring-0  focus:border-2  ${
+            className={`flex justify-center border-primary border  py-1  first:rounded-l-md last:rounded-r-md focus:outline-hidden focus:ring-0  focus:border-2  ${
               selected ? selectedClasses : unselectedClasses
             }`}
           >
