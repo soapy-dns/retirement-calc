@@ -39,6 +39,7 @@ import { removeUnusedHistory } from "./utils/removeUnusedHistory"
 import { applyStressTests } from "./stressTests/applyStressTests"
 import { log } from "console"
 import { initialiseCalculation } from "./initialiseCalculation"
+import { doCalculationsForYear } from "./doCalculationsForYear"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -73,70 +74,23 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
   const scenario = applyStressTests(result.data)
   if (!scenario) throw new Error("No scenario found")
 
-  // const scenario = result.data as IScenario
   const { asAtYear } = scenario
 
   try {
-    // setup
     let calculationMessage = ""
-    // const totalDrawdowns: DrawdownYearData[] = []
-    // const totalAssetIncome: BasicYearData[] = []
-    // const totalExpenses: ExpenseYearData[] = []
-    // const automatedDrawdownMap: Record<number, AutomatedDrawdown[]> = {}
 
     const startingYear = asAtYear
 
-    const { context: contextConfig, transfers } = scenario
+    const { context: contextConfig } = scenario
     const { numOfYears, owners } = contextConfig
 
-    // const {
-    //   numOfYears,
-    //   taxResident = "AU",
-    //   inflation: inflationConfig,
-    //   owners,
-    //   livingExpenses = [],
-    //   currency,
-    //   au2ukExchangeRate
-    // } = contextConfig
-
-    // // SET UP CONTEXT
     const { yearRange, to } = getYearRange(startingYear, numOfYears)
-    // const inflationContext = getInflationContext(yearRange, inflationConfig)
-    // const { livingExpensesTodaysMoney, projectedLivingExpenses } = getLivingExpenses(
-    //   yearRange,
-    //   livingExpenses,
-    //   inflationContext
-    // )
 
-    // // SET UP ASSETS
-    // const assets = buildInitialAssets(startingYear, scenario, inflationContext)
-
-    // // Can only deal with 100% UK or 100% AU residency
-    // const incomeTaxCalculator = getIncomeTaxCalculator({
-    //   taxResident,
-    //   currency,
-    //   inflationContext,
-    //   au2ukExchangeRate,
-    //   asAtYear
-    // })
-    // const earningsTaxCalculator = getEarningsTaxCalculator({
-    //   taxResident,
-    //   currency,
-    //   inflationContext,
-    //   au2ukExchangeRate,
-    //   asAtYear
-    // })
-
-    // const taxes = initTaxes(yearRange, owners)
-    // const earningsTaxes = initEarningsTaxes(yearRange, owners)
-
-    // const incomeFromAssets: AssetIncome[] = initialiseIncomeFromAssets(assets)
     const {
       totalDrawdowns,
       totalAssetIncome,
       totalExpenses,
       automatedDrawdownMap,
-      // yearRange,
       inflationContext,
       livingExpensesTodaysMoney,
       projectedLivingExpenses,
@@ -148,77 +102,26 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       incomeFromAssets
     } = initialiseCalculation(scenario, yearRange)
 
-    //
     let year = startingYear
     let calculatedEndYear = startingYear
     while (year < to && canDrawdownAssets(assets, year)) {
       calculatedEndYear = year + 1
 
-      addAssetIncome(year, assets, incomeFromAssets)
-
-      const manualTransfersForYear = getScenarioTransfersForYear(scenario, year)
-
-      calculateTaxes(taxes, year, assets, owners, incomeTaxCalculator, incomeFromAssets, manualTransfersForYear)
-
-      calculateEarningsTaxes(earningsTaxes, assets, year, earningsTaxCalculator)
-
-      // TOTAL INCOME FOR THIS YEAR -will be moved to the 'incomeBucket' asset
-      const totalIncomeFromAssetsAmt = calculateTotalAssetIncomeAmt(year, incomeFromAssets)
-      totalAssetIncome.push({
-        year,
-        value: Math.round(totalIncomeFromAssetsAmt)
-      })
-
-      // MOVE INCOME FROM ASSETS *AND* PSS INCOME TO THE 'INCOME BUCKET' ASSET
-      const assetToReceiveIncome = assets.find((it) => it.incomeBucket === true)
-      if (!assetToReceiveIncome)
-        throw new Error(
-          "Income from assets has to go somewhere eg a bank account.  incomeBucket: true should be set on one asset"
-        )
-
-      const historyItem = assetToReceiveIncome.history.find((it) => it.year === year + 1) // get next year's asset calculation
-      if (!historyItem) throw new Error(`No data found for income asset ${assetToReceiveIncome.name}`)
-      historyItem.value = historyItem.value + totalIncomeFromAssetsAmt
-      historyItem.incomeFromAssets = totalIncomeFromAssetsAmt
-
-      const mandatedDrawdowns = getMandatedDrawdowns({ assets, year, owners, transfers })
-      automatedDrawdownMap[year] = mandatedDrawdowns
-
-      applyMandatedDrawdowns({ drawdowns: mandatedDrawdowns, assets })
-
-      updateTaxesForAutoDrawdowns({
-        owners,
-        taxes,
-        year,
-        assets,
-        automatedDrawdownsForYear: mandatedDrawdowns,
-        incomeTaxCalculator
-      })
-
-      // RE-CALCULATE TAXES.  This is a bit of a hack because of Automatic drawdowns.
-      // sutomatic drawdown pull money out of an asset for that year,
-      //therefore the income wouldn't have been as much and so
-      // the taxes wouldn't have been as much
-      const groupedDrawdownableAssets = getGroupedDrawdownableAssets(year, assets)
-
-      // why are we sending (for example) the entire taxes for all years when we are only interested in 1.
-      const drawdownContext = {
+      const remainingAmtToDrawdown = doCalculationsForYear({
         year,
         scenario,
-        assets,
-        automatedDrawdownMap,
-        taxes,
-        incomeTaxCalculator,
-        owners,
-        incomeFromAssets: incomeFromAssets,
-        livingExpenses: projectedLivingExpenses,
-        earningsTaxes,
-        totalExpenses,
         totalDrawdowns,
-        groupedAssets: groupedDrawdownableAssets
-      }
-
-      const remainingAmtToDrawdown = applyAutoDrawdowns(drawdownContext)
+        totalAssetIncome,
+        totalExpenses,
+        automatedDrawdownMap,
+        projectedLivingExpenses,
+        assets,
+        incomeTaxCalculator,
+        earningsTaxCalculator,
+        taxes,
+        earningsTaxes,
+        incomeFromAssets
+      })
       if (remainingAmtToDrawdown > 100) {
         // console.log(
         //   `REMAINING AMOUNT TO DRAWDOWN = ${remainingAmtToDrawdown} for year ${year} - stopping further calculation`
