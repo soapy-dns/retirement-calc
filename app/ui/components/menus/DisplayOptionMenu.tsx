@@ -1,11 +1,8 @@
-import { Fragment, FunctionComponent, useContext } from "react"
+import { Fragment, FunctionComponent } from "react"
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from "@headlessui/react"
 import { Menu as MenuIcon } from "lucide-react"
 
-import { ScenarioContext } from "../../context/scenario/ScenarioContext"
 import { Switch } from "../common/switch/Switch"
-
-// focus:ring-1 focus:ring-white focus:ring-offset-1 ring-opacity-100
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
