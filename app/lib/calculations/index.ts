@@ -38,6 +38,7 @@ import { getInflationFactor } from "./utils/getInflationFactor"
 import { removeUnusedHistory } from "./utils/removeUnusedHistory"
 import { applyStressTests } from "./stressTests/applyStressTests"
 import { log } from "console"
+import { initialiseCalculation } from "./initialiseCalculation"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -70,66 +71,82 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
   }
 
   const scenario = applyStressTests(result.data)
+  if (!scenario) throw new Error("No scenario found")
+
   // const scenario = result.data as IScenario
   const { asAtYear } = scenario
 
   try {
     // setup
     let calculationMessage = ""
-    const totalDrawdowns: DrawdownYearData[] = []
-    const totalAssetIncome: BasicYearData[] = []
-    const totalExpenses: ExpenseYearData[] = []
-    const automatedDrawdownMap: Record<number, AutomatedDrawdown[]> = {}
+    // const totalDrawdowns: DrawdownYearData[] = []
+    // const totalAssetIncome: BasicYearData[] = []
+    // const totalExpenses: ExpenseYearData[] = []
+    // const automatedDrawdownMap: Record<number, AutomatedDrawdown[]> = {}
 
     const startingYear = asAtYear
 
-    const { context, transfers } = scenario
+    const { context: contextConfig, transfers } = scenario
+    const { numOfYears, owners } = contextConfig
 
-    const {
-      numOfYears,
-      taxResident = "AU",
-      inflation: inflationConfig,
-      owners,
-      livingExpenses = [],
-      currency,
-      au2ukExchangeRate
-    } = context
+    // const {
+    //   numOfYears,
+    //   taxResident = "AU",
+    //   inflation: inflationConfig,
+    //   owners,
+    //   livingExpenses = [],
+    //   currency,
+    //   au2ukExchangeRate
+    // } = contextConfig
 
-    // SET UP CONTEXT
+    // // SET UP CONTEXT
     const { yearRange, to } = getYearRange(startingYear, numOfYears)
-    const inflationContext = getInflationContext(yearRange, inflationConfig)
-    const { livingExpensesTodaysMoney, projectedLivingExpenses } = getLivingExpenses(
-      yearRange,
-      livingExpenses,
-      inflationContext
-    )
+    // const inflationContext = getInflationContext(yearRange, inflationConfig)
+    // const { livingExpensesTodaysMoney, projectedLivingExpenses } = getLivingExpenses(
+    //   yearRange,
+    //   livingExpenses,
+    //   inflationContext
+    // )
 
-    // SET UP ASSETS
-    const assets = buildInitialAssets(startingYear, scenario, inflationContext)
+    // // SET UP ASSETS
+    // const assets = buildInitialAssets(startingYear, scenario, inflationContext)
 
-    // Can only deal with 100% UK or 100% AU residency
-    const incomeTaxCalculator = getIncomeTaxCalculator({
-      taxResident,
-      currency,
+    // // Can only deal with 100% UK or 100% AU residency
+    // const incomeTaxCalculator = getIncomeTaxCalculator({
+    //   taxResident,
+    //   currency,
+    //   inflationContext,
+    //   au2ukExchangeRate,
+    //   asAtYear
+    // })
+    // const earningsTaxCalculator = getEarningsTaxCalculator({
+    //   taxResident,
+    //   currency,
+    //   inflationContext,
+    //   au2ukExchangeRate,
+    //   asAtYear
+    // })
+
+    // const taxes = initTaxes(yearRange, owners)
+    // const earningsTaxes = initEarningsTaxes(yearRange, owners)
+
+    // const incomeFromAssets: AssetIncome[] = initialiseIncomeFromAssets(assets)
+    const {
+      totalDrawdowns,
+      totalAssetIncome,
+      totalExpenses,
+      automatedDrawdownMap,
+      // yearRange,
       inflationContext,
-      au2ukExchangeRate,
-      asAtYear
-    })
-    const earningsTaxCalculator = getEarningsTaxCalculator({
-      taxResident,
-      currency,
-      inflationContext,
-      au2ukExchangeRate,
-      asAtYear
-    })
-
-    const taxes = initTaxes(yearRange, owners)
-    const earningsTaxes = initEarningsTaxes(yearRange, owners)
-
-    const incomeFromAssets: AssetIncome[] = initialiseIncomeFromAssets(assets)
-
-    if (!scenario) throw new Error("No scenario found")
-    // end of setup
+      livingExpensesTodaysMoney,
+      projectedLivingExpenses,
+      assets,
+      incomeTaxCalculator,
+      earningsTaxCalculator,
+      taxes,
+      earningsTaxes,
+      incomeFromAssets
+    } = initialiseCalculation(scenario, yearRange)
 
     //
     let year = startingYear
