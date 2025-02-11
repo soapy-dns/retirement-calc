@@ -1,4 +1,4 @@
-import { IScenario, OwnersType } from "../data/schema/config"
+import { IScenario } from "../data/schema/config"
 import { calculateTotalAssetIncomeAmt } from "./assetIncome/utils"
 import { Asset } from "./assets/Asset"
 import { addAssetIncome, getGroupedDrawdownableAssets } from "./assets/assetUtils"
@@ -12,7 +12,7 @@ import { calculateEarningsTaxes } from "./tax/getEarningsTaxes"
 import { BandedTaxCalc } from "./tax/taxCalcs/BandedTaxCalc"
 import { calculateTaxes } from "./tax/utils"
 import { getScenarioTransfersForYear } from "./transfers/transferUtils"
-import { BasicYearData, DrawdownYearData, ExpenseYearData, InflationContext } from "./types"
+import { BasicYearData, DrawdownYearData, ExpenseYearData } from "./types"
 
 interface Props {
   year: number
@@ -21,9 +21,6 @@ interface Props {
   totalAssetIncome: BasicYearData[]
   totalExpenses: ExpenseYearData[]
   automatedDrawdownMap: Record<number, AutomatedDrawdown[]>
-  //   yearRange: number[]
-  //   inflationContext: InflationContext
-  //   livingExpensesTodaysMoney: BasicYearData[]
   projectedLivingExpenses: BasicYearData[]
   assets: Asset[]
   incomeTaxCalculator: BandedTaxCalc
@@ -32,11 +29,6 @@ interface Props {
   earningsTaxes: EarningsTax[]
   incomeFromAssets: AssetIncome[]
 }
-
-// interface OutputProps {
-//   remainingAmtToDrawdown: number
-//   calculatedEndYear: number
-// }
 
 export const doCalculationsForYear = ({
   year,
@@ -55,7 +47,6 @@ export const doCalculationsForYear = ({
 }: Props): number => {
   const { context: contextConfig, transfers } = scenario
   const { owners } = contextConfig
-  //   const calculatedEndYear = year + 1
 
   addAssetIncome(year, assets, incomeFromAssets)
 

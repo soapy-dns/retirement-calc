@@ -6,7 +6,6 @@ import { getEarningsTaxCalculator, getIncomeTaxCalculator } from "./tax/taxCalcs
 import { initEarningsTaxes, initTaxes } from "./tax/utils"
 import { BasicYearData, DrawdownYearData, ExpenseYearData } from "./types"
 import { getInflationContext } from "./utils/getInflationContext"
-import { getYearRange } from "./utils/getYearRange"
 import { initialiseIncomeFromAssets } from "./utils/initialiseIncomeFromAssets"
 import { getLivingExpenses } from "./utils/livingExpensesUtils"
 
@@ -20,7 +19,7 @@ export const initialiseCalculation = (scenario: IScenario, yearRange: number[]) 
 
   const startingYear = asAtYear
 
-  const { context: contextConfig, transfers } = scenario
+  const { context: contextConfig } = scenario
 
   const {
     numOfYears,
@@ -33,7 +32,6 @@ export const initialiseCalculation = (scenario: IScenario, yearRange: number[]) 
   } = contextConfig
 
   // SET UP CONTEXT
-  //   const { yearRange, to } = getYearRange(startingYear, numOfYears)
   const inflationContext = getInflationContext(yearRange, inflationConfig)
   const { livingExpensesTodaysMoney, projectedLivingExpenses } = getLivingExpenses(
     yearRange,

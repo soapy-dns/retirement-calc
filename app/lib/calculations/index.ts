@@ -1,36 +1,16 @@
 "use server"
 
 import range from "lodash/range.js"
-
-import {
-  addAssetIncome,
-  canDrawdownAssets,
-  getGroupedDrawdownableAssets,
-  buildInitialAssets
-} from "./assets/assetUtils"
-import { calculateTaxes, initEarningsTaxes, initTaxes } from "./tax/utils"
-import { DrawdownYearData, AssetIncome, ExpenseYearData, Tax } from "./assets/types"
-import { getLivingExpenses } from "./utils/livingExpensesUtils"
-import { initialiseIncomeFromAssets } from "./utils/initialiseIncomeFromAssets"
-import { AutomatedDrawdown } from "./autoDrawdowns/types"
-import { applyAutoDrawdowns } from "./autoDrawdowns/drawdown"
-import { getInflationContext } from "./utils/getInflationContext"
-import { calculateTotalAssetIncomeAmt } from "./assetIncome/utils"
+import { canDrawdownAssets } from "./assets/assetUtils"
+import { AssetIncome } from "./assets/types"
 import { getYearRange } from "./utils/getYearRange"
-import { getEarningsTaxCalculator, getEarningsTaxName, getIncomeTaxCalculator } from "./tax/taxCalcs/getTaxCalculator"
-import { AssetData, AssetSplitItem, BasicYearData, CalculationResults, SurplusYearData, YearData } from "./types"
+import { AssetData, AssetSplitItem, CalculationResults, SurplusYearData, YearData } from "./types"
 import { getAssetSplitByYear } from "./assets/getAssetClasses"
 import { getCalculatedNpvData, getGraphIncomeNpvData } from "./utils/getCalculatedNpvData"
 import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
-import { IScenario, ScenarioSchema } from "../data/schema/config"
-import { calculateEarningsTaxes } from "./tax/getEarningsTaxes"
-import { getScenarioTransfersForYear } from "./transfers/transferUtils"
 import { CalculationError } from "@/app/lib/utils/CalculationError"
 import { isCapitalAsset } from "@/app/ui/utils"
 import { accumToBasicYearData } from "./utils/accumToBasicYearData"
-import { getMandatedDrawdowns } from "./autoDrawdowns/getMandatedDrawdowns"
-import { applyMandatedDrawdowns } from "./autoDrawdowns/applyMandatedDrawdowns"
-import { updateTaxesForAutoDrawdowns } from "./autoDrawdowns/updateTaxesForDrawdowns"
 import { getIncomeByOwner } from "./utils/getIncomeByOwner"
 import { getTaxDetailsByOwner } from "./utils/getTaxDetailsByOwner"
 import { getAccumulatedData, getAccumulatedNPVData } from "./tax/getAccumulatedTaxData"
@@ -40,6 +20,7 @@ import { applyStressTests } from "./stressTests/applyStressTests"
 import { log } from "console"
 import { initialiseCalculation } from "./initialiseCalculation"
 import { doCalculationsForYear } from "./doCalculationsForYear"
+import { ScenarioSchema } from "../data/schema/config"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
