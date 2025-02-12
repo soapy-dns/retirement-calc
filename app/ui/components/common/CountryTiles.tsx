@@ -44,10 +44,13 @@ export const CountryTiles: React.FC<CountryTilesProps> = ({ id, name, value, onC
         return (
           <div
             key={`${option}`}
-            className={clsx("flex flex-col border gap-2 justify-center items-center min-w-[100px] h-[100px] mt-2 ", {
-              "border-2 border-primary": selected
-              // border: !selected
-            })}
+            className={clsx(
+              "flex flex-col border gap-2 justify-center items-center min-w-[100px] h-[100px] mt-2 cursor-pointer",
+              {
+                "border-2 border-primary": selected
+                // border: !selected
+              }
+            )}
           >
             <input
               id={`${id}-${option}`}
@@ -59,7 +62,7 @@ export const CountryTiles: React.FC<CountryTilesProps> = ({ id, name, value, onC
               className="hidden"
               readOnly={true}
             />
-            <label htmlFor={`${id}-${option}`}>
+            <label htmlFor={`${id}-${option}`} className="cursor-pointer">
               <div className="flex justify-center">
                 <Image src={flag[option]} width={36} height={24} alt="Country flag" className="border" />
               </div>
