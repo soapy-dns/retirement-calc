@@ -21,6 +21,7 @@ import { log } from "console"
 import { initialiseCalculation } from "./initialiseCalculation"
 import { doCalculationsForYear } from "./doCalculationsForYear"
 import { ScenarioSchema } from "../data/schema/config"
+import { getAssetSplit } from "./getAssetSplit"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -118,7 +119,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       calculationMessage = `Cannot automate further capital asset drawdowns after ${calculatedEndYear}.  
       Some assets will need to be sold.  (Go to the Transfers on the 'Configuration' page)`
 
-    const finalYear = year + 1
+    // log("calculatedEndYear, year", calculatedEndYear, year)
+    const finalAssetYear = calculatedEndYear
     const numOfCalculatedYears = calculatedEndYear - startingYear
 
     // for assets want to show the 'next' year.  for income we don't
@@ -162,16 +164,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       }
     })
 
-    const capitalAssets = assets.filter((it) => isCapitalAsset(it.className) === true)
-
-    const assetSplitYearly: Record<number, AssetSplitItem[]> = calcYearRangeAssets.reduce(
-      (accum, year) => {
-        const assetSplit = getAssetSplitByYear(capitalAssets, year)
-        accum[year] = assetSplit
-        return accum
-      },
-      {} as Record<number, AssetSplitItem[]>
-    )
+    const assetSplitYearly = getAssetSplit(assets, calcYearRangeAssets)
 
     const totalAssetsData = calcYearRangeAssets.map((year) => {
       const totalYearlyAssetAmt = assets.reduce((accum, it) => {
@@ -248,13 +241,13 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     const totalTaxesYearData = accumToBasicYearData(incomeTaxesYearData.concat(earningsTaxesYearData))
 
-    const accumulatedTaxData = removeUnusedHistory(getAccumulatedData(totalTaxesYearData), finalYear)
+    const accumulatedTaxData = removeUnusedHistory(getAccumulatedData(totalTaxesYearData), finalAssetYear)
     const accumulatedNpvTaxData = removeUnusedHistory(
       getAccumulatedNPVData({
         yearData: totalTaxesYearData,
         inflationContext
       }),
-      finalYear
+      finalAssetYear
     )
 
     // const expensesRowData = { ...incomeTaxRows, ...earningTaxRows, ...livingExpensesRows }
