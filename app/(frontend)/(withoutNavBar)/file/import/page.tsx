@@ -38,8 +38,6 @@ export default function ImportPage() {
   const handleOnClick = async (): Promise<void> => {
     setButtonStatus(ButtonStatus.busy)
 
-    // await sleep(1)
-
     if (selectedFile) {
       const data = await selectedFile.text()
       try {
@@ -65,29 +63,29 @@ export default function ImportPage() {
       </Button>
       <h1 className="text-primary-foreground">Import a scenario file</h1>
       <form>
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center mb-8">
           <Label className="mb-2" htmlFor="file">
             Select a local file to import
           </Label>
           <input
             id="file"
             accept="application/json"
-            className="border-2 file:bg-primary file:border-0 file:text-white ml-4"
+            // className="border-2 file:bg-primary file:border-0 file:text-white ml-4"
+            className={`ml-4 border-2 focus:outline focus:outline-primary-foreground file:bg-primary  file:py-2 file:px-4 file:text-white `}
             name="scenarioFile"
             type="file"
             onChange={changeHandler}
           />
-
-          <Button
-            onClick={handleOnClick}
-            buttonType={ButtonType.primary}
-            disabled={buttonStatus === ButtonStatus.busy || buttonStatus === ButtonStatus.disabled}
-          >
-            <div className=" flex items-center justify-center gap-2">
-              {buttonStatus === ButtonStatus.busy ? <div>Loading...</div> : <div>Upload</div>}
-            </div>
-          </Button>
         </div>
+        <Button
+          onClick={handleOnClick}
+          buttonType={ButtonType.primary}
+          disabled={buttonStatus === ButtonStatus.busy || buttonStatus === ButtonStatus.disabled}
+        >
+          <div className=" flex items-center justify-center gap-2">
+            {buttonStatus === ButtonStatus.busy ? <div>Loading...</div> : <div>Upload</div>}
+          </div>
+        </Button>
       </form>
     </main>
   )
