@@ -3,8 +3,6 @@ import { Menu, MenuItem, MenuItems, Transition } from "@headlessui/react"
 import { ChevronDownIcon } from "@heroicons/react/20/solid"
 import { ScenarioContext } from "../../context/scenario/ScenarioContext"
 
-// focus:ring-1 focus:ring-white focus:ring-offset-1 ring-opacity-100
-
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
 }

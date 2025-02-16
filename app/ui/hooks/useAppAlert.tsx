@@ -34,15 +34,12 @@ const useAppAlert = () => {
       (t: Toast) => (
         <AlertBanner
           variant={AlertType.WARNING}
-          // message={now.toDateString()}
-          // message={toastOptions?.duration ? toastOptions.duration.toString() : "no duration"}
           message={message}
-          // message="Warning alert"
           onClose={() => {
             if (onClose) onClose()
             toast.dismiss(t.id)
           }}
-          maxSize="half"
+          // maxSize="half"
           dismissible={dismissible}
         />
       ),
@@ -64,7 +61,7 @@ const useAppAlert = () => {
           variant={AlertType.INFO}
           message={message}
           onClose={() => toast.remove(t.id)}
-          maxSize="half"
+          // maxSize="half"
           dismissible={dismissible}
         />
       ),

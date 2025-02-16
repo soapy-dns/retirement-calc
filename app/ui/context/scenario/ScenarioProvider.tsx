@@ -14,8 +14,10 @@ import { FormattedErrors } from "../../components/formattedErrors/FormattedError
 import { isIncomeAsset } from "../../utils"
 import { getNewScenario } from "../../../lib/scenario/getNewScenario"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
+import { sortScenarios } from "../../utils/sortScenarios"
 
-const WARNING_DURATION = 3000 // duration for warning messages
+// https://sheribyrnehaber.medium.com/designing-toast-messages-for-accessibility-fb610ac364be#:~:text=Issue%20%231%3A%20How%20long%20should%20toasts%20stay%20up%20for%3F&text=A%20good%20length%20of%20time,best%20practice%20is%206%20seconds.
+const WARNING_DURATION = 5000 // duration for warning messages
 
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
   const scenarioOptions = scenarios.map((scenario) => ({
@@ -96,14 +98,17 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
   const importScenarios = async (
     scenarios: IScenario[]
   ): Promise<{ success: boolean; calculationResults?: CalculationResults }> => {
-    const defaultSelectedScenario = scenarios[0]
+    // sort scenarios by decending date
+    const sortedScenarios = sortScenarios(scenarios)
+
+    const defaultSelectedScenario = sortedScenarios[0]
 
     if (!defaultSelectedScenario) throw new Error("No scenario found in import file")
 
-    const scenarioOptions = getScenarioOptions(scenarios)
+    const scenarioOptions = getScenarioOptions(sortedScenarios)
     const selectedScenarioOption = scenarioOptions.find((it) => it.value === defaultSelectedScenario.id)
 
-    setScenarios(scenarios)
+    setScenarios(sortedScenarios)
     setSelectedScenario(defaultSelectedScenario)
     setScenarioOptions(scenarioOptions)
     setSelectedScenarioOption(selectedScenarioOption)
