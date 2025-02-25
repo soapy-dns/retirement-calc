@@ -147,6 +147,8 @@ interface CalculationResultsSuccess {
   totalTaxableAmtDataByOwner: AssetData
   accumulatedTaxData: BasicYearData[]
   accumulatedNpvTaxData: BasicYearData[]
+  calculatedEndYear: number
+  maxEndYear: number
 }
 
 export type CalculationResults = CalculationResultsSuccess | CalculationResultsFail
