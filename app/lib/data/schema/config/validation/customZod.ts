@@ -22,9 +22,12 @@ const customErrorMap: z.ZodErrorMap = (error, ctx) => {
   switch (error.code) {
     case z.ZodIssueCode.invalid_type:
       if (error.received === "undefined") {
-        if (error.expected.indexOf("|") > 0) return { message: "A value must be selected." }
+        if (error.expected.indexOf("|") > 0) return { message: "Please select an option." }
         return { message: `This field is required.` }
+      } else if (error.code === "invalid_type" && error) {
+        return { message: `Please enter a valid number.` }
       } else {
+        console.log("error", error)
         return { message: `Invalid value.` }
       }
 

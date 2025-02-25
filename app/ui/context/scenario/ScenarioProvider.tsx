@@ -15,6 +15,7 @@ import { isIncomeAsset } from "../../utils"
 import { getNewScenario } from "../../../lib/scenario/getNewScenario"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { sortScenarios } from "../../utils/sortScenarios"
+import { CalculationWarning } from "./CalculationWarning"
 
 // https://sheribyrnehaber.medium.com/designing-toast-messages-for-accessibility-fb610ac364be#:~:text=Issue%20%231%3A%20How%20long%20should%20toasts%20stay%20up%20for%3F&text=A%20good%20length%20of%20time,best%20practice%20is%206%20seconds.
 const WARNING_DURATION = 5000 // duration for warning messages
@@ -29,7 +30,12 @@ const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
 
 const defaultScenarios = getDefaultScenarios()
 
-export const ScenarioProvider = ({ children }: { children: React.ReactNode }) => {
+interface Props {
+  showCalculationInfo: () => void
+  children: React.ReactNode
+}
+
+export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
   const [calculating, setCalculating] = useState<boolean>(false)
 
   const [scenarioOptions, setScenarioOptions] = useState<ISelectOption[]>()
@@ -54,16 +60,20 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     try {
       setCalculating(true)
       const calculationResults = await calculate(selectedScenario)
-      console.log("calculationResults", calculationResults)
+      // console.log("calculationResults", calculationResults)
       setCalculationResults(calculationResults)
       setCalculating(false)
 
       const { success, calculationMessage } = calculationResults
-      const currentYear = getCurrentYear()
-      const { asAtYear } = selectedScenario
-      if (success && calculationMessage) {
-        if (asAtYear >= currentYear) {
-          displayWarningAlert(calculationMessage, { duration: WARNING_DURATION })
+
+      if (success) {
+        const { calculatedEndYear, maxEndYear } = calculationResults
+        if (maxEndYear >= calculatedEndYear) {
+          const calculationMessageElement = (
+            <CalculationWarning calculatedEndYear={calculatedEndYear} showMore={showCalculationInfo} />
+          )
+
+          displayWarningAlert(calculationMessageElement, { duration: WARNING_DURATION })
         }
         // server actions will return a 200 error for validation messages.  This may change in future
       } else if (!success) {
@@ -115,10 +125,6 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
 
     sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
     sessionStorage.setItem("selectedScenario", JSON.stringify(defaultSelectedScenario))
-
-    // const currentYear = getCurrentYear()
-    // if (defaultScenarios[0].asAtYear >= currentYear) {
-    // }
 
     const { success, calculationResults } = await doCalculations(defaultSelectedScenario)
 
@@ -205,7 +211,6 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
   ): Promise<{ success: boolean }> => {
     const newScenario = await getNewScenario(selectedScenario, name, description, (stressTest = "NONE"))
 
-    console.log("newScenario", newScenario)
     const { success } = await doCalculations(newScenario) // this also updates the calculationResults in state.
 
     const mergedScenarios = scenarios.concat([newScenario])
@@ -227,7 +232,6 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
   // Need to store.  This is remounted because the <Route> is remounted (I think)
   useEffect(() => {
     const scenariosString = sessionStorage.getItem("scenarios")
-    console.log("scenariosString exists:", !!scenariosString)
     const scenarios = scenariosString ? JSON.parse(scenariosString) : defaultScenarios
     setScenarios(scenarios)
 
@@ -247,7 +251,6 @@ export const ScenarioProvider = ({ children }: { children: React.ReactNode }) =>
     sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
     sessionStorage.setItem("selectedScenario", JSON.stringify(selectedScenario))
 
-    console.log("do calulation on mount with selectedScenario", selectedScenario)
     doCalculations(selectedScenario)
   }, [])
 

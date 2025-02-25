@@ -115,10 +115,6 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     }
     // }) // end of year
 
-    if (calculatedEndYear !== to)
-      calculationMessage = `Cannot automate further capital asset drawdowns after ${calculatedEndYear}.  
-      Some assets will need to be sold.  (Go to the Transfers on the 'Configuration' page)`
-
     // log("calculatedEndYear, year", calculatedEndYear, year)
     const finalAssetYear = calculatedEndYear
     const numOfCalculatedYears = calculatedEndYear - startingYear
@@ -283,7 +279,9 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       incomeByOwner,
       totalTaxableAmtDataByOwner,
       accumulatedTaxData,
-      accumulatedNpvTaxData
+      accumulatedNpvTaxData,
+      calculatedEndYear,
+      maxEndYear: to
     }
   } catch (e) {
     if (e instanceof CalculationError) {

@@ -1,7 +1,8 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
+// import { z } from "zod"
+import { z } from "@/app/lib/data/schema/config/validation/customZod"
 
 import EditPageLayout from "@/app/(frontend)/(withoutNavBar)/components/EditPageLayout"
 import { ContextConfig } from "@/app/lib/data/schema/config"
@@ -13,7 +14,7 @@ import { useContext, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 
 import { contextConstants } from "../contextConstants"
-import { IsFormNumberOpt } from "@/app/lib/data/schema/config/schemaUtils"
+import { IsFormNumber } from "@/app/lib/data/schema/config/schemaUtils"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
 import { RadioButtonQuestion, RadioQuestionVariant } from "@/app/ui/components/form/RadioButtonQuestion"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
@@ -34,8 +35,8 @@ const FormSchema = z.object({
       .object({
         identifier: z.string(),
         ownerName: z.string(),
-        birthYear: IsFormNumberOpt,
-        gender: z.enum(["M", "F"]).optional()
+        birthYear: IsFormNumber,
+        gender: z.enum(["M", "F"])
       })
       .refine(
         ({ birthYear }) => {
@@ -69,9 +70,11 @@ const OwnersPage: React.FC = () => {
   } = useForm<FormDataType>({
     defaultValues: { items: owners },
     resolver: zodResolver(FormSchema),
-    mode: "onBlur",
-    reValidateMode: "onBlur"
+    mode: "onSubmit", // before form submits
+    reValidateMode: "onChange" // after form submitted
   })
+
+  console.log("errors-->", errors)
 
   const { fields, insert, remove } = useFieldArray({
     control,
@@ -92,7 +95,8 @@ const OwnersPage: React.FC = () => {
       return {
         identifier: it.identifier || getRandomKey(),
         ownerName: it.ownerName,
-        birthYear: it.birthYear ? Number(it.birthYear) : undefined,
+        birthYear: it.birthYear,
+        // birthYear: it.birthYear ? Number(it.birthYear) : undefined,
         gender: it.gender
       }
     })
@@ -122,8 +126,10 @@ const OwnersPage: React.FC = () => {
 
     setShowInvalidActionModal(true)
   }
+
   const handleAdd = () => {
-    insert(1, { identifier: getRandomKey(), ownerName: "Person" })
+    // @ts-ignore - insert without all values added - they will be required on form submit, but the customer needs to add them.
+    insert(1, { identifier: getRandomKey() })
   }
 
   return (
@@ -139,11 +145,7 @@ const OwnersPage: React.FC = () => {
       <div className="mb-4">
         <Alert alertType={AlertType.INFO} heading="Note:">
           <>
-            <p>Owners need to be added to correctly calculate taxes for each. There is a maximum of 2 owners.</p>
-            <p>
-              Only a name is necessary for each. Other details can help make the calculations more accurate, and help
-              indicate if your assets are likely to match your expected lifespan, and improve tax calculations.
-            </p>
+            <p>Owners need to be added to correctly calculate taxes for each. There can be a maximum of 2 owners.</p>
           </>
         </Alert>
       </div>
