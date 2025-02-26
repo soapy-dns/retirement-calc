@@ -22,6 +22,8 @@ import { initialiseCalculation } from "./initialiseCalculation"
 import { doCalculationsForYear } from "./doCalculationsForYear"
 import { ScenarioSchema } from "../data/schema/config"
 import { getAssetSplit } from "./getAssetSplit"
+import { getAssetIncomeRowData } from "./getAssetIncomeRowData"
+import { getAssetRateOfReturn } from "./getAssetRateOfReturn"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -188,13 +190,16 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const graphCalculatedAssetData = { ...assetRowData } as AssetData
     const graphCalculatedAssetNpvData = getCalculatedNpvData(assets, inflationContext) // for graph purposes
 
-    const assetIncomeRowData = incomeFromAssets.reduce((accum: AssetData, assetIncome: AssetIncome) => {
-      const ownerName = owners.find((owner) => owner.identifier === assetIncome.ownerId)?.ownerName || "Unknown"
-      accum[`${assetIncome.name} - ${ownerName}`] = assetIncome.history
-      return accum
-    }, {})
+    const assetIncomeRowData = getAssetIncomeRowData({ incomeFromAssets, owners })
+    // const assetIncomeRowData = incomeFromAssets.reduce((accum: AssetData, assetIncome: AssetIncome) => {
+    //   const ownerName = owners.find((owner) => owner.identifier === assetIncome.ownerId)?.ownerName || "Unknown"
+    //   accum[`${assetIncome.name} - ${ownerName}`] = assetIncome.history
+    //   return accum
+    // }, {})
 
     const incomeByOwner: AssetData = getIncomeByOwner({ owners, incomeFromAssets })
+
+    // const assetRateOfReturnData = getAssetRateOfReturn({ incomeFromAssets, assets, yearRange })
 
     const taxDetailsByOwner = getTaxDetailsByOwner({ owners, taxes })
     const totalTaxableAmtDataByOwner = Object.entries(taxDetailsByOwner).reduce((accum, [ownerName, taxDetails]) => {
@@ -280,6 +285,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       totalTaxableAmtDataByOwner,
       accumulatedTaxData,
       accumulatedNpvTaxData,
+      // assetRateOfReturnData,
       calculatedEndYear,
       maxEndYear: to
     }

@@ -132,6 +132,7 @@ const SheetPage: React.FC = () => {
                 })}
               <Row rowIdentifier="Total Assets" bold={true} cells={totalAssetsData} onToggle={onHelpModalToggle} />
               <Row rowIdentifier="Present value" bold={true} cells={netPresentValue} onToggle={onHelpModalToggle} />
+              {/* <Row rowIdentifier="Return %" bold={true} cells={assetRateOfReturnData} onToggle={onHelpModalToggle} /> */}
               <EmptyLine />
 
               {/* income from assets */}

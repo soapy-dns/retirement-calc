@@ -74,8 +74,6 @@ const OwnersPage: React.FC = () => {
     reValidateMode: "onChange" // after form submitted
   })
 
-  console.log("errors-->", errors)
-
   const { fields, insert, remove } = useFieldArray({
     control,
     name: "items"

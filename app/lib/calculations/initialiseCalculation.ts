@@ -22,7 +22,6 @@ export const initialiseCalculation = (scenario: IScenario, yearRange: number[]) 
   const { context: contextConfig } = scenario
 
   const {
-    numOfYears,
     taxResident = "AU",
     inflation: inflationConfig,
     owners,

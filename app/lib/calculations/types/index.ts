@@ -147,6 +147,7 @@ interface CalculationResultsSuccess {
   totalTaxableAmtDataByOwner: AssetData
   accumulatedTaxData: BasicYearData[]
   accumulatedNpvTaxData: BasicYearData[]
+  // assetRateOfReturnData: BasicYearData[]
   calculatedEndYear: number
   maxEndYear: number
 }
