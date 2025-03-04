@@ -13,12 +13,11 @@ import { Spinner } from "../../components/common/Spinner"
 import { FormattedErrors } from "../../components/formattedErrors/FormattedErrors"
 import { isIncomeAsset } from "../../utils"
 import { getNewScenario } from "../../../lib/scenario/getNewScenario"
-import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { sortScenarios } from "../../utils/sortScenarios"
 import { CalculationWarning } from "./CalculationWarning"
 
 // https://sheribyrnehaber.medium.com/designing-toast-messages-for-accessibility-fb610ac364be#:~:text=Issue%20%231%3A%20How%20long%20should%20toasts%20stay%20up%20for%3F&text=A%20good%20length%20of%20time,best%20practice%20is%206%20seconds.
-const WARNING_DURATION = 5000 // duration for warning messages
+const WARNING_DURATION = 7000 // duration for warning messages
 
 const getScenarioOptions = (scenarios: IScenario[]): ISelectOption[] => {
   const scenarioOptions = scenarios.map((scenario) => ({

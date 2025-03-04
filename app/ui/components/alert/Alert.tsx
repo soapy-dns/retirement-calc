@@ -1,5 +1,5 @@
 import { AlertIcon } from "./AlertIcon"
-import { getBackgroundColor, getForegroundColor, getRole } from "./utils"
+import { getBackgroundColor, getTextForegroundColor, getRole } from "./utils"
 
 export enum AlertType {
   SUCCESS = "success",
@@ -17,7 +17,7 @@ interface IAlert {
 
 export const Alert: React.FC<IAlert> = ({ id = "alert", alertType, heading, children }) => {
   const bgColor = getBackgroundColor(alertType)
-  const foregroundColor = getForegroundColor(alertType)
+  const textForegroundColor = getTextForegroundColor(alertType)
   const role = getRole(alertType)
 
   return (
@@ -26,7 +26,7 @@ export const Alert: React.FC<IAlert> = ({ id = "alert", alertType, heading, chil
         {heading && (
           <div className="flex gap-2">
             <AlertIcon alertType={alertType} />
-            {<div className={`font-semibold text-${foregroundColor}`}>{heading}</div>}
+            {<div className={`font-semibold ${textForegroundColor}`}>{heading}</div>}
           </div>
         )}
 

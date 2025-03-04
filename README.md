@@ -17,7 +17,8 @@ reactStrictMode: true, in nextConfig will cause double rendering. This can help 
 
 pkill next-serv
 
-lsof -i :3000
+lsof -i :3000 - this didn't always work for me - tried
+ss -ltnp
 
 kill -9 pid
 

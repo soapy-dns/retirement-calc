@@ -1,8 +1,8 @@
 import { JSX } from "react"
 import { XMarkIcon } from "@heroicons/react/24/outline"
 import { AlertType } from "./Alert"
-import { AlertHeading, AlertIcon } from "./AlertIcon"
-import { getBackgroundColor, getForegroundColor } from "./utils"
+import { AlertIcon } from "./AlertIcon"
+import { getBackgroundColor, getBorderForegroundColor, getTextForegroundColor } from "./utils"
 
 interface Props {
   variant: AlertType
@@ -14,26 +14,27 @@ interface Props {
 
 export const AlertBanner: React.FC<Props> = ({ onClose, variant, message, dismissible = true, maxSize = "full" }) => {
   const backgroundColor = getBackgroundColor(variant)
-  const foregroundColor = getForegroundColor(variant)
+  const textForegroundColor = getTextForegroundColor(variant)
+  const borderForegroundColor = getBorderForegroundColor(variant)
+
+  // const errorForegroundColor = "border-error-foreground"
 
   return (
-    <div className={`border  ${backgroundColor} w-screen ${maxSize === "half" ? "max-w-lg" : null} p-4`} role="alert">
-      <h2 className={`text-${foregroundColor}`}>
-        <div className="grid grid-cols-3">
-          <div></div>
-          <div className="flex items-center justify-center gap-2">
-            <AlertIcon alertType={variant} />
-            <AlertHeading alertType={variant} />
-          </div>{" "}
-          {dismissible && (
-            <button onClick={onClose} className="justify-self-end">
-              <XMarkIcon className="h-6 w-6" />
-            </button>
-          )}
+    <div
+      className={` ${backgroundColor} w-screen ${maxSize === "half" ? "max-w-lg" : null} p-1 border-2 ${borderForegroundColor} `}
+      role="alert"
+    >
+      <div className="flex justify-between">
+        <div className={`flex gap-2 items-center justify-center ${textForegroundColor} w-full`}>
+          <AlertIcon alertType={variant} />
+          {message}
         </div>
-      </h2>
-
-      <div className="flex items-center justify-center">{message}</div>
+        {dismissible && (
+          <button onClick={onClose} className="">
+            <XMarkIcon className="h-6 w-6 text-primary" />
+          </button>
+        )}
+      </div>
     </div>
   )
 }

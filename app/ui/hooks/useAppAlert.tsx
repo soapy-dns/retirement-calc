@@ -83,7 +83,7 @@ const useAppAlert = () => {
           variant={AlertType.ERROR}
           message={message}
           onClose={() => toast.remove(t.id)}
-          maxSize="half"
+          // maxSize="half"
           dismissible={dismissible}
         />
       ),
@@ -104,7 +104,7 @@ const useAppAlert = () => {
           variant={AlertType.SUCCESS}
           message={message}
           onClose={() => toast.remove(t.id)}
-          maxSize="half"
+          // maxSize="half"
           dismissible={dismissible}
         />
       ),

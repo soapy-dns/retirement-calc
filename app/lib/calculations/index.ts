@@ -55,6 +55,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     }
   }
 
+  // throw new Error("SERVER ERROR")
+
   const scenario = applyStressTests(result.data)
   if (!scenario) throw new Error("No scenario found")
 
