@@ -4,6 +4,8 @@ import { AssetIncome } from "./assets/types"
 import { BasicYearData } from "./types"
 import { log } from "console"
 
+
+// TODO: don't think this gets used - get rid of it?- It doesn't work because there is no apparent return on super or property.
 interface Props {
   incomeFromAssets: AssetIncome[]
   assets: Asset[]

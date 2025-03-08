@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-// import { z } from "zod"
 import { z } from "@/app/lib/data/schema/config/validation/customZod"
 
 import EditPageLayout from "@/app/(frontend)/(withoutNavBar)/components/EditPageLayout"
@@ -89,13 +88,11 @@ const OwnersPage: React.FC = () => {
   }
 
   const onSubmit = async (data: FormDataType) => {
-    console.log("data", data)
     const reformattedDataItems = data.items.map((it) => {
       return {
         identifier: it.identifier || getRandomKey(),
         ownerName: it.ownerName,
         birthYear: it.birthYear,
-        // birthYear: it.birthYear ? Number(it.birthYear) : undefined,
         gender: it.gender
       }
     })
@@ -176,7 +173,6 @@ const OwnersPage: React.FC = () => {
                 {/* @ts-ignore */}
                 <InputQuestion
                   id={`items.${index}.ownerName`}
-                  // control={control}
                   label={contextConstants.OWNER_IDENTIFIER.LABEL}
                   editable={true}
                   helpText={contextConstants.OWNER_IDENTIFIER.HELP_TEXT}
@@ -185,7 +181,6 @@ const OwnersPage: React.FC = () => {
                 <RadioButtonQuestion
                   id={`items.${index}.gender`}
                   label={contextConstants.OWNER_GENDER.LABEL}
-                  // control={control}
                   values={genderOptions}
                   variant={RadioQuestionVariant.BLOCK}
                   helpText={contextConstants.OWNER_GENDER.HELP_TEXT}
@@ -193,7 +188,6 @@ const OwnersPage: React.FC = () => {
 
                 <InputQuestion
                   id={`items.${index}.birthYear`}
-                  // control={control}
                   label={contextConstants.OWNER_BIRTH_YEAR.LABEL}
                   editable={true}
                   restrictedCharSet={INTEGERS_ONLY}

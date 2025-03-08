@@ -6,12 +6,10 @@ import { SelectQuestion } from "@/app/ui/components/form/SelectQuestion"
 import { TextAreaQuestion } from "@/app/ui/components/form/TextAreaQuestion"
 import { yesNoOptions } from "@/app/ui/utils/yesNoOptions"
 import { FunctionComponent } from "react"
-import { Control } from "react-hook-form"
 import { assetConstants } from "./assetConstants"
 import { assetTypeOptions, drawdownOrderOptions } from "./assetTypeOptions"
 import { validateOwners } from "@/app/ui/validation/ownersValidation"
 import { YesNo } from "../types"
-import { AssetType } from "@/app/lib/data/types"
 import {
   isCapitalAsset,
   isCashAsset,
@@ -25,9 +23,9 @@ import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { CountrySelector } from "@/app/ui/components/form/CountrySelector"
 import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
+import IncomeAssetDetails from "./IncomeAssetDetails"
 
 interface Props {
-  // control: Control<any, object>
   register: Function
   assetType: AssetClass
   drawdownSet: string
@@ -37,7 +35,6 @@ interface Props {
 }
 
 export const AssetEditForm: FunctionComponent<Props> = ({
-  // control,
   assetType,
   drawdownSet,
   isRentedFormValue,
@@ -50,14 +47,10 @@ export const AssetEditForm: FunctionComponent<Props> = ({
   const showDrawdown = drawdownSet === "Y"
   const ownerOptions = owners.map((it) => ({ label: it.ownerName, value: it.identifier }))
 
-  // TODO: change to use common
-  const showIncomeStartDate = [AssetType.AuDefinedBenefits, AssetType.Salary].includes(assetType)
-
   return (
     <form>
       <InputQuestion
         id="name"
-        // control={control}
         label={assetConstants.NAME.LABEL}
         restrictedCharSet={ALPHA_NUMERIC}
         helpText={assetConstants.NAME.HELP_TEXT}
@@ -76,7 +69,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
 
       <TextAreaQuestion
         id="description"
-        // control={control}
         label={assetConstants.DESCRIPTION.LABEL}
         helpText={assetConstants.DESCRIPTION.HELP_TEXT}
       />
@@ -84,7 +76,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
       {!isIncomeBucket ? (
         <SelectQuestion
           id="assetType"
-          // control={control}
           label={assetConstants.CLASS.LABEL}
           options={assetTypeOptions}
           editable={true}
@@ -98,7 +89,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
       {!isIncomeBucket && (
         <RadioButtonQuestion
           id="disabled"
-          // control={control}
           label={assetConstants.DISABLED.LABEL}
           values={yesNoOptions}
           variant={RadioQuestionVariant.BLOCK}
@@ -106,18 +96,12 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         />
       )}
 
-      <CountrySelector
-        id="country"
-        // control={control}
-        label={assetConstants.COUNTRY.LABEL}
-        helpText={assetConstants.COUNTRY.HELP_TEXT}
-      />
+      <CountrySelector id="country" label={assetConstants.COUNTRY.LABEL} helpText={assetConstants.COUNTRY.HELP_TEXT} />
 
       {isDefinedBenefitAsset(assetType) && (
         <RadioButtonQuestion
           id="isStatePension"
           label={assetConstants.IS_STATE_PENSION.LABEL}
-          // control={control}
           values={yesNoOptions}
           variant={RadioQuestionVariant.BLOCK}
           helpText={assetConstants.IS_STATE_PENSION.HELP_TEXT}
@@ -126,7 +110,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
 
       <CheckboxQuestion
         id="owners"
-        // control={control}
         label={assetConstants.OWNERS.LABEL}
         options={ownerOptions}
         {...register("owners", {
@@ -139,7 +122,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         <>
           <InputQuestion
             id="value"
-            // control={control}
             label={assetConstants.VALUE.LABEL}
             prefix={currency}
             restrictedCharSet={INTEGERS_ONLY}
@@ -149,7 +131,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
           {isCashAsset(assetType) && (
             <RadioButtonQuestion
               id="incomeBucket"
-              // control={control}
               label={assetConstants.INCOME_BUCKET.LABEL}
               values={yesNoOptions}
               variant={RadioQuestionVariant.BLOCK}
@@ -162,7 +143,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
               <RadioButtonQuestion
                 id="canDrawdown"
                 label={assetConstants.CAN_DRAWDOWN.LABEL}
-                // control={control}
                 values={yesNoOptions}
                 variant={RadioQuestionVariant.BLOCK}
                 helpText={assetConstants.CAN_DRAWDOWN.HELP_TEXT}
@@ -172,21 +152,18 @@ export const AssetEditForm: FunctionComponent<Props> = ({
                 <>
                   <SelectQuestion
                     id="drawdownOrder"
-                    // control={control}
                     label={assetConstants.DRAWDOWN_ORDER.LABEL}
                     options={drawdownOrderOptions}
                     helpText={assetConstants.DRAWDOWN_ORDER.HELP_TEXT}
                   />
                   <InputQuestion
                     id="drawdownFrom"
-                    // control={control}
                     label={assetConstants.DRAWDOWN_FROM.LABEL}
                     restrictedCharSet={INTEGERS_ONLY}
                     helpText={assetConstants.DRAWDOWN_FROM.HELP_TEXT}
                   />
                   <InputQuestion
                     id="preferredMinAmt"
-                    // control={control}
                     label={assetConstants.PREFERRED_MIN_AMT.LABEL}
                     restrictedCharSet={INTEGERS_ONLY}
                     helpText={assetConstants.PREFERRED_MIN_AMT.HELP_TEXT}
@@ -198,42 +175,13 @@ export const AssetEditForm: FunctionComponent<Props> = ({
         </>
       )}
 
-      {isIncomeAsset(assetType) && (
-        <>
-          <InputQuestion
-            id="incomeAmt"
-            // control={control}
-            label={assetConstants.INCOME.LABEL}
-            prefix={currency}
-            restrictedCharSet={INTEGERS_ONLY}
-            helpText={assetConstants.INCOME.HELP_TEXT}
-          />
-
-          {showIncomeStartDate && (
-            <InputQuestion
-              id="incomeStartYear"
-              // control={control}
-              label={assetConstants.INCOME_START_YEAR.LABEL}
-              restrictedCharSet={INTEGERS_ONLY}
-              helpText={assetConstants.INCOME_START_YEAR.HELP_TEXT}
-            />
-          )}
-          <InputQuestion
-            id="incomeEndYear"
-            // control={control}
-            label={assetConstants.INCOME_END_YEAR.LABEL}
-            restrictedCharSet={INTEGERS_ONLY}
-            helpText={assetConstants.INCOME_END_YEAR.HELP_TEXT}
-          />
-        </>
-      )}
+      {isIncomeAsset(assetType) && <IncomeAssetDetails assetType={assetType} />}
 
       {isPropertyAsset(assetType) && (
         <>
           <RadioButtonQuestion
             id="isRented"
             label={assetConstants.PROPERTY_IS_RENTED.LABEL}
-            // control={control}
             values={yesNoOptions}
             variant={RadioQuestionVariant.BLOCK}
             helpText={assetConstants.PROPERTY_IS_RENTED.HELP_TEXT}
@@ -242,7 +190,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
             <>
               <InputQuestion
                 id="rentalStartYear"
-                // control={control}
                 label={assetConstants.RENTAL_START_YEAR.LABEL}
                 restrictedCharSet={INTEGERS_ONLY}
                 helpText={assetConstants.RENTAL_START_YEAR.HELP_TEXT}
@@ -250,14 +197,12 @@ export const AssetEditForm: FunctionComponent<Props> = ({
 
               <InputQuestion
                 id="rentalEndYear"
-                // control={control}
                 label={assetConstants.RENTAL_END_YEAR.LABEL}
                 restrictedCharSet={INTEGERS_ONLY}
                 helpText={assetConstants.RENTAL_END_YEAR.HELP_TEXT}
               />
               <InputQuestion
                 id="rentalIncome"
-                // control={control}
                 label={assetConstants.PROPERTY_RENTAL_INCOME.LABEL}
                 restrictedCharSet={INTEGERS_ONLY}
                 helpText={assetConstants.PROPERTY_RENTAL_INCOME.HELP_TEXT}
@@ -265,7 +210,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
 
               <InputQuestion
                 id="rentalExpenses"
-                // control={control}
                 label={assetConstants.PROPERTY_RENTAL_EXPENSES.LABEL}
                 restrictedCharSet={INTEGERS_ONLY}
                 helpText={assetConstants.PROPERTY_RENTAL_EXPENSES.HELP_TEXT}
@@ -278,7 +222,6 @@ export const AssetEditForm: FunctionComponent<Props> = ({
       {assetType !== "AuShares" && (
         <InputQuestion
           id="rateVariation"
-          // control={control}
           label={assetConstants.RATE_VARIATION.LABEL}
           restrictedCharSet={INTEGERS_ONLY}
           helpText={assetConstants.RATE_VARIATION.HELP_TEXT}

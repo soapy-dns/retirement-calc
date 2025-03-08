@@ -22,7 +22,7 @@ import { initialiseCalculation } from "./initialiseCalculation"
 import { doCalculationsForYear } from "./doCalculationsForYear"
 import { ScenarioSchema } from "../data/schema/config"
 import { getAssetSplit } from "./getAssetSplit"
-import { getAssetIncomeRowData } from "./getAssetIncomeRowData"
+import { getEarnedIncomeRowData, getInvestmentIncomeRowData } from "./getIncomeRowData"
 import { getAssetRateOfReturn } from "./getAssetRateOfReturn"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
@@ -192,12 +192,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     const graphCalculatedAssetData = { ...assetRowData } as AssetData
     const graphCalculatedAssetNpvData = getCalculatedNpvData(assets, inflationContext) // for graph purposes
 
-    const assetIncomeRowData = getAssetIncomeRowData({ incomeFromAssets, owners })
-    // const assetIncomeRowData = incomeFromAssets.reduce((accum: AssetData, assetIncome: AssetIncome) => {
-    //   const ownerName = owners.find((owner) => owner.identifier === assetIncome.ownerId)?.ownerName || "Unknown"
-    //   accum[`${assetIncome.name} - ${ownerName}`] = assetIncome.history
-    //   return accum
-    // }, {})
+    const earnedIncomeRowData = getEarnedIncomeRowData({ incomeFromAssets, owners })
+    const investmentIncomeRowData = getInvestmentIncomeRowData({ incomeFromAssets, owners })
 
     const incomeByOwner: AssetData = getIncomeByOwner({ owners, incomeFromAssets })
 
@@ -260,10 +256,11 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     // const surplusRowData = { "Surplus (if -ve is tax liability for next yr)": surplusYearData }
 
-    return {
+    const successResults: CalculationResults = {
       success: true,
       assetRowData,
-      assetIncomeRowData,
+      earnedIncomeRowData,
+      investmentIncomeRowData,
       drawdownRowData: drawdownData,
       totalDrawdownData: totalDrawdowns,
       expensesRowData,
@@ -291,6 +288,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       calculatedEndYear,
       maxEndYear: to
     }
+
+    return successResults
   } catch (e) {
     if (e instanceof CalculationError) {
       const errMsg = getErrorMessage(e)

@@ -37,7 +37,6 @@ export interface AssetIncome {
   className: AssetClass
   description?: string
   ownerId: string // owner id
-  // income?: number
   percOfIncomeTaxable: number
   proportion: number
   history: BasicYearData[]

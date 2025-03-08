@@ -59,7 +59,7 @@ export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
     try {
       setCalculating(true)
       const calculationResults = await calculate(selectedScenario)
-      // console.log("calculationResults", calculationResults)
+      console.log("calculationResults", calculationResults)
       setCalculationResults(calculationResults)
       setCalculating(false)
 

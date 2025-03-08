@@ -16,6 +16,9 @@ const superAssetClassNames = ["AuSuper"]
 
 export const isEarnedIncomeAsset = (className: AssetClass) => earnedIncomeAssetClassNames.includes(className)
 
+export const isInvestmentIncomeAsset = (className: AssetClass) =>
+  ![...earnedIncomeAssetClassNames, ...definedBenefitsClassNames].includes(className)
+
 export const isIncomeAsset = (className: AssetClass) => incomeAssetClassNames.includes(className)
 
 export const isCapitalAsset = (className: AssetClass) => capitalAssetClassNames.includes(className)

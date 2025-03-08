@@ -86,7 +86,8 @@ const SheetPage: React.FC = () => {
     assetRowData,
     totalAssetsData,
     netPresentValue,
-    assetIncomeRowData,
+    earnedIncomeRowData,
+    investmentIncomeRowData,
     totalAssetIncome,
     totalExpensesData,
     drawdownRowData,
@@ -138,7 +139,9 @@ const SheetPage: React.FC = () => {
               {/* income from assets */}
               <SectionHeading text="Income" onToggle={() => setInfoModal(InfoType.INCOME)} />
 
-              {assetIncomeRowData && allRows && <AssetIncomeRows data={assetIncomeRowData} />}
+              {earnedIncomeRowData && <AssetIncomeRows data={earnedIncomeRowData} />}
+
+              {investmentIncomeRowData && allRows && <AssetIncomeRows data={investmentIncomeRowData} />}
 
               {incomeByOwner && <IndividualIncomeRows data={incomeByOwner} />}
 

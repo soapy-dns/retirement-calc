@@ -27,7 +27,6 @@ export const EditPageLayout: React.FC<EditPageLayoutProps> = ({
   children
 }) => {
   const { control } = useFormContext()
-  // console.log("control in EditPageLayout-->", control)
   // TODO: can this be refactored to include the ChangesNotSavedModal
   return (
     <main>
