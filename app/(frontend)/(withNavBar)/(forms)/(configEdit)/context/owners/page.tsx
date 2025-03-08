@@ -11,7 +11,7 @@ import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext, useState } from "react"
-import { useFieldArray, useForm } from "react-hook-form"
+import { FormProvider, useFieldArray, useForm } from "react-hook-form"
 
 import { contextConstants } from "../contextConstants"
 import { IsFormNumber } from "@/app/lib/data/schema/config/schemaUtils"
@@ -62,17 +62,18 @@ const OwnersPage: React.FC = () => {
 
   const { context } = selectedScenario
   const { owners } = context
-  const {
-    handleSubmit,
-    control,
-    register,
-    formState: { isDirty, errors }
-  } = useForm<FormDataType>({
+  const methods = useForm<FormDataType>({
     defaultValues: { items: owners },
     resolver: zodResolver(FormSchema),
     mode: "onSubmit", // before form submits
     reValidateMode: "onChange" // after form submitted
   })
+  const {
+    handleSubmit,
+    control,
+    register,
+    formState: { isDirty, errors }
+  } = methods
 
   const { fields, insert, remove } = useFieldArray({
     control,
@@ -131,105 +132,107 @@ const OwnersPage: React.FC = () => {
   }
 
   return (
-    <EditPageLayout
-      heading="Asset owners"
-      backText="Back to context"
-      cancelText="Cancel"
-      saveText="Save changes"
-      handleSubmit={handleSubmit(onSubmit)}
-      handleBack={handleBack}
-      handleCancel={handleBack}
-    >
-      <div className="mb-4">
-        <Alert alertType={AlertType.INFO} heading="Note:">
-          <>
-            <p>Owners need to be added to correctly calculate taxes for each. There can be a maximum of 2 owners.</p>
-          </>
-        </Alert>
-      </div>
-
-      <form>
-        {fields.map((it, index) => {
-          return (
-            <Card key={it.id}>
-              <div className="flex justify-between items-start">
-                <h2 className="text-primary-foreground ">Person {index + 1}</h2>
-
-                {fields.length === 2 && (
-                  <Button onClick={() => handleDelete(it.identifier)} buttonType={ButtonType.tertiary}>
-                    <div className="flex items-center gap-2">
-                      <Trash2Icon className="h-5 w-5" />
-                    </div>
-                  </Button>
-                )}
-              </div>
-
-              <input
-                type="hidden"
-                className="w-full text-secondary-foreground border-2 border-blue-300"
-                id={`items.${index}.identifier`}
-                {...register(`items.${index}.identifier`)}
-              />
-
-              {/* @ts-ignore */}
-              <InputQuestion
-                id={`items.${index}.ownerName`}
-                control={control}
-                label={contextConstants.OWNER_IDENTIFIER.LABEL}
-                editable={true}
-                helpText={contextConstants.OWNER_IDENTIFIER.HELP_TEXT}
-              />
-
-              <RadioButtonQuestion
-                id={`items.${index}.gender`}
-                label={contextConstants.OWNER_GENDER.LABEL}
-                control={control}
-                values={genderOptions}
-                variant={RadioQuestionVariant.BLOCK}
-                helpText={contextConstants.OWNER_GENDER.HELP_TEXT}
-              />
-
-              <InputQuestion
-                id={`items.${index}.birthYear`}
-                control={control}
-                label={contextConstants.OWNER_BIRTH_YEAR.LABEL}
-                editable={true}
-                restrictedCharSet={INTEGERS_ONLY}
-                helpText={contextConstants.OWNER_BIRTH_YEAR.HELP_TEXT}
-              />
-            </Card>
-          )
-        })}
-      </form>
-
-      {fields.length === 1 && (
-        <div className="mx-auto sm:w-3/4 flex justify-center mb-4">
-          <Button buttonType={ButtonType.tertiary} onClick={handleAdd}>
-            <div className="flex gap-2 items-center justify-center">
-              <PlusCircleIcon className="h-6 w-6" />
-              <div>Add another person</div>
-            </div>
-          </Button>
-        </div>
-      )}
-
-      <ChangesNotSavedModal
-        showModal={showChangesNotSavedModal}
-        handleCancel={() => setShowChangesNotSavedModal(false)}
-        continueAnyway={() => navigation.goBack()}
-      />
-
-      <GenericModal
-        showModal={showInvalidActionModal}
-        heading="Invalid action."
-        handleCancel={() => {
-          setShowInvalidActionModal(false)
-        }}
+    <FormProvider {...methods}>
+      <EditPageLayout
+        heading="Asset owners"
+        backText="Back to context"
+        cancelText="Cancel"
+        saveText="Save changes"
+        handleSubmit={handleSubmit(onSubmit)}
+        handleBack={handleBack}
+        handleCancel={handleBack}
       >
-        This person still own assets. You will need to update the assets before you can remove this owner from the
-        context.
-      </GenericModal>
-    </EditPageLayout>
+        <div className="mb-4">
+          <Alert alertType={AlertType.INFO} heading="Note:">
+            <>
+              <p>Owners need to be added to correctly calculate taxes for each. There can be a maximum of 2 owners.</p>
+            </>
+          </Alert>
+        </div>
+
+        <form>
+          {fields.map((it, index) => {
+            return (
+              <Card key={it.id}>
+                <div className="flex justify-between items-start">
+                  <h2 className="text-primary-foreground ">Person {index + 1}</h2>
+
+                  {fields.length === 2 && (
+                    <Button onClick={() => handleDelete(it.identifier)} buttonType={ButtonType.tertiary}>
+                      <div className="flex items-center gap-2">
+                        <Trash2Icon className="h-5 w-5" />
+                      </div>
+                    </Button>
+                  )}
+                </div>
+
+                <input
+                  type="hidden"
+                  className="w-full text-secondary-foreground border-2 border-blue-300"
+                  id={`items.${index}.identifier`}
+                  {...register(`items.${index}.identifier`)}
+                />
+
+                {/* @ts-ignore */}
+                <InputQuestion
+                  id={`items.${index}.ownerName`}
+                  // control={control}
+                  label={contextConstants.OWNER_IDENTIFIER.LABEL}
+                  editable={true}
+                  helpText={contextConstants.OWNER_IDENTIFIER.HELP_TEXT}
+                />
+
+                <RadioButtonQuestion
+                  id={`items.${index}.gender`}
+                  label={contextConstants.OWNER_GENDER.LABEL}
+                  // control={control}
+                  values={genderOptions}
+                  variant={RadioQuestionVariant.BLOCK}
+                  helpText={contextConstants.OWNER_GENDER.HELP_TEXT}
+                />
+
+                <InputQuestion
+                  id={`items.${index}.birthYear`}
+                  // control={control}
+                  label={contextConstants.OWNER_BIRTH_YEAR.LABEL}
+                  editable={true}
+                  restrictedCharSet={INTEGERS_ONLY}
+                  helpText={contextConstants.OWNER_BIRTH_YEAR.HELP_TEXT}
+                />
+              </Card>
+            )
+          })}
+        </form>
+
+        {fields.length === 1 && (
+          <div className="mx-auto sm:w-3/4 flex justify-center mb-4">
+            <Button buttonType={ButtonType.tertiary} onClick={handleAdd}>
+              <div className="flex gap-2 items-center justify-center">
+                <PlusCircleIcon className="h-6 w-6" />
+                <div>Add another person</div>
+              </div>
+            </Button>
+          </div>
+        )}
+
+        <ChangesNotSavedModal
+          showModal={showChangesNotSavedModal}
+          handleCancel={() => setShowChangesNotSavedModal(false)}
+          continueAnyway={() => navigation.goBack()}
+        />
+
+        <GenericModal
+          showModal={showInvalidActionModal}
+          heading="Invalid action."
+          handleCancel={() => {
+            setShowInvalidActionModal(false)
+          }}
+        >
+          This person still own assets. You will need to update the assets before you can remove this owner from the
+          context.
+        </GenericModal>
+      </EditPageLayout>
+    </FormProvider>
   )
 }
 

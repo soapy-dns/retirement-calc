@@ -3,6 +3,7 @@ import { ButtonGroup } from "@/app/ui/components/common/ButtonGroup"
 import { Container } from "@/app/ui/components/Container"
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
 import { useState } from "react"
+import { useFormContext } from "react-hook-form"
 
 interface EditPageLayoutProps {
   heading: string
@@ -25,6 +26,8 @@ export const EditPageLayout: React.FC<EditPageLayoutProps> = ({
   handleCancel,
   children
 }) => {
+  const { control } = useFormContext()
+  // console.log("control in EditPageLayout-->", control)
   // TODO: can this be refactored to include the ChangesNotSavedModal
   return (
     <main>

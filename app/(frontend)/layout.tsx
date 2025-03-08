@@ -8,6 +8,7 @@ import { FullOwnerProvider } from "../ui/context/LifeExpectancyProvider"
 import { AppBanner } from "../ui/AppBanner"
 import { GenericModal } from "../ui/components/modals/GenericModal"
 import { useState } from "react"
+
 export default function WithCalculationLayout({ children }: { children: React.ReactNode }) {
   const [showModal, setShowModal] = useState(false)
   return (

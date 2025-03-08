@@ -10,7 +10,7 @@ import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext, useState } from "react"
-import { useForm } from "react-hook-form"
+import { FormProvider, useForm } from "react-hook-form"
 import { contextConstants } from "../contextConstants"
 import { IsFormNumber } from "@/app/lib/data/schema/config/schemaUtils"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
@@ -33,16 +33,17 @@ const SuperPage: React.FC = () => {
 
   const { context } = selectedScenario
   const { superAu } = context
-  const {
-    control,
-    handleSubmit,
-    formState: { isDirty, errors }
-  } = useForm<FormDataType>({
+  const methods = useForm<FormDataType>({
     defaultValues: {
       investmentReturn: Math.round(superAu?.investmentReturn * 10000) / 100
     },
     resolver: zodResolver(FormSchema)
   })
+  const {
+    control,
+    handleSubmit,
+    formState: { isDirty, errors }
+  } = methods
 
   const handleBack = () => {
     if (isDirty) {
@@ -70,36 +71,38 @@ const SuperPage: React.FC = () => {
   }
 
   return (
-    <EditPageLayout
-      heading="Super"
-      backText="Back to context"
-      cancelText="Cancel"
-      saveText="Save changes"
-      handleSubmit={handleSubmit(onSubmit)}
-      handleBack={handleBack}
-      handleCancel={handleBack}
-    >
-      {debug && errors && <pre>{JSON.stringify(errors, null, 4)}</pre>}
+    <FormProvider {...methods}>
+      <EditPageLayout
+        heading="Super"
+        backText="Back to context"
+        cancelText="Cancel"
+        saveText="Save changes"
+        handleSubmit={handleSubmit(onSubmit)}
+        handleBack={handleBack}
+        handleCancel={handleBack}
+      >
+        {debug && errors && <pre>{JSON.stringify(errors, null, 4)}</pre>}
 
-      <form>
-        {/* @ts-ignore */}
-        <InputQuestion
-          id="investmentReturn"
-          control={control}
-          label={contextConstants.SUPER_INVESTMENT_RETURN.LABEL}
-          defaultValue={superAu?.investmentReturn}
-          editable={true}
-          restrictedCharSet={DECIMALS_ONLY}
-          helpText={contextConstants.SUPER_INVESTMENT_RETURN.HELP_TEXT}
+        <form>
+          {/* @ts-ignore */}
+          <InputQuestion
+            id="investmentReturn"
+            // control={control}
+            label={contextConstants.SUPER_INVESTMENT_RETURN.LABEL}
+            defaultValue={superAu?.investmentReturn}
+            editable={true}
+            restrictedCharSet={DECIMALS_ONLY}
+            helpText={contextConstants.SUPER_INVESTMENT_RETURN.HELP_TEXT}
+          />
+        </form>
+
+        <ChangesNotSavedModal
+          showModal={showChangesNotSavedModal}
+          handleCancel={() => setShowChangesNotSavedModal(false)}
+          continueAnyway={() => navigation.goBack()}
         />
-      </form>
-
-      <ChangesNotSavedModal
-        showModal={showChangesNotSavedModal}
-        handleCancel={() => setShowChangesNotSavedModal(false)}
-        continueAnyway={() => navigation.goBack()}
-      />
-    </EditPageLayout>
+      </EditPageLayout>
+    </FormProvider>
   )
 }
 

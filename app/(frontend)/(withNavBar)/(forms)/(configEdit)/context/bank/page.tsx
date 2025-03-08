@@ -9,7 +9,7 @@ import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext, useState } from "react"
-import { useForm } from "react-hook-form"
+import { FormProvider, useForm } from "react-hook-form"
 import { contextConstants } from "../contextConstants"
 import { IsFormNumber } from "@/app/lib/data/schema/config/schemaUtils"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
@@ -25,14 +25,15 @@ const BankPage: React.FC = () => {
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
   const { context } = selectedScenario
   const { auBank } = context
+  const methods = useForm<FormDataType>({
+    defaultValues: { interestRate: Math.round(auBank.interestRate * 10000) / 100 },
+    resolver: zodResolver(FormSchema)
+  })
   const {
     control,
     handleSubmit,
     formState: { isDirty }
-  } = useForm<FormDataType>({
-    defaultValues: { interestRate: Math.round(auBank.interestRate * 10000) / 100 },
-    resolver: zodResolver(FormSchema)
-  })
+  } = methods
 
   const handleBack = () => {
     if (isDirty) {
@@ -62,32 +63,34 @@ const BankPage: React.FC = () => {
 
   return (
     <>
-      <EditPageLayout
-        heading="Cash"
-        backText="Back to context"
-        cancelText="Cancel"
-        saveText="Save changes"
-        handleSubmit={handleSubmit(onSubmit)}
-        handleBack={handleBack}
-        handleCancel={handleBack}
-      >
-        <form>
-          {/* @ts-ignore */}
-          <InputQuestion
-            id="interestRate"
-            control={control}
-            label={contextConstants.CASH_INTEREST_RATE.LABEL}
-            defaultValue={auBank.interestRate}
-            restrictedCharSet={DECIMALS_ONLY}
-            helpText={contextConstants.CASH_INTEREST_RATE.HELP_TEXT}
+      <FormProvider {...methods}>
+        <EditPageLayout
+          heading="Cash"
+          backText="Back to context"
+          cancelText="Cancel"
+          saveText="Save changes"
+          handleSubmit={handleSubmit(onSubmit)}
+          handleBack={handleBack}
+          handleCancel={handleBack}
+        >
+          <form>
+            {/* @ts-ignore */}
+            <InputQuestion
+              id="interestRate"
+              // control={control}
+              label={contextConstants.CASH_INTEREST_RATE.LABEL}
+              defaultValue={auBank.interestRate}
+              restrictedCharSet={DECIMALS_ONLY}
+              helpText={contextConstants.CASH_INTEREST_RATE.HELP_TEXT}
+            />
+          </form>
+          <ChangesNotSavedModal
+            showModal={showModal}
+            handleCancel={() => setShowModal(false)}
+            continueAnyway={() => navigation.goBack()}
           />
-        </form>
-        <ChangesNotSavedModal
-          showModal={showModal}
-          handleCancel={() => setShowModal(false)}
-          continueAnyway={() => navigation.goBack()}
-        />
-      </EditPageLayout>
+        </EditPageLayout>
+      </FormProvider>
     </>
   )
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import { use } from "react"
-import { useForm } from "react-hook-form"
+import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { type Transfer } from "@/app/lib/data/schema/config"
@@ -49,12 +49,7 @@ export default function TransferEditPage(props: { params: Params }) {
   const transfer = getTransferDetails(id) // should I do something different for 'add'?
   const { year, from, to, transferPercent, transferCostType } = transfer || {}
 
-  const {
-    handleSubmit,
-    watch,
-    control,
-    formState: { errors }
-  } = useForm<TransferFormData>({
+  const methods = useForm<TransferFormData>({
     defaultValues: {
       from,
       to,
@@ -65,6 +60,12 @@ export default function TransferEditPage(props: { params: Params }) {
     },
     resolver: zodResolver(getTransferFormSchema(selectedScenario, id))
   })
+  const {
+    handleSubmit,
+    watch,
+    control,
+    formState: { errors }
+  } = methods
 
   const onSubmit = async (data: TransferFormData) => {
     if (transfer) {
@@ -82,17 +83,19 @@ export default function TransferEditPage(props: { params: Params }) {
   }
 
   return (
-    <EditPageLayout
-      heading={id === "add" ? "Add a transfer" : "Edit a transfer"}
-      backText="Back to transfers"
-      cancelText="Cancel"
-      saveText="Save changes"
-      handleSubmit={handleSubmit(onSubmit)}
-      handleBack={handleBack}
-      handleCancel={handleBack}
-    >
-      <TransferForm control={control} watch={watch} />
-      {debug && <pre className="text-primary font-semibold">{JSON.stringify(errors, null, 4)}</pre>}
-    </EditPageLayout>
+    <FormProvider {...methods}>
+      <EditPageLayout
+        heading={id === "add" ? "Add a transfer" : "Edit a transfer"}
+        backText="Back to transfers"
+        cancelText="Cancel"
+        saveText="Save changes"
+        handleSubmit={handleSubmit(onSubmit)}
+        handleBack={handleBack}
+        handleCancel={handleBack}
+      >
+        <TransferForm control={control} watch={watch} />
+        {debug && <pre className="text-primary font-semibold">{JSON.stringify(errors, null, 4)}</pre>}
+      </EditPageLayout>
+    </FormProvider>
   )
 }

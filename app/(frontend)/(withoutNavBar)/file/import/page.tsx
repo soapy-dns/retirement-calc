@@ -8,6 +8,7 @@ import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
 import { ChangeEvent, useContext } from "react"
 
 import { useState } from "react"
+import { FormProvider } from "react-hook-form"
 
 // const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -54,6 +55,8 @@ export default function ImportPage() {
   }
 
   return (
+    // <FormProvider {...methods}>
+
     <main className="flex flex-col items-center">
       <Button onClick={handleBack} buttonType={ButtonType.tertiary}>
         <div className="flex items-center gap-2 text-primary-foreground">
@@ -88,5 +91,6 @@ export default function ImportPage() {
         </Button>
       </form>
     </main>
+    // </FormProvider>
   )
 }

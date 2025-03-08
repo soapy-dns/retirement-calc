@@ -7,7 +7,7 @@ import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext } from "react"
-import { useForm } from "react-hook-form"
+import { FormProvider, useForm } from "react-hook-form"
 import EditPageLayout from "../../components/EditPageLayout"
 import { fileConstants } from "../filesConstants"
 
@@ -22,10 +22,11 @@ export default function Export() {
 
   const navigation = useNavigation()
 
-  const { handleSubmit, control, register } = useForm<FormDataType>({
+  const methods = useForm<FormDataType>({
     defaultValues: { scenariosSelected: [] },
     resolver: zodResolver(FormSchema)
   })
+  const { handleSubmit, control, register } = methods
 
   const handleBack = () => {
     navigation.goBack()
@@ -49,6 +50,7 @@ export default function Export() {
   }
 
   return (
+    <FormProvider {...methods}>
       <EditPageLayout
         heading={"Export your configured scenarios"}
         backText="Back"
@@ -62,7 +64,7 @@ export default function Export() {
           {/*  @ts-ignore  */}
           <CheckboxQuestion
             id="scenarios"
-            control={control}
+            // control={control}
             label={fileConstants.SCENARIOS.LABEL}
             helpText={fileConstants.SCENARIOS.HELP_TEXT}
             options={scenarioOptions}
@@ -70,12 +72,13 @@ export default function Export() {
           />
           <InputQuestion
             id="fileName"
-            control={control}
+            // control={control}
             label={fileConstants.FILE_NAME.LABEL}
             helpText={fileConstants.FILE_NAME.HELP_TEXT}
             // {...register("scenariosSelected")}
           />
         </form>
       </EditPageLayout>
+    </FormProvider>
   )
 }

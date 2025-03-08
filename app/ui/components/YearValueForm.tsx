@@ -1,5 +1,5 @@
 import { contextConstants } from "@/app/(frontend)/(withNavBar)/(forms)/(configEdit)/context/contextConstants"
-import { useForm } from "react-hook-form"
+import { FormProvider, useForm } from "react-hook-form"
 // import { inflationYearValidationRules } from "../validation/inflationYear"
 import { Button, ButtonType } from "./common/Button"
 import { INTEGERS_ONLY } from "./common/formRegExes"
@@ -31,11 +31,12 @@ export const YearValueForm: React.FC<Props> = ({
   valueHelpText,
   valueValidationRules
 }) => {
-  const { handleSubmit, control, reset } = useForm<ChangedFormData>({
+  const methods = useForm<ChangedFormData>({
     defaultValues: {},
     reValidateMode: "onBlur"
     // resolver: zodResolver(FormSchema)
   })
+  const { handleSubmit, control, reset } = methods
 
   const clearFields = () => {
     reset({
@@ -58,44 +59,46 @@ export const YearValueForm: React.FC<Props> = ({
   }
 
   return (
-    <form>
-      <div className="p-4">
-        {/* <div className="mt-6 grid grid-cols-3 justify-items-center justify-self-start gap-2"> */}
-        {/* @ts-ignore */}
-        <InputQuestion
-          id="yearAdd"
-          control={control}
-          placeholder="Add a year"
-          label={contextConstants.FROM_YEAR.LABEL}
-          restrictedCharSet={INTEGERS_ONLY}
-          // validationRules={inflationYearValidationRules}
-          helpText={contextConstants.FROM_YEAR.HELP_TEXT}
-        />
+    <FormProvider {...methods}>
+      <form>
+        <div className="p-4">
+          {/* <div className="mt-6 grid grid-cols-3 justify-items-center justify-self-start gap-2"> */}
+          {/* @ts-ignore */}
+          <InputQuestion
+            id="yearAdd"
+            // control={control}
+            placeholder="Add a year"
+            label={contextConstants.FROM_YEAR.LABEL}
+            restrictedCharSet={INTEGERS_ONLY}
+            // validationRules={inflationYearValidationRules}
+            helpText={contextConstants.FROM_YEAR.HELP_TEXT}
+          />
 
-        <InputQuestion
-          id="valueAdd"
-          control={control}
-          placeholder="Add an amount"
-          label={valueLabel}
-          restrictedCharSet={INTEGERS_ONLY}
-          validationRules={valueValidationRules || {}}
-          helpText={valueHelpText}
-        />
+          <InputQuestion
+            id="valueAdd"
+            // control={control}
+            placeholder="Add an amount"
+            label={valueLabel}
+            restrictedCharSet={INTEGERS_ONLY}
+            validationRules={valueValidationRules || {}}
+            helpText={valueHelpText}
+          />
 
-        <ButtonGroup>
-          {handleCancel && (
-            <Button onClick={onCancel} buttonType={ButtonType.secondary}>
-              Cancel
-            </Button>
-          )}
+          <ButtonGroup>
+            {handleCancel && (
+              <Button onClick={onCancel} buttonType={ButtonType.secondary}>
+                Cancel
+              </Button>
+            )}
 
-          {handleSubmit && (
-            <Button onClick={handleSubmit(onAdd)} buttonType={ButtonType.primary}>
-              Add
-            </Button>
-          )}
-        </ButtonGroup>
-      </div>
-    </form>
+            {handleSubmit && (
+              <Button onClick={handleSubmit(onAdd)} buttonType={ButtonType.primary}>
+                Add
+              </Button>
+            )}
+          </ButtonGroup>
+        </div>
+      </form>
+    </FormProvider>
   )
 }

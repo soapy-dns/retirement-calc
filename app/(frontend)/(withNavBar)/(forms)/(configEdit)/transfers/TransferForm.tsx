@@ -27,21 +27,21 @@ export const TransferForm: FunctionComponent<Props> = ({ control, watch }) => {
     <form>
       <InputQuestion
         id="year"
-        control={control}
+        // control={control}
         label={transferConstants.YEAR.LABEL}
         helpText={transferConstants.YEAR.HELP_TEXT}
         restrictedCharSet={INTEGERS_ONLY}
       />
       <SelectQuestion
         id="from"
-        control={control}
+        // control={control}
         label={transferConstants.FROM.LABEL}
         helpText={transferConstants.FROM.HELP_TEXT}
         options={transferableAssets}
       />
       <SelectQuestion
         id="to"
-        control={control}
+        // control={control}
         label={transferConstants.TO.LABEL}
         helpText={transferConstants.TO.HELP_TEXT}
         options={transferableAssets}
@@ -49,7 +49,7 @@ export const TransferForm: FunctionComponent<Props> = ({ control, watch }) => {
 
       <InputQuestion
         id="transferPercent"
-        control={control}
+        // control={control}
         label={transferConstants.TRANSFER_PERCENT.LABEL}
         suffix="%"
         helpText={transferConstants.TRANSFER_PERCENT.HELP_TEXT}
@@ -57,7 +57,7 @@ export const TransferForm: FunctionComponent<Props> = ({ control, watch }) => {
 
       <RadioButtonQuestion
         id="transferCostType"
-        control={control}
+        // control={control}
         label={transferConstants.TRANSFER_COST_TYPE.LABEL}
         values={costOfTransferTypeOptions}
         variant={RadioQuestionVariant.VERTICAL}
@@ -67,7 +67,7 @@ export const TransferForm: FunctionComponent<Props> = ({ control, watch }) => {
       {currentCostOfTransferType === "TODAYS_MONEY" && (
         <InputQuestion
           id="transferCostValue"
-          control={control}
+          // control={control}
           label={transferConstants.TRANSFER_COST_TODAYS_MONEY.LABEL}
           prefix={currency}
           helpText={transferConstants.TRANSFER_COST_TODAYS_MONEY.HELP_TEXT}
@@ -77,7 +77,7 @@ export const TransferForm: FunctionComponent<Props> = ({ control, watch }) => {
       {currentCostOfTransferType === "FUTURE_MONEY" && (
         <InputQuestion
           id="transferCostValue"
-          control={control}
+          // control={control}
           label={transferConstants.TRANSFER_COST_FUTURE_MONEY.LABEL}
           prefix={currency}
           helpText={transferConstants.TRANSFER_COST_FUTURE_MONEY.HELP_TEXT}
@@ -87,7 +87,7 @@ export const TransferForm: FunctionComponent<Props> = ({ control, watch }) => {
       {currentCostOfTransferType === "PERCENTAGE" && (
         <InputQuestion
           id="transferCostValue"
-          control={control}
+          // control={control}
           label={transferConstants.TRANSFER_COST_PERCENT.LABEL}
           suffix="%"
           helpText={transferConstants.TRANSFER_COST_PERCENT.HELP_TEXT}

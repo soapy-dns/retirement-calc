@@ -1,9 +1,7 @@
 import React, { ChangeEvent } from "react"
-import { Controller, Control, useFormState } from "react-hook-form"
+import { Controller, useFormContext } from "react-hook-form"
 import { useError } from "../../hooks/useError"
 import { Input } from "../common/Input"
-// import { useError } from "../hooks/useError"
-// import { Input } from "./form/Input"
 
 interface PrefixProps {
   text?: string
@@ -27,7 +25,6 @@ type InputProps = {
   id: string
   name?: string
   defaultValue?: string | number
-  control: Control<any, object>
   prefix?: string
   suffix?: string
   type?: string
@@ -48,7 +45,6 @@ export const InputField: React.FC<InputProps> = ({
   name,
   defaultValue,
   type,
-  control,
   prefix,
   suffix,
   validationRules,
@@ -60,12 +56,11 @@ export const InputField: React.FC<InputProps> = ({
   maxLength,
   restrictedCharSet,
   disabled
-  //   labelVariant
 }) => {
   const nameOfEl = name ?? id
+  const { control } = useFormContext()
 
-  const errorMsg = useError(control, nameOfEl)
-  const { errors } = useFormState({ control })
+  const errorMsg = useError(nameOfEl)
 
   const handleOnChange = (value: string, onChange: Function) => {
     // Assumes empty input is always valid
@@ -97,11 +92,8 @@ export const InputField: React.FC<InputProps> = ({
               placeholder={placeholder}
               isError={!!errorMsg}
               ref={ref}
-              //   valid={!errorMsg}
-              //   isSubmitted={isSubmitted}
               aria-invalid={!!errorMsg}
               aria-describedby={errorMsg ? `${id}-validation-error` : undefined}
-              // maxLength={maxLength}
               {...inputProps}
             />
             {suffix && <Suffix text={suffix} />}
