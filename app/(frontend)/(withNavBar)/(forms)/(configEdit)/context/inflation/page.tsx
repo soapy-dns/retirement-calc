@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useContext, useState } from "react"
-import { useFieldArray, useForm } from "react-hook-form"
+import { FormProvider, useFieldArray, useForm } from "react-hook-form"
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -32,6 +32,12 @@ const InflationEditPage: React.FC = () => {
     fromYear: +it.fromYear,
     inflationRate: Math.round(it.inflationRate * 10000) / 100
   }))
+  const methods = useForm<FormDataType>({
+    defaultValues: { items: inflationWithPerc },
+    mode: "onBlur",
+    reValidateMode: "onBlur",
+    resolver: zodResolver(getFormSchema(selectedScenario))
+  })
 
   const {
     // watch,
@@ -43,12 +49,7 @@ const InflationEditPage: React.FC = () => {
     // reset,
     formState: { isDirty, errors }
     // clearErrors
-  } = useForm<FormDataType>({
-    defaultValues: { items: inflationWithPerc },
-    mode: "onBlur",
-    reValidateMode: "onBlur",
-    resolver: zodResolver(getFormSchema(selectedScenario))
-  })
+  } = methods
 
   const { fields, insert, remove } = useFieldArray({
     control,
@@ -109,101 +110,103 @@ const InflationEditPage: React.FC = () => {
   const removeDisabled = fields.length < 2
 
   return (
-    <EditPageLayout
-      heading={"Edit estimated inflation values"}
-      backText="Back to main context"
-      cancelText="Cancel"
-      saveText="Save changes"
-      handleSubmit={handleSubmit(onSubmit)}
-      handleBack={handleBack}
-      handleCancel={handleBack}
-    >
-      {/* {errors && <pre>{JSON.stringify(errors, null, 4)}</pre>} */}
+    <FormProvider {...methods}>
+      <EditPageLayout
+        heading={"Edit estimated inflation values"}
+        backText="Back to main context"
+        cancelText="Cancel"
+        saveText="Save changes"
+        handleSubmit={handleSubmit(onSubmit)}
+        handleBack={handleBack}
+        handleCancel={handleBack}
+      >
+        {/* {errors && <pre>{JSON.stringify(errors, null, 4)}</pre>} */}
 
-      <form>
-        <>
-          <div className="flex justify-center mb-4">
-            <Button buttonType={ButtonType.secondary} onClick={onToggle}>
-              <div className="flex gap-2 items-center justify-center">
-                <PlusCircleIcon className="h-6 w-6" />
-                <div>Add a new row</div>
-              </div>
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-3  gap-2">
-            <div className="font-bold">From year</div>
-            <div className="font-bold">Inflation (%)</div>
-            <div></div>
-          </div>
-
-          {fields.map((it, index) => {
-            return (
-              <div key={it.fromYear} className="grid grid-cols-3 justify-items-center gap-2">
-                {/* @ts-ignore */}
-                <InputField
-                  id={`items.${index}.fromYear`}
-                  control={control}
-                  defaultValue={it.fromYear}
-                  // validationRules={inflationYearValidationRules}
-                  restrictedCharSet={INTEGERS_ONLY}
-                  // type="number"
-                />
-
-                <InputField
-                  id={`items.${index}.inflationRate`}
-                  control={control}
-                  defaultValue={it.inflationRate}
-                  // validationRules={inflationRateValidationRules}
-                  restrictedCharSet={DECIMALS_ONLY}
-                  type="number"
-                />
-                <div>
-                  <Button onClick={() => handleDelete(index)} disabled={removeDisabled}>
-                    <div className="flex items-center gap-2">
-                      <TrashIcon className="h-6 w-6" />
-                      <div className={`hidden md:flex`}>Remove</div>
-                    </div>
-                  </Button>
+        <form>
+          <>
+            <div className="flex justify-center mb-4">
+              <Button buttonType={ButtonType.secondary} onClick={onToggle}>
+                <div className="flex gap-2 items-center justify-center">
+                  <PlusCircleIcon className="h-6 w-6" />
+                  <div>Add a new row</div>
                 </div>
+              </Button>
+            </div>
 
-                {errors?.items?.[index]?.fromYear && (
-                  <div className="col-span-3 justify-self-start">
-                    <ValidationError
-                      id={`items.${index}.fromYear_error`}
-                      errorMsg={errors?.items?.[index]?.fromYear?.message || ""}
-                    />
-                  </div>
-                )}
-                {errors?.items?.[index]?.inflationRate && (
-                  <div className="col-span-3 justify-self-start">
-                    <ValidationError
-                      id={`items.${index}.inflationRate_error`}
-                      errorMsg={errors?.items?.[index]?.inflationRate?.message || ""}
-                    />
-                  </div>
-                )}
-              </div>
-            )
-          })}
-        </>
-      </form>
+            <div className="grid grid-cols-3  gap-2">
+              <div className="font-bold">From year</div>
+              <div className="font-bold">Inflation (%)</div>
+              <div></div>
+            </div>
 
-      <GenericModal showModal={showModal} heading="Add inflation row" handleCancel={onToggle}>
-        <YearValueForm
-          handleCancel={onToggle}
-          handleAdd={handleAdd}
-          valueLabel={contextConstants.RATE.LABEL}
-          valueHelpText={contextConstants.RATE.HELP_TEXT}
+            {fields.map((it, index) => {
+              return (
+                <div key={it.fromYear} className="grid grid-cols-3 justify-items-center gap-2">
+                  {/* @ts-ignore */}
+                  <InputField
+                    id={`items.${index}.fromYear`}
+                    // control={control}
+                    // defaultValue={it.fromYear}
+                    // validationRules={inflationYearValidationRules}
+                    restrictedCharSet={INTEGERS_ONLY}
+                    // type="number"
+                  />
+
+                  <InputField
+                    id={`items.${index}.inflationRate`}
+                    // control={control}
+                    // defaultValue={it.inflationRate}
+                    // validationRules={inflationRateValidationRules}
+                    restrictedCharSet={DECIMALS_ONLY}
+                    type="number"
+                  />
+                  <div>
+                    <Button onClick={() => handleDelete(index)} disabled={removeDisabled}>
+                      <div className="flex items-center gap-2">
+                        <TrashIcon className="h-6 w-6" />
+                        <div className={`hidden md:flex`}>Remove</div>
+                      </div>
+                    </Button>
+                  </div>
+
+                  {errors?.items?.[index]?.fromYear && (
+                    <div className="col-span-3 justify-self-start">
+                      <ValidationError
+                        id={`items.${index}.fromYear_error`}
+                        errorMsg={errors?.items?.[index]?.fromYear?.message || ""}
+                      />
+                    </div>
+                  )}
+                  {errors?.items?.[index]?.inflationRate && (
+                    <div className="col-span-3 justify-self-start">
+                      <ValidationError
+                        id={`items.${index}.inflationRate_error`}
+                        errorMsg={errors?.items?.[index]?.inflationRate?.message || ""}
+                      />
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </>
+        </form>
+
+        <GenericModal showModal={showModal} heading="Add inflation row" handleCancel={onToggle}>
+          <YearValueForm
+            handleCancel={onToggle}
+            handleAdd={handleAdd}
+            valueLabel={contextConstants.RATE.LABEL}
+            valueHelpText={contextConstants.RATE.HELP_TEXT}
+          />
+        </GenericModal>
+
+        <ChangesNotSavedModal
+          showModal={showChangesNotSavedModal}
+          handleCancel={() => setShowChangesNotSavedModal(false)}
+          continueAnyway={() => navigation.goBack()}
         />
-      </GenericModal>
-
-      <ChangesNotSavedModal
-        showModal={showChangesNotSavedModal}
-        handleCancel={() => setShowChangesNotSavedModal(false)}
-        continueAnyway={() => navigation.goBack()}
-      />
-    </EditPageLayout>
+      </EditPageLayout>
+    </FormProvider>
   )
 }
 

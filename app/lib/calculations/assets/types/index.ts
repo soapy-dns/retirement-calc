@@ -1,4 +1,4 @@
-import { OwnerType } from "@/app/lib/data/schema/config"
+import { AssetClass, OwnerType } from "@/app/lib/data/schema/config"
 import { AutomatedDrawdown } from "../../autoDrawdowns/types"
 // import { IScenario, IAsset } from "../../../data/schema/config"
 
@@ -34,9 +34,9 @@ export interface ExpenseYearData extends BasicYearData {
 export interface AssetIncome {
   id: string
   name: string
+  className: AssetClass
   description?: string
   ownerId: string // owner id
-  income?: number
   percOfIncomeTaxable: number
   proportion: number
   history: BasicYearData[]

@@ -19,22 +19,41 @@ export const getBackgroundColor = (alertType?: AlertType) => {
   }
 }
 
-export const getForegroundColor = (alertType?: AlertType) => {
+export const getTextForegroundColor = (alertType?: AlertType) => {
   switch (alertType) {
     case AlertType.SUCCESS:
-      return "bg-success-foreground"
+      return "text-success-foreground"
 
     case AlertType.ERROR:
-      return "bg-error-foreground"
+      return "text-error-foreground"
 
     case AlertType.WARNING:
-      return "bg-warning-foreground"
+      return "text-warning-foreground"
 
     case AlertType.INFO:
-      return "bg-info-foreground"
+      return "text-info-foreground"
 
     default:
-      return "bg-monochrome"
+      return "text-monochrome"
+  }
+}
+
+export const getBorderForegroundColor = (alertType?: AlertType) => {
+  switch (alertType) {
+    case AlertType.SUCCESS:
+      return "border-success-foreground"
+
+    case AlertType.ERROR:
+      return "border-error-foreground"
+
+    case AlertType.WARNING:
+      return "border-warning-foreground"
+
+    case AlertType.INFO:
+      return "border-info-foreground"
+
+    default:
+      return "border-monochrome"
   }
 }
 

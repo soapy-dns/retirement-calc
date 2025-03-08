@@ -52,12 +52,6 @@ export const AssetSummary = ({ asset, removeAllowed }: IAssetItemDisplay) => {
 
   const { name, description, className } = asset
 
-  // const transfersExist = hasTransfers(asset)
-
-  // const disabled = transfersExist === true
-
-  console.log("disabled, removeAlleed", asset.name, removeAllowed)
-
   return (
     <>
       <Card>
@@ -112,20 +106,6 @@ export const AssetSummary = ({ asset, removeAllowed }: IAssetItemDisplay) => {
                   handleRemove={handleRemove}
                   disableRemove={!removeAllowed}
                 />
-                // <ButtonGroup>
-                //   <Button buttonType={ButtonType.primary} onClick={handleEdit}>
-                //     <div className="flex items-center gap-2">
-                //       <PencilSquareIcon className="h-6 w-6" />
-                //       <div>Edit</div>
-                //     </div>
-                //   </Button>
-                //   <Button buttonType={ButtonType.secondary} onClick={handleRemove} disabled={disabled}>
-                //     <div className="flex items-center gap-2">
-                //       <TrashIcon className="h-6 w-6" />
-                //       <div>Remove</div>
-                //     </div>
-                //   </Button>
-                // </ButtonGroup>
               )}
             </div>
           </div>

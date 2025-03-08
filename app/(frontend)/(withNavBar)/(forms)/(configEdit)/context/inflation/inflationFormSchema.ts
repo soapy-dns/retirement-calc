@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { IScenario, InflationRecord, InflationSchema } from "@/app/lib/data/schema/config"
+import { IScenario, InflationSchema } from "@/app/lib/data/schema/config"
 import { sortByFromDate } from "@/app/lib/calculations/utils/sortObjectsByFromDate"
 
 // const sortByFromDate = (inflationRows: InflationRecord[]): InflationRecord[] => {

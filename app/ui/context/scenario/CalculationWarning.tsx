@@ -7,10 +7,14 @@ interface Props {
 
 // if ended and still assets - TODO: ended and no assets left AND still alive
 export const CalculationWarning: React.FunctionComponent<Props> = ({ calculatedEndYear, showMore }) => {
+  const handleClick = () => {
+    // add code here if want to remove the alert after clicking on the link
+    showMore()
+  }
   return (
-    <p>
-      Cannot automate further capital asset drawdowns after {calculatedEndYear}. For more details click{" "}
-      <Button onClick={showMore}>here</Button>.
-    </p>
+    <div>
+      Cannot automate further capital asset drawdowns after {calculatedEndYear}. Click for{" "}
+      <Button onClick={handleClick}>more details</Button>.
+    </div>
   )
 }

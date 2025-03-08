@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useContext, useState } from "react"
-import { useFieldArray, useForm } from "react-hook-form"
+import { FormProvider, useFieldArray, useForm, useFormContext } from "react-hook-form"
 // import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -35,16 +35,20 @@ const LivingExpensesPage: React.FC = () => {
   const { context } = selectedScenario
   const { livingExpenses } = context
 
-  const {
-    handleSubmit,
-    control,
-    formState: { isDirty, errors }
-  } = useForm<FormDataType>({
+  const methods = useForm<FormDataType>({
     defaultValues: { items: livingExpenses },
     resolver: zodResolver(getLivingExpensesFormSchema(selectedScenario)),
     mode: "onBlur",
     reValidateMode: "onBlur"
   })
+
+  const {
+    handleSubmit,
+    control,
+    formState: { isDirty, errors }
+  } = methods
+
+  // console.log("control in livingExpenses - will be set in FormProvider", control)
 
   const { fields, insert, remove } = useFieldArray({
     control,
@@ -104,99 +108,111 @@ const LivingExpensesPage: React.FC = () => {
     }
   }
 
+  // function NestedInput() {
+  //   const methods = useFormContext() // retrieve all hook methods
+  //   console.log("********method in NestedInput", methods)
+  //   const {
+  //     control: { register }
+  //   } = methods
+  //   console.log("register===", register)
+  //   return <input {...register("test")} />
+  // }
+
   const removeDisabled = fields.length < 2
 
   return (
-    <EditPageLayout
-      heading={"Edit estimated living expenses"}
-      backText="Back to main context"
-      cancelText="Cancel"
-      saveText="Save changes"
-      handleSubmit={handleSubmit(onSubmit)}
-      handleBack={handleBack}
-      handleCancel={handleBack}
-    >
-      <>
-        <div className="flex justify-center mb-4">
-          <Button buttonType={ButtonType.secondary} onClick={onToggle}>
-            <div className="flex gap-2 items-center justify-center">
-              <PlusCircleIcon className="h-6 w-6" />
-              <div>Add a new row</div>
-            </div>
-          </Button>
-        </div>
-
-        <form className="mb-4">
-          <div className="grid grid-cols-3 gap-2">
-            <div className="font-bold">From year</div>
-            <div className="font-bold">Value at today&apos;s date</div>
-            <div></div>
-          </div>
-
-          {fields.map((it, index) => {
-            return (
-              <div key={it.fromYear} className="grid grid-cols-3 justify-items-center gap-2">
-                {/* @ts-ignore */}
-                <InputField
-                  id={`items.${index}.fromYear`}
-                  control={control}
-                  placeholder="Add a year"
-                  restrictedCharSet={INTEGERS_ONLY}
-                  type="number"
-                />
-                <InputField
-                  id={`items.${index}.amountInTodaysTerms`}
-                  control={control}
-                  placeholder="Add an amount"
-                  restrictedCharSet={DECIMALS_ONLY}
-                  type="number"
-                />
-                <div>
-                  <Button onClick={() => handleDelete(index)} disabled={removeDisabled}>
-                    <div className="flex items-center gap-2">
-                      <TrashIcon className="h-6 w-6" />
-                      <div className="hidden md:flex ">Remove</div>
-                    </div>
-                  </Button>
-                </div>
-
-                {errors?.items?.[index]?.fromYear && (
-                  <div className="col-span-3 justify-self-start">
-                    <ValidationError
-                      id={`items.${index}.fromYear_error`}
-                      errorMsg={errors?.items?.[index]?.fromYear?.message || ""}
-                    />
-                  </div>
-                )}
-                {errors?.items?.[index]?.amountInTodaysTerms && (
-                  <div className="col-span-3 justify-self-start">
-                    <ValidationError
-                      id={`items.${index}.amountInTodaysTerms_error`}
-                      errorMsg={errors?.items?.[index]?.amountInTodaysTerms?.message || ""}
-                    />
-                  </div>
-                )}
+    <FormProvider {...methods}>
+      <EditPageLayout
+        heading={"Edit estimated living expenses"}
+        backText="Back to main context"
+        cancelText="Cancel"
+        saveText="Save changes"
+        handleSubmit={handleSubmit(onSubmit)}
+        handleBack={handleBack}
+        handleCancel={handleBack}
+      >
+        <>
+          {/* <NestedInput /> */}
+          <div className="flex justify-center mb-4">
+            <Button buttonType={ButtonType.secondary} onClick={onToggle}>
+              <div className="flex gap-2 items-center justify-center">
+                <PlusCircleIcon className="h-6 w-6" />
+                <div>Add a new row</div>
               </div>
-            )
-          })}
-        </form>
-      </>
+            </Button>
+          </div>
+          <form className="mb-4">
+            <div className="grid grid-cols-3 gap-2">
+              <div className="font-bold">From year</div>
+              <div className="font-bold">Value at today&apos;s date</div>
+              <div></div>
+            </div>
 
-      <GenericModal showModal={showModal} heading="Add living expenses row" handleCancel={onToggle}>
-        <YearValueForm
-          handleCancel={onToggle}
-          handleAdd={handleAdd}
-          valueLabel={contextConstants.LIVING_EXPENSES.LABEL}
-          valueHelpText={contextConstants.LIVING_EXPENSES.HELP_TEXT}
+            {fields.map((it, index) => {
+              return (
+                <div key={it.fromYear} className="grid grid-cols-3 justify-items-center gap-2">
+                  {/* @ts-ignore */}
+                  <InputField
+                    id={`items.${index}.fromYear`}
+                    // control={control}
+                    placeholder="Add a year"
+                    restrictedCharSet={INTEGERS_ONLY}
+                    type="number"
+                  />
+                  <InputField
+                    id={`items.${index}.amountInTodaysTerms`}
+                    // control={control}
+                    placeholder="Add an amount"
+                    restrictedCharSet={DECIMALS_ONLY}
+                    type="number"
+                  />
+                  <div>
+                    <Button onClick={() => handleDelete(index)} disabled={removeDisabled}>
+                      <div className="flex items-center gap-2">
+                        <TrashIcon className="h-6 w-6" />
+                        <div className="hidden md:flex ">Remove</div>
+                      </div>
+                    </Button>
+                  </div>
+
+                  {errors?.items?.[index]?.fromYear && (
+                    <div className="col-span-3 justify-self-start">
+                      <ValidationError
+                        id={`items.${index}.fromYear_error`}
+                        errorMsg={errors?.items?.[index]?.fromYear?.message || ""}
+                      />
+                    </div>
+                  )}
+                  {errors?.items?.[index]?.amountInTodaysTerms && (
+                    <div className="col-span-3 justify-self-start">
+                      <ValidationError
+                        id={`items.${index}.amountInTodaysTerms_error`}
+                        errorMsg={errors?.items?.[index]?.amountInTodaysTerms?.message || ""}
+                      />
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </form>
+        </>
+
+        <GenericModal showModal={showModal} heading="Add living expenses row" handleCancel={onToggle}>
+          <YearValueForm
+            handleCancel={onToggle}
+            handleAdd={handleAdd}
+            valueLabel={contextConstants.LIVING_EXPENSES.LABEL}
+            valueHelpText={contextConstants.LIVING_EXPENSES.HELP_TEXT}
+          />
+        </GenericModal>
+
+        <ChangesNotSavedModal
+          showModal={showChangesNotSavedModal}
+          handleCancel={() => setShowChangesNotSavedModal(false)}
+          continueAnyway={() => navigation.goBack()}
         />
-      </GenericModal>
-
-      <ChangesNotSavedModal
-        showModal={showChangesNotSavedModal}
-        handleCancel={() => setShowChangesNotSavedModal(false)}
-        continueAnyway={() => navigation.goBack()}
-      />
-    </EditPageLayout>
+      </EditPageLayout>
+    </FormProvider>
   )
 }
 

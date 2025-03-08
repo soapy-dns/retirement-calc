@@ -12,12 +12,13 @@ export const initialiseIncomeFromAssets = (assets: Asset[]): AssetIncome[] => {
   const incomeProducingAssets = assets.filter((asset) => isIncomeProducingAsset(asset))
 
   incomeProducingAssets.forEach((asset) => {
-    const { ownerIds, id, name, description, percOfIncomeTaxable } = asset
+    const { ownerIds, id, name, className, description, percOfIncomeTaxable } = asset
     const proportion = 1 / ownerIds.length
     ownerIds.forEach((ownerId) => {
       incomeFromAssets.push({
         id,
         name,
+        className,
         description,
         ownerId,
         percOfIncomeTaxable,

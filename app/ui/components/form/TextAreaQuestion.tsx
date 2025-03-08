@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react"
-import { Controller, Control } from "react-hook-form"
+import { Controller, Control, useFormContext } from "react-hook-form"
 import { useError } from "../../hooks/useError"
 import { FormGroup } from "../common/FormGroup"
 import { Textarea } from "../common/Textarea"
@@ -11,7 +11,7 @@ type TextAreaQuestionProps = {
   helpAriaLabel?: string
   placeholder?: string
   name?: string
-  control: Control<any, object>
+  // control: Control<any, object>
   defaultValue?: string
   required?: boolean
   margin?: Object
@@ -25,7 +25,7 @@ export const TextAreaQuestion: FunctionComponent<TextAreaQuestionProps> = ({
   id,
   name,
   required,
-  control,
+  // control,
   defaultValue,
   helpText = "",
   helpAriaLabel,
@@ -35,7 +35,8 @@ export const TextAreaQuestion: FunctionComponent<TextAreaQuestionProps> = ({
   otherContainerProps = {}
 }) => {
   const nameOfEl = name ?? id
-  const errorMsg = useError(control, nameOfEl)
+  const errorMsg = useError(nameOfEl)
+  const { control } = useFormContext()
 
   return (
     <>

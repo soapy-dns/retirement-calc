@@ -1,7 +1,7 @@
 "use client"
 
 import { use } from "react"
-import { useForm } from "react-hook-form"
+import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { AssetEditForm } from "../AssetEditForm"
@@ -192,13 +192,7 @@ export default function AssetEditPage(props: { params: Params }) {
   const canDrawdownValue = canDrawdown ? "Y" : "N"
   const isRentedString = isRented ? "Y" : "N"
   const isDisabled = disabled ? "Y" : "N"
-  const {
-    handleSubmit,
-    watch,
-    control,
-    register,
-    formState: { errors, isDirty }
-  } = useForm<FormDataType>({
+  const methods = useForm<FormDataType>({
     // TODO: this is a bit of a mess
     defaultValues: {
       name,
@@ -226,6 +220,13 @@ export default function AssetEditPage(props: { params: Params }) {
     },
     resolver: zodResolver(FormSchema)
   })
+  const {
+    handleSubmit,
+    watch,
+    control,
+    register,
+    formState: { errors, isDirty }
+  } = methods
 
   if (!owners) return <div>No owners found</div>
 
@@ -258,37 +259,39 @@ export default function AssetEditPage(props: { params: Params }) {
   const isRentedFormValue = watch("isRented") || "N"
 
   return (
-    <EditPageLayout
-      heading={id === "add" ? "Add an asset" : "Edit an asset"}
-      backText="Back to assets"
-      cancelText="Cancel"
-      saveText="Save changes"
-      handleSubmit={handleSubmit(onSubmit)}
-      handleBack={handleBack}
-      handleCancel={handleBack}
-    >
-      {debug && errors && <pre>{JSON.stringify(errors, null, 4)}</pre>}
-      {assetConfig && hasTransfers(assetConfig) && (
-        <Alert alertType={AlertType.INFO} heading="Note:">
-          This asset has transfers. It is not possible to remove this asset, and altering its initial value may have
-          unintended consequences.
-        </Alert>
-      )}
-      {/* @ts-ignore */}
-      <AssetEditForm
-        control={control}
-        assetType={assetType}
-        drawdownSet={drawdownSet}
-        isRentedFormValue={isRentedFormValue}
-        owners={owners}
-        isIncomeBucket={incomeAccumulated === "Y"}
-        register={register}
-      />
-      <ChangesNotSavedModal
-        showModal={showChangesNotSavedModal}
-        handleCancel={() => setShowChangesNotSavedModal(false)}
-        continueAnyway={() => navigation.goBack()}
-      />
-    </EditPageLayout>
+    <FormProvider {...methods}>
+      <EditPageLayout
+        heading={id === "add" ? "Add an asset" : "Edit an asset"}
+        backText="Back to assets"
+        cancelText="Cancel"
+        saveText="Save changes"
+        handleSubmit={handleSubmit(onSubmit)}
+        handleBack={handleBack}
+        handleCancel={handleBack}
+      >
+        {debug && errors && <pre>{JSON.stringify(errors, null, 4)}</pre>}
+        {assetConfig && hasTransfers(assetConfig) && (
+          <Alert alertType={AlertType.INFO} heading="Note:">
+            This asset has transfers. It is not possible to remove this asset, and altering its initial value may have
+            unintended consequences.
+          </Alert>
+        )}
+        {/* @ts-ignore */}
+        <AssetEditForm
+          // control={control}
+          assetType={assetType}
+          drawdownSet={drawdownSet}
+          isRentedFormValue={isRentedFormValue}
+          owners={owners}
+          isIncomeBucket={incomeAccumulated === "Y"}
+          register={register}
+        />
+        <ChangesNotSavedModal
+          showModal={showChangesNotSavedModal}
+          handleCancel={() => setShowChangesNotSavedModal(false)}
+          continueAnyway={() => navigation.goBack()}
+        />
+      </EditPageLayout>
+    </FormProvider>
   )
 }

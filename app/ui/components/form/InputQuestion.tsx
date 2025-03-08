@@ -1,6 +1,6 @@
 // TODO: use InputField
 import React, { ChangeEvent } from "react"
-import { Controller, Control } from "react-hook-form"
+import { Controller, Control, useFormContext } from "react-hook-form"
 import { useError } from "../../hooks/useError"
 import { FormGroup } from "../common/FormGroup"
 import { Input } from "../common/Input"
@@ -10,7 +10,7 @@ type InputProps = {
   id: string
   name?: string
   defaultValue?: string | number
-  control: Control<any, object>
+  // control: Control<any, object>
   prefix?: string
   suffix?: string
   type?: string
@@ -39,7 +39,7 @@ export const InputQuestion: React.FC<InputProps> = ({
   ariaHelpLabel,
   // editable = false,
   type,
-  control,
+  // control,
   prefix,
   suffix,
   validationRules,
@@ -54,7 +54,9 @@ export const InputQuestion: React.FC<InputProps> = ({
 }) => {
   const nameOfEl = name ?? id
 
-  const errorMsg = useError(control, nameOfEl)
+  const { control } = useFormContext()
+
+  const errorMsg = useError(nameOfEl)
 
   const handleOnChange = (value: string, onChange: Function) => {
     // Assumes empty input is always valid

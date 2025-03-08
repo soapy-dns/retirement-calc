@@ -7,7 +7,7 @@ import { ContextConfig } from "@/app/lib/data/schema/config"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useContext, useState } from "react"
-import { useForm } from "react-hook-form"
+import { FormProvider, useForm } from "react-hook-form"
 import { CountryEnum, IsFormNumberOpt } from "@/app/lib/data/schema/config/schemaUtils"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
 import GeneralContextForm from "../GeneralContextForm"
@@ -35,13 +35,14 @@ const GeneralContextEditPage: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false)
 
   const { context } = selectedScenario
+  const methods = useForm<FormDataType>({ defaultValues: context, resolver: zodResolver(FormSchema) })
   const {
     watch,
     handleSubmit,
     control,
     // reset,
     formState: { isDirty }
-  } = useForm<FormDataType>({ defaultValues: context, resolver: zodResolver(FormSchema) })
+  } = methods
 
   const onSubmit = async (data: FormDataType) => {
     const { context } = selectedScenario
@@ -72,24 +73,26 @@ const GeneralContextEditPage: React.FC = () => {
   const currency = watch("currency", context.currency)
 
   return (
-    <EditPageLayout
-      heading={"Edit tax and currency details"}
-      backText="Back to main context"
-      cancelText="Cancel"
-      saveText="Save changes"
-      handleSubmit={handleSubmit(onSubmit)}
-      handleBack={handleBack}
-      handleCancel={handleBack}
-    >
-      {/* @ts-ignore */}
-      <GeneralContextForm control={control} taxResident={taxResident} currency={currency} />
+    <FormProvider {...methods}>
+      <EditPageLayout
+        heading={"Edit tax and currency details"}
+        backText="Back to main context"
+        cancelText="Cancel"
+        saveText="Save changes"
+        handleSubmit={handleSubmit(onSubmit)}
+        handleBack={handleBack}
+        handleCancel={handleBack}
+      >
+        {/* @ts-ignore */}
+        <GeneralContextForm control={control} taxResident={taxResident} currency={currency} />
 
-      <ChangesNotSavedModal
-        showModal={showModal}
-        handleCancel={() => setShowModal(false)}
-        continueAnyway={() => navigation.goBack()}
-      />
-    </EditPageLayout>
+        <ChangesNotSavedModal
+          showModal={showModal}
+          handleCancel={() => setShowModal(false)}
+          continueAnyway={() => navigation.goBack()}
+        />
+      </EditPageLayout>
+    </FormProvider>
   )
 }
 

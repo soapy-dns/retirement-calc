@@ -1,7 +1,6 @@
 import { z } from "zod"
 import { IScenario, LivingExpensesSchema } from "@/app/lib/data/schema/config"
 import { sortByFromDate } from "@/app/lib/calculations/utils/sortObjectsByFromDate"
-// import { sortByFromDate } from "./utils"
 
 const FormSchema = z.object({
   items: z.array(LivingExpensesSchema)

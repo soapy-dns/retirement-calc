@@ -1,6 +1,6 @@
 "use client"
 
-import { useForm } from "react-hook-form"
+import { FormProvider, useForm } from "react-hook-form"
 import { useContext, use, useState } from "react"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -47,16 +47,17 @@ export default function ScenarioPage(props: { params: Params }) {
   const defaultStressTest = "NONE"
   const { name, description, stressTest } = selectedScenario
   const defaultValues = id === "add" ? { stressTest: defaultStressTest } : { name, description, stressTest }
+  const methods = useForm<FormDataType>({
+    // @ts-ignore - how do I fix this TODO:
+    defaultValues,
+    resolver: zodResolver(FormSchema)
+  })
   const {
     control,
     watch,
     handleSubmit,
     formState: { errors, isDirty }
-  } = useForm<FormDataType>({
-    // @ts-ignore - how do I fix this TODO:
-    defaultValues,
-    resolver: zodResolver(FormSchema)
-  })
+  } = methods
 
   const handleBack = () => {
     if (isDirty) {
@@ -81,49 +82,50 @@ export default function ScenarioPage(props: { params: Params }) {
   }
 
   return (
-    <EditPageLayout
-      heading="Scenario Edit"
-      backText="Back to config"
-      cancelText="Cancel"
-      saveText="Save changes"
-      handleSubmit={handleSubmit(onSubmit)}
-      handleBack={handleBack}
-      handleCancel={handleBack}
-    >
-      {id === "add" && (
-        <Alert heading="Note" alertType={AlertType.INFO}>
-          The context, assets and transfers will be copied across from the existing scenario. They can then be changed
-          by editing after saving.
-        </Alert>
-      )}
-      {id === "add" && selectedScenario.asAtYear < getCurrentYear() && (
-        <div className="my-4">
+    <FormProvider {...methods}>
+      <EditPageLayout
+        heading="Scenario Edit"
+        backText="Back to config"
+        cancelText="Cancel"
+        saveText="Save changes"
+        handleSubmit={handleSubmit(onSubmit)}
+        handleBack={handleBack}
+        handleCancel={handleBack}
+      >
+        {id === "add" && (
           <Alert heading="Note" alertType={AlertType.INFO}>
-            As you are copying a historical scenario, and historical scenarios are locked for changes, some aspects may
-            be updated e.g. the &apos;As at date&apos;. Asset details will remain unchanged and these must be updated
-            manually.
+            The context, assets and transfers will be copied across from the existing scenario. They can then be changed
+            by editing after saving.
           </Alert>
-        </div>
-      )}
+        )}
+        {id === "add" && selectedScenario.asAtYear < getCurrentYear() && (
+          <div className="my-4">
+            <Alert heading="Note" alertType={AlertType.INFO}>
+              As you are copying a historical scenario, and historical scenarios are locked for changes, some aspects
+              may be updated e.g. the &apos;As at date&apos;. Asset details will remain unchanged and these must be
+              updated manually.
+            </Alert>
+          </div>
+        )}
 
-      {debug && errors && <pre>{JSON.stringify(errors, null, 4)}</pre>}
+        {debug && errors && <pre>{JSON.stringify(errors, null, 4)}</pre>}
 
-      <form>
-        {/* @ts-ignore */}
-        <InputQuestion
-          id="name"
-          control={control}
-          label={scenarioConstants.NAME.LABEL}
-          restrictedCharSet={ALPHA_NUMERIC}
-          helpText={scenarioConstants.NAME.HELP_TEXT}
-        />
-        <TextAreaQuestion
-          id="description"
-          control={control}
-          label={scenarioConstants.DESCRIPTION.LABEL}
-          helpText={scenarioConstants.DESCRIPTION.HELP_TEXT}
-        />
-        {/* <InputQuestion
+        <form>
+          {/* @ts-ignore */}
+          <InputQuestion
+            id="name"
+            // control={control}
+            label={scenarioConstants.NAME.LABEL}
+            restrictedCharSet={ALPHA_NUMERIC}
+            helpText={scenarioConstants.NAME.HELP_TEXT}
+          />
+          <TextAreaQuestion
+            id="description"
+            // control={control}
+            label={scenarioConstants.DESCRIPTION.LABEL}
+            helpText={scenarioConstants.DESCRIPTION.HELP_TEXT}
+          />
+          {/* <InputQuestion
           id="asAtYear"
           control={control}
           label={scenarioConstants.AS_AT_YEAR.LABEL}
@@ -131,14 +133,15 @@ export default function ScenarioPage(props: { params: Params }) {
           helpText={scenarioConstants.AS_AT_YEAR.HELP_TEXT}
           disabled={true}
         /> */}
-        <StressTestEdit control={control} watch={watch} />
-      </form>
+          <StressTestEdit watch={watch} />
+        </form>
 
-      <ChangesNotSavedModal
-        showModal={showChangesNotSavedModal}
-        handleCancel={() => setShowChangesNotSavedModal(false)}
-        continueAnyway={() => navigation.goBack()}
-      />
-    </EditPageLayout>
+        <ChangesNotSavedModal
+          showModal={showChangesNotSavedModal}
+          handleCancel={() => setShowChangesNotSavedModal(false)}
+          continueAnyway={() => navigation.goBack()}
+        />
+      </EditPageLayout>
+    </FormProvider>
   )
 }

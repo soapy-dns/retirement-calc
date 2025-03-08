@@ -1,5 +1,5 @@
 import { ISelectOption } from "@/app/lib/data/types"
-import { Control, Controller } from "react-hook-form"
+import { Control, Controller, useFormContext } from "react-hook-form"
 import { FormGroup } from "../common/FormGroup"
 import { Select } from "../common/Select"
 import { useError } from "../../hooks/useError"
@@ -10,7 +10,7 @@ type SelectProps = {
   id: string
   name?: string
   defaultValue?: string | number
-  control: Control<any, object>
+  // control: Control<any, object>
   className?: string
   labelClassName?: string
   otherContainerProps?: object
@@ -32,7 +32,7 @@ export const CountrySelector = ({
   name,
   editable,
   options,
-  control,
+  // control,
   validationRules,
   defaultValue,
   helpText, // errorMsg
@@ -41,7 +41,8 @@ export const CountrySelector = ({
 }: SelectProps) => {
   const nameOfEl = name ?? id
 
-  const errorMsg = useError(control, nameOfEl)
+  const errorMsg = useError(nameOfEl)
+  const { control } = useFormContext()
 
   // TODO: fix isError
   return (

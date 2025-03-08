@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react"
-import { Control } from "react-hook-form"
+import { Control, useFormContext } from "react-hook-form"
 import { useError } from "../../hooks/useError"
 import { FormGroup } from "../common/FormGroup"
 
@@ -8,7 +8,7 @@ type CheckboxProps = {
   id: string
   name: string
   defaultValue?: Array<string>
-  control: Control<any, object>
+  // control: Control<any, object>
   options: Array<{ label: string; value: string; disabled?: boolean }>
   className?: string
   otherContainerProps?: object
@@ -24,7 +24,7 @@ export const CheckboxQuestion = React.forwardRef<HTMLInputElement, CheckboxProps
     id,
     name,
     options,
-    control,
+    // control,
     otherContainerProps = {},
     // validationRules,
     helpText,
@@ -33,7 +33,9 @@ export const CheckboxQuestion = React.forwardRef<HTMLInputElement, CheckboxProps
   } = props
   const nameOfEl = name ?? id
 
-  const errorMsg = useError(control, nameOfEl)
+  const errorMsg = useError( nameOfEl)
+    const { control } = useFormContext()
+  
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event) // this comes from the ...register - I think I could maybe also get it from useForm(control)

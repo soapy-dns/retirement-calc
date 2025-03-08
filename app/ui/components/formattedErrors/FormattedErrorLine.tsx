@@ -64,7 +64,7 @@ export const FormattedErrorLine: React.FC<ComponentProps> = ({ error, assets, tr
         </>
       )}
       {/* {!path && <div>{error.message}</div>} */}
-      {!path && <div>{`Invalid configuration. ${path}, ${linkText}`}</div>}
+      {!path && <div>{`Invalid configuration. ${linkText}`}</div>}
     </li>
   )
 }

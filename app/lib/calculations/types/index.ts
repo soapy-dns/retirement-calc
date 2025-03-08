@@ -129,7 +129,8 @@ interface CalculationResultsSuccess {
   netPresentValue: BasicYearData[]
   totalAssetIncome: BasicYearData[]
   totalExpensesData: ExpenseYearData[]
-  assetIncomeRowData: AssetData
+  earnedIncomeRowData: AssetData
+  investmentIncomeRowData: AssetData
   totalDrawdownData: DrawdownYearData[]
   drawdownRowData: AssetData
   surplusRowData: SurplusRowData
@@ -147,6 +148,7 @@ interface CalculationResultsSuccess {
   totalTaxableAmtDataByOwner: AssetData
   accumulatedTaxData: BasicYearData[]
   accumulatedNpvTaxData: BasicYearData[]
+  // assetRateOfReturnData: BasicYearData[]
   calculatedEndYear: number
   maxEndYear: number
 }

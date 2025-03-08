@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react"
-import { Controller, Control } from "react-hook-form"
+import { Controller, Control, useFormContext } from "react-hook-form"
 import { useError } from "../../hooks/useError"
 import { FormGroup } from "../common/FormGroup"
 import { Radio, RadioVariant } from "../common/Radio"
@@ -17,7 +17,7 @@ type RadioProps = {
   label: string
   id: string
   name?: string
-  control: Control<any, object>
+  // control: Control<any, object>
   values: Array<{ label: string; value: string }>
   defaultValue?: string
   className?: string
@@ -36,7 +36,7 @@ export const RadioButtonQuestion: FunctionComponent<RadioProps> = ({
   id,
   name,
   values,
-  control,
+  // control,
   defaultValue,
   //   className,
   //   otherContainerProps = {},
@@ -50,7 +50,8 @@ export const RadioButtonQuestion: FunctionComponent<RadioProps> = ({
   helpAriaLabel
 }) => {
   const nameOfEl = name ?? id
-  const errorMsg = useError(control, nameOfEl)
+  const errorMsg = useError(nameOfEl)
+  const { control } = useFormContext()
 
   return (
     <FormGroup
