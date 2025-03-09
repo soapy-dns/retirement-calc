@@ -27,7 +27,7 @@ export const ConfigNavBar = () => {
     updateActiveTab(ConfigTab.transfers)
   }
 
-  const tabColors = "hover:bg-secondary"
+  const tabHover = "hover:bg-secondary transition-colors duration-200 delay-200"
   const selectedTabClassNames = "border-b-4  bg-secondary border-b-primary-foreground "
 
   return (
@@ -38,7 +38,7 @@ export const ConfigNavBar = () => {
     >
       <button
         onClick={handleContextClick}
-        className={`${tabColors} flex justify-center gap-2 p-2 ${
+        className={`${tabHover}  flex justify-center gap-2 p-2 ${
           activeTab === ConfigTab.context ? selectedTabClassNames : null
         }`}
       >
@@ -48,7 +48,7 @@ export const ConfigNavBar = () => {
 
       <button
         onClick={handleAssetsClick}
-        className={`${tabColors} flex justify-center gap-2 p-2 ${
+        className={`${tabHover} flex justify-center gap-2 p-2 ${
           activeTab === ConfigTab.assets ? selectedTabClassNames : null
         }`}
       >
@@ -58,14 +58,12 @@ export const ConfigNavBar = () => {
 
       <button
         onClick={handleTransfersClick}
-        className={`${tabColors} flex justify-center gap-2 p-2 ${
+        className={`${tabHover} flex justify-center gap-2 p-2 ${
           activeTab === ConfigTab.transfers ? selectedTabClassNames : null
         }`}
       >
-        {/* <div className="mx-4 flex gap-2"> */}
         <div className="">Transfers</div>
         <ArrowPathRoundedSquareIcon className="h-6 w-6 hidden sm:inline" />
-        {/* </div> */}
       </button>
     </nav>
   )

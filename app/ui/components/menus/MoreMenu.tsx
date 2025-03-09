@@ -1,9 +1,11 @@
 import { Fragment } from "react"
-import { Menu, Transition } from "@headlessui/react"
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from "@headlessui/react"
 
 import {
   ArrowLeftOnRectangleIcon,
+  ArrowRightEndOnRectangleIcon,
   ArrowRightOnRectangleIcon,
+  ArrowRightStartOnRectangleIcon,
   DocumentIcon,
   EllipsisVerticalIcon,
   WrenchScrewdriverIcon
@@ -18,12 +20,12 @@ function classNames(...classes: string[]) {
 export const MoreMenu = () => {
   return (
     <Menu as="div" className="relative flex justify-center">
-      <Menu.Button className=" border-x hover:bg-primary-darker">
+      <MenuButton className=" border-x hover:bg-primary-darker transition-colors ease-in-out duration-150 delay-150 ">
         <div className="mx-4 flex flex-row">
           More
           <EllipsisVerticalIcon className="h-6 w-6" aria-hidden="true" />
         </div>
-      </Menu.Button>
+      </MenuButton>
 
       <Transition
         as={Fragment}
@@ -34,64 +36,47 @@ export const MoreMenu = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg  focus:outline  focus:outline-white border-2 border-primary-foreground">
+        <MenuItems className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg  focus:outline  focus:outline-white border-2 border-primary-foreground">
           <div className="py-1">
-            {/*<Menu.Item>
-               {({ active }) => (
-                <Link
-                  href={AppPath.drawdowns}
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block w-full px-4 py-2 text-left text-sm"
-                  )}
-                >
-                  <div className="flex gap-2">
-                    <ChevronDoubleDownIcon className="h-5 w-5" />
-                    Drawdowns
-                  </div>
-                </Link>
-              )}
-            </Menu.Item> */}
-
-            <Menu.Item>
-              {({ active }) => (
+            <MenuItem>
+              {({ focus }) => (
                 <Link
                   href={AppPath.fileImport}
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block w-full px-4 py-2 text-left text-sm"
                   )}
                 >
                   <div className="flex gap-2">
-                    <ArrowLeftOnRectangleIcon className="h-5 w-5" />
+                    <ArrowRightEndOnRectangleIcon className="h-5 w-5" />
                     Import configuration
                   </div>
                 </Link>
               )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
+            </MenuItem>
+            <MenuItem>
+              {({ focus }) => (
                 <Link
                   href={AppPath.fileExport}
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block w-full px-4 py-2 text-left text-sm"
                   )}
                 >
                   <div className="flex gap-2">
-                    <ArrowRightOnRectangleIcon className="h-5 w-5" />
+                    <ArrowRightStartOnRectangleIcon className="h-5 w-5" />
                     Export configuration
                   </div>
                 </Link>
               )}
-            </Menu.Item>
+            </MenuItem>
 
-            <Menu.Item>
-              {({ active }) => (
+            <MenuItem>
+              {({ focus }) => (
                 <Link
                   href={AppPath.tools}
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block w-full px-4 py-2 text-left text-sm"
                   )}
                 >
@@ -101,14 +86,14 @@ export const MoreMenu = () => {
                   </div>
                 </Link>
               )}
-            </Menu.Item>
+            </MenuItem>
 
-            <Menu.Item>
-              {({ active }) => (
+            <MenuItem>
+              {({ focus }) => (
                 <Link
                   href={AppPath.documentation}
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block w-full px-4 py-2 text-left text-sm"
                   )}
                 >
@@ -118,26 +103,9 @@ export const MoreMenu = () => {
                   </div>
                 </Link>
               )}
-            </Menu.Item>
-
-            {/* <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href={AppPath.about}
-                  className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block w-full px-4 py-2 text-left text-sm"
-                  )}
-                >
-                  <div className="flex gap-2">
-                    <ChatBubbleBottomCenterIcon className="h-5 w-5" />
-                    About
-                  </div>
-                </Link>
-              )}
-            </Menu.Item> */}
+            </MenuItem>
           </div>
-        </Menu.Items>
+        </MenuItems>
       </Transition>
     </Menu>
   )
