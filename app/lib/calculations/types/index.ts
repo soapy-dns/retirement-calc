@@ -120,7 +120,7 @@ interface CalculationResultsFail {
   errors?: ValidationIssue[]
 }
 
-interface CalculationResultsSuccess {
+export interface CalculationResultsSuccess {
   success: true
   calculationMessage: string
   yearRange: number[]

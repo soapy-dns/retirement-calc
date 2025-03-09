@@ -13,8 +13,8 @@ export const CalculationWarning: React.FunctionComponent<Props> = ({ calculatedE
   }
   return (
     <div>
-      Cannot automate further capital asset drawdowns after {calculatedEndYear}. Click for{" "}
-      <Button onClick={handleClick}>more details</Button>.
+      Cannot automate further capital asset drawdowns after {calculatedEndYear}.{" "}
+      <Button onClick={handleClick}>Click for more details</Button>.
     </div>
   )
 }

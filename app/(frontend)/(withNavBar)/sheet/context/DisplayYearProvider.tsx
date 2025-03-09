@@ -3,19 +3,22 @@ import React, { ReactNode, createContext, useEffect, useState } from "react"
 interface ContextProps {
   shouldDisplayYear: (year: number) => boolean
   getDisplayYears: () => number[]
+  toggleAllCols: () => void
 }
 export const DisplayYearContext = createContext<ContextProps>({
   shouldDisplayYear: () => true,
-  getDisplayYears: () => []
+  getDisplayYears: () => [],
+  toggleAllCols: () => {}
 })
 
 interface DisplayYearProviderProps {
   children: ReactNode
   yearRange: number[]
-  allCols: boolean
 }
-export const DisplayYearProvider = ({ yearRange, children, allCols }: DisplayYearProviderProps) => {
+
+export const DisplayYearProvider = ({ yearRange, children }: DisplayYearProviderProps) => {
   const [displayYears, setDisplayYears] = useState<number[]>([])
+  const [allCols, setAllCols] = useState<boolean>(false)
 
   useEffect(() => {
     const yearsToDisplay = yearRange.filter((year, index) => {
@@ -29,6 +32,10 @@ export const DisplayYearProvider = ({ yearRange, children, allCols }: DisplayYea
     setDisplayYears(yearsToDisplay)
   }, [yearRange, allCols])
 
+  const toggleAllCols = () => {
+    setAllCols(!allCols)
+  }
+
   const shouldDisplayYear = (year: number) => {
     return displayYears.includes(year)
   }
@@ -38,6 +45,8 @@ export const DisplayYearProvider = ({ yearRange, children, allCols }: DisplayYea
   }
 
   return (
-    <DisplayYearContext.Provider value={{ shouldDisplayYear, getDisplayYears }}>{children}</DisplayYearContext.Provider>
+    <DisplayYearContext.Provider value={{ shouldDisplayYear, getDisplayYears, toggleAllCols }}>
+      {children}
+    </DisplayYearContext.Provider>
   )
 }
