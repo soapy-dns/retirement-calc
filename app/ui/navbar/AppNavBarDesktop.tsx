@@ -18,7 +18,7 @@ export const AppNavBarDesktop = () => {
       <Link
         href={AppPath.config}
         // scroll={true} // this doesn't seem to do anything
-        className={`flex items-center justify-center border-x hover:bg-primary-darker ${
+        className={`flex items-center justify-center border-x hover:bg-primary-darker transition-colors ease-in-out duration-150 delay-150 cursor-pointer${
           pathname === AppPath.config ? selectedTabClassNames : null
         }`}
       >

@@ -38,7 +38,7 @@ export const Select: React.FC<ISelect> = ({
       <select
         onChange={handleSelect}
         value={value}
-        className="my-2 mb-4 h-8 rounded border border-solid border-muted0 focus:outline focus:outline-2 focus:outline-primary "
+        className="my-2 mb-4 h-8 rounded border border-solid border-muted0  focus:outline-2 focus:outline-primary  cursor-pointer"
       >
         {allowsNull && <option value="">--Select--</option>}
 

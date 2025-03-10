@@ -1,5 +1,5 @@
 import { Fragment, useContext } from "react"
-import { Menu, MenuItem, MenuItems, Transition } from "@headlessui/react"
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from "@headlessui/react"
 import { ChevronDownIcon } from "@heroicons/react/20/solid"
 import { ScenarioContext } from "../../context/scenario/ScenarioContext"
 
@@ -8,7 +8,7 @@ function classNames(...classes: string[]) {
 }
 
 export const ScenarioMenu = () => {
-  const { scenarioOptions, selectedScenarioOption, onSelectScenario } = useContext(ScenarioContext)
+  const { scenarioOptions, onSelectScenario } = useContext(ScenarioContext)
 
   const handleSelect = (selectedOption: string) => {
     onSelectScenario(selectedOption)
@@ -16,12 +16,12 @@ export const ScenarioMenu = () => {
 
   return (
     <Menu as="div" className="relative flex justify-center">
-      <Menu.Button className=" border-x hover:bg-primary-darker">
+      <MenuButton className=" border-x hover:bg-primary-darker transition-colors duration-150 delay-150 ease-in-out cursor-pointer">
         <div className="mx-4 flex flex-row">
           Scenarios
           <ChevronDownIcon className="h-6 w-6" aria-hidden="true" />
         </div>
-      </Menu.Button>
+      </MenuButton>
 
       <Transition
         as={Fragment}
@@ -37,11 +37,11 @@ export const ScenarioMenu = () => {
             {scenarioOptions?.map((option) => {
               return (
                 <MenuItem key={option.value}>
-                  {({ active }) => (
+                  {({ focus }) => (
                     <button
                       onClick={() => handleSelect(option.value)}
                       className={classNames(
-                        selectedScenarioOption?.value === option.value ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                        focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
                         "block w-full px-4 py-2 text-left text-sm"
                       )}
                     >

@@ -21,7 +21,7 @@ export const AlertBanner: React.FC<Props> = ({ onClose, variant, message, dismis
 
   return (
     <div
-      className={` ${backgroundColor} w-screen ${maxSize === "half" ? "max-w-lg" : null} p-1 border-2 ${borderForegroundColor} `}
+      className={` ${backgroundColor} w-screen ${maxSize === "half" ? "max-w-lg" : null} p-1 border-2 ${borderForegroundColor}`}
       role="alert"
     >
       <div className="flex justify-between">
