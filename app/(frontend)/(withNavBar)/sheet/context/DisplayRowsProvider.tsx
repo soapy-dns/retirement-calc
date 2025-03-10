@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react"
+import React, { ReactNode, useEffect, useState } from "react"
 
 interface ContextProps {
   showAllRows: boolean
@@ -16,10 +16,18 @@ interface ProviderProps {
 const DisplayRowsProvider: React.FC<ProviderProps> = ({ children }) => {
   const [showAllRows, setShowAllRows] = useState<boolean>(false)
 
-  // TODO: store in session storage
+  useEffect(() => {
+    const sessionString = sessionStorage.getItem("SHOW_ALL_ROWS")
+    if (sessionString) {
+      let typedResult = sessionString === "true" ? true : false
+      setShowAllRows(typedResult)
+    }
+  }, [])
 
   const toggleShowAllRows = () => {
     setShowAllRows(!showAllRows)
+    const sessionString = showAllRows ? "false" : "true"
+    sessionStorage.setItem("SHOW_ALL_ROWS", sessionString)
   }
 
   return (

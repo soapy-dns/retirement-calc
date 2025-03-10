@@ -47,7 +47,7 @@ const Sheet: React.FC<Props> = ({ calculationResultsSuccess }: Props) => {
   const helpModalContext = useContext(HelpModalContext)
   // const scenarioContext = useContext(ScenarioContext)
   const { showAllRows, toggleShowAllRows } = useContext(DisplayRowsContext)
-  const { shouldDisplayYear, getDisplayYears, toggleAllCols } = useContext(DisplayYearContext)
+  const { shouldDisplayYear, getDisplayYears, toggleYears: toggleAllCols } = useContext(DisplayYearContext)
 
   const [infoModal, setInfoModal] = useState<InfoType>(InfoType.NONE)
 
@@ -95,7 +95,7 @@ const Sheet: React.FC<Props> = ({ calculationResultsSuccess }: Props) => {
                 scope="col"
                 className="z-30 bg-muted italic text-primary-foreground md:first:sticky md:first:left-0 max-w-48 "
               >
-                <DisplayOptionsMenu toggleAllCols={toggleAllCols} toggleAllRows={toggleShowAllRows} />
+                <DisplayOptionsMenu />
               </th>
               <HeadingRow />
             </tr>
