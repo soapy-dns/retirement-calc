@@ -16,7 +16,7 @@ export const ScenarioMenu = () => {
 
   return (
     <Menu as="div" className="relative flex justify-center">
-      <MenuButton className=" border-x hover:bg-primary-darker transition-colors duration-150 delay-150 ease-in-out">
+      <MenuButton className=" border-x hover:bg-primary-darker transition-colors duration-150 delay-150 ease-in-out cursor-pointer">
         <div className="mx-4 flex flex-row">
           Scenarios
           <ChevronDownIcon className="h-6 w-6" aria-hidden="true" />

@@ -28,7 +28,7 @@ export const FormGroup: React.FC<IFormGroup> = ({ id, label, helpText, helpAriaL
         {helpText && (
           <button
             onClick={toggleHelpText}
-            className="focus:outline focus:outline-2 focus:outline-primary"
+            className="focus:outline focus:outline-2 focus:outline-primary cursor-pointer"
             aria-label={helpAriaLabel || "Help"}
           >
             <QuestionMarkCircleIcon className="h-5 w-5 text-primary-foreground" />

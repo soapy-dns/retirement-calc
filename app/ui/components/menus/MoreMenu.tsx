@@ -20,7 +20,7 @@ function classNames(...classes: string[]) {
 export const MoreMenu = () => {
   return (
     <Menu as="div" className="relative flex justify-center">
-      <MenuButton className=" border-x hover:bg-primary-darker transition-colors ease-in-out duration-150 delay-150 ">
+      <MenuButton className=" border-x hover:bg-primary-darker transition-colors ease-in-out duration-150 delay-150 cursor-pointer ">
         <div className="mx-4 flex flex-row">
           More
           <EllipsisVerticalIcon className="h-6 w-6" aria-hidden="true" />

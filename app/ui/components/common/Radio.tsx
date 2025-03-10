@@ -30,7 +30,7 @@ export const Radio: React.FC<RadioProps> = ({
         const { label, value: optionValue } = option
         return (
           <div key={`${optionValue}`}>
-            <div className="flex gap-2">
+            <div className="flex gap-2  cursor-pointer">
               <input
                 type="radio"
                 id={`${id}-${optionValue}`}

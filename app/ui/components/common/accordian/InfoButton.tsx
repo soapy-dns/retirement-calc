@@ -10,7 +10,7 @@ export const InfoButton: React.FC<Props> = ({ showInfo, ariaLabel }) => {
   return (
     <button
       onClick={showInfo}
-      className="focus:outline focus:outline-2 focus:outline-primary"
+      className="focus:outline focus:outline-2 focus:outline-primary cursor-pointer"
       aria-label={ariaLabel || "More information"}
     >
       <InformationCircleIcon className="w-6 h-6 " />

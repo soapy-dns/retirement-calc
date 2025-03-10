@@ -38,7 +38,7 @@ export const ConfigNavBar = () => {
     >
       <button
         onClick={handleContextClick}
-        className={`${tabHover}  flex justify-center gap-2 p-2 ${
+        className={`${tabHover}  flex justify-center gap-2 p-2 cursor-pointer ${
           activeTab === ConfigTab.context ? selectedTabClassNames : null
         }`}
       >
@@ -48,7 +48,7 @@ export const ConfigNavBar = () => {
 
       <button
         onClick={handleAssetsClick}
-        className={`${tabHover} flex justify-center gap-2 p-2 ${
+        className={`${tabHover} flex justify-center gap-2 p-2 cursor-pointer ${
           activeTab === ConfigTab.assets ? selectedTabClassNames : null
         }`}
       >
@@ -58,7 +58,7 @@ export const ConfigNavBar = () => {
 
       <button
         onClick={handleTransfersClick}
-        className={`${tabHover} flex justify-center gap-2 p-2 ${
+        className={`${tabHover} flex justify-center gap-2 p-2 cursor-pointer ${
           activeTab === ConfigTab.transfers ? selectedTabClassNames : null
         }`}
       >

@@ -33,9 +33,8 @@ export const CheckboxQuestion = React.forwardRef<HTMLInputElement, CheckboxProps
   } = props
   const nameOfEl = name ?? id
 
-  const errorMsg = useError( nameOfEl)
-    const { control } = useFormContext()
-  
+  const errorMsg = useError(nameOfEl)
+  const { control } = useFormContext()
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event) // this comes from the ...register - I think I could maybe also get it from useForm(control)
@@ -62,10 +61,10 @@ export const CheckboxQuestion = React.forwardRef<HTMLInputElement, CheckboxProps
               value={checkboxValue}
               ref={forwardedRef}
               onChange={handleOnChange}
-              className="mt-1 h-6 w-6 shrink-0  rounded-sm border-2  bg-white accent-primary"
+              className="mt-1 h-6 w-6 shrink-0  rounded-sm border-2  bg-white accent-primary  cursor-pointer"
               // TODO: it is the className that is causing weird stuff to happen!!!  peer, relative or appearance-none
             />
-            <label htmlFor={name} className="my-auto">
+            <label htmlFor={name} className="my-auto  cursor-pointer">
               {label}
             </label>
           </div>
