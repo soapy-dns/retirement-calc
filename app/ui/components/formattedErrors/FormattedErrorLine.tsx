@@ -52,7 +52,7 @@ export const FormattedErrorLine: React.FC<ComponentProps> = ({ error, assets, tr
   }
 
   return (
-    <li>
+    <li className="flex items-center justify-center">
       {path && linkText && (
         <>
           Error in{" "}
