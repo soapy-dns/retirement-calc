@@ -1,5 +1,5 @@
 import { generateMock } from "@anatine/zod-mock"
-import { FormDataType, getFormSchema } from "../inflationFormSchema"
+import { FormDataType, getFormSchema } from "../getFormSchema"
 import { ScenarioSchema } from "@/app/lib/data/schema/config"
 
 const mockScenarioConfig = generateMock(ScenarioSchema)

@@ -17,7 +17,12 @@ export const IsFormNumberOpt = z.preprocess(
     .optional()
 )
 
-export const IsFormNumber = z.preprocess((val) => castEmptyStringToUndefined(val), z.coerce.number())
+export const IsFormNumber = z.preprocess(
+  (val) => castEmptyStringToUndefined(val),
+  z.coerce.number({
+    invalid_type_error: "This value must be entered and a valid number."
+  })
+)
 
 // TODO: need to remove these hard coded values!!!
 const validStartYear = 2020

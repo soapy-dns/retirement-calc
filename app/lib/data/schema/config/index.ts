@@ -2,7 +2,7 @@ import { z } from "zod"
 
 import { assetsVsOwners, validateIncomeBucket } from "./validation"
 import { AssetSchema } from "./asset"
-import { CountryEnum, YesNoSchema } from "./schemaUtils"
+import { CountryEnum, IsFormNumber, YesNoSchema } from "./schemaUtils"
 import { numberFormatter } from "@/app/ui/utils/formatter"
 import { stressTestOptions } from "../../options"
 import { sortByFromDate } from "@/app/lib/calculations/utils/sortObjectsByFromDate"
@@ -46,9 +46,9 @@ const superContextSchema = z.object({
 // will need to refine, but since this will require cross field validation, it will be done versus to scenario
 export const InflationSchema = z.object({
   // fromYear: isValidYearBetween(),
-  fromYear: z.coerce.number(),
+  fromYear: IsFormNumber,
   // fromYear: IsValidYear,
-  inflationRate: z.coerce.number()
+  inflationRate: IsFormNumber
 })
 
 // will need to refine, but since this will require cross field validation, it will be done versus to scenario
