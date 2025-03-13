@@ -32,7 +32,6 @@ const HelpContent = ({ modalData }: { modalData: unknown }) => (
 )
 
 const SheetPage: React.FC = () => {
-  // const helpModalContext = useContext(HelpModalContext)
   const scenarioContext = useContext(ScenarioContext)
   const [infoModal, setInfoModal] = useState<InfoType>(InfoType.NONE)
 
@@ -60,8 +59,6 @@ const SheetPage: React.FC = () => {
   }
 
   const { yearRange } = calculationResults
-
-  // const { showModal: showHelpModal, onToggle: onHelpModalToggle, modalData: helpModalData = {} } = helpModalContext
 
   if (!selectedScenario) return <div>Select a scenario</div>
 

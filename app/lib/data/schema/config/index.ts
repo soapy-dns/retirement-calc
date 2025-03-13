@@ -1,10 +1,9 @@
-import { z } from "zod"
+import { z } from "@/app/lib/data/schema/config/validation/customZod"
 
 import { assetsVsOwners, validateIncomeBucket } from "./validation"
 import { AssetSchema } from "./asset"
-import { CountryEnum, YesNoSchema } from "./schemaUtils"
-import { numberFormatter } from "@/app/ui/utils/formatter"
-import { stressTestOptions } from "../../options"
+import { CountryEnum, IsFormNumber, YesNoSchema } from "./schemaUtils"
+
 import { sortByFromDate } from "@/app/lib/calculations/utils/sortObjectsByFromDate"
 
 const cashContextSchema = z.object({
@@ -46,17 +45,24 @@ const superContextSchema = z.object({
 // will need to refine, but since this will require cross field validation, it will be done versus to scenario
 export const InflationSchema = z.object({
   // fromYear: isValidYearBetween(),
-  fromYear: z.coerce.number(),
+  fromYear: IsFormNumber,
   // fromYear: IsValidYear,
-  inflationRate: z.coerce.number()
+  inflationRate: IsFormNumber
 })
 
 // will need to refine, but since this will require cross field validation, it will be done versus to scenario
-export const LivingExpensesSchema = z.object({
-  // fromYear: isValidYearBetween(),
-  fromYear: z.coerce.number(),
-  amountInTodaysTerms: z.coerce.number().nonnegative()
-})
+export const LivingExpensesSchema = z
+  .object({
+    // fromYear: isValidYearBetween(),
+    fromYear: IsFormNumber,
+    amountInTodaysTerms: IsFormNumber
+  })
+  .refine(
+    ({ amountInTodaysTerms }) => {
+      return amountInTodaysTerms >= 0
+    },
+    { message: "The value at today's date must be >= 0.", path: ["amountInTodaysTerms"] }
+  )
 
 // const transferBaseSchema = z.object({
 //   id: z.string(),
@@ -110,7 +116,7 @@ const BasicTransferSchema = z.object({
   year: z.coerce.number(),
   from: z.string(),
   to: z.string(),
-  transferPercent: z.coerce.number().min(0).max(100),
+  transferPercent: IsFormNumber,
   transferCostType: z.enum(["NO_COST", "TODAYS_MONEY", "PERCENTAGE", "FUTURE_MONEY"]),
   transferCostValue: z.coerce.number().optional()
 })
@@ -133,7 +139,12 @@ export const TransferSchema = BasicTransferSchema
 //   TransferWithoutCost.extend({ id: z.string() }),
 //   TransferWithCost.extend({ id: z.string() })
 // ])
-export const TransferWithIdSchema = TransferSchema.extend({ id: z.string() })
+export const TransferWithIdSchema = TransferSchema.extend({ id: z.string() }).refine(
+  ({ transferPercent }) => {
+    return transferPercent > 0 && transferPercent <= 100
+  },
+  { message: "The transfer percent must be > 0 and <=100.", path: ["transferPercent"] }
+)
 
 // TODO: rinstate this
 // export const TransferSchema = BasicTransferSchema.refine(

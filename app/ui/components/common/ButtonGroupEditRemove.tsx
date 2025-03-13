@@ -1,5 +1,5 @@
 import { PencilSquareIcon } from "@heroicons/react/24/outline"
-import { Button, ButtonType } from "./Button"
+import { Button, ButtonSize, ButtonType } from "./Button"
 import { ButtonGroup } from "./ButtonGroup"
 import { TrashIcon } from "lucide-react"
 

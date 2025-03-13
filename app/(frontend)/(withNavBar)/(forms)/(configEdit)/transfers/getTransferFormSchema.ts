@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "@/app/lib/data/schema/config/validation/customZod"
 
 import { IScenario, TransferSchema } from "@/app/lib/data/schema/config"
 import { verifyNotTransferringMoreThan100Percent } from "./validation/verifyNotTransferringMoreThan100Percent"

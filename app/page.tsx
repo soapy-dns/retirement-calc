@@ -62,8 +62,8 @@ export default function SplashPage() {
         <AppBanner />
       </div>
 
-      <div className="bg-primary text-white -skew-y-2 relative -top-10 ">
-        <div className="px-12 pt-20 pb-8 text-center skew-y-2">
+      <div className="bg-primary text-white -skew-y-4 relative -top-36 -mb-8">
+        <div className="px-12 pt-44 pb-12 text-center skew-y-4">
           <h1 className="font-semibold text-4xl">{mainText}</h1>
           <p className="text-lg">{subText}</p>
         </div>
@@ -73,6 +73,7 @@ export default function SplashPage() {
           By adding details of your assets and income, and using some configurable assumptions we can project the values
           forward to give you an idea of how long your assets may last.
         </p>
+
         <p>The results can be viewed as charts or as a spreadsheet.</p>
 
         <div className="mx-4">

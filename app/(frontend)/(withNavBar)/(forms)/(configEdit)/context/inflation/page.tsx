@@ -17,7 +17,7 @@ import { GenericModal } from "@/app/ui/components/modals/GenericModal"
 import { YearValueForm } from "@/app/ui/components/YearValueForm"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
-import { FormDataType, getFormSchema } from "./inflationFormSchema"
+import { FormDataType, getFormSchema } from "./getFormSchema"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
 
 const InflationEditPage: React.FC = () => {
