@@ -52,11 +52,18 @@ export const InflationSchema = z.object({
 })
 
 // will need to refine, but since this will require cross field validation, it will be done versus to scenario
-export const LivingExpensesSchema = z.object({
-  // fromYear: isValidYearBetween(),
-  fromYear: z.coerce.number(),
-  amountInTodaysTerms: z.coerce.number().nonnegative()
-})
+export const LivingExpensesSchema = z
+  .object({
+    // fromYear: isValidYearBetween(),
+    fromYear: IsFormNumber,
+    amountInTodaysTerms: IsFormNumber
+  })
+  .refine(
+    ({ amountInTodaysTerms }) => {
+      return amountInTodaysTerms >= 0
+    },
+    { message: "The value at today's date must be >= 0.", path: ["amountInTodaysTerms"] }
+  )
 
 // const transferBaseSchema = z.object({
 //   id: z.string(),

@@ -148,6 +148,8 @@ const LivingExpensesPage: React.FC = () => {
               <div></div>
             </div>
 
+            {/* {errors && <pre>{JSON.stringify(errors, null, 4)}</pre>} */}
+
             {fields.map((it, index) => {
               return (
                 <div key={it.fromYear} className="grid grid-cols-3 justify-items-center gap-2">
