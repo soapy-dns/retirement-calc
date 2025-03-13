@@ -35,6 +35,15 @@ const BankPage: React.FC = () => {
     formState: { isDirty }
   } = methods
 
+  // const getRandomInt = (count: number) => {
+  //   return Math.floor(Math.random() * count)
+  // }
+
+  // const random = getRandomInt(2)
+  // if (random === 1) {
+  //   throw new Error("Test error boundary")
+  // }
+
   const handleBack = () => {
     if (isDirty) {
       // pop modal
@@ -61,6 +70,8 @@ const BankPage: React.FC = () => {
     if (success) navigation.goBack()
   }
 
+  //
+
   return (
     <>
       <FormProvider {...methods}>
@@ -77,7 +88,6 @@ const BankPage: React.FC = () => {
             {/* @ts-ignore */}
             <InputQuestion
               id="interestRate"
-              // control={control}
               label={contextConstants.CASH_INTEREST_RATE.LABEL}
               defaultValue={auBank.interestRate}
               restrictedCharSet={DECIMALS_ONLY}

@@ -1,7 +1,7 @@
 import * as React from "react"
 
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
-import { Button, ButtonType } from "@/app/ui/components/common/Button"
+import { Button, ButtonSize, ButtonType } from "@/app/ui/components/common/Button"
 import { TextDisplayField } from "@/app/ui/components/TextDisplayField"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
@@ -52,7 +52,7 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
 
   const EditButton = () => (
     <div className="mx-auto my-6 w-3/4">
-      <Button buttonType={ButtonType.primary} onClick={handleEdit}>
+      <Button buttonType={ButtonType.primary} onClick={handleEdit} size={ButtonSize.full}>
         <div className="flex items-center gap-2">
           <PencilSquareIcon className="h-6 w-6" />
           <div>Edit</div>

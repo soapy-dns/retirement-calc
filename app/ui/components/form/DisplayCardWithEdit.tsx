@@ -1,6 +1,6 @@
 import { PencilSquareIcon } from "@heroicons/react/24/outline"
 import { Card } from "../Card"
-import { Button, ButtonType } from "../common/Button"
+import { Button, ButtonSize, ButtonType } from "../common/Button"
 import { ReactNode } from "react"
 
 interface DisplayCardWithEditProps {
@@ -21,8 +21,8 @@ export const DisplayCardWithEdit: React.FC<DisplayCardWithEditProps> = ({ headin
       {children}
       {handleEdit && (
         <div className="mx-auto my-6 w-3/4">
-          <Button buttonType={ButtonType.primary} onClick={handleEdit}>
-            <div className="flex items-center justify-center gap-2">
+          <Button buttonType={ButtonType.primary} onClick={handleEdit} size={ButtonSize.full}>
+            <div className="flex items-center justify-center gap-2 ">
               <PencilSquareIcon className="h-6 w-6" />
               <div>Edit</div>
             </div>

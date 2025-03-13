@@ -1,6 +1,6 @@
 "use client"
 import { IScenario } from "@/app/lib/data/schema/config"
-import { Button, ButtonType } from "@/app/ui/components/common/Button"
+import { Button, ButtonSize, ButtonType } from "@/app/ui/components/common/Button"
 import { Label } from "@/app/ui/components/common/Label"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
@@ -83,6 +83,7 @@ export default function ImportPage() {
         <Button
           onClick={handleOnClick}
           buttonType={ButtonType.primary}
+          size={ButtonSize.full}
           disabled={buttonStatus === ButtonStatus.busy || buttonStatus === ButtonStatus.disabled}
         >
           <div className=" flex items-center justify-center gap-2">

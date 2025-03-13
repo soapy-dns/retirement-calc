@@ -5,7 +5,7 @@ import { getIncomeTaxCalculator } from "@/app/lib/calculations/tax/taxCalcs/getT
 // import { Country } from "@/app/lib/calculations/tax/taxCalcs/types"
 import { Alert, AlertType } from "@/app/ui/components/alert/Alert"
 import { Card } from "@/app/ui/components/Card"
-import { Button, ButtonType } from "@/app/ui/components/common/Button"
+import { Button, ButtonSize, ButtonType } from "@/app/ui/components/common/Button"
 import { DECIMALS_ONLY, INTEGERS_ONLY } from "@/app/ui/components/common/formRegExes"
 import { Container } from "@/app/ui/components/Container"
 import { InputQuestion } from "@/app/ui/components/form/InputQuestion"
@@ -142,7 +142,7 @@ export default function ToolsPage() {
               // validationRules={changeDetailsValidation}
               restrictedCharSet={INTEGERS_ONLY}
             />
-            <Button onClick={handleSubmit(handleOnClick)} buttonType={ButtonType.primary}>
+            <Button onClick={handleSubmit(handleOnClick)} buttonType={ButtonType.primary} size={ButtonSize.full}>
               Calculate
             </Button>
             {tax && <div>Income tax calculated</div>}
