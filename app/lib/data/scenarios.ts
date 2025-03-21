@@ -95,8 +95,8 @@ export const getDefaultScenarios = (): IScenario[] => {
         taxResident: "AU",
         currency: "AU",
         owners: [
-          { identifier: "HIM", ownerName: "Him" },
-          { identifier: "HER", ownerName: "Her" }
+          { identifier: "HIM", ownerName: "Him", gender: "M", birthYear: 1965 },
+          { identifier: "HER", ownerName: "Her", gender: "F", birthYear: 1970 }
         ],
         auBank: {
           interestRate: 0.005
@@ -227,8 +227,8 @@ export const getDefaultScenarios = (): IScenario[] => {
         taxResident: "SC",
         currency: "SC",
         owners: [
-          { identifier: "HIM", ownerName: "Him" },
-          { identifier: "HER", ownerName: "Her" }
+          { identifier: "HIM", ownerName: "Him", gender: "M", birthYear: 1965 },
+          { identifier: "HER", ownerName: "Her", gender: "F", birthYear: 1970 }
         ],
         auBank: {
           interestRate: 0.005
