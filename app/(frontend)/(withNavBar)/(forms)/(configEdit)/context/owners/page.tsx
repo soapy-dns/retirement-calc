@@ -57,7 +57,7 @@ const OwnersPage: React.FC = () => {
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
   const [showChangesNotSavedModal, setShowChangesNotSavedModal] = useState<boolean>(false)
   const [showInvalidActionModal, setShowInvalidActionModal] = useState<boolean>(false)
-  const { ownerIsInUse } = useAssets()
+  const { ownerHasAssets } = useAssets()
 
   const { context } = selectedScenario
   const { owners } = context
@@ -71,7 +71,7 @@ const OwnersPage: React.FC = () => {
     handleSubmit,
     control,
     register,
-    formState: { isDirty, errors }
+    formState: { isDirty }
   } = methods
 
   const { fields, insert, remove } = useFieldArray({
@@ -112,7 +112,7 @@ const OwnersPage: React.FC = () => {
 
   const handleDelete = (ownerId: string) => {
     // first need to check there are no assets with this owner
-    const ownerUsedByAsset = ownerIsInUse(ownerId)
+    const ownerUsedByAsset = ownerHasAssets(ownerId)
 
     if (!ownerUsedByAsset) {
       const index = owners.findIndex((it) => it.identifier === ownerId)
