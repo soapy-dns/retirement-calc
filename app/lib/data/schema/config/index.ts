@@ -22,8 +22,8 @@ const propertyContextSchema = z.object({
 const OwnerSchema = z.object({
   identifier: z.string(),
   ownerName: z.string(),
-  birthYear: z.number().optional(),
-  gender: z.enum(["M", "F"]).optional()
+  birthYear: z.number(),
+  gender: z.enum(["M", "F"])
 })
 
 const OwnersSchema = z.array(OwnerSchema).min(1).max(2)

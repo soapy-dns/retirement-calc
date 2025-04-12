@@ -142,7 +142,14 @@ const OwnersPage: React.FC = () => {
         <div className="mb-4">
           <Alert alertType={AlertType.INFO} heading="Note:">
             <>
-              <p>Owners need to be added to correctly calculate taxes for each. There can be a maximum of 2 owners.</p>
+              <div>
+                Owner details need to be added to:-
+                <ul>
+                  <li>correctly calculate taxes for each owner</li>
+                  <li>to calculate any mandatory drawdown of assets (eg AU super)</li>
+                  <li>to estimate life expectancies. There can be a maximum of 2 owners.</li>
+                </ul>
+              </div>
             </>
           </Alert>
         </div>

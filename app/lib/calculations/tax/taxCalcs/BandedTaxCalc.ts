@@ -60,30 +60,12 @@ export class BandedTaxCalc {
       this.inflationContext
     )
 
-    // if (year === 2024) {
-    // const taxParams = {
-    //   income,
-    //   year,
-    //   currencyConversionFactor: this.currencyConversionFactor,
-    //   // inflationContext: this.inflationContext,
-    //   incomeInTodaysMoney,
-    //   inflationFactor,
-    //   taxConfig: this.taxToConfig
-    // }
-    // console.log("--taxParams--", taxParams)
-    // }
-
     const lastIndex = this.taxToConfig.findIndex((it) => incomeInTodaysMoney < it.bandTop)
 
     let taxAmtInTodaysMoney
     if (lastIndex === 0) {
       taxAmtInTodaysMoney = incomeInTodaysMoney * this.taxToConfig[0].rate
     } else {
-      // console.log(
-      //   `${this.taxToConfig[lastIndex - 1].taxToTop} + (${incomeInTodaysMoney} - ${
-      //     this.taxToConfig[lastIndex - 1].bandTop
-      //   }) * ${this.taxToConfig[lastIndex].rate})`
-      // )
       taxAmtInTodaysMoney =
         this.taxToConfig[lastIndex - 1].taxToTop +
         (incomeInTodaysMoney - this.taxToConfig[lastIndex - 1].bandTop) * this.taxToConfig[lastIndex].rate
@@ -92,10 +74,6 @@ export class BandedTaxCalc {
     const taxAmtInYearsMoneyAndOriginalCurrency =
       (taxAmtInTodaysMoney * inflationFactor) / this.currencyConversionFactor
 
-    // if (year === 2024) {
-    //   const x = { incomeInTodaysMoney, taxAmtInTodaysMoney, taxAmtInYearsMoneyAndOriginalCurrency }
-    //   console.log("--x--", x)
-    // }
     return { taxAmt: Math.round(taxAmtInYearsMoneyAndOriginalCurrency) }
   }
 }

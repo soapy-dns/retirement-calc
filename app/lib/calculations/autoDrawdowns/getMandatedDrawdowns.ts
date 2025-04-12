@@ -8,10 +8,11 @@ import { getSuperAssetsRelevantForDrawdown } from "./getSuperAssetsRelevantForDr
 import { isSuperAsset } from "@/app/ui/utils"
 import { getPercentageManuallyDrawnDown } from "./getPercentageManuallyDrawnDown"
 import { log } from "console"
+import { NestedMiddlewareError } from "next/dist/build/utils"
 
 const { mandatoryDrawdownPercentages }: { mandatoryDrawdownPercentages: MandatoryDrawdownPercentages } = config
 
-const DEFAULT_AGE = 65
+// const DEFAULT_AGE = 65
 
 interface Props {
   assets: Asset[]
@@ -27,10 +28,6 @@ interface Props {
 */
 export const getMandatedDrawdowns = ({ assets, year, owners, transfers = [] }: Props): AutomatedDrawdown[] => {
   const filteredAssets = getSuperAssetsRelevantForDrawdown({ assets, year, mandatoryDrawdownPercentages })
-  // console.log(
-  //   "-filteredAssets----",
-  //   filteredAssets.map((it) => it.name)
-  // )
 
   const transfersForYear = transfers.filter((it) => it.year === year)
 
@@ -39,7 +36,8 @@ export const getMandatedDrawdowns = ({ assets, year, owners, transfers = [] }: P
     const { ownerIds, country } = asset
 
     const assetOwner = owners.find((it) => it.identifier === ownerIds[0]) // only one owner for super
-    const birthYear = assetOwner?.birthYear || year - DEFAULT_AGE
+    if (!assetOwner) throw new Error(`Owner not found for identifier ${ownerIds[0]}`)
+    const birthYear = assetOwner.birthYear
     const roughAge = year - birthYear
 
     const mandatoryDrawdownPercent =

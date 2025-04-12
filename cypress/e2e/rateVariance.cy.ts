@@ -12,6 +12,6 @@ describe("Rate variance pricing", () => {
 
     cy.get("@cells").should("have.length", 16)
     cy.get("@cells").first().contains("2,330,000")
-    cy.get("@cells").last().contains("7,329,177")
+    cy.get("@cells").last().contains("7,304,216")
   })
 })

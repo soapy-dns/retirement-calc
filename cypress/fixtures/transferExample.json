@@ -36,7 +36,7 @@
       "au2ukExchangeRate": 0.52,
       "currency": "AU",
       "numOfYears": 1,
-      "owners": [{ "identifier": "HIM", "ownerName": "Him" }],
+      "owners": [{ "identifier": "HIM", "ownerName": "Him", "birthYear": 1959, "gender": "M" }],
       "auBank": {
         "interestRate": 0
       },
