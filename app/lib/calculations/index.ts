@@ -2,14 +2,11 @@
 
 import range from "lodash/range.js"
 import { canDrawdownAssets } from "./assets/assetUtils"
-import { AssetIncome } from "./assets/types"
 import { getYearRange } from "./utils/getYearRange"
-import { AssetData, AssetSplitItem, CalculationResults, SurplusYearData, YearData } from "./types"
-import { getAssetSplitByYear } from "./assets/getAssetClasses"
+import { AssetData, CalculationResults, SurplusYearData, YearData } from "./types"
 import { getCalculatedNpvData, getGraphIncomeNpvData } from "./utils/getCalculatedNpvData"
 import { getAutoDrawdownCellData } from "./autoDrawdowns/getAutoDrawdownCellData"
 import { CalculationError } from "@/app/lib/utils/CalculationError"
-import { isCapitalAsset } from "@/app/ui/utils"
 import { accumToBasicYearData } from "./utils/accumToBasicYearData"
 import { getIncomeByOwner } from "./utils/getIncomeByOwner"
 import { getTaxDetailsByOwner } from "./utils/getTaxDetailsByOwner"
@@ -23,7 +20,6 @@ import { doCalculationsForYear } from "./doCalculationsForYear"
 import { ScenarioSchema } from "../data/schema/config"
 import { getAssetSplit } from "./getAssetSplit"
 import { getEarnedIncomeRowData, getInvestmentIncomeRowData } from "./getIncomeRowData"
-import { getAssetRateOfReturn } from "./getAssetRateOfReturn"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 

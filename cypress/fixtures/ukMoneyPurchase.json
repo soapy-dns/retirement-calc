@@ -38,7 +38,7 @@
       "taxResident": "SC",
       "au2ukExchangeRate": 0.52,
       "currency": "AU",
-      "owners": [{ "identifier": "HIM", "ownerName": "Him" }],
+      "owners": [{ "identifier": "HIM", "ownerName": "Him", "birthYear": 1959, "gender": "M" }],
       "auBank": {
         "interestRate": 0.005
       },

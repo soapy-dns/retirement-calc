@@ -38,8 +38,8 @@
       "taxResident": "SC",
       "currency": "AU",
       "owners": [
-        { "identifier": "HIM", "ownerName": "Him" },
-        { "identifier": "HER", "ownerName": "Her" }
+        { "identifier": "HIM", "ownerName": "Him", "birthYear": 1959, "gender": "M" },
+        { "identifier": "HER", "ownerName": "Her", "birthYear": 1959, "gender": "F" }
       ],
       "auBank": {
         "interestRate": 0.005

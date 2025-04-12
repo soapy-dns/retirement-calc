@@ -1,26 +1,7 @@
 import React, { ReactNode, useContext, useEffect, useState } from "react"
-import { LifeExpectancyDetails } from "@/app/lib/calculations/lifeExpectancy/types"
-import { OwnerType } from "@/app/lib/data/schema/config"
-import { FullOwnerDetails, getExpectedDeathDetails, getFullOwnerDetails } from "@/app/lib/calculations/lifeExpectancy"
+import { FullOwnerDetails, getFullOwnerDetails } from "@/app/lib/calculations/lifeExpectancy"
 import { ScenarioContext } from "./scenario/ScenarioContext"
-
-// const getFullOwnerDetails = (owners: OwnerType[]): FullOwnerDetails[] => {
-//   const fullOwnersDetails = owners.map((owner: OwnerType) => {
-//     if (owner.birthYear && owner.gender) {
-//       const deathDetails = getExpectedDeathDetails(owner.birthYear, owner.gender)
-
-//       if (deathDetails) {
-//         const { deathAge, deathYear, yearsLeft } = deathDetails
-//         return { ...owner, deathYear, deathAge, yearsLeft }
-//       }
-//     }
-//     return { ...owner }
-//   })
-
-//   return fullOwnersDetails
-// }
-
-// type FullOwnerDetails = Partial<LifeExpectancyDetails> & OwnerType
+import { OwnerType } from "@/app/lib/data/schema/config"
 
 interface IFullOwnerContext {
   fullOwnerDetails?: FullOwnerDetails[]
@@ -43,12 +24,15 @@ const FullOwnerProvider: React.FC<IFullOwnerProvider> = ({ children }) => {
   const [fullOwnerDetails, setFullOwnerDetails] = useState<FullOwnerDetails[]>([])
   const { selectedScenario } = useContext(ScenarioContext)
 
+  const storeOwnerDetailsInState = async (owners: OwnerType[]) => {
+    const fullOwnerDetails = await getFullOwnerDetails(owners)
+    setFullOwnerDetails(fullOwnerDetails)
+  }
+
   useEffect(() => {
     // update life expectancy in full owner details when owner changes
     const owners = selectedScenario.context.owners
-    const fullOwnerDetails = getFullOwnerDetails(owners)
-
-    setFullOwnerDetails(fullOwnerDetails)
+    storeOwnerDetailsInState(owners)
   }, [selectedScenario.context.owners])
 
   return <FullOwnerContext.Provider value={{ fullOwnerDetails }}>{children}</FullOwnerContext.Provider>

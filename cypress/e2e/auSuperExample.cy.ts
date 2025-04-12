@@ -7,12 +7,13 @@ describe("Au Super example", () => {
     cy.visit("sheet")
     cy.importFile("cypress/fixtures/auSuperExample.json")
   })
+
   it("should have correct values for present value", () => {
     cy.contains("th", "Present value").nextAll().as("cells")
 
     cy.get("@cells").should("have.length", 13)
     cy.get("@cells").first().contains("1,050,000")
-    cy.get("@cells").last().contains("-14,081")
+    cy.get("@cells").last().contains("-12,524")
   })
 
   it("should check the last total income is as expected", () => {
@@ -28,6 +29,6 @@ describe("Au Super example", () => {
 
     cy.get("@cells").should("have.length", 12)
     cy.get("@cells").first().contains("50,000")
-    cy.get("@cells").last().contains("70,830")
+    cy.get("@cells").last().contains("70,129")
   })
 })

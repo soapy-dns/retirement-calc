@@ -148,7 +148,7 @@ export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
   }
 
   const updateScenario = async (updatedScenario: IScenario): Promise<{ success: boolean }> => {
-    console.log("--updateScenario---updatedScenario", updatedScenario)
+    // console.log("--updateScenario---updatedScenario", updatedScenario)
     const { success } = await doCalculations(updatedScenario)
 
     // irrespective of whether the calculation works or not we update the scenario.  The customer can change it.

@@ -4,7 +4,6 @@ import { Transfer, Country, OwnerType, OwnersType } from "../../data/schema/conf
 import { Asset } from "../assets/Asset"
 import { AssetGroup, BasicYearData, InflationContext } from "../types"
 import { removeUnusedHistoryFromTaxes } from "./removeUnusedHistoryFromTaxes"
-import { getTaxableDrawdownAmt } from "./getTaxableDrawdownAmt"
 import { getTaxableTransferAmt } from "./getTaxableTransferAmt"
 
 export const getOwnersTaxableIncomeAmt = (incomeFromAssets: AssetIncome[], ownerId: string, year: number) => {
