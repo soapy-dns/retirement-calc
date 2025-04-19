@@ -5,14 +5,10 @@ import config from "@/app/lib/config.json"
 import { getRandomKey } from "../../utils/getRandomKey"
 import { Constants } from "../constants"
 import { getSuperAssetsRelevantForDrawdown } from "./getSuperAssetsRelevantForDrawdown"
-import { isSuperAsset } from "@/app/ui/utils"
 import { getPercentageManuallyDrawnDown } from "./getPercentageManuallyDrawnDown"
 import { log } from "console"
-import { NestedMiddlewareError } from "next/dist/build/utils"
 
 const { mandatoryDrawdownPercentages }: { mandatoryDrawdownPercentages: MandatoryDrawdownPercentages } = config
-
-// const DEFAULT_AGE = 65
 
 interface Props {
   assets: Asset[]
