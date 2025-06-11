@@ -18,7 +18,7 @@
     "cy:electron": "cypress run"
   },
   "dependencies": {
-    "@anatine/zod-mock": "^3.13.4",
+    "@anatine/zod-mock": "^3.14.0",
     "@faker-js/faker": "^8.4.1",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
