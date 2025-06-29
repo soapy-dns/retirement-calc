@@ -88,6 +88,7 @@ export default function ScenarioPage(props: { params: Params }) {
         backText="Back to config"
         cancelText="Cancel"
         saveText="Save changes"
+        // @ts-ignore  FIXME: dirty hack
         handleSubmit={handleSubmit(onSubmit)}
         handleBack={handleBack}
         handleCancel={handleBack}
