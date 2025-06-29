@@ -13,6 +13,8 @@
     "precommit": "next lint && npm run typecheck && npm run test",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
+    "test:integration": "echo 'test:integration",
+
     "cy:open": "cypress open",
     "cy": "cypress run --browser chrome",
     "cy:electron": "cypress run"
