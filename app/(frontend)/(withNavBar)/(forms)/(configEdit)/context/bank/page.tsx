@@ -26,7 +26,7 @@ const BankPage: React.FC = () => {
   const { context } = selectedScenario
   const { auBank } = context
   const methods = useForm<FormDataType>({
-    defaultValues: { interestRate: Math.round(auBank.interestRate * 10000) / 100 },
+    defaultValues: { interestRate: Math.round(auBank.interestRate * 100) },
     resolver: zodResolver(FormSchema)
   })
   const {
