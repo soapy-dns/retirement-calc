@@ -36,7 +36,7 @@ describe("applyMandatedDrawdowns", () => {
 
     const drawdowns: AutomatedDrawdown[] = [{ year: 2022, from: "asset2", value: 100 }]
 
-    expect(() => applyMandatedDrawdowns({ drawdowns, assets })).toThrowError("asset not found asset2")
+    expect(() => applyMandatedDrawdowns({ drawdowns, assets })).toThrow("asset not found asset2")
   })
 
   it("should throw an error if next history is not found", () => {
@@ -50,6 +50,6 @@ describe("applyMandatedDrawdowns", () => {
 
     const drawdowns: AutomatedDrawdown[] = [{ year: 2022, from: "asset1", value: 100 }]
 
-    expect(() => applyMandatedDrawdowns({ drawdowns, assets })).toThrowError("history cannot be found Asset 1, 2022")
+    expect(() => applyMandatedDrawdowns({ drawdowns, assets })).toThrow("history cannot be found Asset 1, 2022")
   })
 })

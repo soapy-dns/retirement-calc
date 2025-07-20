@@ -31,6 +31,4 @@
     "app/(frontend)/(withNavBar)/charts/htmlLegendPlugin.js"
   ],
   "exclude": ["node_modules", "cypress", "./cypress.config.ts", "**/*.cy.tsx"]
-
-  // "exclude": ["node_modules", "**/*.spec.ts"]
 }
