@@ -13,7 +13,7 @@ type InputProps = {
   // control: Control<any, object>
   prefix?: string
   suffix?: string
-  type?: string
+  type?: "number" | "text" | "date"
   margin?: Object
   className?: string
   labelClassName?: string
@@ -49,7 +49,7 @@ export const InputQuestion: React.FC<InputProps> = ({
   inputProps,
   labelClassName,
   maxLength,
-  restrictedCharSet,
+  // restrictedCharSet,
   disabled
 }) => {
   const nameOfEl = name ?? id
@@ -63,7 +63,11 @@ export const InputQuestion: React.FC<InputProps> = ({
     // const validInput = !value || (restrictedCharSet && value.match(restrictedCharSet)) || !restrictedCharSet
     // console.log("validInput", validInput)
     // if (validInput) {
-    onChange(value)
+    if (type === "number") {
+      onChange(Number(value))
+    } else {
+      onChange(value)
+    }
     // }
   }
 
@@ -87,7 +91,7 @@ export const InputQuestion: React.FC<InputProps> = ({
               data-testid={id}
               disabled={disabled}
               name={renderName}
-              // type={type}
+              type={type}
               // value={value}
               value={value || ""} // "" to avoid uncontrolled input warning
               // onChange={() => console.log("handle change")}

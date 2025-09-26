@@ -10,6 +10,7 @@ interface IInput {
   disabled?: boolean
   placeholder?: string
   value?: string | number
+  type?: "number" | "text" | "date"
   isError: boolean
   prefix?: string
   suffix?: string
@@ -28,6 +29,7 @@ export const Input: React.FC<IInput> = ({
   className,
   prefix,
   suffix,
+  type = "text",
   ...rest
 }) => {
   const colorClasses = isError
@@ -55,6 +57,7 @@ export const Input: React.FC<IInput> = ({
         disabled={disabled}
         onChange={onChange}
         onBlur={onBlur}
+        type={type}
       />
       {suffix && <Suffix text={suffix} />}
     </div>
