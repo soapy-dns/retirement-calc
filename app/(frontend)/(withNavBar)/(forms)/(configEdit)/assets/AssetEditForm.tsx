@@ -124,7 +124,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
             id="value"
             label={assetConstants.VALUE.LABEL}
             prefix={currency}
-            restrictedCharSet={INTEGERS_ONLY}
+            // restrictedCharSet={INTEGERS_ONLY}
             helpText={assetConstants.VALUE.HELP_TEXT}
           />
 
