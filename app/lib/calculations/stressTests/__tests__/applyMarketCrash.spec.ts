@@ -2,12 +2,12 @@ import { applyMarketCrash } from "../applyMarketCrash"
 import { IScenario } from "../../../data/schema/config"
 
 describe("applyMarketCrash", () => {
-  it("should reduce the value of AuShares assets by 20%", () => {
+  it("should reduce the value of AuShares assets by 30%", () => {
     const scenario: IScenario = {
       assets: [{ className: "AuShares", value: 1000 }]
     }
     const result = applyMarketCrash(scenario)
-    expect(result.assets[0].value).toBe(800)
+    expect(result.assets[0].value).toBe(700)
   })
 
   it("should reduce the value of AuSuper assets by 16%", () => {
@@ -15,7 +15,7 @@ describe("applyMarketCrash", () => {
       assets: [{ className: "AuSuper", value: 1000 }]
     }
     const result = applyMarketCrash(scenario)
-    expect(result.assets[0].value).toBe(860)
+    expect(result.assets[0].value).toBe(790)
   })
 
   it("should not change the value of other assets", () => {
@@ -35,8 +35,8 @@ describe("applyMarketCrash", () => {
       ]
     }
     const result = applyMarketCrash(scenario)
-    expect(result.assets[0].value).toBe(800)
-    expect(result.assets[1].value).toBe(860)
+    expect(result.assets[0].value).toBe(700)
+    expect(result.assets[1].value).toBe(790)
     expect(result.assets[2].value).toBe(1000)
   })
 

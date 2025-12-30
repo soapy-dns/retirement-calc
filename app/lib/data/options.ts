@@ -13,7 +13,7 @@ export const stressTestOptions = [
   {
     label: "Market Crash",
     value: "MARKET_CRASH",
-    summary: "Assuming a 20% drop in equity values."
+    summary: "Assuming a 30% drop in equity values."
   },
   {
     label: "Property crash",

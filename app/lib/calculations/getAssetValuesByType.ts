@@ -3,10 +3,13 @@ import { Asset } from "./assets/Asset"
 import { AssetSplitItem } from "./types"
 import { getAssetSplitByYear } from "./assets/getAssetSplitByYear"
 
-export const getAssetSplit = (assets: Asset[], calcYearRangeAssets: number[]): Record<number, AssetSplitItem[]> => {
+export const getAssetValueByType = (
+  assets: Asset[],
+  calcYearRangeAssets: number[]
+): Record<number, AssetSplitItem[]> => {
   const capitalAssets = assets.filter((it) => isCapitalAsset(it.className) === true)
 
-  const assetSplitYearly: Record<number, AssetSplitItem[]> = calcYearRangeAssets.reduce(
+  const assetValuesYearly: Record<number, AssetSplitItem[]> = calcYearRangeAssets.reduce(
     (accum, year) => {
       const assetSplit = getAssetSplitByYear(capitalAssets, year)
       accum[year] = assetSplit
@@ -15,5 +18,5 @@ export const getAssetSplit = (assets: Asset[], calcYearRangeAssets: number[]): R
     {} as Record<number, AssetSplitItem[]>
   )
 
-  return assetSplitYearly
+  return assetValuesYearly
 }
