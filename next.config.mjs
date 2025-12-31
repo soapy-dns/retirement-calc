@@ -1,32 +1,18 @@
-// const withMDX = require("@next/mdx")()
-import rehypeSlug from "rehype-slug"
 import createMDX from "@next/mdx"
+
+//NOTE: not importing rehype-slug directly
+
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+  options: {
+    rehypePlugins: ["rehype-slug"]
+  }
+})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"]
-  // experimental: { TODO: including this gave errors with Link component- commenting for now.
-  //   typedRoutes: true
-  // },
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: "/",
-  //       destination: "/docs/splash",
-  //       permanent: true
-  //     }
-  //   ]
-  // }
+  pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"]
 }
-
-const withMDX = createMDX({
-  // Add markdown plugins here, as desired
-  options: {
-    rehypePlugins: [
-      rehypeSlug // add IDs to any h1-h6 tag that doesn't have one, using a slug made from its text
-    ]
-  }
-})
 
 export default withMDX(nextConfig)
