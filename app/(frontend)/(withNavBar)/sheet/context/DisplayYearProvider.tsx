@@ -27,6 +27,9 @@ export const DisplayYearProvider = ({ yearRange, children }: DisplayYearProvider
     const sessionString = sessionStorage.getItem("SHOW_ALL_YEARS")
     if (sessionString) {
       let typedResult = sessionString === "true" ? true : false
+
+      // TODO: review.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowAllYears(typedResult)
     }
   }, [])
@@ -40,6 +43,8 @@ export const DisplayYearProvider = ({ yearRange, children }: DisplayYearProvider
       return false
     })
 
+    // TODO: this eslint disable should be reviewed.  Should we be saving derived state like this?
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setYearsToDisplay(years)
   }, [yearRange, showAllYears])
 

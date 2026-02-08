@@ -19,11 +19,22 @@ const ConfigTabProvider: React.FC<IConfigTabProvider> = ({ children }) => {
 
   useEffect(() => {
     const storedTabString = sessionStorage.getItem("CONFIG_TAB")
-    if (storedTabString) {
-      let typedStoredTabString = storedTabString as keyof typeof ConfigTab
-      let storedTab = ConfigTab[typedStoredTabString]
-      setActiveTab(storedTab)
+
+    if (storedTabString && storedTabString in ConfigTab) {
+      const typedStoredTabString = storedTabString as keyof typeof ConfigTab
+      const storedTab = ConfigTab[typedStoredTabString]
+
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      return setActiveTab(storedTab)
     }
+
+    // nothing stored or corrupted, set default
+    sessionStorage.setItem("CONFIG_TAB", ConfigTab.context) // active state is already defaulted
+
+     
+    setActiveTab(ConfigTab.context)
+
+    //
   }, [])
 
   const updateActiveTab = (tab: ConfigTab) => {

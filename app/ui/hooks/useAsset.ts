@@ -44,9 +44,9 @@ export const useAsset = () => {
 
     const newAssets = sortAssetConfig(assets)
 
-    selectedScenario.assets = newAssets
+    const newScenario = { ...selectedScenario, assets: newAssets }
 
-    const { success } = await updateScenario(selectedScenario)
+    const { success } = await updateScenario(newScenario)
     return { success }
   }
 
@@ -60,9 +60,9 @@ export const useAsset = () => {
 
     const newAssets = sortAssetConfig(assets)
 
-    selectedScenario.assets = newAssets
+    const newScenario = { ...selectedScenario, assets: newAssets }
 
-    const { success } = await updateScenario(selectedScenario)
+    const { success } = await updateScenario(newScenario)
     return { success }
   }
 
@@ -72,9 +72,9 @@ export const useAsset = () => {
 
     const newAssets = sortAssetConfig(oldAssets.concat([additionalAsset]))
 
-    selectedScenario.assets = newAssets
+    const newScenario = { ...selectedScenario, assets: newAssets }
 
-    const { success } = await updateScenario(selectedScenario)
+    const { success } = await updateScenario(newScenario)
     return { success }
   }
 

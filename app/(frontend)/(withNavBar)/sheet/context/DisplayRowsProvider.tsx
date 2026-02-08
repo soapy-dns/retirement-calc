@@ -20,6 +20,9 @@ const DisplayRowsProvider: React.FC<ProviderProps> = ({ children }) => {
     const sessionString = sessionStorage.getItem("SHOW_ALL_ROWS")
     if (sessionString) {
       let typedResult = sessionString === "true" ? true : false
+
+      // TODO: review.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowAllRows(typedResult)
     }
   }, [])

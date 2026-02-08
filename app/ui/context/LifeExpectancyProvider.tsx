@@ -32,6 +32,8 @@ const FullOwnerProvider: React.FC<IFullOwnerProvider> = ({ children }) => {
   useEffect(() => {
     // update life expectancy in full owner details when owner changes
     const owners = selectedScenario.context.owners
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     storeOwnerDetailsInState(owners)
   }, [selectedScenario.context.owners])
 

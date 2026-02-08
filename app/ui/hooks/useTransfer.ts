@@ -17,8 +17,9 @@ export const useTransfer = () => {
     const index = transfers.findIndex((it) => it.id === transfer.id) || 0
 
     transfers.splice(index, 1, transfer)
-    selectedScenario.transfers = transfers
-    const { success } = await updateScenario(selectedScenario)
+    const newScenario = { ...selectedScenario, transfers }
+
+    const { success } = await updateScenario(newScenario)
     return { success }
   }
 
@@ -28,9 +29,9 @@ export const useTransfer = () => {
     const index = transfers.findIndex((it) => it.id === id) || 0
 
     transfers.splice(index, 1)
-    selectedScenario.transfers = transfers
+    const newScenario = { ...selectedScenario, transfers }
 
-    const { success } = await updateScenario(selectedScenario)
+    const { success } = await updateScenario(newScenario)
     return { success }
   }
 
@@ -46,9 +47,9 @@ export const useTransfer = () => {
       return 0
     })
 
-    selectedScenario.transfers = newTransfers
+    const newScenario = { ...selectedScenario, transfers: newTransfers }
 
-    const { success } = await updateScenario(selectedScenario)
+    const { success } = await updateScenario(newScenario)
     return { success }
   }
 

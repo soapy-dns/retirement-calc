@@ -20,8 +20,8 @@ export const Textarea: React.FC<ITextArea> = ({
   value,
   onChange,
   required = false,
-  maxLength = 250,
-  rows = 4,
+  maxLength = 1000,
+  rows = 7,
   ...rest
 }) => {
   const colorClasses = isError ? "border-error text-error border-2" : "border border-muted0"
@@ -34,7 +34,7 @@ export const Textarea: React.FC<ITextArea> = ({
       disabled={disabled}
       required={required}
       onChange={onChange}
-      rows={4}
+      rows={rows}
       maxLength={maxLength}
     />
   )
