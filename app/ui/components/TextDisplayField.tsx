@@ -7,10 +7,11 @@ interface ITextDisplayFieldProps {
   suffix?: string
 }
 
+// whitespace-pre-wrap is needed to ensure that the text wraps and that new lines are respected.
 export const TextDisplayField: React.FunctionComponent<ITextDisplayFieldProps> = ({ label, prefix, value, suffix }) => {
   return (
     <FormGroup label={label} id={label}>
-      <p className="mb-4">
+      <p className="mb-4 whitespace-pre-wrap">
         {prefix && prefix}
         {value || "-"}
         {suffix && suffix}
