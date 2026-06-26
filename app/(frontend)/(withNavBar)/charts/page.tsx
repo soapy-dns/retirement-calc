@@ -28,6 +28,10 @@ const ChartPage = () => {
       label: "Asset Split (%)"
     },
     {
+      value: "npvByAssetClass",
+      label: "NPV by Asset Class"
+    },
+    {
       value: "drawdown",
       label: "Drawdown"
     },
@@ -44,6 +48,7 @@ const ChartPage = () => {
   useEffect(() => {
     // check session storage and use that if found, else use 'capital assets'
     const chartType = sessionStorage.getItem("chartType")
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (chartType) setSelectedChart(ChartType[chartType as keyof typeof ChartType])
   }, [])
 

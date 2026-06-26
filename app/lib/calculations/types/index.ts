@@ -25,14 +25,6 @@ export interface DrawdownYearData extends BasicYearData {
   automatedDrawdowns: AutomatedDrawdown[]
 }
 
-// this this is duplicated so commented out
-// export interface YearsTaxData extends BasicYearData {
-//   totalTaxableAmt: number
-//   totalIncomeAmt: number
-//   taxableDrawdownsAmt: number
-//   taxableAutomatedDrawdownAmt: number
-// }
-
 export interface ExpenseYearData extends BasicYearData {
   livingExpenses: number
   taxes: number
@@ -143,6 +135,7 @@ export interface CalculationResultsSuccess {
   calculatedAssetData: AssetData
   calculatedAssetNpvData: AssetData
   graphIncomeNpvData: AssetData
+  graphNpvByAssetClassData: AssetData
   incomeTaxesByOwner: AssetData
   incomeByOwner: AssetData
   totalTaxableAmtDataByOwner: AssetData

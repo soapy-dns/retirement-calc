@@ -72,6 +72,7 @@ export default function ToolsPage() {
       inflationContext: undefined,
       au2ukExchangeRate
     })
+    // eslint-disable-next-line react-hooks/purity
     const { taxAmt } = incomeTaxCalculator.getTax(income, Date.now())
     setTax(taxAmt)
     // setFocus("id")

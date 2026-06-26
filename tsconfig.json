@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -11,7 +15,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -19,8 +23,12 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"],
-      "@/docs/*": ["./app/docs/*"]
+      "@/*": [
+        "./*"
+      ],
+      "@/docs/*": [
+        "./app/docs/*"
+      ]
     }
   },
   "include": [
@@ -28,7 +36,13 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/(frontend)/(withNavBar)/charts/htmlLegendPlugin.js"
+    "app/(frontend)/(withNavBar)/charts/htmlLegendPlugin.js",
+    ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "cypress", "./cypress.config.ts", "**/*.cy.tsx"]
+  "exclude": [
+    "node_modules",
+    "cypress",
+    "./cypress.config.ts",
+    "**/*.cy.tsx"
+  ]
 }

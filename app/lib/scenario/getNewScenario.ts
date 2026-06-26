@@ -16,7 +16,7 @@ export const getNewScenario = async (
   const isYearUpdated = scenario.asAtYear < thisYear
   const newScenario = {
     ...cloneDeep(scenario),
-    name,
+    name: `Copy of ${name}`,
     description,
     id: getRandomKey(),
     stressTest: stressTest,
@@ -25,6 +25,7 @@ export const getNewScenario = async (
 
   if (!isYearUpdated) return newScenario
 
+  // TODO: this seems a bit hacky - at least we should tell the customer what is being changed
   // remove historical transfers
   const newTransfers = !newScenario.transfers
     ? []
@@ -57,6 +58,7 @@ export const getNewScenario = async (
 
   // update capital value for all capital assets, as some assets may no longer exist
   // update income in line with inflation.
+  console.log("newScenario name:", newScenario.name)
 
   return newScenario
 }

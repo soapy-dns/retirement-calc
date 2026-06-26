@@ -62,7 +62,7 @@ const IncomeAssetSchema = AssetBaseSchema.extend({
 })
 export type IncomeAsset = z.infer<typeof IncomeAssetSchema>
 
-const PropertySchema = CapitalAssetSchema.extend({
+export const PropertySchema = CapitalAssetSchema.extend({
   className: z.literal("AuProperty"),
   property: PropertyDetailsSchema
 })

@@ -1,7 +1,7 @@
 import { isCapitalAsset } from "@/app/ui/utils"
 import { Asset } from "./assets/Asset"
 import { AssetSplitItem } from "./types"
-import { getAssetSplitByYear } from "./assets/getAssetClasses"
+import { getAssetSplitByYear } from "./assets/getAssetSplitByYear"
 
 export const getAssetSplit = (assets: Asset[], calcYearRangeAssets: number[]): Record<number, AssetSplitItem[]> => {
   const capitalAssets = assets.filter((it) => isCapitalAsset(it.className) === true)

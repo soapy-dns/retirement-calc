@@ -30,15 +30,7 @@ export const contextConstants: Record<string, ItemProps> = {
     HELP_TEXT:
       "The maximum number of years to do calculations for.  This is probably only of use for debugging.  Without there is a maximum number of years enforced (for the unlikely event that your investments make more income than you spend)"
   },
-  // INFLATION: {
-  //   LABEL: "Inflation",
-  //   HELP_TEXT:
-  //     "Specified inflation.  The inflation for subsequent years will be the same unless there is a new value configured."
-  // },
-  // ASSET_OWNERS: {
-  //   LABEL: "Asset owners",
-  //   HELP_TEXT: "All the owners that own assets"
-  // },
+
   CASH_INTEREST_RATE: {
     LABEL: "Interest (%)",
     HELP_TEXT:

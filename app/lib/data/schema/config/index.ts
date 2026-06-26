@@ -64,54 +64,6 @@ export const LivingExpensesSchema = z
     { message: "The value at today's date must be >= 0.", path: ["amountInTodaysTerms"] }
   )
 
-// const transferBaseSchema = z.object({
-//   id: z.string(),
-//   // year: IsValidYear,
-//   year: z.coerce.number(),
-//   from: z.string(),
-//   to: z.string(),
-//   // migrateAll: z.boolean(),
-//   // costOfTransfer: z.number().optional()
-//   transferPercent: z.number(),
-//   transferCostType: z.enum(["TODAYS_MONEY", "PERCENTAGE", "FUTURE_MONEY"]),
-//   transferCostValue: z.number()
-// })
-
-// const transferWithMigrateAll = transferBaseSchema.extend({
-//   migrateAll: z.literal<boolean>(true),
-//   value: z.undefined()
-// })
-
-// const transferWithoutMigrateAll = transferBaseSchema.extend({
-//   migrateAll: z.literal<boolean>(false),
-//   value: z.number()
-// })
-
-// const transferBaseSchema = z.object({
-//   id: z.string(),
-//   // year: IsValidYear,
-//   year: z.coerce.number(),
-//   from: z.string(),
-//   to: z.string(),
-//   migrateAll: z.boolean(),
-//   costOfTransfer: z.number().optional()
-// })
-
-// const transferWithMigrateAll = transferBaseSchema.extend({
-//   migrateAll: z.literal<boolean>(true),
-//   value: z.undefined()
-// })
-
-// const transferWithoutMigrateAll = transferBaseSchema.extend({
-//   migrateAll: z.literal<boolean>(false),
-//   value: z.number()
-// })
-
-// export const TransferSchema = z.discriminatedUnion("migrateAll", [transferWithMigrateAll, transferWithoutMigrateAll])
-
-// const BasicTransferWithCost =
-// const CostTypeEnum = z.enum(["TODAYS_MONEY", "PERCENTAGE", "FUTURE_MONEY"])
-
 const BasicTransferSchema = z.object({
   year: z.coerce.number(),
   from: z.string(),
@@ -121,24 +73,8 @@ const BasicTransferSchema = z.object({
   transferCostValue: z.coerce.number().optional()
 })
 
-// const TransferWithoutCost = BasicTransferSchema.extend({
-//   transferCostType: z.literal<string>("NO_COST")
-//   // transferCostValue: z.coerce.number()
-// })
-// const TransferWithCost = BasicTransferSchema.extend({
-//   transferCostType: CostTypeEnum,
-//   // z.string
-//   //   z.CostType<CostType>("TODAYS_MONEY") | z.literal<CostType>("PERCENTAGE") | z.literal<CostType>("FUTURE_MONEY"),
-//   transferCostValue: z.coerce.number()
-// })
-
-// export const TransferSchema = z.discriminatedUnion("transferCostType", [TransferWithoutCost, TransferWithCost])
 export const TransferSchema = BasicTransferSchema
 
-// export const TransferWithIdSchema = z.discriminatedUnion("transferCostType", [
-//   TransferWithoutCost.extend({ id: z.string() }),
-//   TransferWithCost.extend({ id: z.string() })
-// ])
 export const TransferWithIdSchema = TransferSchema.extend({ id: z.string() }).refine(
   ({ transferPercent }) => {
     return transferPercent > 0 && transferPercent <= 100

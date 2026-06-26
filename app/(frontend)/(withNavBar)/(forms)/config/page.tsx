@@ -10,9 +10,9 @@ import { ConfigTab } from "@/app/ui/context/types"
 import { ConfigTabContext } from "@/app/ui/context/ConfigTabProvider"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { ConfigNavBar } from "../../../../ui/navbar/ConfigNavBar"
-import Scenarios from "@/docs/info/ScenarioInfo.mdx"
+import Scenarios from "../../../../docs/info/ScenarioInfo.mdx"
+// import Scenarios from "../info/ScenarioInfo.mdx"
 import { InfoButton } from "@/app/ui/components/common/accordian/InfoButton"
-import { Switch } from "@/app/ui/components/common/switch/Switch"
 
 const ConfigPage: React.FC = () => {
   const { activeTab } = useContext(ConfigTabContext)

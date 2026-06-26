@@ -16,7 +16,7 @@ export class AuShares extends Asset {
   shareContext: SharesContext
 
   constructor(assetConfig: IAsset, startingYear: number, scenario: IScenario) {
-    if (assetConfig.className !== "AuShares") throw new Error("Invalid config for Property")
+    if (assetConfig.className !== "AuShares") throw new Error("Invalid config for Shares")
 
     super({ ...assetConfig, incomeProducing: true })
 

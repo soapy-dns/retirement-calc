@@ -20,6 +20,7 @@ import { doCalculationsForYear } from "./doCalculationsForYear"
 import { ScenarioSchema } from "../data/schema/config"
 import { getAssetSplit } from "./getAssetSplit"
 import { getEarnedIncomeRowData, getInvestmentIncomeRowData } from "./getIncomeRowData"
+import { getGraphNpvByAssetClass } from "./utils/graphData/getGraphNpvByAssetClass"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -206,6 +207,8 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     const graphIncomeNpvData = getGraphIncomeNpvData(incomeFromAssets, inflationContext)
 
+    const graphNpvByAssetClassData = getGraphNpvByAssetClass(assets)
+
     const drawdownData = getAutoDrawdownCellData(totalDrawdowns, calcYearRangeIncome)
 
     const projectedLivingExpensesToDisplay = projectedLivingExpenses.splice(0, numOfCalculatedYears)
@@ -264,6 +267,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       yearRange: calcYearRangeAssets,
       calculatedAssetData: graphCalculatedAssetData,
       calculatedAssetNpvData: graphCalculatedAssetNpvData,
+      graphNpvByAssetClassData,
       graphIncomeNpvData,
       assetSplitYearly,
       calculationMessage,

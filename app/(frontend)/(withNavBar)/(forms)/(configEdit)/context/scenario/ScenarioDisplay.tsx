@@ -15,6 +15,19 @@ import { Card } from "@/app/ui/components/Card"
 import { StressTestDisplay } from "./StressTestDisplay"
 import { GenericModal } from "@/app/ui/components/modals/GenericModal"
 
+const EditButton: React.FunctionComponent<{ handleEdit: React.MouseEventHandler<HTMLButtonElement> }> = ({
+  handleEdit
+}) => (
+  <div className="mx-auto my-6 w-3/4">
+    <Button buttonType={ButtonType.primary} onClick={handleEdit} size={ButtonSize.full}>
+      <div className="flex items-center gap-2">
+        <PencilSquareIcon className="h-6 w-6" />
+        <div>Edit</div>
+      </div>
+    </Button>
+  </div>
+)
+
 export const ScenarioDisplay: React.FunctionComponent = (props) => {
   const [showCopyModal, setShowCopyModal] = React.useState(false)
   const navigation = useNavigation()
@@ -49,17 +62,6 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
   const { name, description, asAtYear, stressTest } = selectedScenario
 
   const removeButtonDisabled = scenarios?.length === 1
-
-  const EditButton = () => (
-    <div className="mx-auto my-6 w-3/4">
-      <Button buttonType={ButtonType.primary} onClick={handleEdit} size={ButtonSize.full}>
-        <div className="flex items-center gap-2">
-          <PencilSquareIcon className="h-6 w-6" />
-          <div>Edit</div>
-        </div>
-      </Button>
-    </div>
-  )
 
   return (
     <>
@@ -114,7 +116,7 @@ export const ScenarioDisplay: React.FunctionComponent = (props) => {
           <StressTestDisplay />
         </div>
 
-        {asAtYear === getCurrentYear() && <EditButton />}
+        {asAtYear === getCurrentYear() && <EditButton handleEdit={handleEdit} />}
       </Card>
       <GenericModal
         showModal={showCopyModal}

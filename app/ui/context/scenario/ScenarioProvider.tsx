@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 
 import { ScenarioContext } from "./ScenarioContext"
 import { ISelectOption } from "@/app/lib/data/types"
@@ -37,12 +37,27 @@ interface Props {
 export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
   const [calculating, setCalculating] = useState<boolean>(false)
 
-  const [scenarioOptions, setScenarioOptions] = useState<ISelectOption[]>()
-  const [selectedScenarioOption, setSelectedScenarioOption] = useState<ISelectOption>()
+  // const [scenarioOptions, setScenarioOptions] = useState<ISelectOption[]>()
+  // const [selectedScenarioOption, setSelectedScenarioOption] = useState<ISelectOption>()
   const [selectedScenario, setSelectedScenario] = useState<IScenario>(defaultScenarios[0])
   const [scenarios, setScenarios] = useState<IScenario[]>(defaultScenarios)
   const [calculationResults, setCalculationResults] = useState<CalculationResults>()
   const { displayErrorAlert, displayWarningAlert } = useAppAlert()
+
+  const scenarioOptions = useMemo(() => getScenarioOptions(scenarios), [scenarios])
+  const selectedScenarioOption = useMemo(
+    () => scenarioOptions.find((it) => it.value === selectedScenario.id),
+    [scenarioOptions, selectedScenario.id]
+  )
+
+  // useEffect(() => {
+  //   sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
+  // }, [scenarios])
+
+  // useEffect(() => {
+  //   sessionStorage.setItem("selectedScenario", JSON.stringify(selectedScenario))
+  //   // doCalculations(selectedScenario)
+  // }, [selectedScenario])
 
   const getSelectedScenarioAssetsOptions = ({ excludeIncome }: { excludeIncome: boolean }): ISelectOption[] => {
     const assets = excludeIncome
@@ -114,13 +129,13 @@ export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
 
     if (!defaultSelectedScenario) throw new Error("No scenario found in import file")
 
-    const scenarioOptions = getScenarioOptions(sortedScenarios)
-    const selectedScenarioOption = scenarioOptions.find((it) => it.value === defaultSelectedScenario.id)
+    // const scenarioOptions = getScenarioOptions(sortedScenarios)
+    // const selectedScenarioOption = scenarioOptions.find((it) => it.value === defaultSelectedScenario.id)
 
     setScenarios(sortedScenarios)
     setSelectedScenario(defaultSelectedScenario)
-    setScenarioOptions(scenarioOptions)
-    setSelectedScenarioOption(selectedScenarioOption)
+    // setScenarioOptions(scenarioOptions)
+    // setSelectedScenarioOption(selectedScenarioOption)
 
     sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
     sessionStorage.setItem("selectedScenario", JSON.stringify(defaultSelectedScenario))
@@ -141,8 +156,8 @@ export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
 
     if (newSelectedScenario) setSelectedScenario(newSelectedScenario)
 
-    const selectedScenarioOption = scenarioOptions.find((it) => it.value === selectedValue)
-    setSelectedScenarioOption(selectedScenarioOption)
+    // const selectedScenarioOption = scenarioOptions.find((it) => it.value === selectedValue)
+    // setSelectedScenarioOption(selectedScenarioOption)
 
     sessionStorage.setItem("selectedScenario", JSON.stringify(newSelectedScenario))
   }
@@ -160,14 +175,14 @@ export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
 
     scenarios.splice(index, 1, updatedScenario)
 
-    const scenarioOptions = getScenarioOptions(scenarios)
+    // const scenarioOptions = getScenarioOptions(scenarios)
 
     sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
     sessionStorage.setItem("selectedScenario", JSON.stringify(updatedScenario))
 
     setScenarios(scenarios)
     setSelectedScenario(updatedScenario)
-    setScenarioOptions(scenarioOptions)
+    // setScenarioOptions(scenarioOptions)
     return { success }
   }
 
@@ -179,20 +194,20 @@ export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
       const remainingScenarios = [...scenarios]
       remainingScenarios.splice(index, 1)
 
-      const scenarioOptions = getScenarioOptions(remainingScenarios)
+      // const scenarioOptions = getScenarioOptions(remainingScenarios)
 
       const newSelectedScenario = remainingScenarios[0]
       const { success } = await doCalculations(newSelectedScenario)
 
-      const selectedScenarioOption = scenarioOptions.find((it) => it.value === newSelectedScenario.id)
+      // const selectedScenarioOption = scenarioOptions.find((it) => it.value === newSelectedScenario.id)
 
       sessionStorage.setItem("scenarios", JSON.stringify(remainingScenarios))
       sessionStorage.setItem("selectedScenario", JSON.stringify(newSelectedScenario))
 
       setScenarios(remainingScenarios)
-      setScenarioOptions(scenarioOptions)
+      // setScenarioOptions(scenarioOptions)
       setSelectedScenario(newSelectedScenario)
-      setSelectedScenarioOption(selectedScenarioOption)
+      // setSelectedScenarioOption(selectedScenarioOption)
 
       return { success }
     }
@@ -208,23 +223,25 @@ export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
     description: string,
     stressTest: StressTest
   ): Promise<{ success: boolean }> => {
+    console.log("ADD SCENARIO")
     const newScenario = await getNewScenario(selectedScenario, name, description, (stressTest = "NONE"))
+    console.log("new selected scenario name", newScenario.name, newScenario)
 
     const { success } = await doCalculations(newScenario) // this also updates the calculationResults in state.
 
     const mergedScenarios = scenarios.concat([newScenario])
 
-    const scenarioOptions = getScenarioOptions(mergedScenarios)
+    // const scenarioOptions = getScenarioOptions(mergedScenarios)
 
-    const selectedScenarioOption = scenarioOptions.find((it) => it.value === newScenario.id)
+    // const selectedScenarioOption = scenarioOptions.find((it) => it.value === newScenario.id)
 
     sessionStorage.setItem("scenarios", JSON.stringify(mergedScenarios))
     sessionStorage.setItem("selectedScenario", JSON.stringify(newScenario))
 
     setScenarios(mergedScenarios)
-    setScenarioOptions(scenarioOptions)
+    // setScenarioOptions(scenarioOptions)
     setSelectedScenario(newScenario)
-    setSelectedScenarioOption(selectedScenarioOption)
+    // setSelectedScenarioOption(selectedScenarioOption)
     return { success }
   }
 
@@ -232,6 +249,8 @@ export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
   useEffect(() => {
     const scenariosString = sessionStorage.getItem("scenarios")
     const scenarios = scenariosString ? JSON.parse(scenariosString) : defaultScenarios
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setScenarios(scenarios)
 
     const selectedScenarioString = sessionStorage.getItem("selectedScenario")
@@ -240,11 +259,11 @@ export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
       : scenarios[0]
     setSelectedScenario(selectedScenario)
 
-    const scenarioOptions = getScenarioOptions(scenarios)
-    setScenarioOptions(scenarioOptions)
+    // const scenarioOptions = getScenarioOptions(scenarios)
+    // setScenarioOptions(scenarioOptions)
 
-    const selectedScenarioOption = scenarioOptions.find((it) => it.value === selectedScenario.id)
-    setSelectedScenarioOption(selectedScenarioOption)
+    // const selectedScenarioOption = scenarioOptions.find((it) => it.value === selectedScenario.id)
+    // setSelectedScenarioOption(selectedScenarioOption)
 
     // update session storage
     sessionStorage.setItem("scenarios", JSON.stringify(scenarios))
