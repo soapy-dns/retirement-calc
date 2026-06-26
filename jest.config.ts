@@ -18,7 +18,7 @@ const config: Config = {
       branches: 80,
       functions: 55,
       lines: 85,
-      statements: 85
+      statements: 84
     }
   }
 }

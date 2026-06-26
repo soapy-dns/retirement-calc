@@ -2,6 +2,7 @@ import { CellData } from "@/app/(frontend)/(withNavBar)/sheet/row/types"
 import { Asset } from "../assets/Asset"
 import { AssetIncome } from "../assets/types"
 import { AssetData, InflationContext } from "../types"
+import { isCapitalAsset } from "@/app/ui/utils"
 
 // used by graph only
 export const getCalculatedNpvData = (assets: Asset[], inflationContext: InflationContext) => {
