@@ -37,13 +37,7 @@ export const generateMockSharesAsset = (mockScenarioConfig: IScenario, startYear
 
 export const generateMockPropertyAsset = (mockScenarioConfig: IScenario, startYear: number): AuProperty => {
   const mockPropertyConfig = generateMock(PropertySchema)
-
   const mockInflationContext = generateMock(InflationSchema)
-
-  // {
-  //   inflationRate: 0.02,
-  //   inflationVariation: 0.01
-  // }
 
   return new AuProperty(mockPropertyConfig, startYear, mockScenarioConfig, mockInflationContext)
 }

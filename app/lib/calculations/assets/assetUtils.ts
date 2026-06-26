@@ -82,8 +82,6 @@ export const addAssetIncome = (year: number, assets: Asset[], incomeFromAssets: 
     const nextYearData = asset.calcNextYear(yearData, assets)
 
     if (nextYearData.value < 0) {
-      // console.log("--nextYearData--", year, asset.name, nextYearData)
-
       throw new CalculationError(
         `Value of '${asset.name}' in ${nextYearData.year} is less than zero.  Check configured Transfers`
       )

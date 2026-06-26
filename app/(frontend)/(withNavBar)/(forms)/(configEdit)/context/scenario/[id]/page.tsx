@@ -20,7 +20,6 @@ import { useSearchParams } from "next/navigation"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { StressTestEdit } from "../StressTestEdit"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
-import { Console } from "console"
 
 // set years validation
 const FormSchema = z.object({
@@ -72,11 +71,9 @@ export default function ScenarioPage(props: { params: Params }) {
     const { name, description, stressTest } = data
 
     if (id === "add") {
-      console.log("ADDING SCENARIO>>>")
       const { success } = await addScenario(name, description, stressTest)
       if (success) navigation.goBack()
     } else {
-      console.log("UPDATING SCENARIO>>>")
       const updatedScenario = { ...selectedScenario, name, description, stressTest }
 
       const { success } = await updateScenario(updatedScenario)
