@@ -36,7 +36,7 @@
     "date-fns": "^2.30.0",
     "eslint-plugin-react": "^7.37.5",
     "install": "^0.13.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.18.1",
     "lucide-react": "^0.525.0",
     "next": "16.2.9",
     "npm": "^10.8.3",
@@ -49,7 +49,7 @@
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
     "use-debounce": "^10.0.5",
-    "uuid": "^13.0.0",
+    "uuid": "^14.0.1",
     "zod": "^3.25.61"
   },
   "devDependencies": {
@@ -73,7 +73,7 @@
     "husky": "^9.1.7",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
-    "postcss": "^8.5.6",
+    "postcss": "^8.5.16",
     "prettier": "^3.5.3",
     "tailwindcss": "^4.0.0",
     "ts-node": "^10.9.2",
