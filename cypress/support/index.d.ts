@@ -11,5 +11,6 @@ declare namespace Cypress {
      * Custom command to import file from fixtures
      */
     importFile(fileName: string): Chainable<Element>
+    goToSheet(): Chainable<Element>
   }
 }

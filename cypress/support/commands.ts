@@ -10,21 +10,45 @@
 // ***********************************************
 //
 //
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-// NOTE: USING FORCE: TRUE SO THAT IF A TOAST APPEARS THE FUNCTIONALITY STILL WORKS
+
+// NOTE: commands must be added to index.d.ts
+Cypress.Commands.add("goToSheet", () => {
+  cy.visit("sheet")
+  cy.intercept("POST", "/sheet").as("calculationResponse")
+  cy.wait("@calculationResponse").its("response.statusCode").should("eq", 200)
+})
+
 Cypress.Commands.add("importFile", (fileName: string) => {
-  cy.visit("file/import")
-  cy.get("input[type=file]").click({ force: true })
+  // cy.visit("file/import")
+  cy.intercept("POST", "/sheet").as("calculationResponse")
+
+  cy.get('[data-testid="more-menu-button"]').click()
+
+  cy.get('[data-testid="import-config-button"]').click()
+
+  cy.get("input[type=file]").click({ force: false })
 
   cy.get("input[type=file]").as("InputFile")
 
-  cy.get("@InputFile").click({ force: true })
+  cy.get("@InputFile").click({ force: false })
 
-  cy.get("@InputFile").selectFile(fileName, { force: true })
+  cy.get("@InputFile").selectFile(fileName, { force: false })
 
-  cy.contains("Upload").click({ force: true })
-  cy.wait(4000)
+  // cy.contains("Upload").click({ force: true })
+  cy.contains("Upload").click()
+
+  // cy.contains("Upload").should("not.exist")
+  cy.contains("Loading...").should("not.exist")
+  // cy.wait(8000)
+
+  // cy.visit("file/import")
+  // cy.contains("Import a scenario file")
+
+  // cy.get('input[type="file"]').should("exist").selectFile(fileName, { force: true })
+
+  // cy.contains("Upload").should("not.be.disabled").click()
+
+  // cy.contains("Loading...").should("not.exist")
 })
 
 //

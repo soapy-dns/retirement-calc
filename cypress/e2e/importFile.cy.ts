@@ -4,7 +4,7 @@ describe("Partial transfer pricing", () => {
   //   cy.clock(now)
   // })
   beforeEach(() => {
-    cy.visit("sheet")
+    cy.goToSheet()
   })
   it("should display import page", () => {
     // the rest is dealt with in the importFile command

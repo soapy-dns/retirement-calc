@@ -1,4 +1,4 @@
-import Image from "next/image"
+import Image from "next/legacy/image"
 
 import { Country } from "@/app/lib/data/schema/config"
 import clsx from "clsx"

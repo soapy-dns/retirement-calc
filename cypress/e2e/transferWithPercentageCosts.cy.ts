@@ -4,7 +4,7 @@ describe("Transfer with PercentageCosts", () => {
   //   cy.clock(now)
   // })
   beforeEach(() => {
-    cy.visit("sheet")
+    cy.goToSheet()
     cy.importFile("cypress/fixtures/transferWithPercentageCosts.json")
   })
   it("should have correct values for transfer example", () => {

@@ -4,7 +4,7 @@ describe("Partial money purchase pricing", () => {
   //   cy.clock(now)
   // })
   beforeEach(() => {
-    cy.visit("sheet")
+    cy.goToSheet()
     cy.importFile("cypress/fixtures/ukMoneyPurchase.json")
 
     // cy.clock(Date.UTC(2023, 1, 1), ["Date"]) // TODO: server side actions

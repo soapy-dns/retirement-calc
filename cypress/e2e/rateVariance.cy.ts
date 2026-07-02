@@ -4,7 +4,7 @@ describe("Rate variance pricing", () => {
   //   cy.clock(now)
   // })
   beforeEach(() => {
-    cy.visit("sheet")
+    cy.goToSheet()
     cy.importFile("cypress/fixtures/rateVariance.json")
   })
   it("should have correct values for rate variance on assets example", () => {

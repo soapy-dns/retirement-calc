@@ -4,7 +4,7 @@ describe("Salary example for UK including National Insurance", () => {
   //   cy.clock(now)
   // })
   beforeEach(() => {
-    cy.visit("sheet")
+    cy.goToSheet()
     cy.importFile("cypress/fixtures/bankExample.json")
   })
   it("should have correct values for present value", () => {

@@ -4,7 +4,7 @@ describe("Partial transfer pricing", () => {
   //   cy.clock(now)
   // })
   beforeEach(() => {
-    cy.visit("sheet")
+    cy.goToSheet()
     cy.importFile("cypress/fixtures/transferExample.json")
   })
   it("should have correct values for transfer example", () => {

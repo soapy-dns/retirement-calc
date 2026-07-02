@@ -31,10 +31,11 @@ const defaultScenarios = getDefaultScenarios()
 
 interface Props {
   showCalculationInfo: () => void
+  setShowImportModal: (showImportModal: boolean) => void
   children: React.ReactNode
 }
 
-export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
+export const ScenarioProvider = ({ showCalculationInfo, setShowImportModal, children }: Props) => {
   const [calculating, setCalculating] = useState<boolean>(false)
 
   // const [scenarioOptions, setScenarioOptions] = useState<ISelectOption[]>()
@@ -72,6 +73,7 @@ export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
     selectedScenario: IScenario
   ): Promise<{ success: boolean; calculationResults?: CalculationResults }> => {
     try {
+      console.log(">>doCalculations triggered")
       setCalculating(true)
       const calculationResults = await calculate(selectedScenario)
       console.log("calculationResults", calculationResults)
@@ -122,6 +124,9 @@ export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
   const importScenarios = async (
     scenarios: IScenario[]
   ): Promise<{ success: boolean; calculationResults?: CalculationResults }> => {
+    // ): Promise<void> => {
+    // Does not call do a calculation.  Changing the route will do this.
+
     // sort scenarios by decending date
     const sortedScenarios = sortScenarios(scenarios)
 
@@ -152,6 +157,7 @@ export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
     }
 
     // no subsequent navigation, so don't need to return the success flag
+    console.log(">>onSelectScenario triggered", newSelectedScenario.name)
     await doCalculations(newSelectedScenario)
 
     if (newSelectedScenario) setSelectedScenario(newSelectedScenario)
@@ -163,7 +169,7 @@ export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
   }
 
   const updateScenario = async (updatedScenario: IScenario): Promise<{ success: boolean }> => {
-    // console.log("--updateScenario---updatedScenario", updatedScenario)
+    console.log("--updateScenario---updatedScenario", updatedScenario)
     const { success } = await doCalculations(updatedScenario)
 
     // irrespective of whether the calculation works or not we update the scenario.  The customer can change it.
@@ -247,6 +253,7 @@ export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
 
   // Need to store.  This is remounted because the <Route> is remounted (I think)
   useEffect(() => {
+    console.log("ScenarioProvider - useEffect triggered")
     const scenariosString = sessionStorage.getItem("scenarios")
     const scenarios = scenariosString ? JSON.parse(scenariosString) : defaultScenarios
 
@@ -281,6 +288,7 @@ export const ScenarioProvider = ({ showCalculationInfo, children }: Props) => {
         scenarios,
         selectedScenario,
         getSelectedScenarioAssetsOptions,
+        setShowImportModal,
         importScenarios,
         updateScenario,
         deleteSelectedScenario,
