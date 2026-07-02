@@ -12,6 +12,7 @@ interface IScenarioContext {
   getSelectedScenarioAssetsOptions: (excludeIncome: { excludeIncome: boolean }) => ISelectOption[]
   scenarioOptions?: ISelectOption[]
   onSelectScenario: (option: string) => void
+  setShowImportModal: (showImportModal: boolean) => void
   importScenarios: (scenarios: IScenario[]) => Promise<{ success: boolean; calculationResults?: CalculationResults }>
   updateScenario: (scenario: IScenario) => Promise<{ success: boolean }>
   deleteSelectedScenario: () => Promise<{ success: boolean }>
@@ -25,6 +26,7 @@ interface IScenarioContext {
 }
 const scenarios = getDefaultScenarios()
 
+// TODO: aren't we duplicating a bit here?
 export const ScenarioContext = createContext<IScenarioContext>({
   selectedScenario: scenarios[0],
   scenarios: scenarios,
@@ -32,6 +34,7 @@ export const ScenarioContext = createContext<IScenarioContext>({
   getSelectedScenarioAssetsOptions: () => [],
   scenarioOptions: [],
   onSelectScenario: (scenarioOption): void => {},
+  setShowImportModal: (showImportModal: boolean): void => {},
   importScenarios: () => Promise.resolve({ success: false }),
   updateScenario: (scenario: IScenario) => Promise.resolve({ success: false }),
   deleteSelectedScenario: () => Promise.resolve({ success: false }),

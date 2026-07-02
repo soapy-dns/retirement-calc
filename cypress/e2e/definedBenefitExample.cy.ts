@@ -4,7 +4,7 @@ describe("Defined benefit pricing", () => {
   //   cy.clock(now)
   // })
   beforeEach(() => {
-    cy.visit("sheet")
+    cy.goToSheet()
     cy.importFile("cypress/fixtures/definedBenefitExample.json")
   })
   it("should have correct values for defined benefits / state pension example", () => {

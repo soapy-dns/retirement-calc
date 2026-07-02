@@ -4,7 +4,11 @@ describe("Au Super example", () => {
   //   cy.clock(now)
   // })
   beforeEach(() => {
-    cy.visit("sheet")
+    cy.goToSheet()
+    // cy.visit("sheet")
+    // cy.intercept("POST", "/sheet").as("calculationResponse")
+    // cy.wait("@calculationResponse").its("response.statusCode").should("eq", 200)
+
     cy.importFile("cypress/fixtures/auSuperExample.json")
   })
 

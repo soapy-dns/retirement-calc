@@ -4,6 +4,7 @@ export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {},
     baseUrl: "http://localhost:3000",
-    excludeSpecPattern: ["cypress/e2eExamples"]
+    excludeSpecPattern: ["cypress/e2eExamples"],
+    defaultCommandTimeout: 4000 // Increases command wait time to 10 seconds
   }
 })

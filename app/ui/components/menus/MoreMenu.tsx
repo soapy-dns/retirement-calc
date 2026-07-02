@@ -1,5 +1,6 @@
-import { Fragment } from "react"
+import { Fragment, useContext } from "react"
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from "@headlessui/react"
+import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 
 import {
   ArrowLeftOnRectangleIcon,
@@ -18,10 +19,12 @@ function classNames(...classes: string[]) {
 }
 
 export const MoreMenu = () => {
+  const { setShowImportModal } = useContext(ScenarioContext)
+
   return (
     <Menu as="div" className="relative flex justify-center">
       <MenuButton className=" border-x hover:bg-primary-darker transition-colors ease-in-out duration-150 delay-150 cursor-pointer ">
-        <div className="mx-4 flex flex-row">
+        <div className="mx-4 flex flex-row" data-testid="more-menu-button">
           More
           <EllipsisVerticalIcon className="h-6 w-6" aria-hidden="true" />
         </div>
@@ -40,8 +43,12 @@ export const MoreMenu = () => {
           <div className="py-1">
             <MenuItem>
               {({ focus }) => (
-                <Link
-                  href={AppPath.fileImport}
+                <button
+                  data-testid="import-config-button"
+                  onClick={() => {
+                    console.log(">>>import config clicked")
+                    setShowImportModal(true)
+                  }}
                   className={classNames(
                     focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block w-full px-4 py-2 text-left text-sm"
@@ -51,7 +58,7 @@ export const MoreMenu = () => {
                     <ArrowRightEndOnRectangleIcon className="h-5 w-5" />
                     Import configuration
                   </div>
-                </Link>
+                </button>
               )}
             </MenuItem>
             <MenuItem>

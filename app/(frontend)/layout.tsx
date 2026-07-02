@@ -8,9 +8,11 @@ import { FullOwnerProvider } from "../ui/context/LifeExpectancyProvider"
 import { AppBanner } from "../ui/AppBanner"
 import { GenericModal } from "../ui/components/modals/GenericModal"
 import { useState } from "react"
+import { FileImportModal } from "../ui/components/modals/FileImportModal"
 
-export default function WithCalculationLayout({ children }: { children: React.ReactNode }) {
+export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [showModal, setShowModal] = useState(false)
+  const [showImportModal, setShowImportModal] = useState(false)
   return (
     <div>
       <div className="fixed top-0 left-0 z-50 mb-4 inline-block min-w-full">
@@ -19,7 +21,7 @@ export default function WithCalculationLayout({ children }: { children: React.Re
       <Toaster />
 
       <HelpModalProvider>
-        <ScenarioProvider showCalculationInfo={() => setShowModal(true)}>
+        <ScenarioProvider showCalculationInfo={() => setShowModal(true)} setShowImportModal={setShowImportModal}>
           <FullOwnerProvider>{children}</FullOwnerProvider>
 
           <GenericModal
@@ -39,6 +41,12 @@ export default function WithCalculationLayout({ children }: { children: React.Re
               this may or may not be a problem.
             </p>
           </GenericModal>
+          <FileImportModal
+            showModal={showImportModal}
+            handleCancel={() => setShowImportModal(false)}
+
+            // continueAnyway={() => setShowImportModal(false)}
+          />
         </ScenarioProvider>
       </HelpModalProvider>
     </div>

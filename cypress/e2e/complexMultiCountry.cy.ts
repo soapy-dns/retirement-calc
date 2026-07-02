@@ -4,7 +4,7 @@ describe("Pricing", () => {
   //   cy.clock(now)
   // })
   beforeEach(() => {
-    cy.visit("sheet")
+    cy.goToSheet()
     cy.importFile("cypress/fixtures/complexMultiCountry.json")
   })
   it("should check the last present value is as expected", () => {
