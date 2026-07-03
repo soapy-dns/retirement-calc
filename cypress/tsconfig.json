@@ -2,10 +2,10 @@
   "extends": "../tsconfig.json",
   "files": ["**/*.ts", "../cypress.config.ts"],
   "compilerOptions": {
+    "target": "ESNext",
     "sourceMap": false,
     "types": ["cypress", "node"]
   },
-
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "cypress"],
   "exclude": ["node_modules"]
 }

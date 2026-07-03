@@ -1,15 +1,14 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useState } from "react"
 
 import { Row } from "./row/Row"
 import { SectionHeading } from "./row/SectionHeading"
-import { NoActionModal } from "@/app/ui/components/NoActionModal"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 
 import { GenericModal } from "@/app/ui/components/modals/GenericModal"
-import IncomeInfo from "@/docs/info/IncomeInfo.mdx"
+import IncomeInfo from "@/app/docs/info/IncomeInfo.mdx"
 
 import { AssetIncomeRows } from "./AssetIncomeRows"
 import { CalculatedValueRows } from "./CalculatedValuesRows"
