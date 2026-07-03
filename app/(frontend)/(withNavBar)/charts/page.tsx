@@ -28,8 +28,8 @@ const ChartPage = () => {
       label: "Asset Split (%)"
     },
     {
-      value: "npvByAssetClass",
-      label: "NPV by Asset Class"
+      value: "capitalAssetByAssetClass",
+      label: "Capital Asset by Asset Class"
     },
     {
       value: "drawdown",

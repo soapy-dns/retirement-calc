@@ -135,7 +135,7 @@ export interface CalculationResultsSuccess {
   calculatedAssetData: AssetData
   calculatedAssetNpvData: AssetData
   graphIncomeNpvData: AssetData
-  graphNpvByAssetClassData: AssetData
+  graphCapitalAssetByAssetClassData: AssetData
   incomeTaxesByOwner: AssetData
   incomeByOwner: AssetData
   totalTaxableAmtDataByOwner: AssetData
