@@ -1,4 +1,4 @@
-import Image from "next/legacy/image"
+import Image from "next/image"
 
 import { MouseEventHandler } from "react"
 import { Country } from "@/app/lib/data/schema/config"
@@ -48,7 +48,6 @@ export const CountryTiles: React.FC<CountryTilesProps> = ({ id, name, value, onC
               "flex flex-col border gap-2 justify-center items-center min-w-[100px] h-[100px] mt-2 cursor-pointer",
               {
                 "border-2 border-primary": selected
-                // border: !selected
               }
             )}
           >
