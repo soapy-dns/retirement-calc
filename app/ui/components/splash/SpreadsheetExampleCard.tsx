@@ -1,4 +1,4 @@
-import Image from "next/legacy/image"
+import Image from "next/image"
 
 export const SpreadsheetExamplesCard: React.FC = () => {
   return (
@@ -9,8 +9,8 @@ export const SpreadsheetExamplesCard: React.FC = () => {
           <Image
             src="/images/spreadsheetDesktopExample.png"
             alt=""
-            layout="fill"
-            objectFit="cover"
+            fill
+            style={{ objectFit: "cover" }}
             className="relative object-left-top object-cover "
           />
         </div>
