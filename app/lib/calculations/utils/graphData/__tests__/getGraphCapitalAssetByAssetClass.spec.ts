@@ -1,4 +1,4 @@
-import { getGraphNpvByAssetClass } from "../getGraphNpvByAssetClass"
+import { getGraphCapitalAssetByAssetClass } from "../getGraphCapitalAssetByAssetClass"
 import { Asset } from "../../../assets/Asset"
 import {
   generateMockBankAsset,
@@ -8,11 +8,11 @@ import {
   generateMockPropertyAsset
 } from "@/app/lib/testUtils"
 
-describe("getGraphNpvByAssetClass", () => {
+describe("getGraphCapitalAssetByAssetClass", () => {
   const year = 2023
   const mockScenarioConfig = generateMockScenarioConfig()
 
-  it("should return unique asset groups with correctly aggregated NPV data", () => {
+  it("should return unique asset groups with correctly aggregated capital asset data", () => {
     const mockBankAsset1 = generateMockBankAsset(mockScenarioConfig, year)
     mockBankAsset1.history = [
       { value: 100, year: year, income: 0, transferAmt: 0 },
@@ -72,7 +72,7 @@ describe("getGraphNpvByAssetClass", () => {
       mockSuperAsset2
     ]
 
-    const result = getGraphNpvByAssetClass(assets)
+    const result = getGraphCapitalAssetByAssetClass(assets)
 
     console.log("result", result)
     expect(result).toHaveProperty("cash")

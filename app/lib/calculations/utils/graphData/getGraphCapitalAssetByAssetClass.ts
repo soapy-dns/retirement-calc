@@ -2,7 +2,7 @@ import { isCapitalAsset } from "@/app/ui/utils"
 import { Asset } from "../../assets/Asset"
 import { AssetData, CapitalAssetGroup } from "../../types"
 
-export const getGraphNpvByAssetClass = (assets: Asset[]): AssetData => {
+export const getGraphCapitalAssetByAssetClass = (assets: Asset[]): AssetData => {
   const groupKeys = Object.keys(CapitalAssetGroup)
 
   const initialAssetData = groupKeys.reduce((accum: AssetData, key) => {

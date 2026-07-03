@@ -14,13 +14,12 @@ import { getAccumulatedData, getAccumulatedNPVData } from "./tax/getAccumulatedT
 import { getInflationFactor } from "./utils/getInflationFactor"
 import { removeUnusedHistory } from "./utils/removeUnusedHistory"
 import { applyStressTests } from "./stressTests/applyStressTests"
-import { log } from "console"
 import { initialiseCalculation } from "./initialiseCalculation"
 import { doCalculationsForYear } from "./doCalculationsForYear"
 import { ScenarioSchema } from "../data/schema/config"
 import { getAssetSplit } from "./getAssetSplit"
 import { getEarnedIncomeRowData, getInvestmentIncomeRowData } from "./getIncomeRowData"
-import { getGraphNpvByAssetClass } from "./utils/graphData/getGraphNpvByAssetClass"
+import { getGraphCapitalAssetByAssetClass } from "./utils/graphData/getGraphCapitalAssetByAssetClass"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -207,7 +206,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
 
     const graphIncomeNpvData = getGraphIncomeNpvData(incomeFromAssets, inflationContext)
 
-    const graphNpvByAssetClassData = getGraphNpvByAssetClass(assets)
+    const graphCapitalAssetByAssetClassData = getGraphCapitalAssetByAssetClass(assets)
 
     const drawdownData = getAutoDrawdownCellData(totalDrawdowns, calcYearRangeIncome)
 
@@ -267,7 +266,7 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
       yearRange: calcYearRangeAssets,
       calculatedAssetData: graphCalculatedAssetData,
       calculatedAssetNpvData: graphCalculatedAssetNpvData,
-      graphNpvByAssetClassData,
+      graphCapitalAssetByAssetClassData,
       graphIncomeNpvData,
       assetSplitYearly,
       calculationMessage,
