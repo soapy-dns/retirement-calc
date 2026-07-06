@@ -8,14 +8,14 @@ import { type Transfer } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { useTransfer } from "@/app/ui/hooks/useTransfer"
 import EditPageLayout from "@/app/(frontend)/(withoutNavBar)/components/EditPageLayout"
-import { TransferFormData, getTransferFormSchema } from "../getTransferFormSchema"
+import { FormInputDataType, FormOutputDataType, getTransferFormSchema } from "../getTransferFormSchema"
 import { useContext } from "react"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
 import { TransferForm } from "../TransferForm"
 import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { useSearchParams } from "next/navigation"
 
-const getTransferValuesFromForm = (data: TransferFormData): Omit<Transfer, "id"> => {
+const getTransferValuesFromForm = (data: FormOutputDataType): Omit<Transfer, "id"> => {
   return {
     ...data,
     year: +data.year,
@@ -25,7 +25,7 @@ const getTransferValuesFromForm = (data: TransferFormData): Omit<Transfer, "id">
   }
 }
 
-const marshall = (data: TransferFormData, transfer: Transfer): Transfer => {
+const marshall = (data: FormOutputDataType, transfer: Transfer): Transfer => {
   const newFields = getTransferValuesFromForm(data)
 
   // @ts-ignore TODO:
@@ -49,7 +49,7 @@ export default function TransferEditPage(props: { params: Params }) {
   const transfer = getTransferDetails(id) // should I do something different for 'add'?
   const { year, from, to, transferPercent, transferCostType } = transfer || {}
 
-  const methods = useForm<TransferFormData>({
+  const methods = useForm<FormInputDataType, any, FormOutputDataType>({
     defaultValues: {
       from,
       to,
@@ -63,11 +63,10 @@ export default function TransferEditPage(props: { params: Params }) {
   const {
     handleSubmit,
     watch,
-    control,
     formState: { errors }
   } = methods
 
-  const onSubmit = async (data: TransferFormData) => {
+  const onSubmit = async (data: FormOutputDataType) => {
     if (transfer) {
       const newTransferConfig = marshall(data, transfer)
       const { success } = await updateTransfer(newTransferConfig)
@@ -93,7 +92,7 @@ export default function TransferEditPage(props: { params: Params }) {
         handleBack={handleBack}
         handleCancel={handleBack}
       >
-        <TransferForm control={control} watch={watch} />
+        <TransferForm watch={watch} />
         {debug && <pre className="text-primary font-semibold">{JSON.stringify(errors, null, 4)}</pre>}
       </EditPageLayout>
     </FormProvider>

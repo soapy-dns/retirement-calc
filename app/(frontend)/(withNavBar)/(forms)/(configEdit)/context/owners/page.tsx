@@ -50,7 +50,8 @@ const FormSchema = z.object({
       )
   )
 })
-export type FormDataType = z.infer<typeof FormSchema>
+type FormInputDataType = z.input<typeof FormSchema>
+type FormOutputDataType = z.output<typeof FormSchema>
 
 const OwnersPage: React.FC = () => {
   const navigation = useNavigation()
@@ -61,7 +62,7 @@ const OwnersPage: React.FC = () => {
 
   const { context } = selectedScenario
   const { owners } = context
-  const methods = useForm<FormDataType>({
+  const methods = useForm<FormInputDataType, any, FormOutputDataType>({
     defaultValues: { items: owners },
     resolver: zodResolver(FormSchema),
     mode: "onSubmit", // before form submits
@@ -87,7 +88,7 @@ const OwnersPage: React.FC = () => {
     }
   }
 
-  const onSubmit = async (data: FormDataType) => {
+  const onSubmit = async (data: FormOutputDataType) => {
     const reformattedDataItems = data.items.map((it) => {
       return {
         identifier: it.identifier || getRandomKey(),

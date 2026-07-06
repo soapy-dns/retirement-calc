@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-// import { z } from "@/app/lib/data/schema/config/validation/customZod"
 
 import EditPageLayout from "@/app/(frontend)/(withoutNavBar)/components/EditPageLayout"
 import { ContextConfig } from "@/app/lib/data/schema/config"
@@ -20,7 +19,8 @@ import { useSearchParams } from "next/navigation"
 const FormSchema = z.object({
   investmentReturn: IsFormNumber
 })
-export type FormDataType = z.infer<typeof FormSchema>
+type FormInputDataType = z.input<typeof FormSchema>
+type FormOutputDataType = z.output<typeof FormSchema>
 
 const SuperPage: React.FC = () => {
   const navigation = useNavigation()
@@ -33,14 +33,13 @@ const SuperPage: React.FC = () => {
 
   const { context } = selectedScenario
   const { superAu } = context
-  const methods = useForm<FormDataType>({
+  const methods = useForm<FormInputDataType, any, FormOutputDataType>({
     defaultValues: {
       investmentReturn: Math.round(superAu?.investmentReturn * 10000) / 100
     },
     resolver: zodResolver(FormSchema)
   })
   const {
-    control,
     handleSubmit,
     formState: { isDirty, errors }
   } = methods
@@ -53,7 +52,7 @@ const SuperPage: React.FC = () => {
     }
   }
 
-  const onSubmit = async (data: FormDataType) => {
+  const onSubmit = async (data: FormOutputDataType) => {
     const { investmentReturn } = data
     const { context } = selectedScenario
 
@@ -87,7 +86,6 @@ const SuperPage: React.FC = () => {
           {/* @ts-ignore */}
           <InputQuestion
             id="investmentReturn"
-            // control={control}
             label={contextConstants.SUPER_INVESTMENT_RETURN.LABEL}
             defaultValue={superAu?.investmentReturn}
             editable={true}

@@ -44,4 +44,5 @@ export const getLivingExpensesFormSchema = (scenario: IScenario) => {
   return refinedFormSchema
 }
 
-export type FormDataType = z.infer<typeof FormSchema>
+export type FormInputDataType = z.input<typeof FormSchema>
+export type FormOutputDataType = z.output<typeof FormSchema>

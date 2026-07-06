@@ -9,7 +9,9 @@ const castEmptyStringToUndefined = (val?: unknown) => (val !== "" ? val : undefi
 
 // const IsFormNumberOpt = z.custom<{ arg: string }>((val) => {})
 export const IsFormNumberOpt = z.preprocess(
-  (val) => castEmptyStringToUndefined(val),
+  // (val) => castEmptyStringToUndefined(val),
+  (value) => (value === "" ? undefined : value),
+
   z.coerce
     .number({
       invalid_type_error: "This value should be a number"
@@ -18,9 +20,10 @@ export const IsFormNumberOpt = z.preprocess(
 )
 
 export const IsFormNumber = z.preprocess(
-  (val) => castEmptyStringToUndefined(val),
+  (value) => (value === "" ? undefined : value),
   z.coerce.number({
-    invalid_type_error: "This value must be entered and a valid number."
+    required_error: "This value is required",
+    invalid_type_error: "This value must be a valid number."
   })
 )
 

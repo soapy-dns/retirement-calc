@@ -32,9 +32,9 @@ import { YesNo } from "../../types"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
-import { FormDataType, FormSchema } from "./FormSchema"
+import { FormInputDataType, FormOutputDataType, FormSchema } from "./FormSchema"
 
-const getAssetConfigFromForm = (data: FormDataType): Omit<IAsset, "id"> => {
+const getAssetConfigFromForm = (data: FormOutputDataType): Omit<IAsset, "id"> => {
   const {
     name,
     description,
@@ -124,7 +124,7 @@ const getAssetConfigFromForm = (data: FormDataType): Omit<IAsset, "id"> => {
   return assetConfig
 }
 
-const marshall = (data: FormDataType, assetConfig: IAsset): IAsset => {
+const marshall = (data: FormOutputDataType, assetConfig: IAsset): IAsset => {
   const newFields = getAssetConfigFromForm(data)
 
   return {
@@ -192,7 +192,7 @@ export default function AssetEditPage(props: { params: Params }) {
   const canDrawdownValue = canDrawdown ? "Y" : "N"
   const isRentedString = isRented ? "Y" : "N"
   const isDisabled = disabled ? "Y" : "N"
-  const methods = useForm<FormDataType>({
+  const methods = useForm<FormInputDataType, any, FormOutputDataType>({
     // TODO: this is a bit of a mess
     defaultValues: {
       name,
@@ -223,22 +223,19 @@ export default function AssetEditPage(props: { params: Params }) {
   const {
     handleSubmit,
     watch,
-    control,
     register,
     formState: { errors, isDirty }
   } = methods
 
   if (!owners) return <div>No owners found</div>
 
-  const onSubmit = async (data: FormDataType) => {
+  const onSubmit = async (data: FormOutputDataType) => {
     // let success = false
     if (assetConfig) {
       const newAssetConfig = marshall(data, assetConfig)
       const { success: updateSuccess } = await updateAsset(newAssetConfig)
-      // success = updateSuccess
     } else {
       const { success: addSuccess } = await addAsset(getAssetConfigFromForm(data))
-      // success = addSuccess
     }
 
     // backend could still say it an error, but I don't think we should stop nav at this point
@@ -278,7 +275,6 @@ export default function AssetEditPage(props: { params: Params }) {
         )}
         {/* @ts-ignore */}
         <AssetEditForm
-          // control={control}
           assetType={assetType}
           drawdownSet={drawdownSet}
           isRentedFormValue={isRentedFormValue}

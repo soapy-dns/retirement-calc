@@ -26,7 +26,7 @@ const FormSchema = z
     { message: "The exchange rate is required", path: ["au2ukExchangeRate"] }
   )
 
-export type FormDataType = z.infer<typeof FormSchema>
+export type FormDataType = z.input<typeof FormSchema>
 
 const GeneralContextEditPage: React.FC = () => {
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)

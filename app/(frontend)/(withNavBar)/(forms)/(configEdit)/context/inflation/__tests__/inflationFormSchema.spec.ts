@@ -1,5 +1,5 @@
 import { generateMock } from "@anatine/zod-mock"
-import { FormDataType, getFormSchema } from "../getFormSchema"
+import { FormInputDataType, getFormSchema } from "../getFormSchema"
 import { ScenarioSchema } from "@/app/lib/data/schema/config"
 
 const mockScenarioConfig = generateMock(ScenarioSchema)
@@ -20,7 +20,7 @@ describe("", () => {
   it("should validate ok", () => {
     mockScenarioConfig.asAtYear = 2024
 
-    const inflationData: FormDataType = {
+    const inflationData: FormInputDataType = {
       items: [
         { fromYear: 2024, inflationRate: 3 },
         { fromYear: 2025, inflationRate: 5.5 },
@@ -35,7 +35,7 @@ describe("", () => {
   })
 
   it("should fail because of fromYear before asAt year", () => {
-    const inflationData: FormDataType = {
+    const inflationData: FormInputDataType = {
       items: [{ fromYear: 2023, inflationRate: 3 }]
     }
     mockScenarioConfig.asAtYear = 2024

@@ -70,4 +70,5 @@ export const getFormSchema = (scenario: IScenario) => {
   return refinedInflationFormSchema
 }
 
-export type FormDataType = z.infer<typeof InflationFormSchema>
+export type FormInputDataType = z.input<typeof InflationFormSchema>
+export type FormOutputDataType = z.output<typeof InflationFormSchema>

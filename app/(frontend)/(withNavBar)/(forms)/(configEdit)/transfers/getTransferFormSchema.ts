@@ -37,4 +37,5 @@ export const getTransferFormSchema = (scenario: IScenario, id: string) => {
   return refinedTransferFormSchema
 }
 
-export type TransferFormData = z.infer<typeof TransferSchema>
+export type FormInputDataType = z.input<typeof TransferSchema>
+export type FormOutputDataType = z.output<typeof TransferSchema>
