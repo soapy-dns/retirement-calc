@@ -19,7 +19,8 @@ const FormSchema = z.object({
   growthInterestRate: IsFormNumber,
   dividendInterestRate: IsFormNumber
 })
-export type FormDataType = z.infer<typeof FormSchema>
+type FormInputDataType = z.input<typeof FormSchema>
+type FormOutputDataType = z.output<typeof FormSchema>
 
 const SharesPage: React.FC = () => {
   const navigation = useNavigation()
@@ -28,7 +29,7 @@ const SharesPage: React.FC = () => {
 
   const { context } = selectedScenario
   const { sharesAu } = context
-  const methods = useForm<FormDataType>({
+  const methods = useForm<FormInputDataType, any, FormOutputDataType>({
     defaultValues: {
       growthInterestRate: Math.round(sharesAu?.growthInterestRate * 10000) / 100,
       dividendInterestRate: Math.round(sharesAu?.dividendInterestRate * 10000) / 100
@@ -49,7 +50,7 @@ const SharesPage: React.FC = () => {
     }
   }
 
-  const onSubmit = async (data: FormDataType) => {
+  const onSubmit = async (data: FormOutputDataType) => {
     const { growthInterestRate, dividendInterestRate } = data
     const { context } = selectedScenario
 
@@ -82,7 +83,6 @@ const SharesPage: React.FC = () => {
           {/* @ts-ignore */}
           <InputQuestion
             id="growthInterestRate"
-            // control={control}
             label={contextConstants.SHARES_GROWTH.LABEL}
             suffix="%"
             editable={true}
@@ -91,7 +91,6 @@ const SharesPage: React.FC = () => {
           />
           <InputQuestion
             id="dividendInterestRate"
-            // control={control}
             label={contextConstants.SHARES_INCOME.LABEL}
             suffix="%"
             editable={true}

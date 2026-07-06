@@ -1,13 +1,12 @@
 "use client"
 
 import React, { useContext, useState } from "react"
-import { FormProvider, useFieldArray, useForm, useFormContext } from "react-hook-form"
-// import { z } from "zod"
+import { FormProvider, useFieldArray, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { ScenarioContext } from "@/app/ui/context/scenario/ScenarioContext"
-import { ContextConfig, LivingExpensesSchema } from "@/app/lib/data/schema/config"
+import { ContextConfig } from "@/app/lib/data/schema/config"
 import { useNavigation } from "@/app/ui/hooks/useNavigation"
 import { InputField } from "@/app/ui/components/form/InputField"
 import { DECIMALS_ONLY, INTEGERS_ONLY } from "@/app/ui/components/common/formRegExes"
@@ -18,12 +17,8 @@ import { YearValueForm } from "@/app/ui/components/YearValueForm"
 import { GenericModal } from "@/app/ui/components/modals/GenericModal"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
-import { FormDataType, getLivingExpensesFormSchema } from "./livingExpenseFormSchema"
+import { FormInputDataType, FormOutputDataType, getLivingExpensesFormSchema } from "./livingExpenseFormSchema"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
-
-// const LivingExpensesFormSchema = z.object({
-//   items: z.array(LivingExpensesSchema)
-// })
 
 const LivingExpensesPage: React.FC = () => {
   const navigation = useNavigation()
@@ -35,7 +30,7 @@ const LivingExpensesPage: React.FC = () => {
   const { context } = selectedScenario
   const { livingExpenses } = context
 
-  const methods = useForm<FormDataType>({
+  const methods = useForm<FormInputDataType, any, FormOutputDataType>({
     defaultValues: { items: livingExpenses },
     resolver: zodResolver(getLivingExpensesFormSchema(selectedScenario)),
     mode: "onBlur",
@@ -64,7 +59,7 @@ const LivingExpensesPage: React.FC = () => {
     const newRecord = { fromYear, amountInTodaysTerms }
 
     let insertIndex = 0
-    const findIndex = fields.findIndex((it) => it.fromYear > fromYear)
+    const findIndex = fields.findIndex((it) => Number(it.fromYear) > fromYear) // it.fromYear is unknown (from FormInputDataType) so we need to cast it to number to compare with fromYear which is a number
 
     if (findIndex === -1) {
       insertIndex = fields.length
@@ -79,7 +74,7 @@ const LivingExpensesPage: React.FC = () => {
     onToggle() // This closes in this situation.  I think we could improve this
   }
 
-  const onSubmit = async (data: FormDataType) => {
+  const onSubmit = async (data: FormOutputDataType) => {
     const { context } = selectedScenario
 
     const reformattedDataItems = data.items.map((it) => {
@@ -152,7 +147,7 @@ const LivingExpensesPage: React.FC = () => {
 
             {fields.map((it, index) => {
               return (
-                <div key={it.fromYear} className="grid grid-cols-3 justify-items-center gap-2">
+                <div key={String(it.fromYear)} className="grid grid-cols-3 justify-items-center gap-2">
                   {/* @ts-ignore */}
                   <InputField
                     id={`items.${index}.fromYear`}

@@ -17,7 +17,7 @@ import { GenericModal } from "@/app/ui/components/modals/GenericModal"
 import { YearValueForm } from "@/app/ui/components/YearValueForm"
 import { HelpModalContext } from "@/app/ui/context/HelpModalProvider"
 import { contextConstants } from "../contextConstants"
-import { FormDataType, getFormSchema } from "./getFormSchema"
+import { FormInputDataType, FormOutputDataType, getFormSchema } from "./getFormSchema"
 import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSavedModal"
 
 const InflationEditPage: React.FC = () => {
@@ -32,7 +32,7 @@ const InflationEditPage: React.FC = () => {
     fromYear: +it.fromYear,
     inflationRate: Math.round(it.inflationRate * 10000) / 100
   }))
-  const methods = useForm<FormDataType>({
+  const methods = useForm<FormInputDataType, any, FormOutputDataType>({
     defaultValues: { items: inflationWithPerc },
     mode: "onBlur",
     reValidateMode: "onBlur",
@@ -40,17 +40,12 @@ const InflationEditPage: React.FC = () => {
   })
 
   const {
-    // watch,
-    trigger,
-    getValues,
-    setValue,
     handleSubmit,
     control,
-    // reset,
     formState: { isDirty, errors }
-    // clearErrors
   } = methods
 
+  // fields will be of type FormInputDataType["items"] which is an array of objects with fromYear and inflationRate
   const { fields, insert, remove } = useFieldArray({
     control,
     name: "items"
@@ -65,7 +60,7 @@ const InflationEditPage: React.FC = () => {
     const newRecord = { fromYear, inflationRate }
 
     let insertIndex = 0
-    const findIndex = fields.findIndex((it) => it.fromYear > fromYear)
+    const findIndex = fields.findIndex((it) => Number(it.fromYear) > fromYear) // This will find the first index where the fromYear is greater than the new fromYear.  If it doesn't find one, it will return -1
 
     if (findIndex === -1) {
       insertIndex = fields.length
@@ -78,7 +73,7 @@ const InflationEditPage: React.FC = () => {
     onToggle() // This closes in this situation.  I think we could improve this
   }
 
-  const onSubmit = async (data: FormDataType) => {
+  const onSubmit = async (data: FormOutputDataType) => {
     const { context } = selectedScenario
 
     const reformattedDataItems = data.items.map((it) => {
@@ -141,25 +136,11 @@ const InflationEditPage: React.FC = () => {
 
             {fields.map((it, index) => {
               return (
-                <div key={it.fromYear} className="grid grid-cols-3 justify-items-center gap-2">
+                <div key={String(it.fromYear)} className="grid grid-cols-3 justify-items-center gap-2">
                   {/* @ts-ignore */}
-                  <InputField
-                    id={`items.${index}.fromYear`}
-                    // control={control}
-                    // defaultValue={it.fromYear}
-                    // validationRules={inflationYearValidationRules}
-                    restrictedCharSet={INTEGERS_ONLY}
-                    // type="number"
-                  />
+                  <InputField id={`items.${index}.fromYear`} restrictedCharSet={INTEGERS_ONLY} />
 
-                  <InputField
-                    id={`items.${index}.inflationRate`}
-                    // control={control}
-                    // defaultValue={it.inflationRate}
-                    // validationRules={inflationRateValidationRules}
-                    restrictedCharSet={DECIMALS_ONLY}
-                    type="number"
-                  />
+                  <InputField id={`items.${index}.inflationRate`} restrictedCharSet={DECIMALS_ONLY} type="number" />
                   <div>
                     <Button onClick={() => handleDelete(index)} disabled={removeDisabled}>
                       <div className="flex items-center gap-2">

@@ -17,7 +17,8 @@ import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSaved
 const FormSchema = z.object({
   interestRate: IsFormNumber
 })
-export type FormDataType = z.infer<typeof FormSchema>
+type FormInputDataType = z.input<typeof FormSchema>
+type FormOutputDataType = z.output<typeof FormSchema>
 
 const BankPage: React.FC = () => {
   const navigation = useNavigation()
@@ -25,7 +26,7 @@ const BankPage: React.FC = () => {
   const { selectedScenario, updateScenario } = useContext(ScenarioContext)
   const { context } = selectedScenario
   const { auBank } = context
-  const methods = useForm<FormDataType>({
+  const methods = useForm<FormInputDataType, any, FormOutputDataType>({
     defaultValues: { interestRate: Math.round(auBank.interestRate * 10000) / 100 },
     resolver: zodResolver(FormSchema)
   })
@@ -34,15 +35,6 @@ const BankPage: React.FC = () => {
     handleSubmit,
     formState: { isDirty }
   } = methods
-
-  // const getRandomInt = (count: number) => {
-  //   return Math.floor(Math.random() * count)
-  // }
-
-  // const random = getRandomInt(2)
-  // if (random === 1) {
-  //   throw new Error("Test error boundary")
-  // }
 
   const handleBack = () => {
     if (isDirty) {
@@ -53,7 +45,7 @@ const BankPage: React.FC = () => {
     }
   }
 
-  const onSubmit = async (data: FormDataType) => {
+  const onSubmit = async (data: FormOutputDataType) => {
     const { interestRate } = data
     const { context } = selectedScenario
 

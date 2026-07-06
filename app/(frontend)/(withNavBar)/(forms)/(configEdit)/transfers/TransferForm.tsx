@@ -10,11 +10,11 @@ import { useContextConfig } from "@/app/ui/hooks/useContextConfig"
 import { costOfTransferTypeOptions } from "./costOfTransferTypeOptions"
 
 interface Props {
-  control: Control<any, object>
+  // control: Control<any, object>
   watch: Function
 }
 
-export const TransferForm: FunctionComponent<Props> = ({ control, watch }) => {
+export const TransferForm: FunctionComponent<Props> = ({ watch }) => {
   const { getSelectedScenarioAssetsOptions } = useContext(ScenarioContext)
   const { getCurrencySymbol } = useContextConfig()
   const currency = getCurrencySymbol()

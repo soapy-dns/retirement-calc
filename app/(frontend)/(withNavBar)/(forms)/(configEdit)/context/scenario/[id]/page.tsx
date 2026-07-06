@@ -29,7 +29,7 @@ const FormSchema = z.object({
 })
 // assetCountry: Country = "AU",
 
-export type FormDataType = z.infer<typeof FormSchema>
+export type FormDataType = z.input<typeof FormSchema>
 
 type Params = Promise<{ id: string }>
 
@@ -53,7 +53,6 @@ export default function ScenarioPage(props: { params: Params }) {
     resolver: zodResolver(FormSchema)
   })
   const {
-    control,
     watch,
     handleSubmit,
     formState: { errors, isDirty }

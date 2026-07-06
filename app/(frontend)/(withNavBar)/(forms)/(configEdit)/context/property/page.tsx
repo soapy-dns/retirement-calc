@@ -19,7 +19,8 @@ import { ChangesNotSavedModal } from "@/app/ui/components/modals/ChangesNotSaved
 const FormSchema = z.object({
   growthRate: IsFormNumber
 })
-export type FormDataType = z.infer<typeof FormSchema>
+export type FormInputDataType = z.input<typeof FormSchema>
+export type FormOutputDataType = z.output<typeof FormSchema>
 
 const PropertyPage: React.FC = () => {
   const navigation = useNavigation()
@@ -28,7 +29,7 @@ const PropertyPage: React.FC = () => {
 
   const { context } = selectedScenario
   const { property } = context
-  const methods = useForm<FormDataType>({
+  const methods = useForm<FormInputDataType, any, FormOutputDataType>({
     defaultValues: { growthRate: Math.round(property.growthInterestRate * 10000) / 100 },
     resolver: zodResolver(FormSchema)
   })
@@ -46,7 +47,7 @@ const PropertyPage: React.FC = () => {
     }
   }
 
-  const onSubmit = async (data: FormDataType) => {
+  const onSubmit = async (data: FormOutputDataType) => {
     const { growthRate } = data
     const { context } = selectedScenario
 

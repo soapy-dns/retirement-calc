@@ -1,9 +1,9 @@
 import { Transfer } from "@/app/lib/data/schema/config"
-import { TransferFormData } from "../getTransferFormSchema"
+import { FormOutputDataType } from "../getTransferFormSchema"
 
 // verify that for any one year not more that 100% is being transferred
 export const verifyNotTransferringMoreThan100Percent = (
-  { from, year, transferPercent }: TransferFormData,
+  { from, year, transferPercent }: FormOutputDataType,
   transfers: Transfer[] = []
 ): boolean => {
   const thisYearsTransfers = transfers.filter((transfer) => transfer.year === year && transfer.from === from)

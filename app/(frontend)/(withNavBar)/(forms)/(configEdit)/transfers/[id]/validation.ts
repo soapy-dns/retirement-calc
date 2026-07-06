@@ -1,5 +1,5 @@
 import { Transfer } from "@/app/lib/data/schema/config"
-import { TransferFormData } from "../getTransferFormSchema"
+import { FormInputDataType } from "../getTransferFormSchema"
 
 /*
  A -> B and B -> C BAD - tested by testForMultipleMigrateAllFromAndTo

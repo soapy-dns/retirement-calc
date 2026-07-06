@@ -97,4 +97,5 @@ export const FormSchema = z
     { message: "An income asset should only have 1 owner", path: ["owners"] }
   )
 
-export type FormDataType = z.output<typeof FormSchema>
+export type FormInputDataType = z.input<typeof FormSchema>
+export type FormOutputDataType = z.output<typeof FormSchema>
