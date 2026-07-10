@@ -12,12 +12,7 @@ const onToggle = jest.fn()
 const showModal = false
 const modalData = {}
 
-const updateScenario = jest.fn()
-
-// const showCalculationInfo = jest.fn()
-
 jest.mock("../../../../../../../ui/hooks/useNavigation", () => ({
-  // jest.mock("@/app/ui/hooks/useNavigation", () => ({
   useNavigation: () => {
     return { goBack }
   }

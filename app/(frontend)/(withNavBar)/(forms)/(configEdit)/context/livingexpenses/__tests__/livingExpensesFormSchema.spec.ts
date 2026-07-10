@@ -1,5 +1,5 @@
 import { ScenarioSchema } from "@/app/lib/data/schema/config"
-import { FormDataType, getLivingExpensesFormSchema } from "../livingExpenseFormSchema"
+import { FormOutputDataType, getLivingExpensesFormSchema } from "../livingExpenseFormSchema"
 import { generateMock } from "@anatine/zod-mock"
 
 const asAtYear = 2024
@@ -22,7 +22,7 @@ describe("", () => {
   })
 
   it("should validate ok", () => {
-    const livingExpensesData: FormDataType = {
+    const livingExpensesData: FormOutputDataType = {
       items: [
         { fromYear: asAtYear, amountInTodaysTerms: 100000 },
         { fromYear: asAtYear + 1, amountInTodaysTerms: 50000 },
