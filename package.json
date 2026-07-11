@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --fix",
-    "typecheck": "tsc --project ./tsconfigTest.json ",
+    "typecheck": "tsc -v && tsc --project ./tsconfigTest.json ",
     "typecheck:watch": "tsc --project ./tsconfigTest.json --watch",
     "precommit": "eslint . && npm run typecheck && npm run test",
     "test": "jest --coverage",
