@@ -1,5 +1,5 @@
 import { getUpdatedLivingExpensesConfig } from "../getUpdatedLivingExpensesConfig"
-import { IScenario } from "@/app/lib/data/schema/config"
+import { ContextConfig, IScenario } from "@/app/lib/data/schema/config"
 import { getInflationFactorAtNewYear } from "../getInflationFactorAtNewYear"
 
 jest.mock("../getInflationFactorAtNewYear")
@@ -12,13 +12,13 @@ describe("getUpdatedLivingExpensesConfig", () => {
   })
 
   it("should throw an error if newYear is less than the first year in livingExpensesConfig", () => {
-    const scenario: IScenario = {
+    const scenario = {
       asAtYear: 2020,
       context: {
         inflation: [],
         livingExpenses: [{ fromYear: 2021, amountInTodaysTerms: 1000 }]
       }
-    }
+    } as unknown as IScenario
 
     expect(() => getUpdatedLivingExpensesConfig(scenario, 2020)).toThrow(
       "invalid new year for calculating living expenses"
@@ -32,7 +32,7 @@ describe("getUpdatedLivingExpensesConfig", () => {
         inflation: [],
         livingExpenses: [{ fromYear: 2021, amountInTodaysTerms: 1000 }]
       }
-    }
+    } as unknown as IScenario
 
     mockGetInflationFactorAtNewYear.mockReturnValue(1.1)
 
@@ -51,7 +51,7 @@ describe("getUpdatedLivingExpensesConfig", () => {
           { fromYear: 2023, amountInTodaysTerms: 1100 }
         ]
       }
-    }
+    } as unknown as IScenario
 
     mockGetInflationFactorAtNewYear.mockReturnValue(1.1)
 

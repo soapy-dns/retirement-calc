@@ -1,4 +1,3 @@
-import { getCurrentYear } from "@/app/lib/calculations/utils/getCurrentYear"
 import { z } from "zod"
 
 const castEmptyStringToUndefined = (val?: unknown) => (val !== "" ? val : undefined)

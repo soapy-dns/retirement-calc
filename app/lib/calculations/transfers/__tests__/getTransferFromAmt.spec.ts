@@ -3,35 +3,35 @@ import { Transfer } from "../../../data/schema/config"
 
 describe("getTransferFromAmt", () => {
   it("should calculate the transfer amount correctly with positive values", () => {
-    const transfer: Transfer = { transferPercent: 10 }
+    const transfer: Transfer = { transferPercent: 10 } as unknown as Transfer
     const prevValue = 1000
     const result = getTransferFromAmt(transfer, prevValue)
     expect(result).toBe(100)
   })
 
   it("should calculate the transfer amount correctly with zero percent", () => {
-    const transfer: Transfer = { transferPercent: 0 }
+    const transfer: Transfer = { transferPercent: 0 } as unknown as Transfer
     const prevValue = 1000
     const result = getTransferFromAmt(transfer, prevValue)
     expect(result).toBe(0)
   })
 
   it("should calculate the transfer amount correctly with negative values", () => {
-    const transfer: Transfer = { transferPercent: -10 }
+    const transfer: Transfer = { transferPercent: -10 } as unknown as Transfer
     const prevValue = 1000
     const result = getTransferFromAmt(transfer, prevValue)
     expect(result).toBe(-100)
   })
 
   it("should calculate the transfer amount correctly with zero previous value", () => {
-    const transfer: Transfer = { transferPercent: 10 }
+    const transfer: Transfer = { transferPercent: 10 } as unknown as Transfer
     const prevValue = 0
     const result = getTransferFromAmt(transfer, prevValue)
     expect(result).toBe(0)
   })
 
   it("should calculate the transfer amount correctly with fractional percent", () => {
-    const transfer: Transfer = { transferPercent: 12.5 }
+    const transfer: Transfer = { transferPercent: 12.5 } as unknown as Transfer
     const prevValue = 1000
     const result = getTransferFromAmt(transfer, prevValue)
     expect(result).toBe(125)
