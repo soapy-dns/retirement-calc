@@ -25,7 +25,7 @@
     "@hookform/resolvers": "^5.4.0",
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
-    "@next/bundle-analyzer": "16.2.9",
+    "@next/bundle-analyzer": "16.2.10",
     "@next/mdx": "16.2.9",
     "@types/mdx": "^2.0.12",
     "chart.js": "^4.5.0",
