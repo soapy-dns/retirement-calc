@@ -14,9 +14,10 @@ export const getNewScenario = async (
 ): Promise<IScenario> => {
   const thisYear = getCurrentYear()
   const isYearUpdated = scenario.asAtYear < thisYear
+  const newName = name === scenario.name ? `Copy of ${name}` : name
   const newScenario = {
     ...cloneDeep(scenario),
-    name: `Copy of ${name}`,
+    name: newName,
     description,
     id: getRandomKey(),
     stressTest: stressTest,
