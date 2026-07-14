@@ -28,8 +28,8 @@
     "@hookform/resolvers": "^5.4.0",
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
-    "@next/bundle-analyzer": "16.2.9",
-    "@next/mdx": "16.2.9",
+    "@next/bundle-analyzer": "^16.2.10",
+    "@next/mdx": "^16.2.10",
     "@types/mdx": "^2.0.12",
     "chart.js": "^4.5.0",
     "chartjs-plugin-annotation": "^3.1.0",
@@ -69,6 +69,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/uuid": "^9.0.7",
     "@typescript-eslint/typescript-estree": "^8.63.0",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "cypress": "^15.18.0",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.2.10",
@@ -79,7 +80,6 @@
     "prettier": "^3.5.3",
     "tailwindcss": "^4.0.0",
     "ts-node": "^10.9.2",
-    "@typescript/native": "npm:typescript@^7.0.2",
     "typescript": "npm:@typescript/typescript6@^6.0.2"
   },
   "overrides": {}
