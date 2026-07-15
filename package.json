@@ -11,7 +11,7 @@
     "typecheck:watch": "tsc --project ./tsconfigTest.json --watch",
     "tsc": "tsc --ignoreConfig --watch",
     "precommit": "eslint . && npm run typecheck && npm run test",
-    "test": "jest",
+    "test": "jest --runInBand",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
     "test:ci": "jest --ci --maxWorkers=50%",
