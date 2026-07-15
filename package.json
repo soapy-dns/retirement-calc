@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --fix",
+    "lint": "eslint . --cache --fix",
     "typecheck": "tsc -v && tsc --project ./tsconfigTest.json ",
     "typecheck:watch": "tsc --project ./tsconfigTest.json --watch",
     "tsc": "tsc --ignoreConfig --watch",
