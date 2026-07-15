@@ -42,9 +42,10 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ chartType }) => {
     accumulatedNpvTaxData
   } = calculationResults
 
+  console.log("chartType", chartType)
+
   switch (chartType) {
     case ChartType.capitalAssets:
-      console.log("calculatedAssetData", calculatedAssetData)
       return <CalculatedAssetLineChart yearRange={yearRange} graphData={calculatedAssetData} />
     case ChartType.capitalAssetsNpv:
       return <CalculatedAssetLineChart yearRange={yearRange} graphData={calculatedAssetNpvData} />
@@ -60,7 +61,8 @@ const ChartDisplay: React.FC<ChartDisplayProps> = ({ chartType }) => {
     case ChartType.accumTaxNPV:
       const accumulatedNpvTaxDataAndLabel = { "Accumulated Tax (Today's money)": accumulatedNpvTaxData }
       return <CalculatedAssetLineChart yearRange={yearRange} graphData={accumulatedNpvTaxDataAndLabel} />
-    case ChartType.capitalAssetsByAssetClass:
+    case ChartType.capitalAssetByAssetClass:
+      console.log("graphCapitalAssetByAssetClassData", graphCapitalAssetByAssetClassData)
       return <CalculatedAssetLineChart yearRange={yearRange} graphData={graphCapitalAssetByAssetClassData} />
 
     default:

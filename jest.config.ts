@@ -10,11 +10,13 @@ const createJestConfig = nextJest({
 const config: Config = {
   coverageProvider: "v8",
   testEnvironment: "jsdom",
+  maxWorkers: process.env.CI ? 2 : 1,
   // Add more setup options before each test is run
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-  moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/$1"
-  },
+  // moduleNameMapper: {
+  //   "^@/(.*)$": "<rootDir>/$1"
+  // },
+  slowTestThreshold: 2, // Highlights any file taking over 2 seconds
   coverageThreshold: {
     global: {
       branches: 80,

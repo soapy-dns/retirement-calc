@@ -24,7 +24,7 @@ import { PlusCircleIcon, Trash2Icon } from "lucide-react"
 import { getRandomKey } from "@/app/lib/utils/getRandomKey"
 import { useAssets } from "@/app/ui/hooks/useAssets"
 import { GenericModal } from "@/app/ui/components/modals/GenericModal"
-import format from "date-fns/format"
+import { format } from "date-fns"
 
 const invalidYearMsg = `The year of birth must be >= 21 years and <= 100 years from this year`
 

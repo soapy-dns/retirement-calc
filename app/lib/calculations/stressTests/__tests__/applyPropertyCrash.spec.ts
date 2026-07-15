@@ -8,7 +8,7 @@ describe("applyPropertyCrash", () => {
         { className: "AuProperty", value: 1000 },
         { className: "Stock", value: 2000 }
       ]
-    }
+    } as unknown as IScenario
 
     const result = applyPropertyCrash(scenario)
 
@@ -22,7 +22,7 @@ describe("applyPropertyCrash", () => {
         { className: "Stock", value: 2000 },
         { className: "Bond", value: 1500 }
       ]
-    }
+    } as unknown as IScenario
 
     const result = applyPropertyCrash(scenario)
 
@@ -33,7 +33,7 @@ describe("applyPropertyCrash", () => {
   it("should handle an empty assets array", () => {
     const scenario: IScenario = {
       assets: []
-    }
+    } as unknown as IScenario
 
     const result = applyPropertyCrash(scenario)
 
@@ -46,7 +46,7 @@ describe("applyPropertyCrash", () => {
         { className: "Stock", value: 2000 },
         { className: "Bond", value: 1500 }
       ]
-    }
+    } as unknown as IScenario
 
     const result = applyPropertyCrash(scenario)
 
@@ -60,7 +60,7 @@ describe("applyPropertyCrash", () => {
         { className: "AuProperty", value: 1000 },
         { className: "AuProperty", value: 2000 }
       ]
-    }
+    } as unknown as IScenario
 
     const result = applyPropertyCrash(scenario)
 
