@@ -20,26 +20,22 @@ export const getLivingExpensesFormSchema = (scenario: IScenario) => {
       message: `The first row should have a year matching the scenario's 'As at year' - ${asAtYear}`,
       path: ["items", 0, "fromYear"]
     }
-  ).refine(
-    ({ items }) => {
-      sortByFromDate(items)
+  ).superRefine(({ items }, ctx) => {
+    sortByFromDate(items)
 
-      // check for duplicates
-      const set = new Set(items.map((it) => it.fromYear))
-      return set.size === items.length
-    },
-    ({ items }) => {
-      const duplicateIndex = items.findIndex((item, index) => {
-        if (index === 0) return false
-        if (item.fromYear === items[index - 1].fromYear) return true
-        return false
-      })
-      return {
-        message: `This row has the same year as the previous row.`,
+    const duplicateIndex = items.findIndex((item, index) => {
+      if (index === 0) return false
+      return item.fromYear === items[index - 1].fromYear
+    })
+
+    if (duplicateIndex !== -1) {
+      ctx.addIssue({
+        code: "custom",
+        message: "This row has the same year as the previous row.",
         path: ["items", duplicateIndex, "fromYear"]
-      }
+      })
     }
-  )
+  })
 
   return refinedFormSchema
 }

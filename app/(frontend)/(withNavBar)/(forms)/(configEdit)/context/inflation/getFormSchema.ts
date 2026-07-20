@@ -38,6 +38,7 @@ export const getFormSchema = (scenario: IScenario) => {
 
     .refine(
       ({ items }) => {
+        // TODO: should copy before sorting!!!
         sortByFromDate(items)
         return items[0].fromYear === asAtYear
       },
@@ -46,26 +47,23 @@ export const getFormSchema = (scenario: IScenario) => {
         path: ["items", 0, "fromYear"]
       }
     )
-    .refine(
-      ({ items }) => {
-        sortByFromDate(items)
+    .superRefine((data, ctx) => {
+      const sortedItems = [...data.items].sort((a, b) => a.fromYear - b.fromYear)
 
-        // check for duplicates
-        const set = new Set(items.map((it) => it.fromYear))
-        return set.size === items.length
-      },
-      ({ items }) => {
-        const duplicateIndex = items.findIndex((item, index) => {
-          if (index === 0) return false
-          if (item.fromYear === items[index - 1].fromYear) return true
-          return false
-        })
-        return {
-          message: `This row has the same year as the previous row.`,
-          path: ["items", duplicateIndex, "fromYear"]
-        }
-      }
-    )
+      const duplicate = sortedItems.find((item, index) => {
+        return index > 0 && item.fromYear === sortedItems[index - 1].fromYear
+      })
+
+      if (!duplicate) return
+
+      const duplicateIndex = data.items.findIndex((item) => item === duplicate)
+
+      ctx.addIssue({
+        code: "custom",
+        message: "This row has the same year as the previous row.",
+        path: ["items", duplicateIndex, "fromYear"]
+      })
+    })
 
   return refinedInflationFormSchema
 }

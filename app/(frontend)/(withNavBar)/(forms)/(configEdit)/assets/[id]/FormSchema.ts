@@ -57,18 +57,19 @@ export const FormSchema = z
     },
     { message: "There must be an income amount > 0 for this asset.", path: ["incomeAmt"] }
   )
-  .refine(
-    ({ incomeStartYear, incomeEndYear }) => {
-      if (!incomeStartYear || !incomeEndYear) return true
-      return incomeStartYear <= incomeEndYear
-    },
-    ({ incomeStartYear, incomeEndYear }) => {
-      return {
+  .superRefine((data, ctx) => {
+    const { incomeStartYear, incomeEndYear } = data
+
+    if (!incomeStartYear || !incomeEndYear) return
+
+    if (incomeStartYear > incomeEndYear) {
+      ctx.addIssue({
+        code: "custom",
         message: `The income start year ${incomeStartYear} should be before the income end year ${incomeEndYear}.`,
         path: ["incomeStartYear"]
-      }
+      })
     }
-  )
+  })
   .refine(
     ({ canDrawdown, drawdownOrder }) => {
       if (canDrawdown === "Y" && !drawdownOrder) return false

@@ -1,16 +1,16 @@
-import { generateMock } from "@anatine/zod-mock"
-import { CashSchema, OwnersType, ScenarioSchema } from "../.."
+import { generateMock } from "@/app/lib/testUtils"
+import { CashAsset, CashSchema, IScenario, OwnersType, ScenarioSchema } from "../.."
 import { assetsVsOwners } from ".."
 
 describe("Validate assetOwners against context owners", () => {
-  const mockCashAssetConfig = generateMock(CashSchema)
-  const mockScenarioConfig = generateMock(ScenarioSchema)
+  const mockCashAssetConfig = generateMock<CashAsset>(CashSchema)
+  const mockScenarioConfig = generateMock<IScenario>(ScenarioSchema)
   const { context } = mockScenarioConfig
   context.owners = [
     { identifier: "C", ownerName: "C", gender: "M" },
     { identifier: "D", ownerName: "D", gender: "F" }
   ] as unknown as OwnersType
-  
+
   it("should be false when 2 asset owners not found", () => {
     mockCashAssetConfig.assetOwners = ["A", "B"]
 

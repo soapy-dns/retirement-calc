@@ -11,18 +11,16 @@
     "typecheck:watch": "tsc --project ./tsconfigTest.json --watch",
     "tsc": "tsc --ignoreConfig --watch",
     "precommit": "eslint . && npm run typecheck && npm run test",
-    "test": "jest --runInBand",
-    "test:coverage": "jest --coverage",
-    "test:watch": "jest --watch",
-    "test:ci": "jest --ci --maxWorkers=50%",
+    "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest --runInBand",
+    "test:coverage": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest --runInBand --coverage",
+    "test:watch": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest --watch",
+    "test:ci": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest --ci --maxWorkers=50%",
     "test:integration": "echo 'test:integration",
     "cy:open": "cypress open",
     "cy": "cypress run --browser chrome",
     "cy:electron": "cypress run"
   },
   "dependencies": {
-    "@anatine/zod-mock": "^3.14.0",
-    "@faker-js/faker": "^8.4.1",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^5.4.0",
@@ -51,7 +49,7 @@
     "tailwindcss-animate": "^1.0.7",
     "use-debounce": "^10.0.5",
     "uuid": "^14.0.1",
-    "zod": "^3.25.61"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "16.2.9",
@@ -70,6 +68,7 @@
     "@types/uuid": "^9.0.7",
     "@typescript-eslint/typescript-estree": "^8.63.0",
     "@typescript/native": "npm:typescript@^7.0.2",
+    "cross-env": "^10.1.0",
     "cypress": "^15.18.0",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.2.10",
@@ -80,7 +79,8 @@
     "prettier": "^3.5.3",
     "tailwindcss": "^4.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "npm:@typescript/typescript6@^6.0.2"
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
+    "zocker": "^3.0.0"
   },
   "overrides": {}
 }

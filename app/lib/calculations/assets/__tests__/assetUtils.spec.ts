@@ -1,15 +1,25 @@
-import { CashSchema, ScenarioSchema, SharesSchema, SuperSchema } from "@/app/lib/data/schema/config"
-import { generateMock } from "@anatine/zod-mock"
+import {
+  CashSchema,
+  ScenarioSchema,
+  SharesSchema,
+  SuperSchema,
+  CashAsset,
+  SuperAsset,
+  SharesAsset,
+  IScenario
+} from "@/app/lib/data/schema/config"
+import { generateMock } from "@/app/lib/testUtils"
 import { AuBank } from "../AuBank"
 import { AuSuper } from "../AuSuper"
 import { AuShares } from "../AuShares"
 import { getGroupedDrawdownableAssets } from "../assetUtils"
 
 describe("getGroupedDrawdownableAssets", () => {
-  const mockCashConfig = generateMock(CashSchema)
-  const mockSuperConfig = generateMock(SuperSchema)
-  const mockShareConfig = generateMock(SharesSchema)
-  const mockScenarioConfig = generateMock(ScenarioSchema)
+  const mockCashConfig = generateMock<CashAsset>(CashSchema)
+  // mockCashConfig.className = "AuBank"
+  const mockSuperConfig = generateMock<SuperAsset>(SuperSchema)
+  const mockShareConfig = generateMock<SharesAsset>(SharesSchema)
+  const mockScenarioConfig = generateMock<IScenario>(ScenarioSchema)
   const year = 2023
 
   it("should return a group correctly based on the drawdownOrder", () => {

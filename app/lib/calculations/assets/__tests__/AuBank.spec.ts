@@ -1,5 +1,5 @@
-import { CashSchema, ScenarioSchema } from "@/app/lib/data/schema/config"
-import { generateMock } from "@anatine/zod-mock"
+import { CashAsset, CashSchema, ScenarioSchema, IScenario } from "@/app/lib/data/schema/config"
+import { generateMock } from "@/app/lib/testUtils"
 import { AuBank } from "../AuBank"
 
 jest.mock("../../tax/utils", () => ({
@@ -8,8 +8,8 @@ jest.mock("../../tax/utils", () => ({
 }))
 
 describe("Cash calculate the next year's values", () => {
-  const mockCashAssetConfig = generateMock(CashSchema)
-  const mockScenarioConfig = generateMock(ScenarioSchema)
+  const mockCashAssetConfig = generateMock<CashAsset>(CashSchema)
+  const mockScenarioConfig = generateMock<IScenario>(ScenarioSchema)
   const year = 2023
 
   // Auto drawdowns must affect the income TODO:

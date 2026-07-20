@@ -30,11 +30,6 @@ const getErrorMessage = (error: unknown) => {
 
 export const calculate = async (data: unknown): Promise<CalculationResults> => {
   await sleep(1)
-  // console.log("--calculate data--", JSON.stringify(data, null, 4))
-  // console.log("--data.context--", data.context);
-  // const stressTestValues = stressTestOptions.map((it) => {
-  //   return it.value
-  // })
 
   const result = ScenarioSchema.safeParse(data)
 
@@ -47,11 +42,17 @@ export const calculate = async (data: unknown): Promise<CalculationResults> => {
     return {
       success: false,
       calculationMessage: firstCustomError?.message || "Invalid configuration",
-      errors: result.error.issues
+      errors: result.error.issues.map((it) => {
+        const stringPath: string[] = it.path.map(String)
+
+        return {
+          code: it.code,
+          message: it.message,
+          path: stringPath
+        }
+      })
     }
   }
-
-  // throw new Error("SERVER ERROR")
 
   const scenario = applyStressTests(result.data)
   if (!scenario) throw new Error("No scenario found")

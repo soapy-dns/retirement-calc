@@ -13,7 +13,7 @@ import { fileConstants } from "../filesConstants"
 
 const FormSchema = z.object({
   scenariosSelected: z.array(z.string()).min(1, "You must select at least one scenario"),
-  fileName: z.string({ required_error: "Please include a file name." })
+  fileName: z.string().min(1, "Please include a file name.")
 })
 export type FormDataType = z.infer<typeof FormSchema>
 
@@ -64,7 +64,6 @@ export default function Export() {
           {/*  @ts-ignore  */}
           <CheckboxQuestion
             id="scenarios"
-            // control={control}
             label={fileConstants.SCENARIOS.LABEL}
             helpText={fileConstants.SCENARIOS.HELP_TEXT}
             options={scenarioOptions}
@@ -72,10 +71,8 @@ export default function Export() {
           />
           <InputQuestion
             id="fileName"
-            // control={control}
             label={fileConstants.FILE_NAME.LABEL}
             helpText={fileConstants.FILE_NAME.HELP_TEXT}
-            // {...register("scenariosSelected")}
           />
         </form>
       </EditPageLayout>

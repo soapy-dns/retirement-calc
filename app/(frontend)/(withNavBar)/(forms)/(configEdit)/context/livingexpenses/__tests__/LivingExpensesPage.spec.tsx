@@ -1,10 +1,9 @@
-import React from "react"
 import { screen } from "@testing-library/dom"
 import { act, render, waitFor } from "@testing-library/react"
 
 import LivingExpensesPage from "../page"
-import { generateMock } from "@anatine/zod-mock"
-import { ScenarioSchema } from "@/app/lib/data/schema/config"
+import { generateMock } from "@/app/lib/testUtils"
+import { IScenario, ScenarioSchema } from "@/app/lib/data/schema/config"
 import { ProviderWrapper } from "@/app/ui/testing/ProviderWrappers"
 
 const goBack = jest.fn()
@@ -18,7 +17,7 @@ jest.mock("../../../../../../../ui/hooks/useNavigation", () => ({
   }
 }))
 
-const mockScenarioConfig = generateMock(ScenarioSchema)
+const mockScenarioConfig = generateMock<IScenario>(ScenarioSchema)
 mockScenarioConfig.asAtYear = 2024
 mockScenarioConfig.context.livingExpenses = [
   {

@@ -1,8 +1,8 @@
-import { generateMock } from "@anatine/zod-mock"
+import { generateMock } from "@/app/lib/testUtils"
 import { FormInputDataType, getFormSchema } from "../getFormSchema"
-import { ScenarioSchema } from "@/app/lib/data/schema/config"
+import { IScenario, ScenarioSchema } from "@/app/lib/data/schema/config"
 
-const mockScenarioConfig = generateMock(ScenarioSchema)
+const mockScenarioConfig = generateMock<IScenario>(ScenarioSchema)
 const asAtYear = 2024
 
 describe("", () => {

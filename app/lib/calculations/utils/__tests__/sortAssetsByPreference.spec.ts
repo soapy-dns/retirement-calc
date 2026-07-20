@@ -1,13 +1,13 @@
-import { generateMock } from "@anatine/zod-mock"
+import { generateMock } from "@/app/lib/testUtils"
 import { sortByDrawdownOrder } from "../sortAssetsByPreference"
-import { CashSchema, ScenarioSchema } from "@/app/lib/data/schema/config"
+import { CashAsset, CashSchema, ScenarioSchema, IScenario } from "@/app/lib/data/schema/config"
 import { AuBank } from "../../assets/AuBank"
 
 describe("test", () => {
   it("should sort correctly", () => {
-    const mockAssetConfig1 = generateMock(CashSchema)
-    const mockAssetConfig2 = generateMock(CashSchema)
-    const mockScenarioConfig = generateMock(ScenarioSchema)
+    const mockAssetConfig1 = generateMock<CashAsset>(CashSchema)
+    const mockAssetConfig2 = generateMock<CashAsset>(CashSchema)
+    const mockScenarioConfig = generateMock<IScenario>(ScenarioSchema)
     const year = 2023
 
     mockAssetConfig1.canDrawdown = true

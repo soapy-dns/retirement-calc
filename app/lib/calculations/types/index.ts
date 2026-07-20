@@ -105,6 +105,7 @@ export interface ValidationIssue {
   code: string
   message: string
   path: Array<number | string>
+  // path: Array<number | string | symbol>
 }
 interface CalculationResultsFail {
   success: false
