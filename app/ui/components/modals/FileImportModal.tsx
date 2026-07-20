@@ -34,12 +34,10 @@ export const FileImportModal: React.FC<Props> = ({ showModal, handleCancel }) =>
   }
 
   const handleOnClick = async (): Promise<void> => {
-    console.log(">>>handleOnClick")
     setButtonStatus(ButtonStatus.busy)
 
     if (selectedFile) {
       const data = await selectedFile.text()
-      console.log(">>>importScenarios data", data)
       try {
         const scenarios: IScenario[] = JSON.parse(data)
 
@@ -49,8 +47,9 @@ export const FileImportModal: React.FC<Props> = ({ showModal, handleCancel }) =>
         handleCancel()
 
         setButtonStatus(ButtonStatus.disabled)
+        window.scrollTo(0, 0) // scroll to top of page on successful import
+
       } catch (e) {
-        console.log(">>>error importing file", e)
         setButtonStatus(ButtonStatus.disabled)
 
         throw new Error("Error importing file")
