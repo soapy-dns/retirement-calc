@@ -6,14 +6,12 @@ const castEmptyStringToUndefined = (val?: unknown) => (val !== "" ? val : undefi
 //  * will be string or number.  Therefore I think we need to preprocess.
 //  * coerce.number() coerces "" -> 0
 
-// const IsFormNumberOpt = z.custom<{ arg: string }>((val) => {})
 export const IsFormNumberOpt = z.preprocess(
-  // (val) => castEmptyStringToUndefined(val),
   (value) => (value === "" ? undefined : value),
 
   z.coerce
     .number({
-      invalid_type_error: "This value should be a number"
+      error: "This value should be a number"
     })
     .optional()
 )
@@ -21,8 +19,14 @@ export const IsFormNumberOpt = z.preprocess(
 export const IsFormNumber = z.preprocess(
   (value) => (value === "" ? undefined : value),
   z.coerce.number({
-    required_error: "This value is required",
-    invalid_type_error: "This value must be a valid number."
+    error: (issue) => {
+      // If the input was undefined or completely omitted
+      if (issue.input === undefined) {
+        return "This value is required"
+      }
+      // For anything that fails coercion (e.g. "abc" resulting in NaN)
+      return "This value must be a valid number."
+    }
   })
 )
 
@@ -96,10 +100,14 @@ export const IsOptionalValidYear = z.preprocess(
   z.coerce
     .number()
     .optional()
-    .refine(
-      (val) => val === undefined || (val >= validStartYear && val <= validEndYear),
-      (val) => ({ message: `The year ${val} is not valid` })
-    )
+    .superRefine((val, ctx) => {
+      if (val !== undefined && (val < validStartYear || val > validEndYear)) {
+        ctx.addIssue({
+          code: "custom",
+          message: `The year ${val} is not valid`
+        })
+      }
+    })
 )
 
 // export const IsFutureOrCurrentYear = z.preprocess(

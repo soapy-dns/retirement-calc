@@ -4,9 +4,9 @@ import { Asset } from "../../assets/Asset"
 import * as getTransferFromAmtModule from "../getTransferFromAmt"
 import * as getTransferToAmtModule from "../getTransferToAmt"
 
-import { generateMock } from "@anatine/zod-mock"
+import { generateMock } from "@/app/lib/testUtils"
 
-const mockTransfer = generateMock(TransferWithIdSchema)
+const mockTransfer = generateMock<Transfer>(TransferWithIdSchema)
 const transfer1 = { ...mockTransfer, from: "asset1", to: "asset2", year: 2023, transferPercent: 10 }
 const transfer2 = { ...mockTransfer, from: "asset1", to: "asset2", year: 2023, transferPercent: 10 }
 

@@ -1,9 +1,10 @@
-import { ScenarioSchema } from "@/app/lib/data/schema/config"
+import { IScenario, ScenarioSchema } from "@/app/lib/data/schema/config"
 import { FormOutputDataType, getLivingExpensesFormSchema } from "../livingExpenseFormSchema"
-import { generateMock } from "@anatine/zod-mock"
+import { generateMock } from "@/app/lib/testUtils"
 
 const asAtYear = 2024
-const mockScenarioConfig = generateMock(ScenarioSchema)
+const mockScenarioConfig = generateMock<IScenario>(ScenarioSchema)
+console.log("mockScenarioConfig", mockScenarioConfig)
 mockScenarioConfig.asAtYear = asAtYear
 
 const LivingExpensesSchema = getLivingExpensesFormSchema(mockScenarioConfig)

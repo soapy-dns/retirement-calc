@@ -1,14 +1,10 @@
 import { z } from "zod"
 
-import { drawdownOrderValidator, incomeValidator, propertyValidator } from "./validation"
-import { CountryEnum, IsOptionalValidYear, YesNoSchema } from "./schemaUtils"
+import { drawdownOrderValidator, propertyValidator } from "./validation"
+import { CountryEnum, IsOptionalValidYear } from "./schemaUtils"
 
 export const AssetClassEnum = z.enum(["AuBank", "AuSuper", "AuProperty", "Salary", "AuDefinedBenefits", "AuShares"])
 export type AssetClass = z.infer<typeof AssetClassEnum>
-
-// FIXME: I can't get these to work by importing
-// const IsOptionalFutureOrCurrentYear = z.number().optional()
-// const CountryEnum = z.enum(["AU", "SC", "EN"])
 
 const IncomeDetailsSchema = z.object({
   incomeAmt: z.number().min(1),
@@ -40,7 +36,6 @@ export const AssetBaseSchema = z.object({
   disabled: z.boolean().optional(),
   description: z.string().optional(),
   assetOwners: z.string().array(), // assetOwners different for different classNames certainly diff validation
-  // assetOwners: z.string().array().nonempty(),
   country: CountryEnum.optional(), // defaults to AU
   rateVariation: z.number().optional()
 })
@@ -93,6 +88,7 @@ export type SuperAsset = z.infer<typeof SuperSchema>
 export const SharesSchema = LiquidAssetSchema.extend({
   className: z.literal("AuShares")
 })
+export type SharesAsset = z.infer<typeof SharesSchema>
 
 export const AssetSchema = z
   .discriminatedUnion("className", [
@@ -103,7 +99,30 @@ export const AssetSchema = z
     SuperSchema,
     SharesSchema
   ])
-  .refine(incomeValidator.validator, incomeValidator.options)
+  .superRefine((data, ctx) => {
+    const { className } = data
+
+    if (className !== "Salary" && className !== "AuDefinedBenefits") {
+      return
+    }
+
+    const { income } = data as IncomeAsset
+    const { incomeStartYear, incomeEndYear } = income
+
+    // Preserve the original behavior: don't validate until both values exist.
+    if (!incomeStartYear || !incomeEndYear) {
+      return
+    }
+
+    if (incomeStartYear > incomeEndYear) {
+      ctx.addIssue({
+        code: "custom",
+        message: `The income start year ${incomeStartYear} should be before the income end year ${incomeEndYear}`,
+        path: ["income", "incomeStartYear"]
+      })
+    }
+  })
+
   .refine(drawdownOrderValidator.validator, drawdownOrderValidator.options)
   .refine(propertyValidator.validator, propertyValidator.options)
 

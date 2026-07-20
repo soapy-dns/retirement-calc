@@ -1,4 +1,4 @@
-import { z } from "@/app/lib/data/schema/config/validation/customZod"
+import { z } from "zod"
 
 import { assetsVsOwners, validateIncomeBucket } from "./validation"
 import { AssetSchema } from "./asset"
@@ -144,88 +144,77 @@ export const ScenarioSchema = z
   .refine(({ assets, context }) => assetsVsOwners(assets, context), {
     message: "An asset has no owners."
   })
-  .refine(
-    ({ asAtYear, context: { livingExpenses } }) => {
-      sortByFromDate(livingExpenses)
-      return livingExpenses[0].fromYear === asAtYear
-    },
-    ({ asAtYear }) => {
-      return {
+  .superRefine(({ asAtYear, context: { livingExpenses } }, ctx) => {
+    // Note: sorting mutates the array in-place
+    sortByFromDate(livingExpenses)
+
+    if (livingExpenses[0]?.fromYear !== asAtYear) {
+      ctx.addIssue({
+        code: "custom",
         message: `The first row should have a year matching the scenario's 'As at year' of ${asAtYear}`,
-        path: ["context.livingExpenses", 0, "fromYear"]
-      }
-    }
-  )
-  .refine(
-    ({ context: { livingExpenses } }) => {
-      sortByFromDate(livingExpenses)
-
-      // check for duplicates
-      const set = new Set(livingExpenses.map((it) => it.fromYear))
-      return set.size === livingExpenses.length
-    },
-    ({ context: { livingExpenses } }) => {
-      const duplicateIndex = livingExpenses.findIndex((item, index) => {
-        if (index === 0) return false
-        if (item.fromYear === livingExpenses[index - 1].fromYear) return true
-        return false
+        path: ["context", "livingExpenses", 0, "fromYear"]
       })
-      return {
-        message: `This row has the same year as the previous row.`,
-        path: ["context.livingExpenses", duplicateIndex, "fromYear"]
-      }
     }
-  )
-  .refine(
-    ({ asAtYear, context: { inflation } }) => {
-      sortByFromDate(inflation)
-      return inflation[0].fromYear === asAtYear
-    },
-    ({ asAtYear }) => {
-      return {
+  })
+  .superRefine(({ context: { livingExpenses } }, ctx) => {
+    sortByFromDate(livingExpenses)
+
+    // Track seen years to catch duplicates on the fly
+    const seenYears = new Set<number>()
+
+    livingExpenses.forEach((item, index) => {
+      if (seenYears.has(item.fromYear)) {
+        ctx.addIssue({
+          code: "custom",
+          message: "This row has the same year as a previous row.",
+          path: ["context", "livingExpenses", index, "fromYear"]
+        })
+      }
+      seenYears.add(item.fromYear)
+    })
+  })
+  .superRefine(({ asAtYear, context: { inflation } }, ctx) => {
+    // Note: sorting mutates the array in-place
+    sortByFromDate(inflation)
+
+    if (inflation?.[0]?.fromYear !== asAtYear) {
+      ctx.addIssue({
+        code: "custom",
         message: `The first row should have a year matching the scenario's 'As at year' of ${asAtYear}`,
-        path: ["context.inflation", 0, "fromYear"]
-      }
-    }
-  )
-  .refine(
-    ({ context: { inflation } }) => {
-      sortByFromDate(inflation)
-
-      // check for duplicates
-      const set = new Set(inflation.map((it) => it.fromYear))
-      return set.size === inflation.length
-    },
-    ({ context: { inflation } }) => {
-      const duplicateIndex = inflation.findIndex((item, index) => {
-        if (index === 0) return false
-        if (item.fromYear === inflation[index - 1].fromYear) return true
-        return false
+        path: ["context", "inflation", 0, "fromYear"]
       })
-      return {
-        message: `This row has the same year as the previous row.`,
-        path: ["context.inflation", duplicateIndex, "fromYear"]
-      }
     }
-  )
-  .refine(
-    ({ asAtYear, transfers }) => {
-      if (!transfers) return true
+  })
+  .superRefine(({ context: { inflation } }, ctx) => {
+    sortByFromDate(inflation)
 
-      const invalidTransfer = transfers.find((transfer) => transfer.year < asAtYear)
-      if (invalidTransfer) return false
-      return true
-    },
+    // Track seen years to catch duplicates immediately
+    const seenYears = new Set<number>()
 
-    ({ asAtYear, transfers }) => {
-      const invalidTransferIndex = transfers?.findIndex((transfer) => transfer.year < asAtYear)
+    inflation.forEach((item, index) => {
+      if (seenYears.has(item.fromYear)) {
+        ctx.addIssue({
+          code: "custom",
+          message: "This row has the same year as a previous row.",
+          path: ["context", "inflation", index, "fromYear"]
+        })
+      }
+      seenYears.add(item.fromYear)
+    })
+  })
+  .superRefine(({ asAtYear, transfers }, ctx) => {
+    if (!transfers) return
 
-      return {
+    const invalidIndex = transfers.findIndex((transfer) => transfer.year < asAtYear)
+
+    if (invalidIndex !== -1) {
+      ctx.addIssue({
+        code: "custom",
         message: `Transfer year must be >= 'As at year' of ${asAtYear}`,
-        path: ["transfers", invalidTransferIndex ?? ""]
-      }
+        path: ["transfers", invalidIndex, "year"] // Targets the exact field on the invalid row
+      })
     }
-  )
+  })
 
 export type IScenario = z.infer<typeof ScenarioSchema>
 export type ContextConfig = z.infer<typeof ContextSchema>

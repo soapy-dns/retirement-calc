@@ -136,7 +136,7 @@ const InflationEditPage: React.FC = () => {
 
             {fields.map((it, index) => {
               return (
-                <div key={String(it.fromYear)} className="grid grid-cols-3 justify-items-center gap-2">
+                <div key={String(it.fromYear) + index} className="grid grid-cols-3 justify-items-center gap-2">
                   {/* @ts-ignore */}
                   <InputField id={`items.${index}.fromYear`} restrictedCharSet={INTEGERS_ONLY} />
 

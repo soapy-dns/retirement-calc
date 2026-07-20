@@ -1,12 +1,12 @@
-import { CashSchema, ScenarioSchema } from "@/app/lib/data/schema/config"
-import { Asset } from "../../assets/Asset"
+import { CashAsset, CashSchema, ScenarioSchema, IScenario } from "@/app/lib/data/schema/config"
+// import { Asset } from "../../assets/Asset"
 import { getDrawdownableAssets } from "../getDrawdownableAssets"
-import { generateMock } from "@anatine/zod-mock"
+import { generateMock } from "@/app/lib/testUtils"
 import { AuBank } from "../../assets/AuBank"
 
 describe("test", () => {
-  const mockAssetConfig = generateMock(CashSchema)
-  const mockScenarioConfig = generateMock(ScenarioSchema)
+  const mockAssetConfig = generateMock<CashAsset>(CashSchema)
+  const mockScenarioConfig = generateMock<IScenario>(ScenarioSchema)
   const year = 2023
 
   it("should not return if not canDrawdown", () => {

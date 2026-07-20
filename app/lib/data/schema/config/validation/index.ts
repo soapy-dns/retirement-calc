@@ -42,44 +42,29 @@ export const assetsVsOwners = (assets: IAsset[], context: ContextConfig) => {
 }
 
 // The next validations related to assets. Perhaps this could be separated out.
-export const incomeValidator = {
-  validator: (data: { className: string }): boolean => {
-    const { className } = data
-    if (className === "Salary" || className === "AuDefinedBenefits") {
-      const { income } = data as IncomeAsset
-      const { incomeStartYear, incomeEndYear } = income
-      if (!incomeStartYear || !incomeEndYear) return true
-      return incomeStartYear <= incomeEndYear
-    }
-    return true
-  },
-  options: (data: { className: string }) => {
-    const { className } = data
-    if (className === "Salary" || className === "AuDefinedBenefits") {
-      const { income } = data as IncomeAsset
-      const { incomeStartYear, incomeEndYear } = income
-      // if (!incomeStartYear || !incomeEndYear) return true
-      // return incomeStartYear <= incomeEndYear
-      return {
-        message: `The income start year ${incomeStartYear} should be before the income end year ${incomeEndYear}`,
-        path: ["income.incomeStartYear"]
-      }
-    }
-    return { message: "Validation Error" }
-  }
-}
+// export const incomeValidator = {
+//   validator: (data: { className: string }): boolean => {
+//     const { className } = data
+//     if (className === "Salary" || className === "AuDefinedBenefits") {
+//       const { income } = data as IncomeAsset
+//       const { incomeStartYear, incomeEndYear } = income
+//       if (!incomeStartYear || !incomeEndYear) return true
+//       return incomeStartYear <= incomeEndYear
+//     }
+//     return true
+//   },
+//   options: (data: { className: string }) => {
+//     const { className } = data
+//     if (className === "Salary" || className === "AuDefinedBenefits") {
+//       const { income } = data as IncomeAsset
+//       const { incomeStartYear, incomeEndYear } = income
 
-// export const validYear = {
-//   // how would I pass validStartYear in?
-//   validator: (val: string) => {
-//     // true means its valid
-//     if (Number.isNaN(val)) return false
-
-//     const value = Number(val)
-
-//     if (value >= validStartYear && value <= validEndYear) return true
-
-//     return false
+//       return {
+//         message: `The income start year ${incomeStartYear} should be before the income end year ${incomeEndYear}`,
+//         path: ["income.incomeStartYear"]
+//       }
+//     }
+//     return { message: "Validation Error" }
 //   }
 // }
 
