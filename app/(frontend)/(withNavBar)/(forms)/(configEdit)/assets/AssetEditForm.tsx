@@ -128,7 +128,9 @@ export const AssetEditForm: FunctionComponent<Props> = ({
             helpText={assetConstants.VALUE.HELP_TEXT}
           />
 
-          {isCashAsset(assetType) && (
+          {/* TODO: have removed editiing of the income bucket.  There should be only one, and it cannot be changed. 
+Might need to add it back in, or remove this code completely*/}
+          {/* {isCashAsset(assetType) && (
             <RadioButtonQuestion
               id="incomeBucket"
               label={assetConstants.INCOME_BUCKET.LABEL}
@@ -136,7 +138,7 @@ export const AssetEditForm: FunctionComponent<Props> = ({
               variant={RadioQuestionVariant.BLOCK}
               helpText={assetConstants.INCOME_BUCKET.HELP_TEXT}
             />
-          )}
+          )} */}
 
           {isLiquidAsset(assetType) && (
             <>
